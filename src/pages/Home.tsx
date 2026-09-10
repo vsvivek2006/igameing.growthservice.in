@@ -144,12 +144,93 @@ const FEATURED_RESOURCES = [
   },
 ];
 
+const TARGET_VERTICALS = [
+  {
+    title: 'iGaming & Online Gaming',
+    slug: 'gaming',
+    badge: 'Skill & Real-Money',
+    challenge: 'Overcoming multi-year domain authority deficits and algorithmic volatility in highly contested game SERPs.',
+    link: '/industries/gaming',
+  },
+  {
+    title: 'Casino & Gambling Brands',
+    slug: 'casino',
+    badge: 'Tier-1 Contested',
+    challenge: 'Navigating aggressive affiliate competition, licensing jurisdiction boundaries, and strict ad platform policy restrictions.',
+    link: '/industries/casino',
+  },
+  {
+    title: 'Sports & Cricket Gaming',
+    slug: 'cricket-gaming',
+    badge: 'Event-Driven Surges',
+    challenge: 'Capturing real-time tournament search peaks, live score queries, and maintaining indexation during major sports leagues.',
+    link: '/industries/cricket-gaming',
+  },
+  {
+    title: 'Yono & High-Velocity Search',
+    slug: 'yono',
+    badge: 'Velocity Queries',
+    challenge: 'Managing high-velocity APK search spikes, rapid crawl budget demands, and maintaining brand entity protection.',
+    link: '/industries/yono',
+  },
+  {
+    title: 'Colour Prediction Platforms',
+    slug: 'color-prediction',
+    badge: 'Reputation & Intent',
+    challenge: 'Structuring clear informational and transactional intent while defending against malicious SERP displacement.',
+    link: '/industries/color-prediction',
+  },
+  {
+    title: 'Colour Trading Platforms',
+    slug: 'color-trading',
+    badge: 'Search Volume',
+    challenge: 'Filtering qualified high-intent trade volume from casual searchers with tailored conversion architecture.',
+    link: '/industries/color-trading',
+  },
+  {
+    title: 'Stock Market & Financial Platforms',
+    slug: 'stock-market',
+    badge: 'YMYL & Financial',
+    challenge: 'Satisfying extreme Google E-E-A-T standards, algorithmic financial scrutiny, and compliant conversion funnels.',
+    link: '/industries/stock-market',
+  },
+  {
+    title: 'Adult & Escort Industry (B2B)',
+    slug: 'adult-escort',
+    badge: 'Policy-Safe Marketing',
+    challenge: 'Operating strictly as a B2B marketing agency, providing clean code-level SEO without explicit sexual content.',
+    link: '/industries/adult-escort',
+  },
+];
+
+const ARCHITECTURE_PIPELINE = [
+  { name: 'Architecture', desc: 'Server DOM & Routing' },
+  { name: 'Crawlability', desc: 'Bot Budget & Rendering' },
+  { name: 'Speed', desc: 'Core Web Vitals LCP' },
+  { name: 'Indexation', desc: 'Canonical Integrity' },
+  { name: 'Content', desc: 'Topical Authority Clusters' },
+  { name: 'Internal Links', desc: 'Topical Graph Flow' },
+  { name: 'Authority', desc: 'Quality-Controlled Links' },
+  { name: 'Conversion', desc: 'Qualified Client Revenue' },
+];
+
+const MEASUREMENT_FUNNEL = [
+  { stage: 'Impressions', desc: 'Dominating commercial query search visibility' },
+  { stage: 'Clicks', desc: 'High-CTR titles and verified rich snippets' },
+  { stage: 'Qualified Traffic', desc: 'Landing pages aligned with transactional intent' },
+  { stage: 'Engagement', desc: 'Fast rendering and intuitive user journeys' },
+  { stage: 'Lead', desc: 'High-trust intake forms and strategy consultations' },
+  { stage: 'Conversion', desc: 'Qualified commercial partnership agreements' },
+  { stage: 'Revenue', desc: 'Compounding long-term client organic returns' },
+];
+
 const PROCESS = [
-  { n: '01', title: 'Diagnostic', desc: 'Technical audit, competitive gap analysis, and keyword architecture mapping provide the factual baseline.' },
-  { n: '02', title: 'Strategy', desc: 'Phased SEO roadmap prioritised by leverage and realistic timeline. No vague promises — specific deliverables and milestones.' },
-  { n: '03', title: 'Foundations', desc: 'Technical infrastructure, site architecture, and on-page signals — the layer that makes everything else work.' },
-  { n: '04', title: 'Growth Engine', desc: 'Content at the quality level competitive SERPs require, authority development, and conversion architecture.' },
-  { n: '05', title: 'Compound', desc: 'Monthly reporting, iteration based on performance data, and continuous expansion of the keyword footprint.' },
+  { n: '01', title: 'Diagnose', desc: 'Technical audit, crawl log analysis, indexation barrier review, and competitive gap mapping establish the factual baseline.' },
+  { n: '02', title: 'Architect', desc: 'Custom 90-day technical and content roadmap tailored to vertical compliance, search intent, and platform constraints.' },
+  { n: '03', title: 'Build', desc: 'Core Web Vitals remediation, schema pipelines, internal linking graph, and high-performance website architecture.' },
+  { n: '04', title: 'Grow', desc: 'Topical authority clusters, high-intent landing page assets, and quality-controlled editorial authority acquisition.' },
+  { n: '05', title: 'Measure', desc: 'First-party data layers, server-side cookieless attribution, and conversion funnel analysis from impression to revenue.' },
+  { n: '06', title: 'Compound', desc: 'Continuous crawl budget governance, entity expansion, monthly transparency reporting, and compounding organic market share.' },
 ];
 
 const HOMEPAGE_FAQS = [
@@ -172,6 +253,22 @@ const HOMEPAGE_FAQS = [
   {
     q: 'How long before we see results?',
     a: 'Meaningful organic movement in competitive categories typically registers between months 4–8 depending on domain authority, keyword competitiveness, and how quickly technical fixes can be implemented. Lower-competition keyword clusters can show movement earlier. We scope expectations accurately based on your starting position.',
+  },
+  {
+    q: 'How does backlink and authority acquisition work in high-competition verticals?',
+    a: 'We focus strictly on quality-controlled authority acquisition: topical relevance, editorial rigor, natural anchor distribution, and disciplined link velocity. We reject toxic private blog networks (PBNs), automated link blasts, and manipulative link schemes that risk manual actions and algorithmic penalties.',
+  },
+  {
+    q: 'What are the platform eligibility rules for Google Ads and Meta Ads?',
+    a: 'Paid advertising availability depends on the client\'s business model, destination, jurisdiction, licence/certification status and platform policy. Google and Meta require specialized advertiser certifications (e.g. gambling certifications, local financial services verification) and valid operating licenses. We manage campaigns strictly within official regulatory frameworks and never attempt to bypass platform restrictions.',
+  },
+  {
+    q: 'How do you measure attribution and conversions for organic search?',
+    a: 'We deploy privacy-compliant, server-side event tracking and custom GA4 pipelines to map user journeys from initial organic impression down through query intent, session engagement, qualified lead intake, and revenue generation.',
+  },
+  {
+    q: 'What does the code-level SEO diagnostic cover?',
+    a: 'Our senior technical architects inspect server DOM structure, crawl budget distribution, parameter handling, SSR hydration bottlenecks, canonical loops, Schema.org entity graphs, and competitive topical coverage. We deliver a prioritized engineering action plan within 24 hours, completely free of generic automated scorecards.',
   },
 ];
 
@@ -258,23 +355,23 @@ export const Home: React.FC = () => {
                   </a>
                 </div>
 
-                {/* Engineering Trust Credentials */}
+                {/* Engineering Trust Credentials (igaming.md Section 4) */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-800/80 text-xs text-slate-300">
                   <div className="flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <span>Technical SEO</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <span>SEO-First Development</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <span>Authority Building</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                     <span>Compliance-Aware</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>White-Hat Only</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>First-Party Data</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Code Ownership</span>
                   </div>
                 </div>
               </FadeIn>
@@ -285,6 +382,39 @@ export const Home: React.FC = () => {
               <FadeIn delay={150}>
                 <HeroArchitectureVisual />
               </FadeIn>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Section B: Truthful Operating Standards Strip (igaming.md Section B) ──────── */}
+      <section className="bg-slate-900 border-b border-slate-800 py-4 text-xs text-slate-300">
+        <Container>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <span className="text-slate-400 font-bold uppercase tracking-wider text-[11px]">
+              Operating Standards
+            </span>
+            <div className="flex flex-wrap items-center gap-6 sm:gap-8 font-medium">
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                Technical SEO Infrastructure
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-purple-400" />
+                Strategy-First Execution
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-400" />
+                Data-Driven Attribution
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-400" />
+                Regulated Industry Specialists
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                Transparent Reporting
+              </span>
             </div>
           </div>
         </Container>
@@ -374,19 +504,64 @@ export const Home: React.FC = () => {
         </Container>
       </Section>
 
-      {/* ── 3. High-Competition Vertical Matrix Visualizer ───────────── */}
+      {/* ── Section C: Industries We Understand & Target Verticals ── */}
       <section className="bg-gradient-to-br from-slate-950 via-[#0D1220] to-[#070B14] py-20 lg:py-28 text-white border-y border-slate-800">
         <Container>
           <div className="max-w-3xl mx-auto text-center mb-16">
             <FadeIn>
               <div className="type-eyebrow text-purple-400 mb-3">Vertical Specialization</div>
               <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white leading-tight">
-                Tailored Growth Matrix
+                High-Competition Industry Intelligence
               </h2>
               <p className="type-body-lg text-slate-400 mt-4 leading-relaxed">
-                Generic agencies fail because casino, gaming, trading, and regulated markets operate under unique search heuristics, compliance restrictions, and authority barriers.
+                Generic agencies fail because gaming, casino, financial trading, and policy-sensitive markets operate under unique search heuristics, compliance boundaries, and authority barriers.
               </p>
             </FadeIn>
+          </div>
+
+          {/* 8 Target Verticals Grid with Specific Marketing Challenges (igaming.md Section C) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+            {TARGET_VERTICALS.map((vertical, idx) => (
+              <MotionCard
+                key={vertical.slug}
+                delay={idx * 40}
+                variant="dark"
+                className="p-5 flex flex-col justify-between hover:border-purple-500/50 transition-all group"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                      {vertical.badge}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-500">
+                      0{idx + 1}
+                    </span>
+                  </div>
+                  <h3 className="font-heading font-bold text-base text-white mb-2 group-hover:text-purple-300 transition-colors">
+                    {vertical.title}
+                  </h3>
+                  <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                    {vertical.challenge}
+                  </p>
+                </div>
+                <Link
+                  to={vertical.link}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 group-hover:text-purple-300 transition-colors pt-3 border-t border-slate-800"
+                >
+                  <span>Explore Vertical Strategy</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              </MotionCard>
+            ))}
+          </div>
+
+          <div className="pt-8 border-t border-slate-800/80 mb-10 text-center">
+            <span className="text-xs font-bold uppercase tracking-wider text-purple-400">
+              Interactive Growth &amp; Difficulty Matrix
+            </span>
+            <h3 className="text-xl font-bold text-white mt-1">
+              Explore Algorithmic Risk, Authority Thresholds &amp; Channel Viability
+            </h3>
           </div>
 
           {/* Interactive Matrix Visualizer Component */}
@@ -396,16 +571,7 @@ export const Home: React.FC = () => {
         </Container>
       </section>
 
-      {/* ── 4. Technical Depth & Code-Level Auditing ─────────────────── */}
-      <Section variant="subtle" spacing="lg">
-        <Container>
-          <FadeIn>
-            <TechnicalAuditVisual />
-          </FadeIn>
-        </Container>
-      </Section>
-
-      {/* ── 5. Why Specialised / Agency Manifesto ───────────────────── */}
+      {/* ── Section E: Why Specialised / Agency Manifesto ───────────── */}
       <Section variant="white" spacing="lg">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto">
@@ -464,8 +630,212 @@ export const Home: React.FC = () => {
         </Container>
       </Section>
 
-      {/* ── 6. Engineering Journey / Process Flow ───────────────────── */}
+      {/* ── Section F & G: SEO-First Architecture Pipeline & Technical Depth ── */}
       <Section variant="subtle" spacing="lg">
+        <Container>
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <FadeIn>
+              <div className="type-eyebrow mb-3">System Architecture</div>
+              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight">
+                SEO-First Website Development Pipeline
+              </h2>
+              <p className="type-body text-slate-600 mt-4 leading-relaxed">
+                Search performance is not an afterthought added to a finished design. We engineer discovery, crawlability, and indexation into the root software layer.
+              </p>
+            </FadeIn>
+          </div>
+
+          {/* 8-Step Architectural Pipeline Flow (igaming.md Section F) */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 max-w-6xl mx-auto mb-14">
+            {ARCHITECTURE_PIPELINE.map((item, idx) => (
+              <div
+                key={item.name}
+                className="relative p-4 rounded-xl bg-white border border-slate-200/90 hover:border-purple-300 hover:shadow-sm transition-all flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-mono text-[10px] font-bold text-purple-700 px-1.5 py-0.5 rounded bg-purple-50 border border-purple-200/60">
+                      0{idx + 1}
+                    </span>
+                    {idx < ARCHITECTURE_PIPELINE.length - 1 && (
+                      <span className="hidden lg:inline text-slate-300 group-hover:text-purple-500 font-bold">→</span>
+                    )}
+                  </div>
+                  <div className="font-heading font-bold text-sm text-slate-900 mb-1">
+                    {item.name}
+                  </div>
+                  <p className="text-[11px] text-slate-500 leading-tight">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Technical Code-Level Inspection Component */}
+          <FadeIn>
+            <TechnicalAuditVisual />
+          </FadeIn>
+        </Container>
+      </Section>
+
+      {/* ── Section H & I: Authority Acquisition & Compliance-Aware Acquisition ── */}
+      <Section variant="white" spacing="lg">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto items-stretch">
+            {/* Authority & Backlinks */}
+            <div className="lg:col-span-6 p-8 rounded-2xl bg-slate-50 border border-slate-200/90 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-2 text-purple-700 text-xs font-bold uppercase tracking-wider mb-3">
+                  <Shield className="w-4 h-4" />
+                  <span>Quality-Controlled Authority</span>
+                </div>
+                <h3 className="font-heading font-bold text-2xl text-slate-900 mb-3">
+                  Authority &amp; Digital PR Architecture
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed mb-6">
+                  In competitive verticals, low-grade link packages trigger algorithmic demotions. We execute disciplined, editorial authority acquisition built on contextual relevance, topical clusters, and verified publisher relationships.
+                </p>
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  <div className="p-3 rounded-xl bg-white border border-slate-200/70">
+                    <div className="text-xs font-bold text-slate-900 mb-1">Topical Relevance</div>
+                    <div className="text-[11px] text-slate-500">Contextually aligned publisher nodes</div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white border border-slate-200/70">
+                    <div className="text-xs font-bold text-slate-900 mb-1">Anchor Diversity</div>
+                    <div className="text-[11px] text-slate-500">Natural brand-to-generic balance</div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white border border-slate-200/70">
+                    <div className="text-xs font-bold text-slate-900 mb-1">Velocity Discipline</div>
+                    <div className="text-[11px] text-slate-500">Controlled organic link schedules</div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white border border-slate-200/70">
+                    <div className="text-xs font-bold text-slate-900 mb-1">Zero PBN Risk</div>
+                    <div className="text-[11px] text-slate-500">No automated networks or link farms</div>
+                  </div>
+                </div>
+              </div>
+              <Link
+                to="/services/link-building"
+                className="inline-flex items-center gap-2 text-sm font-bold text-purple-700 hover:text-purple-900 transition-colors pt-4 border-t border-slate-200/80"
+              >
+                <span>Explore Authority Acquisition Protocols</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* Paid Media & Policy Compliance Card */}
+            <div className="lg:col-span-6 p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 text-white border border-slate-800 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
+                  <Zap className="w-4 h-4" />
+                  <span>Platform Policy &amp; Paid Acquisition</span>
+                </div>
+                <h3 className="font-heading font-bold text-2xl text-white mb-3">
+                  Google &amp; Meta Ads Compliance Framework
+                </h3>
+                <p className="text-sm text-slate-300 leading-relaxed mb-6">
+                  Paid acquisition in gaming, casino, and finance requires rigorous platform certifications, destination licensing verification, and regulatory geo-fencing.
+                </p>
+
+                {/* Mandatory Policy Copy Rule (igaming.md Section I) */}
+                <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 mb-6">
+                  <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-300 mb-1">
+                    Mandatory Policy Standard
+                  </div>
+                  <p className="text-xs text-amber-200/90 leading-relaxed">
+                    Paid advertising availability depends on the client's business model, destination, jurisdiction, licence/certification status and platform policy. Never positioned as bypassing restrictions.
+                  </p>
+                </div>
+
+                <div className="space-y-2 text-xs text-slate-300 mb-6">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Google Ads Gambling &amp; Financial Services Certification guidance</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Meta Ads regulated industry whitelist setup &amp; jurisdiction gating</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Server-side event tracking and conversion measurement architecture</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 pt-4 border-t border-slate-800">
+                <Link
+                  to="/services/google-ads"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-300 hover:text-amber-200 transition-colors"
+                >
+                  <span>Google Ads Policy</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+                <Link
+                  to="/services/meta-ads"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-300 hover:text-purple-200 transition-colors"
+                >
+                  <span>Meta Ads Framework</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── Section K: Search Measurement & Conversion Funnel ───────── */}
+      <Section variant="subtle" spacing="lg">
+        <Container>
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <FadeIn>
+              <div className="type-eyebrow mb-3">Attribution &amp; CRO</div>
+              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight">
+                From Impression to Qualified Revenue
+              </h2>
+              <p className="type-body text-slate-600 mt-4 leading-relaxed">
+                Rankings mean nothing without commercial attribution. We map every search query through a deterministic conversion funnel.
+              </p>
+            </FadeIn>
+          </div>
+
+          {/* 7-Stage Funnel Flow (igaming.md Section K) */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 max-w-6xl mx-auto mb-8">
+            {MEASUREMENT_FUNNEL.map((step, idx) => (
+              <div
+                key={step.stage}
+                className="relative p-4 rounded-xl bg-white border border-slate-200/90 flex flex-col justify-between group hover:border-purple-300 hover:shadow-sm transition-all"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-mono text-[10px] font-bold text-purple-700 px-1.5 py-0.5 rounded bg-purple-50">
+                      0{idx + 1}
+                    </span>
+                    {idx < MEASUREMENT_FUNNEL.length - 1 && (
+                      <span className="hidden lg:inline text-slate-300 group-hover:text-purple-400">→</span>
+                    )}
+                  </div>
+                  <div className="font-heading font-bold text-sm text-slate-900 mb-1">
+                    {step.stage}
+                  </div>
+                  <p className="text-[11px] text-slate-500 leading-tight">
+                    {step.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="max-w-2xl mx-auto text-center">
+            <p className="text-xs text-slate-500 font-medium">
+              Cookieless server attribution • Custom BigQuery pipelines • First-party conversion signals
+            </p>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── Section L: Phased Engineering Journey (6 Stages) ─────────── */}
+      <Section variant="white" spacing="lg">
         <Container>
           <div className="max-w-3xl mx-auto text-center mb-16">
             <FadeIn>
@@ -474,24 +844,24 @@ export const Home: React.FC = () => {
                 Phased Engineering Journey
               </h2>
               <p className="type-body text-slate-500 mt-4 leading-relaxed">
-                Every engagement follows an explicit programmatic flow. No guesswork, no black boxes, no undocumented activity.
+                Every engagement follows an explicit programmatic flow: Diagnose → Architect → Build → Grow → Measure → Compound. No guesswork, no black boxes.
               </p>
             </FadeIn>
           </div>
 
-          {/* 5-Step Process Rail */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
+          {/* 6-Step Process Rail (igaming.md Section L) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 max-w-6xl mx-auto">
             {PROCESS.map((step, idx) => (
               <div
                 key={step.n}
-                className="relative p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between hover:border-purple-300 hover:shadow-md transition-all duration-200"
+                className="relative p-6 rounded-2xl bg-slate-50 border border-slate-200/90 flex flex-col justify-between hover:border-purple-300 hover:bg-purple-50/20 hover:shadow-sm transition-all duration-200"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="font-mono text-2xl font-black text-purple-600/40">
+                    <span className="font-mono text-2xl font-black text-purple-600/50">
                       {step.n}
                     </span>
-                    <span className="w-2 h-2 rounded-full bg-purple-600/30" />
+                    <span className="w-2 h-2 rounded-full bg-purple-600/40" />
                   </div>
                   <h3 className="font-heading font-bold text-base text-slate-900 mb-2">
                     {step.title}
@@ -501,7 +871,7 @@ export const Home: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="mt-6 pt-3 border-t border-slate-100 flex items-center justify-between text-[10px] font-mono text-slate-400">
+                <div className="mt-6 pt-3 border-t border-slate-200/60 flex items-center justify-between text-[10px] font-mono text-slate-400">
                   <span>STAGE 0{idx + 1}</span>
                   <span>ACTIVE</span>
                 </div>
@@ -640,7 +1010,7 @@ export const Home: React.FC = () => {
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <div className="type-eyebrow text-purple-300">Ready to Scale</div>
             <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white leading-tight">
-              Request Your Free Code-Level SEO Diagnostic
+              Tell Us Where Your Site Is Today. We’ll Show You the Next Growth Opportunities.
             </h2>
             <p className="type-body-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
               A senior search architect reviews your platform DOM tree, crawl budget, parameter configuration, and competitive keyword gap. No automated report — an actual engineering diagnostic.

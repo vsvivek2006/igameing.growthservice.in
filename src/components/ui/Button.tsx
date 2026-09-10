@@ -6,6 +6,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: 'primary' | 'secondary' | 'gold' | 'outline' | 'dark' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   to?: string;
+  href?: string;
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
 }
@@ -15,6 +16,7 @@ export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   size = 'md',
   to,
+  href,
   icon,
   iconPosition = 'left',
   className = '',
@@ -51,9 +53,17 @@ export const Button: React.FC<ButtonProps> = ({
     </>
   );
 
-  if (to) {
+  const destination = to || href;
+  if (destination) {
+    if (destination.startsWith('http://') || destination.startsWith('https://') || destination.startsWith('//') || destination.startsWith('mailto:') || destination.startsWith('tel:')) {
+      return (
+        <a href={destination} className={baseClasses} target="_blank" rel="noopener noreferrer">
+          {content}
+        </a>
+      );
+    }
     return (
-      <Link to={to} className={baseClasses}>
+      <Link to={destination} className={baseClasses}>
         {content}
       </Link>
     );

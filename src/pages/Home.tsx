@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -12,1044 +12,927 @@ import {
   Shield,
   Globe,
   Layers,
-  BookOpen,
+  ChevronRight,
+  MousePointer,
+  FileText,
+  AlertTriangle,
+  Network,
+  X,
+  BarChart2,
+  FileSearch,
 } from 'lucide-react';
 import { SEOHead } from '../seo';
 import { buildOrganizationSchema, buildWebSiteSchema } from '../seo/schema';
-import {
-  Container,
-  Section,
-  Button,
-  FAQAccordion,
-  HeroArchitectureVisual,
-  MatrixVisualizer,
-  TechnicalAuditVisual,
-} from '../components/ui';
-import { FadeIn, MotionCard } from '../components/animations';
+import { Container, Section, Button, FAQAccordion } from '../components/ui';
 import { trackEvent } from '../analytics';
-import { getAllServices } from '../data/servicesData';
+import { PRICING_CATEGORIES, PRICING_DISCLAIMER } from '../data/pricingData';
+import { ENGAGEMENT_PROCESS, PROCESS_PROOFS, COMPLIANCE_COMMITMENTS, COMPARISON_ROWS } from '../data/trustData';
+import useInView from '../hooks/useInView';
 
-const WHAT_WE_DO = [
+// ─── Reusable Reveal wrapper ──────────────────────────────────────────────────
+function Reveal({
+  children,
+  direction = 'up',
+  delay = 0,
+  className = '',
+}: {
+  children: React.ReactNode;
+  direction?: 'up' | 'left' | 'right' | 'scale';
+  delay?: number;
+  className?: string;
+}) {
+  const [ref, isInView] = useInView<HTMLDivElement>();
+  const dirClass = {
+    up: 'reveal-up',
+    left: 'reveal-left',
+    right: 'reveal-right',
+    scale: 'reveal-scale',
+  }[direction];
+  return (
+    <div
+      ref={ref}
+      className={`${dirClass} ${isInView ? 'in-view' : ''} ${delay ? `delay-${delay}` : ''} ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
+// ─── Animated word rotator in hero ───────────────────────────────────────────
+const ROTATING_WORDS = ['iGaming', 'Casino', 'Trading', 'Financial', 'Cricket Gaming'];
+function WordRotator() {
+  const [idx, setIdx] = useState(0);
+  const [animating, setAnimating] = useState(false);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setAnimating(true);
+      setTimeout(() => {
+        setIdx((i) => (i + 1) % ROTATING_WORDS.length);
+        setAnimating(false);
+      }, 300);
+    }, 2500);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <span
+      className="text-gradient-gold inline-block"
+      style={{
+        opacity: animating ? 0 : 1,
+        transform: animating ? 'translateY(-8px)' : 'translateY(0)',
+        transition: 'opacity 0.3s ease, transform 0.3s ease',
+        minWidth: '10ch',
+        display: 'inline-block',
+        textAlign: 'left',
+      }}
+    >
+      {ROTATING_WORDS[idx]}
+    </span>
+  );
+}
+
+// ─── Animated counter pill ────────────────────────────────────────────────────
+function CounterPill({
+  value,
+  label,
+  color = 'purple',
+}: {
+  value: string;
+  label: string;
+  color?: 'purple' | 'gold' | 'blue';
+}) {
+  const colorMap = {
+    purple: 'bg-purple-500/10 border-purple-500/30 text-purple-300',
+    gold: 'bg-amber-500/10 border-amber-500/30 text-amber-300',
+    blue: 'bg-blue-500/10 border-blue-500/30 text-blue-300',
+  };
+  return (
+    <div
+      className={`inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl border backdrop-blur-sm ${colorMap[color]} animate-float-slow`}
+    >
+      <span className="text-xl font-extrabold font-heading">{value}</span>
+      <span className="text-xs font-medium opacity-80">{label}</span>
+    </div>
+  );
+}
+
+// ─── Pricing Card ─────────────────────────────────────────────────────────────
+function PricingCard({ tier }: { tier: (typeof PRICING_CATEGORIES)[number]['tiers'][number] }) {
+  return (
+    <div
+      className={`relative flex flex-col rounded-3xl p-7 h-full transition-all duration-300 ${
+        tier.featured
+          ? 'pricing-card-featured text-white'
+          : 'bg-white border border-slate-200 hover:border-purple-300 gradient-border-card'
+      }`}
+    >
+      {tier.featured && (
+        <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-[10px] font-extrabold uppercase tracking-widest shadow-glow-gold-sm whitespace-nowrap">
+          Most Popular
+        </div>
+      )}
+
+      <div className="mb-5">
+        <div
+          className={`text-xs font-bold uppercase tracking-widest mb-1 ${
+            tier.featured ? 'text-purple-300' : 'text-purple-600'
+          }`}
+        >
+          {tier.name}
+        </div>
+        <p className={`text-xs leading-relaxed ${tier.featured ? 'text-slate-300' : 'text-slate-500'}`}>
+          {tier.tagline}
+        </p>
+      </div>
+
+      <div className="mb-6">
+        <div className="flex items-baseline gap-2">
+          <span className={`text-3xl font-extrabold font-heading ${tier.featured ? 'text-white' : 'text-slate-900'}`}>
+            {tier.priceINR}
+          </span>
+          {tier.priceINR !== 'Custom' && (
+            <span className={`text-sm font-semibold ${tier.featured ? 'text-slate-300' : 'text-slate-500'}`}>
+              / {tier.priceUSD}
+            </span>
+          )}
+        </div>
+        <div className={`text-xs mt-1 ${tier.featured ? 'text-slate-400' : 'text-slate-400'}`}>
+          {tier.billingNote}
+        </div>
+      </div>
+
+      <ul className="space-y-2.5 mb-8 flex-1">
+        {tier.features.map((f) => (
+          <li key={f} className="flex items-start gap-2.5 text-xs">
+            <CheckCircle2
+              className={`w-4 h-4 flex-shrink-0 mt-0.5 ${tier.featured ? 'text-amber-400' : 'text-purple-500'}`}
+            />
+            <span className={tier.featured ? 'text-slate-200' : 'text-slate-700'}>{f}</span>
+          </li>
+        ))}
+        {tier.notIncluded?.map((f) => (
+          <li key={f} className="flex items-start gap-2.5 text-xs opacity-50">
+            <X className={`w-4 h-4 flex-shrink-0 mt-0.5 ${tier.featured ? 'text-slate-400' : 'text-slate-400'}`} />
+            <span className={tier.featured ? 'text-slate-400' : 'text-slate-500'}>{f}</span>
+          </li>
+        ))}
+      </ul>
+
+      <Link
+        to={tier.ctaPath}
+        onClick={() => trackEvent('cta_click', { cta_name: tier.id, cta_location: 'pricing_card' })}
+        className={`w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-bold transition-all duration-200 ${
+          tier.featured
+            ? 'bg-gradient-to-r from-amber-500 to-orange-400 text-slate-950 hover:shadow-glow-gold-sm hover:-translate-y-0.5'
+            : 'bg-purple-600 hover:bg-purple-700 text-white hover:-translate-y-0.5'
+        }`}
+      >
+        {tier.cta} <ArrowRight className="w-4 h-4" />
+      </Link>
+    </div>
+  );
+}
+
+// ─── FAQ data ─────────────────────────────────────────────────────────────────
+const HOME_FAQS = [
   {
-    icon: TrendingUp,
-    title: 'SEO for Competitive Markets',
-    desc: 'Technical SEO, content strategy, and authority development engineered for industries that cannot afford to lose the organic channel.',
-    link: '/services/seo',
-    ctaText: 'Explore SEO Strategy',
-    metric: 'Enterprise Organic',
+    question: 'What industries do you work with?',
+    answer:
+      'We serve 8 specialist verticals: iGaming platforms, casino operators, cricket and fantasy sports gaming, Yono/rummy/card gaming, color prediction and color trading platforms, stock market and financial trading portals, and adult/escort services (B2B marketing only). We do not serve generic consumer brands.',
   },
   {
-    icon: Code2,
-    title: 'SEO-First Website Development',
-    desc: 'Websites built with performance, crawlability, and conversion architecture from the specification stage — not retrofitted after launch.',
-    link: '/services/website-development',
-    ctaText: 'Review Web Architecture',
-    metric: 'Sub-Second LCP',
+    question: 'Do you guarantee page 1 rankings?',
+    answer:
+      'No. Search engine rankings are determined by Google and Bing algorithms — not by us. We commit to delivering specific process deliverables (technical audits, architecture implementation, content production, authority development) and reporting on measurable signals. Any agency that guarantees specific rankings is making a claim they cannot control.',
   },
   {
-    icon: BarChart3,
-    title: 'Paid Acquisition & Compliance',
-    desc: 'Google Ads and Meta Ads management for industries where policy compliance and account architecture determine whether campaigns run at all.',
-    link: '/services/google-ads',
-    ctaText: 'Explore Paid Compliance',
-    metric: 'Policy-Certified',
+    question: 'Can you run Google Ads for gaming or adult-industry businesses?',
+    answer:
+      'Advertising eligibility depends on your specific business model, the markets you target, your licence or certification status, and current platform policy. We conduct a pre-engagement eligibility assessment before any paid acquisition engagement begins. We do not guarantee advertising access and we do not position ourselves as a way to bypass platform restrictions.',
   },
   {
-    icon: Target,
-    title: 'Conversion Optimisation (CRO)',
-    desc: 'Systematic A/B testing and funnel analysis that converts more of the traffic you already have without increasing acquisition cost.',
-    link: '/services/conversion-optimization',
-    ctaText: 'Analyze Funnel CRO',
-    metric: 'Data-Driven UX',
+    question: 'How long before I see organic results?',
+    answer:
+      'Technical SEO improvements (indexation, crawl efficiency, Core Web Vitals) typically show measurable improvement within 4–8 weeks. Keyword ranking and organic traffic growth in competitive verticals typically becomes visible within 3–6 months. Authority development compounds over 6–18 months. We set realistic expectations based on your current baseline after the diagnostic.',
+  },
+  {
+    question: 'What is included in the free SEO audit?',
+    answer:
+      'Our complimentary technical audit covers: Core Web Vitals and performance, crawl budget and indexation analysis, canonical and redirect architecture, keyword gap analysis (top 10 competitors), authority profile review (domain equity and toxic link risk), and a prioritised remediation roadmap. It is conducted manually by a senior SEO engineer, not an automated tool export.',
+  },
+  {
+    question: 'Do you work with new platforms that have no existing rankings?',
+    answer:
+      'Yes. A significant portion of our engagements are with new or recently launched platforms building organic presence from zero. We design architecture-first strategies that establish the technical foundation, content authority, and internal structure needed to scale.',
   },
 ];
 
-const WHY_SPECIALISED = [
-  {
-    icon: Shield,
-    title: 'Compliance-Aware Strategy',
-    desc: 'We understand the advertising and content restrictions that apply in regulated, high-risk, and policy-sensitive industries. Strategy is built within those constraints, not discovered to violate them after execution.',
-  },
-  {
-    icon: Layers,
-    title: 'Technical Depth',
-    desc: 'High-competition markets require technical SEO precision: crawl budget management, JavaScript rendering, schema markup, and Core Web Vitals at a level that general agencies rarely reach.',
-  },
-  {
-    icon: Globe,
-    title: 'Vertical-Specific Intelligence',
-    desc: 'The keyword landscape, competitor profiles, content standards, and authority benchmarks in gaming, finance, and adult categories are fundamentally different from general commercial search. Vertical expertise is not optional.',
-  },
-  {
-    icon: Search,
-    title: 'SEO as Infrastructure',
-    desc: 'We treat organic search as a business asset that compounds over time — not a campaign that switches off when the budget runs out. Every engagement builds sustainable, owned visibility.',
-  },
-];
+// ─── Main Component ───────────────────────────────────────────────────────────
+export const HomePage: React.FC = () => {
+  const [activePricingTab, setActivePricingTab] = useState<string>('seo');
 
-const METHODOLOGY_PRINCIPLES = [
-  {
-    number: '01',
-    title: 'SEO Before Decoration',
-    tagline: 'Architecture Dictates Aesthetics',
-    desc: 'Visual design must serve information architecture, crawl efficiency, and content hierarchy. Beautiful websites that hide critical content behind client-side rendering or confusing navigation fail before they start.',
-  },
-  {
-    number: '02',
-    title: 'Technical Foundations First',
-    tagline: 'Fix Leaks Before Pouring Volume',
-    desc: 'Crawl budget leaks, broken canonical chains, and poor Core Web Vitals silently suppress every piece of content published. We eliminate technical debt before recommending content scaling.',
-  },
-  {
-    number: '03',
-    title: 'Search Intent Over Keyword Density',
-    tagline: 'Satisfy Real Commercial Needs',
-    desc: 'Keyword-stuffed pages trigger Helpful Content penalties. We map granular search intent—informational, commercial, navigational—and architect pages that provide genuine answers and logical next actions.',
-  },
-  {
-    number: '04',
-    title: 'UX Cohesion & Search Signals',
-    tagline: 'What Converts Users Satisfies Search',
-    desc: 'Fast rendering, mobile responsiveness, semantic HTML, and intuitive navigation are simultaneously user experience features and direct search quality signals.',
-  },
-  {
-    number: '05',
-    title: 'Measurement Before Scaling',
-    tagline: 'Verified Attribution Over Speculation',
-    desc: 'We never scale acquisition channels without first-party data layers, verified conversion tracking, and cookieless server-side attribution in place. Every dollar spent must trace to a verified outcome.',
-  },
-];
-
-const FEATURED_RESOURCES = [
-  {
-    category: 'Technical SEO Guide',
-    title: 'The 47-Point Technical SEO Audit Guide for Competitive Verticals',
-    desc: 'A rigorous engineering framework for identifying crawl traps, rendering bottlenecks, parameter bloat, and indexation leaks on high-volume platforms.',
-    readTime: '14 min read',
-    path: '/resources/seo-guides/technical-seo-guide',
-  },
-  {
-    category: 'Architectural Blueprint',
-    title: 'Programmatic SEO Guide — Scalable Pages Without Doorway Penalties',
-    desc: 'Architectural blueprint for scaling search assets with programmatic page generation, algorithmic quality scoring, and indexation gates.',
-    readTime: '16 min read',
-    path: '/resources/seo-guides/programmatic-seo',
-  },
-  {
-    category: 'Industry Insight',
-    title: 'Gaming SEO Strategy Blueprint — Search Market Penetration Playbook',
-    desc: 'Strategic analysis of organic search competition in the online gaming market. Managing brand entity authority and algorithmic volatility.',
-    readTime: '15 min read',
-    path: '/resources/industry-insights/gaming-seo',
-  },
-];
-
-const TARGET_VERTICALS = [
-  {
-    title: 'iGaming & Online Gaming',
-    slug: 'gaming',
-    badge: 'Skill & Real-Money',
-    challenge: 'Overcoming multi-year domain authority deficits and algorithmic volatility in highly contested game SERPs.',
-    link: '/industries/gaming',
-  },
-  {
-    title: 'Casino & Gambling Brands',
-    slug: 'casino',
-    badge: 'Tier-1 Contested',
-    challenge: 'Navigating aggressive affiliate competition, licensing jurisdiction boundaries, and strict ad platform policy restrictions.',
-    link: '/industries/casino',
-  },
-  {
-    title: 'Sports & Cricket Gaming',
-    slug: 'cricket-gaming',
-    badge: 'Event-Driven Surges',
-    challenge: 'Capturing real-time tournament search peaks, live score queries, and maintaining indexation during major sports leagues.',
-    link: '/industries/cricket-gaming',
-  },
-  {
-    title: 'Yono & High-Velocity Search',
-    slug: 'yono',
-    badge: 'Velocity Queries',
-    challenge: 'Managing high-velocity APK search spikes, rapid crawl budget demands, and maintaining brand entity protection.',
-    link: '/industries/yono',
-  },
-  {
-    title: 'Colour Prediction Platforms',
-    slug: 'color-prediction',
-    badge: 'Reputation & Intent',
-    challenge: 'Structuring clear informational and transactional intent while defending against malicious SERP displacement.',
-    link: '/industries/color-prediction',
-  },
-  {
-    title: 'Colour Trading Platforms',
-    slug: 'color-trading',
-    badge: 'Search Volume',
-    challenge: 'Filtering qualified high-intent trade volume from casual searchers with tailored conversion architecture.',
-    link: '/industries/color-trading',
-  },
-  {
-    title: 'Stock Market & Financial Platforms',
-    slug: 'stock-market',
-    badge: 'YMYL & Financial',
-    challenge: 'Satisfying extreme Google E-E-A-T standards, algorithmic financial scrutiny, and compliant conversion funnels.',
-    link: '/industries/stock-market',
-  },
-  {
-    title: 'Adult & Escort Industry (B2B)',
-    slug: 'adult-escort',
-    badge: 'Policy-Safe Marketing',
-    challenge: 'Operating strictly as a B2B marketing agency, providing clean code-level SEO without explicit sexual content.',
-    link: '/industries/adult-escort',
-  },
-];
-
-const ARCHITECTURE_PIPELINE = [
-  { name: 'Architecture', desc: 'Server DOM & Routing' },
-  { name: 'Crawlability', desc: 'Bot Budget & Rendering' },
-  { name: 'Speed', desc: 'Core Web Vitals LCP' },
-  { name: 'Indexation', desc: 'Canonical Integrity' },
-  { name: 'Content', desc: 'Topical Authority Clusters' },
-  { name: 'Internal Links', desc: 'Topical Graph Flow' },
-  { name: 'Authority', desc: 'Quality-Controlled Links' },
-  { name: 'Conversion', desc: 'Qualified Client Revenue' },
-];
-
-const MEASUREMENT_FUNNEL = [
-  { stage: 'Impressions', desc: 'Dominating commercial query search visibility' },
-  { stage: 'Clicks', desc: 'High-CTR titles and verified rich snippets' },
-  { stage: 'Qualified Traffic', desc: 'Landing pages aligned with transactional intent' },
-  { stage: 'Engagement', desc: 'Fast rendering and intuitive user journeys' },
-  { stage: 'Lead', desc: 'High-trust intake forms and strategy consultations' },
-  { stage: 'Conversion', desc: 'Qualified commercial partnership agreements' },
-  { stage: 'Revenue', desc: 'Compounding long-term client organic returns' },
-];
-
-const PROCESS = [
-  { n: '01', title: 'Diagnose', desc: 'Technical audit, crawl log analysis, indexation barrier review, and competitive gap mapping establish the factual baseline.' },
-  { n: '02', title: 'Architect', desc: 'Custom 90-day technical and content roadmap tailored to vertical compliance, search intent, and platform constraints.' },
-  { n: '03', title: 'Build', desc: 'Core Web Vitals remediation, schema pipelines, internal linking graph, and high-performance website architecture.' },
-  { n: '04', title: 'Grow', desc: 'Topical authority clusters, high-intent landing page assets, and quality-controlled editorial authority acquisition.' },
-  { n: '05', title: 'Measure', desc: 'First-party data layers, server-side cookieless attribution, and conversion funnel analysis from impression to revenue.' },
-  { n: '06', title: 'Compound', desc: 'Continuous crawl budget governance, entity expansion, monthly transparency reporting, and compounding organic market share.' },
-];
-
-const HOMEPAGE_FAQS = [
-  {
-    q: 'What industries do you specialise in?',
-    a: 'We work exclusively with businesses in high-competition and high-risk verticals: online gaming, casino, fantasy sports (cricket gaming, Yono), color prediction and color trading platforms, stock market and financial platforms, and adult industry businesses. We do not serve general commercial clients.',
-  },
-  {
-    q: 'Why choose a specialist agency over a generalist?',
-    a: 'High-competition industries have fundamentally different SEO conditions: higher domain authority thresholds, more stringent content standards, paid advertising restrictions, and compliance-specific content requirements. A generalist agency applies frameworks that do not account for these factors. We start from the specific competitive reality of your vertical.',
-  },
-  {
-    q: 'Do you guarantee SEO rankings?',
-    a: 'No. Ranking guarantees are made by agencies that do not understand how search works. We guarantee transparent process, measurable output, and honest reporting. Results in competitive industries are the product of sustained, quality work — not a commitment any responsible agency should make on a timeline.',
-  },
-  {
-    q: 'Can you work with businesses where paid advertising is restricted?',
-    a: 'Yes — this is one of our core specialities. Many of the industries we serve have limited or no access to standard paid advertising channels. Organic SEO becomes the primary or only scalable acquisition channel, and we build programmes accordingly.',
-  },
-  {
-    q: 'How long before we see results?',
-    a: 'Meaningful organic movement in competitive categories typically registers between months 4–8 depending on domain authority, keyword competitiveness, and how quickly technical fixes can be implemented. Lower-competition keyword clusters can show movement earlier. We scope expectations accurately based on your starting position.',
-  },
-  {
-    q: 'How does backlink and authority acquisition work in high-competition verticals?',
-    a: 'We focus strictly on quality-controlled authority acquisition: topical relevance, editorial rigor, natural anchor distribution, and disciplined link velocity. We reject toxic private blog networks (PBNs), automated link blasts, and manipulative link schemes that risk manual actions and algorithmic penalties.',
-  },
-  {
-    q: 'What are the platform eligibility rules for Google Ads and Meta Ads?',
-    a: 'Paid advertising availability depends on the client\'s business model, destination, jurisdiction, licence/certification status and platform policy. Google and Meta require specialized advertiser certifications (e.g. gambling certifications, local financial services verification) and valid operating licenses. We manage campaigns strictly within official regulatory frameworks and never attempt to bypass platform restrictions.',
-  },
-  {
-    q: 'How do you measure attribution and conversions for organic search?',
-    a: 'We deploy privacy-compliant, server-side event tracking and custom GA4 pipelines to map user journeys from initial organic impression down through query intent, session engagement, qualified lead intake, and revenue generation.',
-  },
-  {
-    q: 'What does the code-level SEO diagnostic cover?',
-    a: 'Our senior technical architects inspect server DOM structure, crawl budget distribution, parameter handling, SSR hydration bottlenecks, canonical loops, Schema.org entity graphs, and competitive topical coverage. We deliver a prioritized engineering action plan within 24 hours, completely free of generic automated scorecards.',
-  },
-];
-
-export const Home: React.FC = () => {
-  const allServices = getAllServices();
+  const activePricingCategory = PRICING_CATEGORIES.find((c) => c.id === activePricingTab)!;
 
   return (
     <>
       <SEOHead
-        title="SEO & Digital Growth for High-Competition Industries — iGaming Growth"
-        description="Specialist SEO, website development, and digital marketing for gaming, casino, financial, and adult industry businesses. Technical SEO, content strategy, and performance marketing for the markets that fight hardest for organic visibility."
+        title="iGaming Growth — Specialist B2B Digital Growth Agency for High-Competition Verticals"
+        description="Technical SEO, website development, paid acquisition, and conversion optimisation for iGaming, casino, trading, financial, and adult-industry businesses. Engineering-led. Compliance-aware."
         canonicalPath="/"
         jsonLd={[buildOrganizationSchema(), buildWebSiteSchema()]}
       />
 
-      {/* ── 1. Hero Section: Architectural Composition ─────────────── */}
-      <section className="relative bg-hero-atmosphere text-white overflow-hidden min-h-[calc(100vh-80px)] flex items-center pt-8 pb-20 lg:py-28">
-        {/* Ambient atmospheric gradients & grid */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-1/4 right-1/4 w-[600px] h-[500px] rounded-full bg-purple-600/15 blur-[140px]" />
-          <div className="absolute bottom-10 left-10 w-[500px] h-[400px] rounded-full bg-indigo-600/12 blur-[120px]" />
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage: 'linear-gradient(#a78bfa 1px, transparent 1px), linear-gradient(to right, #a78bfa 1px, transparent 1px)',
-              backgroundSize: '48px 48px',
-            }}
-          />
+      {/* ── 1. HERO ─────────────────────────────────────────────────────── */}
+      <section className="relative min-h-screen flex items-center bg-navy-950 overflow-hidden">
+        {/* Atmospheric background */}
+        <div className="absolute inset-0 bg-hero-atmosphere" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full bg-purple-600/15 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[400px] rounded-full bg-violet-800/10 blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/3 -left-20 w-[300px] h-[300px] rounded-full bg-amber-500/5 blur-[80px] pointer-events-none" />
+
+        {/* Decorative grid dots */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-20"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle, rgba(167,139,250,0.3) 1px, transparent 1px)',
+            backgroundSize: '40px 40px',
+          }}
+        />
+
+        <Container className="relative z-10 py-28 lg:py-36">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Left — copy */}
+            <div>
+              <div
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/25 text-purple-300 text-xs font-semibold uppercase tracking-wider mb-8 animate-fade-in"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                B2B Growth Agency · High-Competition Verticals
+              </div>
+
+              <h1
+                className="type-display text-white mb-6 animate-fade-in"
+                style={{ animationDelay: '100ms' }}
+              >
+                The Growth Engine for{' '}
+                <WordRotator />
+                {' '}Brands
+              </h1>
+
+              <p
+                className="text-lg lg:text-xl text-slate-300 leading-relaxed mb-10 max-w-xl animate-fade-in"
+                style={{ animationDelay: '200ms' }}
+              >
+                We build technical SEO infrastructure, conversion-optimised websites, and compliant paid acquisition systems for iGaming operators, casino platforms, financial trading apps, and other high-competition digital businesses. Engineering-first. Compliance-aware. Zero vanity metrics.
+              </p>
+
+              <div
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12 animate-fade-in"
+                style={{ animationDelay: '300ms' }}
+              >
+                <Button
+                  to="/free-seo-audit"
+                  variant="gold"
+                  size="lg"
+                  className="w-full sm:w-auto justify-center"
+                  icon={<Zap className="w-4 h-4" />}
+                  onClick={() => trackEvent('cta_click', { cta_name: 'free_seo_audit', cta_location: 'hero' })}
+                >
+                  Get Free SEO Audit
+                </Button>
+                <Button
+                  to="/book-call"
+                  variant="outline"
+                  size="lg"
+                  className="border-navy-700 text-white hover:bg-navy-800/60"
+                  onClick={() => trackEvent('cta_click', { cta_name: 'book_call', cta_location: 'hero' })}
+                >
+                  Book Strategy Call
+                </Button>
+              </div>
+
+              {/* Stat pills */}
+              <div
+                className="flex flex-wrap gap-3 animate-fade-in"
+                style={{ animationDelay: '400ms' }}
+              >
+                <CounterPill value="8" label="Specialist Verticals" color="purple" />
+                <CounterPill value="12" label="Growth Disciplines" color="gold" />
+                <CounterPill value="100%" label="White-Hat" color="blue" />
+              </div>
+            </div>
+
+            {/* Right — architecture visual */}
+            <div className="hidden lg:block animate-fade-in" style={{ animationDelay: '200ms' }}>
+              <div className="relative">
+                {/* Main card */}
+                <div className="gradient-border-card-dark p-8 rounded-3xl border border-slate-700/60">
+                  <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-5">
+                    Engagement Architecture
+                  </div>
+                  {[
+                    { label: 'Technical Audit', status: 'Complete', color: 'text-emerald-400', dot: 'bg-emerald-400' },
+                    { label: 'Architecture Design', status: 'In Progress', color: 'text-amber-400', dot: 'bg-amber-400' },
+                    { label: 'Content Pipeline', status: 'In Progress', color: 'text-amber-400', dot: 'bg-amber-400' },
+                    { label: 'Authority Development', status: 'Scheduled', color: 'text-slate-400', dot: 'bg-slate-600' },
+                    { label: 'CRO Implementation', status: 'Scheduled', color: 'text-slate-400', dot: 'bg-slate-600' },
+                  ].map((item, i) => (
+                    <div
+                      key={item.label}
+                      className="flex items-center justify-between py-3 border-b border-slate-800/60 last:border-0"
+                      style={{ animationDelay: `${i * 100 + 300}ms` }}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`w-2 h-2 rounded-full ${item.dot}`} />
+                        <span className="text-sm text-slate-200 font-medium">{item.label}</span>
+                      </div>
+                      <span className={`text-xs font-semibold ${item.color}`}>{item.status}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Floating metric cards */}
+                <div className="absolute -top-6 -right-6 bg-white rounded-2xl p-4 shadow-card-hover border border-slate-100 animate-float">
+                  <div className="text-xs text-slate-500 mb-1">Core Web Vitals</div>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-2xl font-extrabold text-emerald-600">98</span>
+                    <span className="text-xs text-slate-400">/ 100</span>
+                  </div>
+                </div>
+
+                <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-card-hover border border-slate-100 animate-float-slow">
+                  <div className="text-xs text-slate-500 mb-1">Organic Coverage</div>
+                  <div className="text-2xl font-extrabold text-purple-700">+340%</div>
+                  <div className="text-[10px] text-slate-400">keyword expansion</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-500 animate-bounce-subtle">
+          <span className="text-[10px] uppercase tracking-widest">Scroll</span>
+          <div className="w-px h-8 bg-gradient-to-b from-slate-500 to-transparent" />
         </div>
-
-        <Container className="relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            {/* Left Column: Brand Statement & Primary Actions */}
-            <div className="lg:col-span-6 xl:col-span-7">
-              <FadeIn>
-                {/* Eyebrow badge */}
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/15 border border-purple-500/25 mb-6">
-                  <Zap className="w-3.5 h-3.5 text-amber-400" />
-                  <span className="text-xs font-bold text-purple-200 tracking-wider uppercase">
-                    Specialist Digital Growth Agency
-                  </span>
-                </div>
-
-                <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white leading-[1.08] mb-6">
-                  SEO &amp; Digital Growth for{' '}
-                  <span className="text-gradient-purple">High-Competition</span>{' '}
-                  Industries
-                </h1>
-
-                <p className="type-body-lg text-slate-300 leading-relaxed mb-8 max-w-2xl">
-                  We build organic search visibility, technical SEO infrastructure, and performance marketing systems for gaming, casino, financial, and adult industry businesses — the markets where standard agency approaches consistently fail.
-                </p>
-
-                {/* Primary CTA Pair */}
-                <div className="flex flex-wrap items-center gap-4 mb-10">
-                  <Button
-                    to="/free-seo-audit"
-                    variant="gold"
-                    size="lg"
-                    icon={<Search className="w-4 h-4" />}
-                    onClick={() => trackEvent('cta_click', { cta_name: 'free_seo_audit', cta_location: 'hero' })}
-                  >
-                    Get Free SEO Audit
-                  </Button>
-                  <Button
-                    to="/book-call"
-                    variant="dark"
-                    size="lg"
-                    icon={<ArrowRight className="w-4 h-4" />}
-                    iconPosition="right"
-                    onClick={() => trackEvent('cta_click', { cta_name: 'book_strategy_call', cta_location: 'hero' })}
-                  >
-                    Book Strategy Call
-                  </Button>
-                  <a
-                    href="https://wa.me/919341436937"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5"
-                    onClick={() => trackEvent('cta_click', { cta_name: 'whatsapp_direct', cta_location: 'hero' })}
-                  >
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>WhatsApp Chat</span>
-                  </a>
-                </div>
-
-                {/* Engineering Trust Credentials (igaming.md Section 4) */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-800/80 text-xs text-slate-300">
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Technical SEO</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>SEO-First Development</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Authority Building</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Compliance-Aware</span>
-                  </div>
-                </div>
-              </FadeIn>
-            </div>
-
-            {/* Right Column: Interactive Search System Architecture Visual */}
-            <div className="lg:col-span-6 xl:col-span-5">
-              <FadeIn delay={150}>
-                <HeroArchitectureVisual />
-              </FadeIn>
-            </div>
-          </div>
-        </Container>
       </section>
 
-      {/* ── Section B: Truthful Operating Standards Strip (igaming.md Section B) ──────── */}
-      <section className="bg-slate-900 border-b border-slate-800 py-4 text-xs text-slate-300">
-        <Container>
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <span className="text-slate-400 font-bold uppercase tracking-wider text-[11px]">
-              Operating Standards
-            </span>
-            <div className="flex flex-wrap items-center gap-6 sm:gap-8 font-medium">
-              <span className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                Technical SEO Infrastructure
+      {/* ── 2. TRUST TICKER ─────────────────────────────────────────────── */}
+      <section className="py-5 bg-navy-900/80 border-y border-navy-800/60 overflow-hidden">
+        <div className="relative">
+          <div className="ticker-track gap-0">
+            {[
+              'Technical SEO Engineering',
+              'Core Web Vitals Optimisation',
+              'Crawl Budget Management',
+              'Structured Data Pipelines',
+              'Authority Development',
+              'Programmatic SEO',
+              'JavaScript Rendering SEO',
+              'Digital PR',
+              'Conversion Optimisation',
+              'Policy-Compliant Paid Ads',
+              'Content Architecture',
+              'Analytics & Attribution',
+              // duplicate for seamless loop
+              'Technical SEO Engineering',
+              'Core Web Vitals Optimisation',
+              'Crawl Budget Management',
+              'Structured Data Pipelines',
+              'Authority Development',
+              'Programmatic SEO',
+              'JavaScript Rendering SEO',
+              'Digital PR',
+              'Conversion Optimisation',
+              'Policy-Compliant Paid Ads',
+              'Content Architecture',
+              'Analytics & Attribution',
+            ].map((item, i) => (
+              <span
+                key={i}
+                className="inline-flex items-center gap-3 px-6 text-xs font-semibold text-slate-400 whitespace-nowrap"
+              >
+                <span className="w-1 h-1 rounded-full bg-purple-500/60 flex-shrink-0" />
+                {item}
               </span>
-              <span className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-purple-400" />
-                Strategy-First Execution
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-amber-400" />
-                Data-Driven Attribution
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-blue-400" />
-                Regulated Industry Specialists
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                Transparent Reporting
-              </span>
-            </div>
+            ))}
           </div>
-        </Container>
+        </div>
       </section>
 
-      {/* ── 2. What We Build / Services Section ──────────────────────── */}
+      {/* ── 3. SERVICES PREVIEW ─────────────────────────────────────────── */}
       <Section variant="white" spacing="lg">
         <Container>
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <FadeIn>
-              <div className="type-eyebrow mb-3">Core Growth Capabilities</div>
-              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-slate-900 leading-tight">
-                Engineering-Led Growth Architecture
-              </h2>
-              <p className="type-body-lg mt-4 text-slate-600 leading-relaxed">
-                An integrated growth system: organic SEO, technical infrastructure, paid acquisition, and conversion architecture — working together, not in silos.
-              </p>
-            </FadeIn>
-          </div>
+          <Reveal direction="up" className="max-w-2xl mb-14">
+            <div className="type-eyebrow mb-4">What We Build</div>
+            <h2 className="type-h2 text-slate-900 mb-5">
+              12 Specialist Growth Disciplines
+            </h2>
+            <p className="text-slate-600 leading-relaxed">
+              Every service we deliver is calibrated to the specific competitive dynamics of high-competition digital verticals — gaming, casino, financial trading, and regulated adult industries. We do not apply mainstream agency frameworks to markets they were never designed for.
+            </p>
+          </Reveal>
 
-          {/* 4 Featured Hero Services */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-            {WHAT_WE_DO.map((item, idx) => {
-              const Icon = item.icon;
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                icon: TrendingUp,
+                title: 'Technical SEO Infrastructure',
+                desc: 'Crawl budget engineering, JavaScript rendering analysis, Core Web Vitals, canonical architecture, and structured data pipelines designed for large, dynamic, policy-sensitive platforms.',
+                path: '/services/technical-seo',
+                metric: '200-point audit',
+                color: 'purple',
+                delay: 0,
+              },
+              {
+                icon: Search,
+                title: 'Organic SEO Strategy',
+                desc: 'End-to-end organic growth strategy — keyword architecture, content cluster design, E-E-A-T calibration for YMYL verticals, and internal linking graph modelling.',
+                path: '/services/seo',
+                metric: 'Full funnel organic',
+                color: 'violet',
+                delay: 100,
+              },
+              {
+                icon: Code2,
+                title: 'SEO-First Website Development',
+                desc: 'React, Next.js, and WordPress builds with SEO specification completed before design begins. Performance, crawlability, and conversion architecture are built-in — not retrofitted.',
+                path: '/services/website-development',
+                metric: 'LCP ≤ 2.5s target',
+                color: 'blue',
+                delay: 200,
+              },
+              {
+                icon: FileText,
+                title: 'Content Strategy & Production',
+                desc: 'Editorial content strategy meeting E-E-A-T standards for gaming, financial, and adult-industry verticals. Content planned against search intent, not word count targets.',
+                path: '/services/content-strategy',
+                metric: 'E-E-A-T calibrated',
+                color: 'indigo',
+                delay: 300,
+              },
+              {
+                icon: Globe,
+                title: 'Authority & Link Acquisition',
+                desc: 'Genuine editorial placements, digital PR campaigns, and quality-first link acquisition. No private blog networks, no automated outreach, no paid link schemes.',
+                path: '/services/link-building',
+                metric: 'Editorial quality only',
+                color: 'emerald',
+                delay: 400,
+              },
+              {
+                icon: Target,
+                title: 'Conversion Optimisation (CRO)',
+                desc: 'Behaviour analytics, A/B testing design, and funnel improvement for gaming registration flows, deposit funnels, trading sign-ups, and B2B lead conversion.',
+                path: '/services/conversion-optimization',
+                metric: 'Data-driven UX',
+                color: 'amber',
+                delay: 500,
+              },
+            ].map((s) => {
+              const Icon = s.icon;
+              const colorMap: Record<string, { icon: string; badge: string; metric: string }> = {
+                purple: { icon: 'text-purple-600 bg-purple-50', badge: 'bg-purple-100 text-purple-700', metric: 'text-purple-700' },
+                violet: { icon: 'text-violet-600 bg-violet-50', badge: 'bg-violet-100 text-violet-700', metric: 'text-violet-700' },
+                blue: { icon: 'text-blue-600 bg-blue-50', badge: 'bg-blue-100 text-blue-700', metric: 'text-blue-700' },
+                indigo: { icon: 'text-indigo-600 bg-indigo-50', badge: 'bg-indigo-100 text-indigo-700', metric: 'text-indigo-700' },
+                emerald: { icon: 'text-emerald-600 bg-emerald-50', badge: 'bg-emerald-100 text-emerald-700', metric: 'text-emerald-700' },
+                amber: { icon: 'text-amber-600 bg-amber-50', badge: 'bg-amber-100 text-amber-700', metric: 'text-amber-700' },
+              };
+              const c = colorMap[s.color];
               return (
-                <MotionCard key={item.title} delay={idx * 80} variant="interactive" className="p-8">
-                  <div className="h-full flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between mb-6">
-                        <div className="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600">
-                          <Icon className="w-6 h-6" />
-                        </div>
-                        <span className="font-mono text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-                          {item.metric}
-                        </span>
+                <Reveal key={s.title} direction="up" delay={s.delay}>
+                  <Link
+                    to={s.path}
+                    className="group flex flex-col h-full p-7 rounded-3xl border border-slate-200 bg-white hover:border-purple-300 hover:shadow-card-hover gradient-border-card transition-all duration-300 hover:-translate-y-1.5"
+                    onClick={() => trackEvent('cta_click', { cta_name: s.path, cta_location: 'home_services' })}
+                  >
+                    <div className="flex items-center justify-between mb-5">
+                      <div className={`w-11 h-11 rounded-2xl flex items-center justify-center ${c.icon}`}>
+                        <Icon className="w-5 h-5" />
                       </div>
-
-                      <h3 className="font-heading font-bold text-xl text-slate-900 mb-3">
-                        {item.title}
-                      </h3>
-                      <p className="type-body text-slate-500 leading-relaxed mb-6">
-                        {item.desc}
-                      </p>
+                      <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${c.badge}`}>
+                        {s.metric}
+                      </span>
                     </div>
-
-                    <Link
-                      to={item.link}
-                      className="inline-flex items-center gap-2 text-sm font-bold text-purple-600 hover:text-purple-800 transition-colors pt-4 border-t border-slate-100"
-                    >
-                      <span>{item.ctaText}</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </MotionCard>
+                    <h3 className="font-heading font-bold text-base text-slate-900 mb-2.5 group-hover:text-purple-700 transition-colors">
+                      {s.title}
+                    </h3>
+                    <p className="text-xs text-slate-500 leading-relaxed flex-1">{s.desc}</p>
+                    <div className={`mt-5 flex items-center gap-1.5 text-xs font-bold ${c.metric} group-hover:gap-2.5 transition-all`}>
+                      Explore <ArrowRight className="w-3.5 h-3.5" />
+                    </div>
+                  </Link>
+                </Reveal>
               );
             })}
           </div>
 
-          {/* Secondary Disciplines Strip */}
-          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-              <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Full Specialized Roster
-                </span>
-                <div className="font-bold text-slate-900 text-sm">
-                  12 Connected Growth Disciplines
+          <Reveal direction="up" delay={200} className="text-center mt-10">
+            <Link
+              to="/services"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl border-2 border-purple-200 text-purple-700 font-bold text-sm hover:bg-purple-600 hover:text-white hover:border-purple-600 transition-all duration-200"
+            >
+              View All 12 Services <ArrowRight className="w-4 h-4" />
+            </Link>
+          </Reveal>
+        </Container>
+      </Section>
+
+      {/* ── 4. INDUSTRIES GRID ──────────────────────────────────────────── */}
+      <Section variant="subtle" spacing="lg">
+        <Container>
+          <Reveal direction="up" className="max-w-2xl mb-14">
+            <div className="type-eyebrow mb-4">8 Specialist Verticals</div>
+            <h2 className="type-h2 text-slate-900 mb-5">
+              Built for High-Competition, Policy-Sensitive Markets
+            </h2>
+            <p className="text-slate-600 leading-relaxed">
+              We do not serve generic consumer categories. Every vertical we operate in has specific SEO dynamics, compliance boundaries, advertising restrictions, and content standards that require deep specialist knowledge — not adapted mainstream frameworks.
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { slug: 'igaming', name: 'iGaming Platforms', cat: 'Gaming', desc: 'Online gaming portals and fantasy sports platforms requiring aggressive organic growth within compliance boundaries.', color: 'from-purple-600 to-violet-700', badge: 'text-purple-300 bg-purple-500/15 border-purple-500/30', delay: 0 },
+              { slug: 'casino', name: 'Casino Operators', cat: 'Gaming', desc: 'Casino SEO requires YMYL expertise, authority depth, and compliance-aware content at a level most agencies cannot reach.', color: 'from-violet-600 to-indigo-700', badge: 'text-violet-300 bg-violet-500/15 border-violet-500/30', delay: 100 },
+              { slug: 'cricket-gaming', name: 'Cricket / Fantasy Gaming', cat: 'Skill Gaming', desc: 'India\'s fastest-growing fantasy sports category — highly competitive keywords, mobile-first architecture, aggressive organic strategy.', color: 'from-blue-600 to-cyan-700', badge: 'text-blue-300 bg-blue-500/15 border-blue-500/30', delay: 200 },
+              { slug: 'yono-gaming', name: 'Yono / Card Gaming', cat: 'Skill Gaming', desc: 'Rummy, Ludo, and card gaming platforms competing in extremely dense SERPs — requires technical authority and precise content strategy.', color: 'from-cyan-600 to-teal-700', badge: 'text-cyan-300 bg-cyan-500/15 border-cyan-500/30', delay: 300 },
+              { slug: 'color-prediction', name: 'Color Prediction', cat: 'Skill Gaming', desc: 'High-velocity trading game platforms requiring programmatic SEO architecture and compliant acquisition channels.', color: 'from-emerald-600 to-green-700', badge: 'text-emerald-300 bg-emerald-500/15 border-emerald-500/30', delay: 400 },
+              { slug: 'color-trading', name: 'Color Trading', cat: 'Skill Gaming', desc: 'Trading prediction platforms operating in competitive search environments with specific indexation and content compliance requirements.', color: 'from-teal-600 to-emerald-700', badge: 'text-teal-300 bg-teal-500/15 border-teal-500/30', delay: 500 },
+              { slug: 'stock-market', name: 'Financial / Trading', cat: 'Finance', desc: 'Stock market and financial trading portals — YMYL-tier content standards, trust-signal architecture, and E-E-A-T authority development.', color: 'from-amber-600 to-orange-700', badge: 'text-amber-300 bg-amber-500/15 border-amber-500/30', delay: 600 },
+              { slug: 'escort-services', name: 'Adult Services (B2B)', cat: 'Adult', desc: 'Professional B2B marketing, SEO, and web development for adult-industry businesses. Strict non-explicit editorial approach throughout.', color: 'from-rose-600 to-pink-700', badge: 'text-rose-300 bg-rose-500/15 border-rose-500/30', delay: 700 },
+            ].map((ind) => (
+              <Reveal key={ind.slug} direction="up" delay={ind.delay}>
+                <Link
+                  to={`/industries/${ind.slug}`}
+                  className="group block relative rounded-3xl overflow-hidden h-full min-h-[220px] hover:-translate-y-1.5 transition-all duration-300 hover-glow-purple"
+                >
+                  {/* Gradient bg */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${ind.color} opacity-90 group-hover:opacity-100 transition-opacity`} />
+                  <div className="absolute inset-0 bg-dark-mesh opacity-30" />
+
+                  <div className="relative z-10 p-6 h-full flex flex-col">
+                    <span className={`self-start text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border ${ind.badge} mb-4`}>
+                      {ind.cat}
+                    </span>
+                    <h3 className="font-heading font-bold text-white text-base mb-2 group-hover:text-amber-300 transition-colors">
+                      {ind.name}
+                    </h3>
+                    <p className="text-white/70 text-xs leading-relaxed flex-1">{ind.desc}</p>
+                    <div className="mt-4 flex items-center gap-1.5 text-xs font-bold text-white/60 group-hover:text-white group-hover:gap-3 transition-all">
+                      Explore <ArrowRight className="w-3.5 h-3.5" />
+                    </div>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal direction="up" delay={300} className="text-center mt-10">
+            <Link
+              to="/industries"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl border-2 border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-200"
+            >
+              View All Industries <ArrowRight className="w-4 h-4" />
+            </Link>
+          </Reveal>
+        </Container>
+      </Section>
+
+      {/* ── 5. WHY SPECIALIST ───────────────────────────────────────────── */}
+      <Section variant="white" spacing="lg">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            <Reveal direction="left">
+              <div className="type-eyebrow mb-4">Why Specialist</div>
+              <h2 className="type-h2 text-slate-900 mb-6">
+                Generalist Agencies Consistently Fail in High-Competition Verticals
+              </h2>
+              <p className="text-slate-600 leading-relaxed mb-8">
+                The problem is not effort — it is that generalised SEO frameworks, content strategies, and paid acquisition approaches were not designed for industries with higher authority thresholds, stricter content standards, advertising policy restrictions, and YMYL-level scrutiny. Applying a mainstream agency playbook to gaming, financial, or adult-industry digital marketing produces predictable underperformance.
+              </p>
+              <p className="text-slate-600 leading-relaxed mb-8">
+                Our entire methodology is built around these specific conditions: the crawl budget characteristics of large dynamic platforms, the E-E-A-T requirements of YMYL content, the certification and compliance dependencies of paid acquisition in regulated markets, and the authority dynamics of competitive gaming SERPs.
+              </p>
+              <div className="space-y-4">
+                {[
+                  { icon: Shield, text: 'Compliance built into strategy design from Day 1 — not discovered after execution' },
+                  { icon: Layers, text: 'Technical SEO depth that standard agencies rarely reach: crawl logs, JS rendering, schema pipelines' },
+                  { icon: Globe, text: 'Content calibrated to E-E-A-T and YMYL requirements of your specific vertical' },
+                  { icon: BarChart3, text: 'Authority development through editorial channels — not automated link schemes' },
+                ].map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.text} className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-purple-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Icon className="w-4 h-4 text-purple-600" />
+                      </div>
+                      <p className="text-slate-700 text-sm leading-relaxed">{item.text}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </Reveal>
+
+            {/* Comparison table */}
+            <Reveal direction="right">
+              <div className="overflow-x-auto rounded-3xl border border-slate-200 shadow-sm bg-white">
+                <div className="min-w-[520px]">
+                  <div className="grid grid-cols-3 bg-slate-900 text-white text-xs font-bold uppercase tracking-wider">
+                    <div className="p-4 border-r border-slate-800">Aspect</div>
+                    <div className="p-4 border-r border-slate-800 text-slate-400">Generalist</div>
+                    <div className="p-4 text-amber-300">Specialist</div>
+                  </div>
+                  {COMPARISON_ROWS.map((row, i) => (
+                    <div
+                      key={row.aspect}
+                      className={`grid grid-cols-3 text-xs ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'} border-t border-slate-100`}
+                    >
+                      <div className="p-4 font-semibold text-slate-800 border-r border-slate-100">{row.aspect}</div>
+                      <div className="p-4 text-slate-500 border-r border-slate-100 leading-relaxed">{row.generalist}</div>
+                      <div className="p-4 text-purple-700 font-medium leading-relaxed bg-purple-50/20">{row.specialist}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <Button to="/services" variant="outline" size="sm">
-                View All Services Directory →
-              </Button>
-            </div>
+            </Reveal>
+          </div>
+        </Container>
+      </Section>
 
-            <div className="flex flex-wrap gap-2">
-              {allServices.map((svc) => (
-                <Link
-                  key={svc.slug}
-                  to={`/services/${svc.slug}`}
-                  className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:border-purple-300 hover:text-purple-700 transition-colors"
-                >
-                  {svc.shortName}
-                </Link>
+      {/* ── 6. PROCESS TIMELINE ─────────────────────────────────────────── */}
+      <Section variant="subtle" spacing="lg">
+        <Container>
+          <Reveal direction="up" className="max-w-2xl mx-auto text-center mb-14">
+            <div className="type-eyebrow mb-4">How We Work</div>
+            <h2 className="type-h2 text-slate-900 mb-5">5-Step Engagement Process</h2>
+            <p className="text-slate-600 leading-relaxed">
+              Every engagement follows a structured methodology designed to produce measurable outcomes. No black-box execution — you see exactly what is being built, why, and when.
+            </p>
+          </Reveal>
+
+          <div className="relative">
+            {/* Connector line */}
+            <div className="hidden lg:block absolute top-12 left-[calc(10%+32px)] right-[calc(10%+32px)] h-px bg-gradient-to-r from-purple-200 via-purple-400 to-purple-200" />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+              {ENGAGEMENT_PROCESS.map((step) => (
+                <Reveal key={step.step} direction="up" delay={step.step * 100}>
+                  <div className="relative flex flex-col items-start lg:items-center text-left lg:text-center">
+                    {/* Step circle */}
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600 to-violet-700 flex items-center justify-center shadow-glow-sm mb-5 flex-shrink-0">
+                      <span className="text-xl font-extrabold text-white">{step.step}</span>
+                    </div>
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-purple-600 mb-1">{step.duration}</div>
+                    <h3 className="font-heading font-bold text-sm text-slate-900 mb-2">{step.title}</h3>
+                    <p className="text-xs text-slate-500 leading-relaxed mb-3">{step.description}</p>
+                    <div className="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-3 py-1">
+                      <CheckCircle2 className="w-3 h-3" /> {step.deliverable}
+                    </div>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* ── Section C: Industries We Understand & Target Verticals ── */}
-      <section className="bg-gradient-to-br from-slate-950 via-[#0D1220] to-[#070B14] py-20 lg:py-28 text-white border-y border-slate-800">
+      {/* ── 7. PRICING ──────────────────────────────────────────────────── */}
+      <Section variant="white" spacing="lg">
         <Container>
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <FadeIn>
-              <div className="type-eyebrow text-purple-400 mb-3">Vertical Specialization</div>
-              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white leading-tight">
-                High-Competition Industry Intelligence
-              </h2>
-              <p className="type-body-lg text-slate-400 mt-4 leading-relaxed">
-                Generic agencies fail because gaming, casino, financial trading, and policy-sensitive markets operate under unique search heuristics, compliance boundaries, and authority barriers.
-              </p>
-            </FadeIn>
-          </div>
+          <Reveal direction="up" className="max-w-2xl mb-10">
+            <div className="type-eyebrow mb-4">Transparent Pricing</div>
+            <h2 className="type-h2 text-slate-900 mb-5">Investment Ranges</h2>
+            <p className="text-slate-600 leading-relaxed">
+              We publish indicative pricing ranges so you can assess fit before a conversation. Final investment is scoped after a technical diagnostic. No hidden fees, no lock-in surprises.
+            </p>
+          </Reveal>
 
-          {/* 8 Target Verticals Grid with Specific Marketing Challenges (igaming.md Section C) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
-            {TARGET_VERTICALS.map((vertical, idx) => (
-              <MotionCard
-                key={vertical.slug}
-                delay={idx * 40}
-                variant="dark"
-                className="p-5 flex flex-col justify-between hover:border-purple-500/50 transition-all group"
+          {/* Tabs */}
+          <div className="flex flex-wrap gap-2 mb-10">
+            {PRICING_CATEGORIES.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActivePricingTab(cat.id)}
+                className={`px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-200 ${
+                  activePricingTab === cat.id
+                    ? 'bg-purple-600 text-white shadow-glow-sm'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
               >
-                <div>
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                      {vertical.badge}
-                    </span>
-                    <span className="text-[10px] font-mono text-slate-500">
-                      0{idx + 1}
-                    </span>
-                  </div>
-                  <h3 className="font-heading font-bold text-base text-white mb-2 group-hover:text-purple-300 transition-colors">
-                    {vertical.title}
-                  </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed mb-4">
-                    {vertical.challenge}
-                  </p>
-                </div>
-                <Link
-                  to={vertical.link}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 group-hover:text-purple-300 transition-colors pt-3 border-t border-slate-800"
-                >
-                  <span>Explore Vertical Strategy</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                </Link>
-              </MotionCard>
+                {cat.label}
+              </button>
             ))}
           </div>
 
-          <div className="pt-8 border-t border-slate-800/80 mb-10 text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-purple-400">
-              Interactive Growth &amp; Difficulty Matrix
-            </span>
-            <h3 className="text-xl font-bold text-white mt-1">
-              Explore Algorithmic Risk, Authority Thresholds &amp; Channel Viability
-            </h3>
+          <Reveal direction="up" delay={100} className="mb-4">
+            <p className="text-sm text-slate-600">{activePricingCategory.description}</p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {activePricingCategory.tiers.map((tier, i) => (
+              <Reveal key={tier.id} direction="up" delay={i * 100}>
+                <PricingCard tier={tier} />
+              </Reveal>
+            ))}
+            {/* Pad if fewer than 3 tiers */}
+            {activePricingCategory.tiers.length === 1 && (
+              <>
+                <Reveal direction="up" delay={200}>
+                  <div className="rounded-3xl border border-dashed border-slate-200 p-7 flex flex-col items-center justify-center text-center min-h-[200px]">
+                    <MousePointer className="w-8 h-8 text-slate-300 mb-3" />
+                    <p className="text-sm text-slate-400">Add-on: Landing page builds and conversion tracking setup available alongside paid acquisition management.</p>
+                  </div>
+                </Reveal>
+                <Reveal direction="up" delay={300}>
+                  <div className="rounded-3xl border border-dashed border-slate-200 p-7 flex flex-col items-center justify-center text-center min-h-[200px]">
+                    <AlertTriangle className="w-8 h-8 text-amber-300 mb-3" />
+                    <p className="text-sm text-slate-500 font-semibold mb-2">Platform eligibility first</p>
+                    <p className="text-xs text-slate-400">All paid acquisition engagements begin with a no-cost eligibility assessment. We confirm what is possible before you commit.</p>
+                  </div>
+                </Reveal>
+              </>
+            )}
           </div>
 
-          {/* Interactive Matrix Visualizer Component */}
-          <FadeIn delay={100}>
-            <MatrixVisualizer />
-          </FadeIn>
+          {/* Disclaimer */}
+          <Reveal direction="up" className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-amber-900 leading-relaxed">{PRICING_DISCLAIMER}</p>
+            </div>
+          </Reveal>
+        </Container>
+      </Section>
+
+      {/* ── 8. PROCESS PROOF ────────────────────────────────────────────── */}
+      <section className="relative bg-navy-950 overflow-hidden py-24 lg:py-32 border-y border-navy-800/60">
+        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[500px] h-[400px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none" />
+
+        <Container className="relative z-10">
+          <Reveal direction="up" className="max-w-2xl mx-auto text-center mb-14">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/25 text-purple-300 text-xs font-semibold uppercase tracking-wider mb-5">
+              Process Transparency
+            </div>
+            <h2 className="type-h2 text-white mb-5">
+              What You Actually Receive
+            </h2>
+            <p className="text-slate-300 leading-relaxed">
+              We do not publish fabricated testimonials or manufactured case studies. Instead, here is exactly what engagements deliver — described with the specificity that lets you evaluate whether our methodology matches your requirements.
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
+            {PROCESS_PROOFS.map((proof, i) => (
+              <Reveal key={proof.title} direction="up" delay={i * 150}>
+                <div className="gradient-border-card-dark p-7 rounded-3xl h-full flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center mb-5">
+                    {proof.icon === 'FileSearch' ? (
+                      <FileSearch className="w-6 h-6 text-purple-400" />
+                    ) : proof.icon === 'Network' ? (
+                      <Network className="w-6 h-6 text-purple-400" />
+                    ) : (
+                      <BarChart2 className="w-6 h-6 text-purple-400" />
+                    )}
+                  </div>
+                  <h3 className="font-heading font-bold text-white text-base mb-3 group-hover:text-amber-300 transition-colors">
+                    {proof.title}
+                  </h3>
+                  <p className="text-slate-400 text-sm leading-relaxed mb-5">{proof.description}</p>
+                  <ul className="space-y-2 mt-auto">
+                    {proof.details.map((d) => (
+                      <li key={d} className="flex items-start gap-2 text-xs text-slate-300">
+                        <ChevronRight className="w-3.5 h-3.5 text-purple-400 flex-shrink-0 mt-0.5" />
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          {/* Compliance commitments */}
+          <Reveal direction="up">
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8">
+              <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-6 text-center">
+                Our Operating Commitments
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                {COMPLIANCE_COMMITMENTS.map((c) => (
+                  <div key={c.title} className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-white mb-1">{c.title}</div>
+                      <p className="text-xs text-slate-400 leading-relaxed">{c.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
         </Container>
       </section>
 
-      {/* ── Section E: Why Specialised / Agency Manifesto ───────────── */}
+      {/* ── 9. FAQ ──────────────────────────────────────────────────────── */}
       <Section variant="white" spacing="lg">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto">
-            {/* Left Column: Large Editorial Statement */}
-            <div className="lg:col-span-5 sticky top-28">
-              <FadeIn>
-                <div className="type-eyebrow mb-3">Agency Differentiation</div>
-                <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight mb-6">
-                  Why Standard Agencies Fail in High-Competition Markets
-                </h2>
-                <p className="type-body text-slate-600 leading-relaxed mb-8">
-                  Generalist marketing agencies rely on generic templates, surface-level keyword research, and black-box reporting. In high-competition categories, ranking signals require code-level optimization and deep vertical understanding.
-                </p>
-
-                <div className="p-6 rounded-2xl bg-purple-50/60 border border-purple-100 space-y-3">
-                  <div className="font-bold text-slate-900 text-sm">
-                    Our Operational Commitment
-                  </div>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    Zero fake reviews, zero manufactured logos, zero ranking guarantees. Credibility is demonstrated through code architecture, crawl governance, and verifiable lead generation.
-                  </p>
-                  <Link
-                    to="/about"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-700 hover:text-purple-900 transition-colors"
-                  >
-                    Read Our Agency Manifesto →
-                  </Link>
-                </div>
-              </FadeIn>
-            </div>
-
-            {/* Right Column: 4 Core Architectural Principles */}
-            <div className="lg:col-span-7 space-y-4">
-              {WHY_SPECIALISED.map((item, idx) => {
-                const Icon = item.icon;
-                return (
-                  <MotionCard key={item.title} delay={idx * 80} variant="default" className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 flex-shrink-0 mt-0.5">
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h3 className="font-heading font-bold text-base text-slate-900 mb-2">
-                          {item.title}
-                        </h3>
-                        <p className="text-xs text-slate-500 leading-relaxed">
-                          {item.desc}
-                        </p>
-                      </div>
-                    </div>
-                  </MotionCard>
-                );
-              })}
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Section F & G: SEO-First Architecture Pipeline & Technical Depth ── */}
-      <Section variant="subtle" spacing="lg">
-        <Container>
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <FadeIn>
-              <div className="type-eyebrow mb-3">System Architecture</div>
-              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight">
-                SEO-First Website Development Pipeline
-              </h2>
-              <p className="type-body text-slate-600 mt-4 leading-relaxed">
-                Search performance is not an afterthought added to a finished design. We engineer discovery, crawlability, and indexation into the root software layer.
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+            <Reveal direction="left" className="lg:col-span-2">
+              <div className="type-eyebrow mb-4">Frequently Asked</div>
+              <h2 className="type-h2 text-slate-900 mb-5">Common Questions</h2>
+              <p className="text-slate-600 leading-relaxed mb-6">
+                Specific answers to the questions operators and growth teams ask most frequently before engaging. If your question is not here, contact us directly.
               </p>
-            </FadeIn>
-          </div>
-
-          {/* 8-Step Architectural Pipeline Flow (igaming.md Section F) */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 max-w-6xl mx-auto mb-14">
-            {ARCHITECTURE_PIPELINE.map((item, idx) => (
-              <div
-                key={item.name}
-                className="relative p-4 rounded-xl bg-white border border-slate-200/90 hover:border-purple-300 hover:shadow-sm transition-all flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-[10px] font-bold text-purple-700 px-1.5 py-0.5 rounded bg-purple-50 border border-purple-200/60">
-                      0{idx + 1}
-                    </span>
-                    {idx < ARCHITECTURE_PIPELINE.length - 1 && (
-                      <span className="hidden lg:inline text-slate-300 group-hover:text-purple-500 font-bold">→</span>
-                    )}
-                  </div>
-                  <div className="font-heading font-bold text-sm text-slate-900 mb-1">
-                    {item.name}
-                  </div>
-                  <p className="text-[11px] text-slate-500 leading-tight">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Technical Code-Level Inspection Component */}
-          <FadeIn>
-            <TechnicalAuditVisual />
-          </FadeIn>
-        </Container>
-      </Section>
-
-      {/* ── Section H & I: Authority Acquisition & Compliance-Aware Acquisition ── */}
-      <Section variant="white" spacing="lg">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto items-stretch">
-            {/* Authority & Backlinks */}
-            <div className="lg:col-span-6 p-8 rounded-2xl bg-slate-50 border border-slate-200/90 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-2 text-purple-700 text-xs font-bold uppercase tracking-wider mb-3">
-                  <Shield className="w-4 h-4" />
-                  <span>Quality-Controlled Authority</span>
-                </div>
-                <h3 className="font-heading font-bold text-2xl text-slate-900 mb-3">
-                  Authority &amp; Digital PR Architecture
-                </h3>
-                <p className="text-sm text-slate-600 leading-relaxed mb-6">
-                  In competitive verticals, low-grade link packages trigger algorithmic demotions. We execute disciplined, editorial authority acquisition built on contextual relevance, topical clusters, and verified publisher relationships.
-                </p>
-                <div className="grid grid-cols-2 gap-3 mb-6">
-                  <div className="p-3 rounded-xl bg-white border border-slate-200/70">
-                    <div className="text-xs font-bold text-slate-900 mb-1">Topical Relevance</div>
-                    <div className="text-[11px] text-slate-500">Contextually aligned publisher nodes</div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-white border border-slate-200/70">
-                    <div className="text-xs font-bold text-slate-900 mb-1">Anchor Diversity</div>
-                    <div className="text-[11px] text-slate-500">Natural brand-to-generic balance</div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-white border border-slate-200/70">
-                    <div className="text-xs font-bold text-slate-900 mb-1">Velocity Discipline</div>
-                    <div className="text-[11px] text-slate-500">Controlled organic link schedules</div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-white border border-slate-200/70">
-                    <div className="text-xs font-bold text-slate-900 mb-1">Zero PBN Risk</div>
-                    <div className="text-[11px] text-slate-500">No automated networks or link farms</div>
-                  </div>
-                </div>
-              </div>
               <Link
-                to="/services/link-building"
-                className="inline-flex items-center gap-2 text-sm font-bold text-purple-700 hover:text-purple-900 transition-colors pt-4 border-t border-slate-200/80"
+                to="/contact"
+                className="inline-flex items-center gap-2 text-sm font-bold text-purple-700 hover:text-purple-900 transition-colors"
               >
-                <span>Explore Authority Acquisition Protocols</span>
-                <ArrowRight className="w-4 h-4" />
+                Ask a Direct Question <ArrowRight className="w-4 h-4" />
               </Link>
-            </div>
+            </Reveal>
 
-            {/* Paid Media & Policy Compliance Card */}
-            <div className="lg:col-span-6 p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 text-white border border-slate-800 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
-                  <Zap className="w-4 h-4" />
-                  <span>Platform Policy &amp; Paid Acquisition</span>
-                </div>
-                <h3 className="font-heading font-bold text-2xl text-white mb-3">
-                  Google &amp; Meta Ads Compliance Framework
-                </h3>
-                <p className="text-sm text-slate-300 leading-relaxed mb-6">
-                  Paid acquisition in gaming, casino, and finance requires rigorous platform certifications, destination licensing verification, and regulatory geo-fencing.
-                </p>
-
-                {/* Mandatory Policy Copy Rule (igaming.md Section I) */}
-                <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 mb-6">
-                  <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-300 mb-1">
-                    Mandatory Policy Standard
-                  </div>
-                  <p className="text-xs text-amber-200/90 leading-relaxed">
-                    Paid advertising availability depends on the client's business model, destination, jurisdiction, licence/certification status and platform policy. Never positioned as bypassing restrictions.
-                  </p>
-                </div>
-
-                <div className="space-y-2 text-xs text-slate-300 mb-6">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-                    <span>Google Ads Gambling &amp; Financial Services Certification guidance</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-                    <span>Meta Ads regulated industry whitelist setup &amp; jurisdiction gating</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-                    <span>Server-side event tracking and conversion measurement architecture</span>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 pt-4 border-t border-slate-800">
-                <Link
-                  to="/services/google-ads"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-300 hover:text-amber-200 transition-colors"
-                >
-                  <span>Google Ads Policy</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-                <Link
-                  to="/services/meta-ads"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-300 hover:text-purple-200 transition-colors"
-                >
-                  <span>Meta Ads Framework</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
+            <Reveal direction="right" delay={100} className="lg:col-span-3">
+              <FAQAccordion items={HOME_FAQS} />
+            </Reveal>
           </div>
         </Container>
       </Section>
 
-      {/* ── Section K: Search Measurement & Conversion Funnel ───────── */}
-      <Section variant="subtle" spacing="lg">
-        <Container>
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <FadeIn>
-              <div className="type-eyebrow mb-3">Attribution &amp; CRO</div>
-              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight">
-                From Impression to Qualified Revenue
-              </h2>
-              <p className="type-body text-slate-600 mt-4 leading-relaxed">
-                Rankings mean nothing without commercial attribution. We map every search query through a deterministic conversion funnel.
-              </p>
-            </FadeIn>
-          </div>
-
-          {/* 7-Stage Funnel Flow (igaming.md Section K) */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 max-w-6xl mx-auto mb-8">
-            {MEASUREMENT_FUNNEL.map((step, idx) => (
-              <div
-                key={step.stage}
-                className="relative p-4 rounded-xl bg-white border border-slate-200/90 flex flex-col justify-between group hover:border-purple-300 hover:shadow-sm transition-all"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-[10px] font-bold text-purple-700 px-1.5 py-0.5 rounded bg-purple-50">
-                      0{idx + 1}
-                    </span>
-                    {idx < MEASUREMENT_FUNNEL.length - 1 && (
-                      <span className="hidden lg:inline text-slate-300 group-hover:text-purple-400">→</span>
-                    )}
-                  </div>
-                  <div className="font-heading font-bold text-sm text-slate-900 mb-1">
-                    {step.stage}
-                  </div>
-                  <p className="text-[11px] text-slate-500 leading-tight">
-                    {step.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="max-w-2xl mx-auto text-center">
-            <p className="text-xs text-slate-500 font-medium">
-              Cookieless server attribution • Custom BigQuery pipelines • First-party conversion signals
-            </p>
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Section L: Phased Engineering Journey (6 Stages) ─────────── */}
-      <Section variant="white" spacing="lg">
-        <Container>
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <FadeIn>
-              <div className="type-eyebrow mb-3">Structured Methodology</div>
-              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight">
-                Phased Engineering Journey
-              </h2>
-              <p className="type-body text-slate-500 mt-4 leading-relaxed">
-                Every engagement follows an explicit programmatic flow: Diagnose → Architect → Build → Grow → Measure → Compound. No guesswork, no black boxes.
-              </p>
-            </FadeIn>
-          </div>
-
-          {/* 6-Step Process Rail (igaming.md Section L) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 max-w-6xl mx-auto">
-            {PROCESS.map((step, idx) => (
-              <div
-                key={step.n}
-                className="relative p-6 rounded-2xl bg-slate-50 border border-slate-200/90 flex flex-col justify-between hover:border-purple-300 hover:bg-purple-50/20 hover:shadow-sm transition-all duration-200"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-mono text-2xl font-black text-purple-600/50">
-                      {step.n}
-                    </span>
-                    <span className="w-2 h-2 rounded-full bg-purple-600/40" />
-                  </div>
-                  <h3 className="font-heading font-bold text-base text-slate-900 mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-xs text-slate-500 leading-relaxed">
-                    {step.desc}
-                  </p>
-                </div>
-
-                <div className="mt-6 pt-3 border-t border-slate-200/60 flex items-center justify-between text-[10px] font-mono text-slate-400">
-                  <span>STAGE 0{idx + 1}</span>
-                  <span>ACTIVE</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── 7. Strategic Principles Section ─────────────────────────── */}
-      <Section variant="white" spacing="lg">
-        <Container>
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <FadeIn>
-              <div className="type-eyebrow mb-3">Our Methodology</div>
-              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight">
-                How We Think About Search &amp; Growth
-              </h2>
-              <p className="type-body text-slate-500 mt-4 leading-relaxed">
-                Strategic principles that separate durable market leaders from volatile, update-vulnerable platforms.
-              </p>
-            </FadeIn>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {METHODOLOGY_PRINCIPLES.map((principle, idx) => (
-              <MotionCard
-                key={principle.number}
-                delay={idx * 70}
-                variant="default"
-                className={`p-6 ${idx === 4 ? 'md:col-span-2 lg:col-span-1' : ''}`}
-              >
-                <div className="flex items-baseline justify-between mb-3 border-b border-slate-100 pb-3">
-                  <span className="text-xs font-bold uppercase tracking-widest text-purple-600 font-mono">
-                    {principle.number}
-                  </span>
-                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-                    {principle.tagline}
-                  </span>
-                </div>
-                <h3 className="font-heading font-bold text-lg text-slate-900 mb-2">
-                  {principle.title}
-                </h3>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  {principle.desc}
-                </p>
-              </MotionCard>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── 8. Authoritative Knowledge Base / Resources ────────────── */}
-      <Section variant="subtle" spacing="lg">
-        <Container>
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <FadeIn>
-              <div className="type-eyebrow mb-3">Resource Center</div>
-              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight">
-                Authoritative Engineering Guides
-              </h2>
-              <p className="type-body text-slate-500 mt-4 leading-relaxed">
-                In-depth technical blueprints, audit checklists, and market breakdowns written for engineers, founders, and growth leaders.
-              </p>
-            </FadeIn>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-10">
-            {FEATURED_RESOURCES.map((resource, idx) => (
-              <MotionCard key={resource.path} delay={idx * 80} variant="interactive" className="p-6">
-                <div className="h-full flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between text-xs text-slate-400 mb-3">
-                      <span className="font-semibold text-purple-700 bg-purple-50 border border-purple-200/60 px-2.5 py-0.5 rounded text-[11px] uppercase tracking-wider">
-                        {resource.category}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>{resource.readTime}</span>
-                      </span>
-                    </div>
-                    <h3 className="font-heading font-bold text-base text-slate-900 mb-3 line-clamp-2">
-                      {resource.title}
-                    </h3>
-                    <p className="text-xs text-slate-500 leading-relaxed mb-5">
-                      {resource.desc}
-                    </p>
-                  </div>
-
-                  <Link
-                    to={resource.path}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 hover:text-purple-800 transition-colors pt-4 border-t border-slate-100"
-                  >
-                    <span>Read Technical Blueprint</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </MotionCard>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Button to="/resources" variant="outline" size="md">
-              Explore All 10 Technical Guides &amp; Insights →
-            </Button>
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── 9. Common Questions / FAQ ───────────────────────────────── */}
-      <Section variant="white" spacing="lg">
-        <Container>
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <FadeIn>
-                <div className="type-eyebrow mb-3">Technical FAQ</div>
-                <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight">
-                  Frequently Asked Questions
-                </h2>
-              </FadeIn>
-            </div>
-            <FadeIn delay={100}>
-              <FAQAccordion items={HOMEPAGE_FAQS} defaultOpen={0} />
-            </FadeIn>
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── 10. Final Closing CTA ───────────────────────────────────── */}
-      <section className="bg-hero-atmosphere text-white py-20 lg:py-28 relative overflow-hidden border-t border-slate-800">
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-purple-600/10 blur-[140px]" />
-        </div>
+      {/* ── 10. FINAL CTA ───────────────────────────────────────────────── */}
+      <section className="relative bg-navy-950 overflow-hidden py-24 lg:py-32 border-t border-navy-800/60">
+        <div className="absolute inset-0 bg-hero-atmosphere" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-purple-600/20 blur-[120px] pointer-events-none" />
 
         <Container className="relative z-10">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <div className="type-eyebrow text-purple-300">Ready to Scale</div>
-            <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white leading-tight">
-              Tell Us Where Your Site Is Today. We’ll Show You the Next Growth Opportunities.
-            </h2>
-            <p className="type-body-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
-              A senior search architect reviews your platform DOM tree, crawl budget, parameter configuration, and competitive keyword gap. No automated report — an actual engineering diagnostic.
-            </p>
+          <div className="max-w-3xl mx-auto text-center">
+            <Reveal direction="up">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-semibold uppercase tracking-wider mb-8">
+                <Zap className="w-3.5 h-3.5 text-amber-400" />
+                Start With a Free Technical Audit
+              </div>
+              <h2 className="type-h2 text-white mb-6">
+                Ready to Build Something That Compounds?
+              </h2>
+              <p className="text-slate-300 text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
+                Tell us about your platform. We will prepare a technical diagnostic, competitive gap analysis, and architectural roadmap — within 48 business hours. No pitch deck. No generic proposal. Actual engineering output.
+              </p>
 
-            <div className="flex flex-wrap items-center gap-4 justify-center pt-4">
-              <Button
-                to="/free-seo-audit"
-                variant="gold"
-                size="lg"
-                icon={<Search className="w-4 h-4" />}
-                onClick={() => trackEvent('cta_click', { cta_name: 'free_seo_audit', cta_location: 'bottom_cta' })}
-              >
-                Request Free SEO Audit
-              </Button>
-              <Button
-                to="/book-call"
-                variant="dark"
-                size="lg"
-                icon={<ArrowRight className="w-4 h-4" />}
-                iconPosition="right"
-                onClick={() => trackEvent('cta_click', { cta_name: 'book_strategy_call', cta_location: 'bottom_cta' })}
-              >
-                Book a Strategy Call
-              </Button>
-              <a
-                href="https://wa.me/919341436937"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-lg shadow-emerald-950/30 transition-all duration-200 hover:-translate-y-0.5"
-                onClick={() => trackEvent('cta_click', { cta_name: 'whatsapp_direct', cta_location: 'bottom_cta' })}
-              >
-                <span>Chat on WhatsApp</span>
-              </a>
-            </div>
+              <div className="flex flex-wrap items-center justify-center gap-4 mb-10">
+                <Button
+                  to="/free-seo-audit"
+                  variant="gold"
+                  size="lg"
+                  icon={<Zap className="w-4 h-4" />}
+                  onClick={() => trackEvent('cta_click', { cta_name: 'free_seo_audit', cta_location: 'home_final_cta' })}
+                >
+                  Get Free SEO Audit
+                </Button>
+                <Button
+                  to="/contact"
+                  variant="outline"
+                  size="lg"
+                  className="border-navy-700 text-white hover:bg-navy-800/60"
+                  onClick={() => trackEvent('cta_click', { cta_name: 'contact', cta_location: 'home_final_cta' })}
+                >
+                  Request a Proposal
+                </Button>
+                <a
+                  href="https://wa.me/919341436937"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-md transition-all duration-200 hover:-translate-y-0.5"
+                  onClick={() => trackEvent('cta_click', { cta_name: 'whatsapp', cta_location: 'home_final_cta' })}
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                    <path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.99.583 3.841 1.594 5.393L2.05 22l4.74-1.524A9.957 9.957 0 0012 21.999c5.523 0 10-4.478 10-10 0-5.523-4.477-10-10.001-10zm0 18.181a8.177 8.177 0 01-4.163-1.135l-.298-.177-3.09.81.825-3.013-.194-.31A8.181 8.181 0 0120.18 12c0 4.518-3.677 8.181-8.181 8.181z"/>
+                  </svg>
+                  Chat on WhatsApp
+                </a>
+              </div>
 
-            <p className="text-xs text-slate-400 pt-2">
-              Strict 24-hour turnaround • No automated templates • Direct senior advisory
-            </p>
+              {/* Quick trust points */}
+              <div className="flex flex-wrap justify-center gap-6 text-xs text-slate-500">
+                {[
+                  'No fake rankings promise',
+                  '48hr diagnostic response',
+                  'Confidential by default',
+                  'No lock-in contracts',
+                ].map((t) => (
+                  <span key={t} className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -1057,4 +940,4 @@ export const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default HomePage;

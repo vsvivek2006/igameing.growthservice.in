@@ -11,120 +11,151 @@ export const TermsPage: React.FC = () => {
     <>
       <SEOHead
         title="Terms of Use | iGaming Growth"
-        description="Terms and conditions governing access to and use of iGaming Growth's website, content, and B2B digital growth services."
+        description="Terms and conditions governing access to and use of iGaming Growth's website, architectural content, and B2B digital growth advisory services."
         canonicalPath="/terms"
         jsonLd={buildBreadcrumbSchema(breadcrumbs)}
       />
 
-      <div className="bg-slate-900 text-white py-12 border-b border-purple-900/40">
+      <div className="bg-slate-900 text-white py-16 sm:py-20 border-b border-purple-900/40">
         <Container>
           <Breadcrumb items={breadcrumbs} dark className="mb-4" />
-          <h1 className="type-h2 text-white mb-3">Terms of Use</h1>
-          <p className="type-body-lg text-slate-300 max-w-3xl">
-            Legal conditions governing access to and use of the {businessName} website and services. Last reviewed: September 2026.
+          <h1 className="type-h2 text-white mb-4">Terms of Use</h1>
+          <p className="type-body-lg text-slate-300 max-w-3xl leading-relaxed">
+            Legal terms, operational conditions, and regulatory frameworks governing access to and commercial use of the {businessName} website, technical resources, and professional agency services. Last updated: September 2026.
           </p>
         </Container>
       </div>
 
-      <Section variant="white" spacing="md">
+      <Section variant="white" spacing="lg">
         <Container size="md">
           <div className="space-y-6 text-slate-700 leading-relaxed text-sm">
-            <Card variant="base" className="space-y-2">
+            <Card variant="base" className="space-y-3">
               <h2 className="font-heading font-bold text-lg text-slate-900">
-                1. Nature of This Website
+                1. Nature of the Website &amp; Business Model
               </h2>
               <p>
-                {businessName} operates as a specialist B2B digital growth agency. This website is an informational and commercial resource for businesses operating in high-competition digital verticals seeking SEO, website development, authority acquisition, paid media management, and related professional services.
+                {businessName} operates exclusively as a specialist business-to-business (B2B) digital marketing, technical search engine optimization, and website engineering agency. This website is an informational and commercial portal intended solely for corporate founders, platform operators, Chief Technology Officers, and digital growth executives evaluating professional technical services.
               </p>
               <p>
-                This website does not operate as a gambling platform, betting exchange, financial trading service, or consumer gaming portal. No wagering, gambling, or financial transactions occur on or through this website.
+                This website does not operate as an online casino, gambling operator, sportsbook, financial brokerage, stock trading exchange, or adult consumer platform. No wagering, real-money betting, financial trading, or transactional consumer gameplay occurs on or through this website.
               </p>
             </Card>
 
-            <Card variant="base" className="space-y-2">
+            <Card variant="base" className="space-y-3">
               <h2 className="font-heading font-bold text-lg text-slate-900">
-                2. Access and Permitted Use
+                2. Permitted Commercial Use &amp; Access Restrictions
               </h2>
               <p>
-                Access to this website is permitted for business owners, operators, founders, and growth professionals evaluating or engaging B2B digital marketing services. You may not reproduce, distribute, or commercially exploit site content without written permission.
+                Access to this website is granted for the evaluation of our professional capabilities, consumption of published architectural guides, and submission of bona fide business inquiries. You agree not to:
+              </p>
+              <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
+                <li>Systematically scrape, data-mine, or harvest architectural code snippets, matrices, or pricing data via automated bots, headless crawlers, or scrapers without prior written authorization.</li>
+                <li>Submit fabricated, abusive, or spam communications through our diagnostic intake forms or strategy booking endpoints.</li>
+                <li>Attempt to reverse-engineer, decompile, or probe the infrastructure, servers, or hosting configurations of this web application.</li>
+                <li>Misrepresent your identity, affiliation, or commercial authorization when requesting proprietary diagnostic audits or advisory sessions.</li>
+              </ul>
+            </Card>
+
+            <Card variant="base" className="space-y-3">
+              <h2 className="font-heading font-bold text-lg text-slate-900">
+                3. Scope of Professional Agency Services
+              </h2>
+              <p>
+                {businessName} provides specialized services including technical SEO auditing, Core Web Vitals remediation, crawl budget optimization, programmatic SEO system design, informational content strategy, authority and digital PR consultation, conversion rate optimization (CRO), and policy-compliant paid media strategy.
               </p>
               <p>
-                Automated scraping, crawling beyond standard search engine indexation, or misuse of contact forms for commercial solicitation is strictly prohibited.
+                All services are executed under separate formal Statement of Work (SOW) agreements or master services contracts. The descriptions, pricing indicators, and sample deliverables published on this website are indicative and do not constitute a binding unilateral offer to contract.
               </p>
             </Card>
 
-            <Card variant="base" className="space-y-2">
+            <Card variant="base" className="space-y-3">
               <h2 className="font-heading font-bold text-lg text-slate-900">
-                3. Services Scope
+                4. Explicit Absence of Ranking or Traffic Guarantees
               </h2>
               <p>
-                {businessName} provides B2B professional services including technical SEO, SEO-first website development, content strategy, authority and link acquisition, digital PR, conversion optimisation, analytics and attribution, and paid acquisition management where platform eligibility permits.
+                In compliance with global advertising truth standards and search engine guidelines (igaming.md §22), {businessName} does not promise, warrant, or guarantee specific search engine ranking positions, organic click volumes, domain authority scores, or commercial revenue outcomes.
               </p>
               <p>
-                Paid advertising availability depends on the client's business model, destination, jurisdiction, licence or certification status, and platform policy. We do not guarantee advertising eligibility for any specific platform or jurisdiction.
+                Organic search rankings are determined by autonomous, third-party algorithmic scoring systems (including Google, Bing, and emergent AI search engines) that change continuously without notice. Our professional commitments are defined strictly by verified engineering deliverables, code-level Pull Requests, process rigor, and adherence to agreed technical milestones.
               </p>
             </Card>
 
-            <Card variant="base" className="space-y-2">
+            <Card variant="base" className="space-y-3">
               <h2 className="font-heading font-bold text-lg text-slate-900">
-                4. No Ranking Guarantees
+                5. Intellectual Property Rights &amp; Deliverables Ownership
               </h2>
               <p>
-                Search engine rankings are determined by third-party algorithms ({businessName} has no control over Google, Bing, or other search engine ranking systems). We do not promise, guarantee, or imply specific ranking positions, traffic volumes, or revenue outcomes.
+                All original text, architectural frameworks, diagrams, visual interfaces, component code, data schemas, and editorial research published on this website are the proprietary intellectual property of {businessName}, protected by applicable international copyright and trademark laws.
               </p>
               <p>
-                Service agreements define deliverables, process commitments, and reporting obligations — not guaranteed outcomes.
-              </p>
-            </Card>
-
-            <Card variant="base" className="space-y-2">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
-                5. Intellectual Property
-              </h2>
-              <p>
-                All website content, design, copy, data structures, and technical documentation are the intellectual property of {businessName} unless otherwise stated. Work produced under client engagements is governed by individual service agreements.
+                Deliverables produced under formal client engagements (e.g., custom repository code, bespoke structured data, unique content assets) transfer to the client upon full settlement of contracted invoices, subject to the explicit terms of the governing Statement of Work.
               </p>
             </Card>
 
-            <Card variant="base" className="space-y-2">
+            <Card variant="base" className="space-y-3">
               <h2 className="font-heading font-bold text-lg text-slate-900">
-                6. Limitation of Liability
+                6. Client Warranties &amp; Jurisdictional Compliance
               </h2>
               <p>
-                {businessName} accepts no liability for business decisions made based on information published on this website. All content is provided for informational purposes. Specific strategic advice is provided under formal engagement agreements, not through this website.
+                Clients engaging {businessName} represent and warrant that their digital platform, product offerings, operational licenses, and promotional marketing comply fully with all applicable local, national, and international laws, statutory regulations, and consumer protection codes in their operating jurisdictions.
+              </p>
+              <p>
+                We reserve the unilateral right to refuse service, suspend active engagements, or terminate contracts immediately without liability if an operator is found to engage in unlawful practices, consumer fraud, unlicensed gambling operations where licensing is mandatory, or malicious black-hat digital distribution.
               </p>
             </Card>
 
-            <Card variant="base" className="space-y-2">
+            <Card variant="base" className="space-y-3">
               <h2 className="font-heading font-bold text-lg text-slate-900">
-                7. External Links
+                7. Limitation of Liability &amp; Disclaimers
               </h2>
               <p>
-                This website may link to third-party tools, research sources, or partner resources. {businessName} is not responsible for the content, accuracy, or policies of external websites.
+                To the maximum extent permitted by governing law, {businessName}, its directors, technical leads, employees, and contractors shall not be liable for any indirect, incidental, consequential, special, or punitive damages, including loss of profits, organic traffic reductions, server downtime, algorithmic indexing adjustments, or business interruption arising from the use of this website or information contained herein.
+              </p>
+              <p>
+                All published educational resources, checklists, and code blueprints are provided on an "as-is" and "as-available" basis without representations or warranties of any kind, whether express or implied.
               </p>
             </Card>
 
-            <Card variant="base" className="space-y-2">
+            <Card variant="base" className="space-y-3">
               <h2 className="font-heading font-bold text-lg text-slate-900">
-                8. Changes to These Terms
+                8. Third-Party Search Engines, Algorithms &amp; Platform Policy Shifts
               </h2>
               <p>
-                These terms may be updated as the business evolves or as regulatory and platform requirements change. Continued use of the website constitutes acceptance of the current terms. Material changes will be noted by updating the review date at the top of this page.
+                Search engines frequently deploy core algorithm updates, re-calibrate spam filters, and alter rich snippet eligibility rules without advance disclosure. Similarly, digital advertising platforms (Google Ads, Meta, Bing) routinely modify jurisdictional advertising policies for contested verticals.
+              </p>
+              <p>
+                {businessName} accepts no liability for sudden visibility shifts, policy restrictions, or advertising suspension actions resulting from independent platform policy changes initiated by third-party search and advertising providers.
               </p>
             </Card>
 
-            <Card variant="base" className="space-y-2">
+            <Card variant="base" className="space-y-3">
               <h2 className="font-heading font-bold text-lg text-slate-900">
-                9. Contact
+                9. Retainer Terms, Billing &amp; Cancellation Policies
               </h2>
               <p>
-                For questions about these terms or our services, contact us at{' '}
-                <a
-                  href="mailto:hello@igameing.growthservice.in"
-                  className="text-purple-700 font-semibold hover:text-purple-900 transition-colors"
-                >
-                  hello@igameing.growthservice.in
-                </a>.
+                Standard agency engagements operate under monthly retainers with an agreed minimum initial duration (typically 3 months) to allow adequate time for technical indexing and authority compounding. Retainer fees are invoiced monthly in advance and are payable within contracted payment windows.
+              </p>
+              <p>
+                Following the initial commitment period, retainers may be cancelled by either party upon thirty (30) days written notice. Fees paid for delivered technical audits, completed sprint milestones, or deployed code repositories are non-refundable.
+              </p>
+            </Card>
+
+            <Card variant="base" className="space-y-3">
+              <h2 className="font-heading font-bold text-lg text-slate-900">
+                10. Governing Law, Dispute Resolution &amp; Severability
+              </h2>
+              <p>
+                These Terms of Use shall be governed by and construed in accordance with the substantive laws of India, without regard to its conflict of law principles. Any dispute, claim, or controversy arising out of or relating to these terms shall be subject to the exclusive jurisdiction of the competent courts in India.
+              </p>
+              <p>
+                If any provision of these Terms is found to be invalid, unlawful, or unenforceable by an authorized court of law, such provision shall be severed from the remaining terms, which shall continue in full force and effect.
+              </p>
+              <p className="pt-2">
+                For legal notices, contract inquiries, or corporate documentation, contact:
+                <br />
+                <strong>Legal Desk:</strong> hello@igameing.growthservice.in
+                <br />
+                <strong>Direct Line:</strong> +91 93414 36937
               </p>
             </Card>
           </div>

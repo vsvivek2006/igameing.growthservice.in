@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
-import { Clock, Video, CheckCircle2, Shield, ArrowRight, Zap, AlertCircle } from 'lucide-react';
+import {
+  Clock,
+  Video,
+  CheckCircle2,
+  Shield,
+  ArrowRight,
+  Zap,
+  AlertCircle,
+  XCircle,
+  FileCheck,
+} from 'lucide-react';
 import { SEOHead } from '../seo';
-import { Container, Section, Button, Breadcrumb } from '../components/ui';
+import { buildBreadcrumbSchema, buildFAQSchema } from '../seo/schema';
+import { Container, Section, Button, Breadcrumb, Badge, FAQAccordion } from '../components/ui';
 import { FadeIn } from '../components/animations';
 import { trackEvent } from '../analytics/tracking';
 import businessConfig from '../config/business';
@@ -15,6 +26,71 @@ interface BookingFormData {
   growthGoal: string;
   honeypot: string;
 }
+
+const CALL_FAQS = [
+  {
+    q: 'Who will I be speaking with on this strategy call?',
+    a: 'You will speak directly with a senior growth architect and technical SEO engineer with direct operational experience in high-competition verticals. We do not use junior account representatives or commissioned sales closers.',
+  },
+  {
+    q: 'Is there any commercial obligation or sales pressure?',
+    a: 'None. This session is designed as a technical and strategic diagnostic. We review your domain architecture, identify competitor blind spots, and present an actionable organic roadmap. If there is mutual alignment for a formal engagement, we can discuss scopes; otherwise, the recommendations are yours to execute independently.',
+  },
+  {
+    q: 'What video platform is used for the strategy session?',
+    a: 'We host sessions via Google Meet or Zoom. A direct calendar invitation with the meeting link is delivered immediately following confirmed booking.',
+  },
+  {
+    q: 'Can multiple team members from my company join the call?',
+    a: 'Yes. We encourage technical leads, CTOs, and marketing directors to participate so we can discuss both engineering infrastructure and commercial growth objectives simultaneously.',
+  },
+  {
+    q: 'How should our team prepare for this session?',
+    a: 'Having your primary domain URL, top 3 competitor platforms, and approximate target markets in mind is sufficient. If you have specific analytics or Search Console data you wish to screen-share, you may do so securely during the call.',
+  },
+  {
+    q: 'What happens if we need to reschedule our session?',
+    a: 'Every calendar invitation includes a one-click rescheduling link allowing you to select an alternative slot with at least 12 hours advance notice.',
+  },
+];
+
+const PREPARATION_STEPS = [
+  {
+    title: '1. Identify Your Top 3 Contested Competitors',
+    desc: 'Name the competitor domains that consistently outrank you for primary category and commercial query clusters.',
+  },
+  {
+    title: '2. Define Your Core Conversion Bottleneck',
+    desc: 'Whether it is crawl indexation stalls, slow Core Web Vitals, or low conversion rates from organic search visitors.',
+  },
+  {
+    title: '3. Prepare Architectural Questions',
+    desc: 'Bring your technical queries regarding Next.js/React rendering, faceted navigation canonicals, or regulatory policy boundaries.',
+  },
+];
+
+const QUALIFICATION_CRITERIA = [
+  {
+    type: 'ideal',
+    title: 'Who This Advisory Session Is For',
+    points: [
+      'Founders, CTOs, and Growth Heads of gaming, casino, or financial platforms',
+      'Businesses generating or targeting >$10k/month in digital revenue',
+      'Teams committed to sustainable, 100% white-hat organic search equity',
+      'Platforms experiencing crawl stalls or recent algorithmic update drops',
+    ],
+  },
+  {
+    type: 'not-ideal',
+    title: 'Who This Session Is NOT For',
+    points: [
+      'Affiliates looking for private PBN link networks or black-hat cloaking',
+      'Operators expecting guaranteed #1 rankings within 14 days',
+      'Early-stage concept projects without an active domain or development roadmap',
+      'Marketers unwilling to implement necessary code-level technical fixes',
+    ],
+  },
+];
 
 export const BookCallPage: React.FC = () => {
   const [formData, setFormData] = useState<BookingFormData>({
@@ -89,7 +165,6 @@ export const BookCallPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Bot trap check
     if (formData.honeypot) {
       return;
     }
@@ -119,7 +194,6 @@ export const BookCallPage: React.FC = () => {
 
     if (result.success) {
       setIsSubmitted(true);
-      // Fire generate_lead strictly after confirmed successful submission
       trackEvent('generate_lead', {
         form_type: 'book_call',
         vertical: formData.vertical || 'unspecified',
@@ -133,9 +207,7 @@ export const BookCallPage: React.FC = () => {
     }
   };
 
-  const breadcrumbItems = [
-    { label: 'Book a Call' },
-  ];
+  const breadcrumbItems = [{ label: 'Book a Strategy Call', path: '/book-call' }];
 
   const agendaItems = [
     {
@@ -161,33 +233,39 @@ export const BookCallPage: React.FC = () => {
         title="Book a Strategy Call — iGaming Growth Advisory Session"
         description="Schedule a private 30-minute growth architecture review with a senior agency strategist. Review your domain, identify competitor blind spots, and plan acquisition."
         canonicalPath="/book-call"
+        jsonLd={[
+          buildBreadcrumbSchema(breadcrumbItems),
+          buildFAQSchema(CALL_FAQS),
+        ]}
       />
 
-      {/* Hero Section */}
-      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-20 lg:py-24 overflow-hidden border-b border-navy-800/80">
+      {/* ── 1. Hero Section ───────────────────────────────────────── */}
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-16 sm:py-20 lg:py-24 overflow-hidden border-b border-navy-800/80">
         <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
-        <div className="absolute top-0 right-1/4 w-[500px] h-[400px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-[400px] h-[300px] rounded-full bg-violet-600/10 blur-[80px] pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[320px] sm:w-[500px] h-[280px] sm:h-[400px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[280px] sm:w-[400px] h-[220px] sm:h-[300px] rounded-full bg-violet-600/10 blur-[80px] pointer-events-none" />
 
         <Container className="relative z-10">
-          <Breadcrumb items={breadcrumbItems} className="mb-6 text-slate-400" />
+          <div className="mb-6 overflow-x-auto py-1">
+            <Breadcrumb items={breadcrumbItems} variant="light" />
+          </div>
 
-          <div className="max-w-3xl">
+          <div className="max-w-3xl mx-auto text-center">
             <FadeIn>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-semibold uppercase tracking-wider mb-6">
                 <Video className="w-3.5 h-3.5 text-purple-400" />
                 <span>30-Minute Growth Advisory Session</span>
               </div>
 
-              <h1 className="type-h1 text-white mb-5">
-                Schedule a Private Strategy Session with a Senior Growth Architect
+              <h1 className="type-h1 text-white mb-5 leading-tight">
+                Private Strategy Session with a Senior Growth Architect
               </h1>
 
-              <p className="text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl">
+              <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl mx-auto">
                 No junior sales pitches. You will speak directly with a senior technical SEO engineer and digital growth strategist who will review your domain and outline a realistic acquisition roadmap.
               </p>
 
-              <div className="flex flex-wrap items-center gap-6 text-xs text-slate-400">
+              <div className="flex flex-wrap justify-center items-center gap-6 text-xs text-slate-400">
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-purple-400" />
                   <span>30 Minutes via Google Meet / Zoom</span>
@@ -206,12 +284,12 @@ export const BookCallPage: React.FC = () => {
         </Container>
       </section>
 
-      {/* Main Booking Section */}
+      {/* ── 2. Booking Form & Agenda Grid ─────────────────────────── */}
       <Section variant="white" spacing="lg">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
             {/* Left: Agenda & Call Value */}
-            <div className="lg:col-span-5 space-y-6">
+            <div className="lg:col-span-5 space-y-6 order-1">
               <FadeIn>
                 <div>
                   <h2 className="font-heading font-extrabold text-2xl text-slate-950 mb-3">
@@ -252,10 +330,10 @@ export const BookCallPage: React.FC = () => {
                 <div className="p-5 rounded-2xl bg-navy-950 text-white border border-navy-800 shadow-card-dark space-y-3">
                   <div>
                     <h4 className="font-heading font-bold text-sm text-white mb-1">
-                      Need Immediate Advice?
+                      Need Immediate Scoping?
                     </h4>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      For active regulatory situations or urgent launch deadlines, contact our engineering desk directly:
+                      For urgent launch deadlines or sudden algorithmic drops, reach our desk directly:
                     </p>
                   </div>
                   <div className="flex flex-col gap-2 pt-1">
@@ -280,9 +358,9 @@ export const BookCallPage: React.FC = () => {
             </div>
 
             {/* Right: Booking Intake Form */}
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-7 order-2">
               <FadeIn delay={150}>
-                <div className="bg-white rounded-2xl lg:rounded-3xl border border-slate-200/80 shadow-xl p-7 sm:p-10">
+                <div className="bg-white rounded-2xl lg:rounded-3xl border border-slate-200/80 shadow-xl p-6 sm:p-10">
                   {isSubmitted ? (
                     <div className="text-center py-10 space-y-4">
                       <div className="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
@@ -292,7 +370,7 @@ export const BookCallPage: React.FC = () => {
                         Session Request Confirmed
                       </h3>
                       <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-                        Thank you, {formData.name}. Our strategy desk has received your details for <strong>{formData.website}</strong>. A calendar invite and session link will be delivered to <strong>{formData.email}</strong> within 24 business hours.
+                        Thank you, {formData.name}. Our strategy desk has received your details for <strong>{formData.website}</strong>. A calendar invitation and session link will be delivered to <strong>{formData.email}</strong> within 24 business hours.
                       </p>
                       <div className="pt-4">
                         <Button to="/resources" variant="outline" size="md">
@@ -303,7 +381,7 @@ export const BookCallPage: React.FC = () => {
                   ) : (
                     <>
                       <div className="pb-6 mb-6 border-b border-slate-100">
-                        <h2 className="font-heading font-bold text-2xl text-slate-950 mb-1">
+                        <h2 className="font-heading font-bold text-xl sm:text-2xl text-slate-950 mb-1">
                           Book Your Advisory Session
                         </h2>
                         <p className="text-xs text-slate-500">
@@ -487,7 +565,7 @@ export const BookCallPage: React.FC = () => {
                               setFormData({ ...formData, growthGoal: e.target.value });
                               if (formErrors.growthGoal) setFormErrors({ ...formErrors, growthGoal: undefined });
                             }}
-                            className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors ${
+                            className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors resize-none ${
                               formErrors.growthGoal ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
                             }`}
                           />
@@ -549,6 +627,113 @@ export const BookCallPage: React.FC = () => {
                 </div>
               </FadeIn>
             </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── 3. Preparation & Readiness Checklist ──────────────────── */}
+      <Section variant="slate" spacing="lg">
+        <Container>
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <Badge variant="purple" size="sm" className="mb-3">
+              Session Maximization
+            </Badge>
+            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-4">
+              How to Prepare for Your 30-Minute Advisory Call
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              We respect your time. Preparing these 3 items beforehand ensures we dive straight into high-leverage architectural and strategic analysis.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {PREPARATION_STEPS.map((step) => (
+              <div key={step.title} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
+                <div className="w-8 h-8 rounded-xl bg-purple-50 border border-purple-100 text-purple-700 font-bold text-xs flex items-center justify-center">
+                  <FileCheck className="w-4 h-4" />
+                </div>
+                <h3 className="font-heading font-bold text-base text-slate-900">
+                  {step.title}
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  {step.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── 4. Qualification Matrix (Who This Call Is For) ───────── */}
+      <Section variant="white" spacing="lg">
+        <Container>
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <Badge variant="amber" size="sm" className="mb-3">
+              Mutual Fit Criteria
+            </Badge>
+            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-4">
+              Is This Advisory Session Right for You?
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              We maintain high advisory standards and focus our engineering resources exclusively where we can deliver compounding commercial impact.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {QUALIFICATION_CRITERIA.map((crit) => (
+              <div
+                key={crit.title}
+                className={`rounded-2xl p-6 sm:p-8 border ${
+                  crit.type === 'ideal'
+                    ? 'bg-emerald-50/40 border-emerald-200/80'
+                    : 'bg-rose-50/40 border-rose-200/80'
+                }`}
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  {crit.type === 'ideal' ? (
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+                  ) : (
+                    <XCircle className="w-5 h-5 text-rose-600 flex-shrink-0" />
+                  )}
+                  <h3 className="font-heading font-bold text-base text-slate-900">
+                    {crit.title}
+                  </h3>
+                </div>
+                <ul className="space-y-3">
+                  {crit.points.map((pt) => (
+                    <li key={pt} className="flex items-start gap-2.5 text-xs text-slate-700 leading-relaxed">
+                      <span
+                        className={`w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 ${
+                          crit.type === 'ideal' ? 'bg-emerald-600' : 'bg-rose-500'
+                        }`}
+                      />
+                      <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── 5. Strategy Call FAQs ─────────────────────────────────── */}
+      <Section variant="slate" spacing="lg">
+        <Container>
+          <div className="max-w-2xl mx-auto text-center mb-10">
+            <Badge variant="purple" size="sm" className="mb-3">
+              Booking Questions
+            </Badge>
+            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-3">
+              Frequently Asked Questions: Strategy Calls
+            </h2>
+            <p className="text-slate-600 text-sm">
+              Answers to common scheduling, format, and confidentiality questions.
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto">
+            <FAQAccordion items={CALL_FAQS.map(f => ({ question: f.q, answer: f.a }))} />
           </div>
         </Container>
       </Section>

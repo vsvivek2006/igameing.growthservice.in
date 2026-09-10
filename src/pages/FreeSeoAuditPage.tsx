@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
-import { Zap, Search, BarChart3, AlertTriangle, Globe, CheckCircle2, AlertCircle } from 'lucide-react';
+import {
+  Zap,
+  Search,
+  BarChart3,
+  AlertTriangle,
+  Globe,
+  CheckCircle2,
+  AlertCircle,
+  FileText,
+  Video,
+  Clock,
+  ShieldCheck,
+  Check,
+  Layers,
+} from 'lucide-react';
 import { SEOHead } from '../seo';
-import { Container, Section } from '../components/ui';
+import { buildBreadcrumbSchema, buildFAQSchema } from '../seo/schema';
+import { Container, Section, Badge, FAQAccordion, Breadcrumb } from '../components/ui';
 import { FadeIn } from '../components/animations';
 import { trackEvent } from '../analytics/tracking';
-
 import { submitLead } from '../services/leadSubmission';
 
 interface AuditFormData {
@@ -18,6 +32,60 @@ interface AuditFormData {
   keywords: string;
   honeypot: string;
 }
+
+const AUDIT_FAQS = [
+  {
+    q: 'What is included in this free technical SEO audit?',
+    a: 'Your audit is conducted manually by a senior technical SEO engineer. It covers crawl budget efficiency, JavaScript rendering bottlenecks, Core Web Vitals standing, Schema.org entity mapping, top 50 competitor keyword gaps, and platform policy compliance risks.',
+  },
+  {
+    q: 'How long does it take to receive the completed audit?',
+    a: 'Diagnostic reports are delivered to your work email within 24–48 business hours. We prioritize thoroughness and accuracy over instant, automated SaaS exports.',
+  },
+  {
+    q: 'Do I need to provide access to Google Search Console or Google Analytics?',
+    a: 'No preliminary access is required. We perform the initial diagnostic using external crawl emulation, headless browser snapshots, server response headers, and proprietary SERP intelligence. If you choose to grant read-only GSC access later, we can incorporate internal log data.',
+  },
+  {
+    q: 'Is our website data and business information kept confidential?',
+    a: 'Yes, 100%. We sign mutual NDAs on request and treat all domain diagnostics, keyword targets, and architecture data with strict confidentiality. We never sell contact information or publicize client audits without explicit consent.',
+  },
+  {
+    q: 'Why is this technical audit offered free of charge?',
+    a: 'We offer this complimentary diagnostic to demonstrate our engineering rigor before discussing commercial engagements. Operators and technical founders who experience the clarity of our diagnostic baseline consistently choose us for multi-quarter execution.',
+  },
+  {
+    q: 'What happens after I receive the audit report?',
+    a: 'You receive an actionable executive PDF summary and an optional 10-minute video walkthrough. You can implement the recommendations with your internal engineering team or schedule a strategy call with our architects to discuss managed execution.',
+  },
+];
+
+const AUDIT_PILLARS = [
+  {
+    icon: Search,
+    title: '1. Crawl Architecture & Indexation Health',
+    desc: 'Analysis of server access headers, HTTP status code distributions, robots.txt directives, and faceted navigation parameters that trap search engine bots.',
+    points: ['Crawl budget allocation & waste detection', 'Facet parameter canonicalization checks', 'DOM hydration timeout identification'],
+  },
+  {
+    icon: Zap,
+    title: '2. Core Web Vitals & Hydration SLA',
+    desc: 'Real-world mobile performance benchmarking against Google thresholds: Largest Contentful Paint (LCP), Interaction to Next Paint (INP), and Layout Shift (CLS).',
+    points: ['Above-the-fold asset preloading analysis', 'Client bundle hydration mismatch checks', 'Main-thread JavaScript task breakdown'],
+  },
+  {
+    icon: Layers,
+    title: '3. Entity Schema & Knowledge Graph',
+    desc: 'Validation of JSON-LD structured data connecting your domain to authoritative search engine entities, publisher schemas, and BreadcrumbList trees.',
+    points: ['Schema.org syntax & nesting validation', 'Author E-E-A-T entity connection verification', 'Rich snippet qualification assessment'],
+  },
+  {
+    icon: BarChart3,
+    title: '4. Commercial Keyword Gap Map',
+    desc: 'Identification of high-intent search queries captured by your top 5 competitors that your domain fails to rank for, prioritizing high-conversion opportunities.',
+    points: ['Transactional vs informational intent clustering', 'Under-served long-tail query discovery', 'Topical authority deficit modeling'],
+  },
+];
 
 export const FreeSeoAuditPage: React.FC = () => {
   const [formData, setFormData] = useState<AuditFormData>({
@@ -126,7 +194,6 @@ export const FreeSeoAuditPage: React.FC = () => {
 
     if (result.success) {
       setIsSubmitted(true);
-      // Fire generate_lead strictly after confirmed successful submission
       trackEvent('generate_lead', {
         form_type: 'free_seo_audit',
         market: formData.market || 'all_markets',
@@ -140,49 +207,80 @@ export const FreeSeoAuditPage: React.FC = () => {
     }
   };
 
+  const breadcrumbItems = [{ label: 'Free SEO Audit', path: '/free-seo-audit' }];
+
   return (
     <>
       <SEOHead
         title="Free Technical SEO & Growth Audit — High-Competition Platforms"
         description="Request a confidential technical SEO audit for your gaming, financial, or high-competition digital platform. We review Core Web Vitals, indexation, keyword gaps, and compliance."
         canonicalPath="/free-seo-audit"
+        jsonLd={[
+          buildBreadcrumbSchema(breadcrumbItems),
+          buildFAQSchema(AUDIT_FAQS),
+        ]}
       />
 
-      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-20 lg:py-24 overflow-hidden border-b border-navy-800/80">
+      {/* ── 1. Hero Section ───────────────────────────────────────── */}
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-16 sm:py-20 lg:py-24 overflow-hidden border-b border-navy-800/80">
         <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
-        <div className="absolute top-1/3 -left-32 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-10 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/3 -left-32 w-72 sm:w-96 h-72 sm:h-96 bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-10 w-72 sm:w-96 h-72 sm:h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <Container className="relative z-10">
+          <div className="mb-6 overflow-x-auto py-1">
+            <Breadcrumb items={breadcrumbItems} variant="light" />
+          </div>
+
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-wider mb-6">
                 <Zap className="w-3.5 h-3.5 text-amber-400" />
                 <span>100% Confidential — Manual Engineering Diagnostic</span>
               </div>
-              <h1 className="type-h1 text-white mb-5">
-                Technical SEO & Organic Growth Audit
+              <h1 className="type-h1 text-white mb-5 leading-tight">
+                Technical SEO &amp; Organic Growth Audit
               </h1>
-              <p className="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
-                Discover the crawl bottlenecks, keyword gaps, and technical barriers holding your organic rankings back. Conducted manually by a senior technical SEO engineer — not an automated tool export.
+              <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto mb-8">
+                Discover the crawl bottlenecks, keyword gaps, and rendering barriers holding your organic search traffic back. Conducted manually by a senior technical SEO engineer — not an automated tool export.
               </p>
+
+              {/* Trust Indicators */}
+              <div className="flex flex-wrap justify-center items-center gap-6 text-xs text-slate-400">
+                <div className="flex items-center gap-1.5">
+                  <Clock className="w-4 h-4 text-amber-400" />
+                  <span>24–48h Turnaround</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                  <span>Confidentiality Guaranteed</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <FileText className="w-4 h-4 text-purple-400" />
+                  <span>Executive PDF &amp; Video Brief</span>
+                </div>
+              </div>
             </FadeIn>
           </div>
         </Container>
       </section>
 
+      {/* ── 2. Intake Form & Diagnostic Terminal ──────────────────── */}
       <Section variant="white" spacing="lg">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
             {/* Form */}
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-7 order-2 lg:order-1">
               <FadeIn>
-                <div className="bg-white rounded-2xl lg:rounded-3xl border border-slate-200/80 shadow-xl p-7 sm:p-10">
+                <div className="bg-white rounded-2xl lg:rounded-3xl border border-slate-200/80 shadow-xl p-6 sm:p-10">
                   <div className="flex items-center justify-between pb-6 mb-6 border-b border-slate-100">
                     <div>
-                      <h2 className="font-heading font-bold text-2xl text-slate-950">Request Your Free Audit</h2>
-                      <p className="text-xs text-slate-500 mt-1">Manual diagnostic delivered within 48 business hours</p>
+                      <h2 className="font-heading font-bold text-xl sm:text-2xl text-slate-950">
+                        Request Your Free Audit
+                      </h2>
+                      <p className="text-xs text-slate-500 mt-1">
+                        Manual diagnostic delivered within 48 business hours
+                      </p>
                     </div>
                     <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-600">
                       <Zap className="w-5 h-5" />
@@ -197,15 +295,15 @@ export const FreeSeoAuditPage: React.FC = () => {
                       <h3 className="font-heading font-bold text-2xl text-slate-900">
                         Audit Request Received
                       </h3>
-                      <p className="text-sm text-slate-600 leading-relaxed">
-                        Thank you, {formData.name}. Our technical SEO audit desk has logged <strong>{formData.website}</strong>. A comprehensive diagnostic report will be prepared and delivered to <strong>{formData.email}</strong> within 48 business hours.
+                      <p className="text-sm text-slate-600 leading-relaxed max-w-md mx-auto">
+                        Thank you, {formData.name}. Our technical SEO audit desk has logged <strong>{formData.website}</strong>. A comprehensive diagnostic report will be prepared and delivered to <strong>{formData.email}</strong> within 24–48 business hours.
                       </p>
-                      <p className="text-xs text-slate-400">
-                        Urgent inquiry? Email our audit desk at business@igameing.growthservice.in
+                      <p className="text-xs text-slate-400 pt-2">
+                        Direct inquiry? Email our audit desk at hello@igameing.growthservice.in
                       </p>
                     </div>
                   ) : (
-                    <form className="space-y-5" onSubmit={handleSubmit} onFocusCapture={handleFieldInteraction} noValidate>
+                    <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit} onFocusCapture={handleFieldInteraction} noValidate>
                       {/* Honeypot Field */}
                       <div
                         style={{
@@ -231,145 +329,151 @@ export const FreeSeoAuditPage: React.FC = () => {
                         />
                       </div>
 
-                      <div>
-                        <label htmlFor="audit_name" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Your Name *
-                        </label>
-                        <input
-                          id="audit_name"
-                          type="text"
-                          required
-                          placeholder="John Smith"
-                          value={formData.name}
-                          onChange={(e) => {
-                            setFormData({ ...formData, name: e.target.value });
-                            if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
-                          }}
-                          className={`w-full px-4 py-3 rounded-xl border text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors ${
-                            formErrors.name ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
-                          }`}
-                        />
-                        {formErrors.name && (
-                          <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
-                            <AlertCircle className="w-3 h-3" />
-                            {formErrors.name}
-                          </p>
-                        )}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="audit_name" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                            Your Name *
+                          </label>
+                          <input
+                            id="audit_name"
+                            type="text"
+                            required
+                            placeholder="Alex Mercer"
+                            value={formData.name}
+                            onChange={(e) => {
+                              setFormData({ ...formData, name: e.target.value });
+                              if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
+                            }}
+                            className={`w-full px-4 py-3 rounded-xl border text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors ${
+                              formErrors.name ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                            }`}
+                          />
+                          {formErrors.name && (
+                            <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                              <AlertCircle className="w-3 h-3" />
+                              {formErrors.name}
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label htmlFor="audit_email" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                            Work Email *
+                          </label>
+                          <input
+                            id="audit_email"
+                            type="email"
+                            required
+                            placeholder="alex@brand.com"
+                            value={formData.email}
+                            onChange={(e) => {
+                              setFormData({ ...formData, email: e.target.value });
+                              if (formErrors.email) setFormErrors({ ...formErrors, email: undefined });
+                            }}
+                            className={`w-full px-4 py-3 rounded-xl border text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors ${
+                              formErrors.email ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                            }`}
+                          />
+                          {formErrors.email && (
+                            <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                              <AlertCircle className="w-3 h-3" />
+                              {formErrors.email}
+                            </p>
+                          )}
+                        </div>
                       </div>
 
-                      <div>
-                        <label htmlFor="audit_email" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Work Email *
-                        </label>
-                        <input
-                          id="audit_email"
-                          type="email"
-                          required
-                          placeholder="you@yourbrand.com"
-                          value={formData.email}
-                          onChange={(e) => {
-                            setFormData({ ...formData, email: e.target.value });
-                            if (formErrors.email) setFormErrors({ ...formErrors, email: undefined });
-                          }}
-                          className={`w-full px-4 py-3 rounded-xl border text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors ${
-                            formErrors.email ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
-                          }`}
-                        />
-                        {formErrors.email && (
-                          <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
-                            <AlertCircle className="w-3 h-3" />
-                            {formErrors.email}
-                          </p>
-                        )}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="audit_website" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                            Website URL to Audit *
+                          </label>
+                          <input
+                            id="audit_website"
+                            type="url"
+                            required
+                            placeholder="https://your-platform.com"
+                            value={formData.website}
+                            onChange={(e) => {
+                              setFormData({ ...formData, website: e.target.value });
+                              if (formErrors.website) setFormErrors({ ...formErrors, website: undefined });
+                            }}
+                            className={`w-full px-4 py-3 rounded-xl border text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors ${
+                              formErrors.website ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                            }`}
+                          />
+                          {formErrors.website && (
+                            <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                              <AlertCircle className="w-3 h-3" />
+                              {formErrors.website}
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label htmlFor="audit_business" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                            Brand / Company Name
+                          </label>
+                          <input
+                            id="audit_business"
+                            type="text"
+                            placeholder="Your brand or platform"
+                            value={formData.business}
+                            onChange={(e) => setFormData({ ...formData, business: e.target.value })}
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors"
+                          />
+                        </div>
                       </div>
 
-                      <div>
-                        <label htmlFor="audit_website" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Website URL to Audit *
-                        </label>
-                        <input
-                          id="audit_website"
-                          type="url"
-                          required
-                          placeholder="https://your-platform.com"
-                          value={formData.website}
-                          onChange={(e) => {
-                            setFormData({ ...formData, website: e.target.value });
-                            if (formErrors.website) setFormErrors({ ...formErrors, website: undefined });
-                          }}
-                          className={`w-full px-4 py-3 rounded-xl border text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors ${
-                            formErrors.website ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
-                          }`}
-                        />
-                        {formErrors.website && (
-                          <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
-                            <AlertCircle className="w-3 h-3" />
-                            {formErrors.website}
-                          </p>
-                        )}
-                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="audit_industry" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                            Industry Vertical
+                          </label>
+                          <select
+                            id="audit_industry"
+                            value={formData.industry}
+                            onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors bg-white"
+                          >
+                            <option value="">Select your vertical</option>
+                            <option value="iGaming">Online Gaming (iGaming)</option>
+                            <option value="Casino">Casino Platform</option>
+                            <option value="Cricket Gaming">Cricket / Fantasy Sports</option>
+                            <option value="Yono Gaming">Yono / Skill Gaming Apps</option>
+                            <option value="Color Prediction">Color Prediction Platform</option>
+                            <option value="Color Trading">Color Trading Platform</option>
+                            <option value="Stock Market / Financial">Stock Market &amp; Financial Portal</option>
+                            <option value="Adult / Escort Services">Adult Directory / Portal (B2B)</option>
+                            <option value="Other">Other High-Competition Vertical</option>
+                          </select>
+                        </div>
 
-                      <div>
-                        <label htmlFor="audit_business" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Business / Brand Name
-                        </label>
-                        <input
-                          id="audit_business"
-                          type="text"
-                          placeholder="Your brand or platform name"
-                          value={formData.business}
-                          onChange={(e) => setFormData({ ...formData, business: e.target.value })}
-                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors"
-                        />
-                      </div>
-
-                      <div>
-                        <label htmlFor="audit_industry" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Industry Vertical
-                        </label>
-                        <select
-                          id="audit_industry"
-                          value={formData.industry}
-                          onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
-                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors bg-white"
-                        >
-                          <option value="">Select your vertical</option>
-                          <option value="iGaming">iGaming (Online Gaming Platform)</option>
-                          <option value="Casino">Casino</option>
-                          <option value="Cricket Gaming">Cricket / Fantasy Sports Gaming</option>
-                          <option value="Yono Gaming">Yono / Rummy / Card Gaming</option>
-                          <option value="Color Prediction">Color Prediction Platform</option>
-                          <option value="Color Trading">Color Trading Platform</option>
-                          <option value="Stock Market / Financial">Stock Market / Financial Trading</option>
-                          <option value="Adult / Escort Services">Adult / Escort Services (B2B)</option>
-                          <option value="Other">Other High-Competition Vertical</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label htmlFor="audit_market" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Primary Target Market
-                        </label>
-                        <select
-                          id="audit_market"
-                          value={formData.market}
-                          onChange={(e) => setFormData({ ...formData, market: e.target.value })}
-                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors bg-white"
-                        >
-                          <option value="">Select market</option>
-                          <option value="India">India</option>
-                          <option value="UK">UK</option>
-                          <option value="Canada">Canada</option>
-                          <option value="Australia">Australia</option>
-                          <option value="Europe">Malta / Europe</option>
-                          <option value="UAE">UAE / Middle East</option>
-                          <option value="Global">Global</option>
-                        </select>
+                        <div>
+                          <label htmlFor="audit_market" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                            Primary Target Market
+                          </label>
+                          <select
+                            id="audit_market"
+                            value={formData.market}
+                            onChange={(e) => setFormData({ ...formData, market: e.target.value })}
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors bg-white"
+                          >
+                            <option value="">Select market</option>
+                            <option value="India">India</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Europe">Europe / Malta</option>
+                            <option value="UAE">UAE / Middle East</option>
+                            <option value="Global">Global / Multi-Regional</option>
+                          </select>
+                        </div>
                       </div>
 
                       <div>
                         <label htmlFor="audit_priority" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Current Priority
+                          Primary Diagnostic Priority
                         </label>
                         <select
                           id="audit_priority"
@@ -378,25 +482,22 @@ export const FreeSeoAuditPage: React.FC = () => {
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors bg-white"
                         >
                           <option value="">What matters most right now?</option>
-                          <option value="Technical SEO / Crawl Fixes">Technical SEO / Crawl Issues</option>
-                          <option value="Organic Traffic Growth">Organic Traffic Growth</option>
-                          <option value="Keyword Rankings">Keyword Rankings</option>
-                          <option value="Authority / Backlink Strategy">Authority / Backlink Strategy</option>
-                          <option value="Website Architecture / Migration">Website Architecture / Migration</option>
-                          <option value="Paid Acquisition Eligibility">Paid Acquisition Eligibility</option>
-                          <option value="Conversion Optimisation">Conversion Optimisation (CRO)</option>
-                          <option value="Full Growth Strategy">Full Growth Strategy</option>
+                          <option value="Technical SEO / Crawl Fixes">Technical SEO / Crawl &amp; Indexation Fixes</option>
+                          <option value="Organic Traffic Growth">Organic Traffic Scaling</option>
+                          <option value="Keyword Rankings">Keyword Rankings on Primary Terms</option>
+                          <option value="Core Web Vitals">Core Web Vitals &amp; Page Speed Optimization</option>
+                          <option value="Full Growth Strategy">Full Technical &amp; Topical Growth Strategy</option>
                         </select>
                       </div>
 
                       <div>
                         <label htmlFor="audit_keywords" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Top Target Keywords (optional)
+                          Top Target Keywords or Competitors (optional)
                         </label>
                         <textarea
                           id="audit_keywords"
                           rows={3}
-                          placeholder="e.g., casino SEO, gaming portal rankings, financial trading traffic..."
+                          placeholder="e.g. gaming platform rankings, competitor domain, specific query targets..."
                           value={formData.keywords}
                           onChange={(e) => setFormData({ ...formData, keywords: e.target.value })}
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors resize-none"
@@ -435,7 +536,7 @@ export const FreeSeoAuditPage: React.FC = () => {
                         className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-navy-950 font-bold text-base hover:shadow-glow-gold-sm transition-all duration-200 shadow-md hover:-translate-y-0.5 disabled:opacity-50 cursor-pointer"
                       >
                         <Zap className="w-4 h-4 fill-navy-950" />
-                        {isSubmitting ? 'Processing Audit Request...' : 'Get My Free SEO Audit'}
+                        {isSubmitting ? 'Processing Audit Request...' : 'Get My Free Technical SEO Audit'}
                       </button>
 
                       <p className="text-center text-xs text-slate-400">
@@ -447,15 +548,15 @@ export const FreeSeoAuditPage: React.FC = () => {
               </FadeIn>
             </div>
 
-            {/* Value Points & Diagnostic Preview */}
-            <div className="lg:col-span-5 space-y-6">
+            {/* Right: Value Points & Terminal Preview */}
+            <div className="lg:col-span-5 space-y-6 order-1 lg:order-2">
               <FadeIn delay={150}>
                 <div>
                   <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-950 mb-3">
                     What's Included in Your Audit
                   </h2>
                   <p className="text-sm text-slate-600 leading-relaxed">
-                    Most free audits are automated SaaS exports with zero commercial context. Ours is performed by an experienced technical SEO strategist who reviews your architecture through the lens of your specific vertical, competitors, and indexing constraints.
+                    Most free audits are automated SaaS exports with zero commercial context. Ours is performed manually by an experienced technical SEO strategist who reviews your architecture through the lens of your specific vertical, competitors, and indexing constraints.
                   </p>
                 </div>
 
@@ -470,7 +571,7 @@ export const FreeSeoAuditPage: React.FC = () => {
                   </div>
                   <div className="space-y-1.5 text-slate-300">
                     <div className="flex justify-between">
-                      <span className="text-slate-400">1. Crawl & Indexation</span>
+                      <span className="text-slate-400">1. Crawl &amp; Indexation</span>
                       <span className="text-purple-300">DOM / Bot Status</span>
                     </div>
                     <div className="flex justify-between">
@@ -532,7 +633,122 @@ export const FreeSeoAuditPage: React.FC = () => {
                 </div>
               </FadeIn>
             </div>
+          </div>
+        </Container>
+      </Section>
 
+      {/* ── 3. Four Pillars of the Engineering Audit ──────────────── */}
+      <Section variant="slate" spacing="lg">
+        <Container>
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <Badge variant="purple" size="sm" className="mb-3">
+              Comprehensive Scope
+            </Badge>
+            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-4">
+              The 4 Pillars of Our Technical Diagnostic
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              We inspect the full lifecycle of your web application from server headers to client-side DOM rendering and competitive SERP positioning.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {AUDIT_PILLARS.map((pillar) => {
+              const Icon = pillar.icon;
+              return (
+                <div key={pillar.title} className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+                  <div className="w-12 h-12 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-700">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-heading font-bold text-lg text-slate-900">
+                    {pillar.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    {pillar.desc}
+                  </p>
+                  <ul className="space-y-2 pt-2 border-t border-slate-100">
+                    {pillar.points.map((pt) => (
+                      <li key={pt} className="flex items-center gap-2 text-xs text-slate-700">
+                        <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── 4. Deliverables & Turnaround SLA ───────────────────────── */}
+      <Section variant="white" spacing="lg">
+        <Container>
+          <div className="bg-navy-950 bg-hero-atmosphere rounded-2xl sm:rounded-3xl p-8 sm:p-12 text-white border border-navy-800 shadow-card-dark">
+            <div className="max-w-3xl mx-auto text-center space-y-6">
+              <Badge variant="amber" size="sm">
+                Service Level Agreement
+              </Badge>
+              <h2 className="type-h2 text-white">
+                What You Receive in Your Diagnostic Package
+              </h2>
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+                No generic 80-page automated PDF dumps filled with useless warnings. We deliver concise, code-ready instructions your team can act on immediately.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 text-left">
+                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+                  <div className="text-emerald-400 font-bold text-sm flex items-center gap-2">
+                    <FileText className="w-4 h-4" />
+                    <span>Executive Summary</span>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    A prioritized 10–15 page PDF detailing critical blockers, immediate quick-wins, and 90-day trajectory.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+                  <div className="text-amber-400 font-bold text-sm flex items-center gap-2">
+                    <Video className="w-4 h-4" />
+                    <span>Loom Walkthrough</span>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    A recorded video by our lead architect walking through your codebase and live DOM render snapshots.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+                  <div className="text-purple-300 font-bold text-sm flex items-center gap-2">
+                    <Clock className="w-4 h-4" />
+                    <span>24–48h SLA</span>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Guaranteed turnaround time with direct follow-up email support to clarify any architectural questions.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── 5. Technical Audit FAQs ───────────────────────────────── */}
+      <Section variant="slate" spacing="lg">
+        <Container>
+          <div className="max-w-2xl mx-auto text-center mb-10">
+            <Badge variant="purple" size="sm" className="mb-3">
+              Questions &amp; Answers
+            </Badge>
+            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-3">
+              Frequently Asked Questions: Free Technical Audit
+            </h2>
+            <p className="text-slate-600 text-sm">
+              Everything you need to know about our diagnostic process and data confidentiality.
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto">
+            <FAQAccordion items={AUDIT_FAQS.map(f => ({ question: f.q, answer: f.a }))} />
           </div>
         </Container>
       </Section>

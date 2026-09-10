@@ -13,19 +13,32 @@ import { FadeIn, MotionCard } from '../components/animations';
 import { getAllGuides, GuideArticle } from '../data/guidesData';
 import { trackEvent } from '../analytics/tracking';
 
+// Maps UI display category IDs to the underlying data category values
+const CATEGORY_TO_DATA: Record<string, string> = {
+  'technical-seo': 'seo-guide',
+  'growth-strategy': 'seo-guide',
+  'paid-acquisition': 'seo-guide',
+  'website-architecture': 'seo-guide',
+};
+
 export const ResourcesHub: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const guides = getAllGuides();
 
   const categories = [
     { id: 'all', label: 'All Resources' },
-    { id: 'seo-guide', label: 'Technical SEO Guides' },
-    { id: 'industry-insight', label: 'Industry Market Insights' },
+    { id: 'seo-guide', label: 'SEO Guides' },
+    { id: 'technical-seo', label: 'Technical SEO' },
+    { id: 'industry-insight', label: 'Industry Insights' },
+    { id: 'growth-strategy', label: 'Growth Strategy' },
+    { id: 'paid-acquisition', label: 'Paid Acquisition' },
+    { id: 'website-architecture', label: 'Website Architecture' },
   ];
 
   const filteredGuides = useMemo(() => {
     if (selectedCategory === 'all') return guides;
-    return guides.filter((g) => g.category === selectedCategory);
+    const dataCategory = CATEGORY_TO_DATA[selectedCategory] ?? selectedCategory;
+    return guides.filter((g) => g.category === dataCategory);
   }, [guides, selectedCategory]);
 
   return (

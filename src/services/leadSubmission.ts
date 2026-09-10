@@ -16,8 +16,11 @@ export interface LeadSubmissionPayload {
   readonly email: string;
   readonly website?: string;
   readonly company?: string;
+  readonly business?: string;
+  readonly industry?: string;
   readonly vertical?: string;
   readonly market?: string;
+  readonly priority?: string;
   readonly growthGoal?: string;
   readonly services?: readonly string[];
   readonly budget?: string;

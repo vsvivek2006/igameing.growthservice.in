@@ -9,9 +9,12 @@ import { submitLead } from '../services/leadSubmission';
 
 interface AuditFormData {
   name: string;
+  business: string;
   email: string;
   website: string;
+  industry: string;
   market: string;
+  priority: string;
   keywords: string;
   honeypot: string;
 }
@@ -19,9 +22,12 @@ interface AuditFormData {
 export const FreeSeoAuditPage: React.FC = () => {
   const [formData, setFormData] = useState<AuditFormData>({
     name: '',
+    business: '',
     email: '',
     website: '',
+    industry: '',
     market: '',
+    priority: '',
     keywords: '',
     honeypot: '',
   });
@@ -111,6 +117,9 @@ export const FreeSeoAuditPage: React.FC = () => {
       website: formData.website,
       market: formData.market,
       growthGoal: formData.keywords,
+      business: formData.business,
+      industry: formData.industry,
+      priority: formData.priority,
     });
 
     setIsSubmitting(false);
@@ -301,6 +310,43 @@ export const FreeSeoAuditPage: React.FC = () => {
                       </div>
 
                       <div>
+                        <label htmlFor="audit_business" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Business / Brand Name
+                        </label>
+                        <input
+                          id="audit_business"
+                          type="text"
+                          placeholder="Your brand or platform name"
+                          value={formData.business}
+                          onChange={(e) => setFormData({ ...formData, business: e.target.value })}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors"
+                        />
+                      </div>
+
+                      <div>
+                        <label htmlFor="audit_industry" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Industry Vertical
+                        </label>
+                        <select
+                          id="audit_industry"
+                          value={formData.industry}
+                          onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors bg-white"
+                        >
+                          <option value="">Select your vertical</option>
+                          <option value="iGaming">iGaming (Online Gaming Platform)</option>
+                          <option value="Casino">Casino</option>
+                          <option value="Cricket Gaming">Cricket / Fantasy Sports Gaming</option>
+                          <option value="Yono Gaming">Yono / Rummy / Card Gaming</option>
+                          <option value="Color Prediction">Color Prediction Platform</option>
+                          <option value="Color Trading">Color Trading Platform</option>
+                          <option value="Stock Market / Financial">Stock Market / Financial Trading</option>
+                          <option value="Adult / Escort Services">Adult / Escort Services (B2B)</option>
+                          <option value="Other">Other High-Competition Vertical</option>
+                        </select>
+                      </div>
+
+                      <div>
                         <label htmlFor="audit_market" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
                           Primary Target Market
                         </label>
@@ -318,6 +364,28 @@ export const FreeSeoAuditPage: React.FC = () => {
                           <option value="Europe">Malta / Europe</option>
                           <option value="UAE">UAE / Middle East</option>
                           <option value="Global">Global</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label htmlFor="audit_priority" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Current Priority
+                        </label>
+                        <select
+                          id="audit_priority"
+                          value={formData.priority}
+                          onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-colors bg-white"
+                        >
+                          <option value="">What matters most right now?</option>
+                          <option value="Technical SEO / Crawl Fixes">Technical SEO / Crawl Issues</option>
+                          <option value="Organic Traffic Growth">Organic Traffic Growth</option>
+                          <option value="Keyword Rankings">Keyword Rankings</option>
+                          <option value="Authority / Backlink Strategy">Authority / Backlink Strategy</option>
+                          <option value="Website Architecture / Migration">Website Architecture / Migration</option>
+                          <option value="Paid Acquisition Eligibility">Paid Acquisition Eligibility</option>
+                          <option value="Conversion Optimisation">Conversion Optimisation (CRO)</option>
+                          <option value="Full Growth Strategy">Full Growth Strategy</option>
                         </select>
                       </div>
 

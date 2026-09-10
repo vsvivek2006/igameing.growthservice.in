@@ -1,6 +1,6 @@
 {
   "manifest_version": "1.0.0",
-  "generated_at": "2026-09-10T12:29:47.228Z",
+  "generated_at": "2026-09-10T13:04:14.587Z",
   "canonical_origin": "https://igameing.growthservice.in",
   "total_indexable_pages": 50,
   "target_constraint": 50,
@@ -20,7 +20,7 @@
       "sitemap_eligible": true,
       "priority": 1,
       "changefreq": "daily",
-      "last_verified": "2026-09-10T12:29:47.226Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -36,7 +36,7 @@
       "sitemap_eligible": true,
       "priority": 0.7,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -52,7 +52,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -68,7 +68,7 @@
       "sitemap_eligible": true,
       "priority": 0.9,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -84,7 +84,7 @@
       "sitemap_eligible": true,
       "priority": 0.9,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -100,7 +100,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -116,7 +116,7 @@
       "sitemap_eligible": true,
       "priority": 0.9,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -132,7 +132,7 @@
       "sitemap_eligible": true,
       "priority": 0.9,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -148,7 +148,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -164,7 +164,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -180,7 +180,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -196,7 +196,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -212,7 +212,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -228,7 +228,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -244,7 +244,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -260,7 +260,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -276,7 +276,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -292,7 +292,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -308,7 +308,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -324,7 +324,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.585Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -340,7 +340,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -356,7 +356,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -372,7 +372,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -388,7 +388,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -404,7 +404,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -420,7 +420,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -436,7 +436,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -452,7 +452,7 @@
       "sitemap_eligible": true,
       "priority": 0.85,
       "changefreq": "weekly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -468,7 +468,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -484,7 +484,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -500,7 +500,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -516,7 +516,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -532,7 +532,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -548,7 +548,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -564,7 +564,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -580,7 +580,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -596,7 +596,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -612,7 +612,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -628,7 +628,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -644,7 +644,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -660,7 +660,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -676,7 +676,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -692,7 +692,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -708,7 +708,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -724,7 +724,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -740,7 +740,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -756,7 +756,7 @@
       "sitemap_eligible": true,
       "priority": 0.8,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -772,7 +772,7 @@
       "sitemap_eligible": true,
       "priority": 0.75,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -788,7 +788,7 @@
       "sitemap_eligible": true,
       "priority": 0.75,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     },
     {
@@ -804,7 +804,7 @@
       "sitemap_eligible": true,
       "priority": 0.75,
       "changefreq": "monthly",
-      "last_verified": "2026-09-10T12:29:47.227Z",
+      "last_verified": "2026-09-10T13:04:14.586Z",
       "status": "READY_FOR_INDEXATION"
     }
   ]

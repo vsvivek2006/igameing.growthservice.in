@@ -29,12 +29,12 @@ const TEAM_VALUES = [
   {
     icon: Award,
     title: 'Vertical Depth',
-    desc: 'We only work in iGaming. This means we know the players, the platforms, the regulators, and the competitive dynamics.',
+    desc: 'We work exclusively in high-competition, policy-sensitive digital verticals: iGaming, casino, cricket gaming, Yono, color prediction, color trading, stock market/financial, and adult-industry B2B marketing.',
   },
   {
     icon: Zap,
     title: 'Speed of Execution',
-    desc: 'iGaming moves fast. We operate with startup urgency — delivering strategies, creatives, and campaigns in days, not quarters.',
+    desc: 'High-competition verticals move fast. We operate with engineering urgency — delivering technical audits, architectural roadmaps, and implementation milestones on defined timelines.',
   },
 ];
 
@@ -81,10 +81,10 @@ export const AboutPage: React.FC = () => {
                 </h2>
                 <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
                   <p>
-                    iGaming Growth was founded after years of watching casino operators and gaming startups burn budget on agencies that didn't understand the vertical. Generic SEO advice. Non-compliant ad copy. Landing pages that worked for software companies but failed for gaming funnels.
+                    iGaming Growth was built to address a clear gap: businesses in gaming, casino, financial trading, and other high-competition digital verticals were being served by generalist agencies applying frameworks designed for mainstream commercial markets. Generic keyword research. Non-compliant ad copy. Technical SEO advice that did not account for crawl budget economics or YMYL scrutiny.
                   </p>
                   <p>
-                    We built iGaming Growth as the antidote: a team with operator experience, affiliate network knowledge, and a track record in the most competitive digital niches on earth. We launch brands from zero, scale established operators into new geos, and fix broken growth engines for mature businesses.
+                    We built iGaming Growth as a specialist alternative: a B2B growth agency that starts from the specific competitive reality of your vertical — the authority thresholds, compliance boundaries, content standards, and search heuristics specific to your market. We work on technical architecture, content authority, acquisition systems, and conversion infrastructure.
                   </p>
                   <p>
                     Today, iGaming Growth operates as a dedicated B2B growth agency delivering performance SEO, technical development, and conversion marketing across high-competition markets in India and globally.
@@ -151,24 +151,79 @@ export const AboutPage: React.FC = () => {
         </Container>
       </Section>
 
-      {/* Parent brand */}
+      {/* Technical Competence & Infrastructure */}
       <Section variant="white" spacing="md">
         <Container>
-          <div className="max-w-2xl mx-auto text-center space-y-4">
-            <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Our Standard</div>
-            <h2 className="font-heading font-bold text-2xl text-slate-900">
-              Enterprise SEO Infrastructure
-            </h2>
-            <p className="text-sm text-slate-500 leading-relaxed">
-              Our engineering infrastructure gives iGaming clients access to enterprise-grade SEO tooling, log file analysis, crawler emulation, and custom schema pipelines designed specifically for regulated, competitive verticals.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 pt-4">
-              <Link
-                to="/services"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-sm font-semibold hover:border-purple-300 hover:text-purple-600 transition-colors"
-              >
-                Explore Services <ArrowRight className="w-4 h-4" />
-              </Link>
+          <div className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+              <FadeIn>
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-widest text-purple-600 mb-4">Technical Competence</div>
+                  <h2 className="font-heading font-bold text-2xl text-slate-900 mb-4">
+                    Engineering Infrastructure
+                  </h2>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                    Our technical work spans server-side rendering analysis, crawl log interpretation, JavaScript rendering evaluation, structured data pipeline construction, Core Web Vitals engineering, and canonical architecture design — across platforms including React, Next.js, WordPress, and custom stacks.
+                  </p>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Every engagement starts from a code-level diagnostic rather than a surface-level audit tool output. Our schema pipelines are validated programmatically. Internal linking graphs are modelled before implementation. Authority acquisition is quality-controlled through editorial review.
+                  </p>
+                  <div className="mt-6">
+                    <Link
+                      to="/services"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-sm font-semibold hover:border-purple-300 hover:text-purple-600 transition-colors"
+                    >
+                      Explore Services <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+              </FadeIn>
+
+              <FadeIn delay={150}>
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-widest text-purple-600 mb-4">Compliance &amp; Editorial Standards</div>
+                  <h2 className="font-heading font-bold text-2xl text-slate-900 mb-4">
+                    How We Work With Policy-Sensitive Verticals
+                  </h2>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                    We operate across verticals where regulatory complexity, advertising platform policy, and content compliance are primary constraints — not afterthoughts. Paid advertising eligibility, jurisdiction restrictions, and platform certification requirements are factored into every acquisition strategy.
+                  </p>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3 text-sm text-slate-700">
+                      <span className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="w-2 h-2 rounded-full bg-purple-600" />
+                      </span>
+                      <span>No ranking guarantees — process transparency only</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm text-slate-700">
+                      <span className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="w-2 h-2 rounded-full bg-purple-600" />
+                      </span>
+                      <span>Zero fabricated case studies, fake testimonials, or manufactured social proof</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm text-slate-700">
+                      <span className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="w-2 h-2 rounded-full bg-purple-600" />
+                      </span>
+                      <span>Paid media described with accurate platform eligibility framing — never positioned as policy bypass</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm text-slate-700">
+                      <span className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="w-2 h-2 rounded-full bg-purple-600" />
+                      </span>
+                      <span>Adult-industry and escort vertical work is strictly B2B marketing agency scope — no explicit content</span>
+                    </div>
+                  </div>
+                  <div className="mt-6">
+                    <Link
+                      to="/editorial-policy"
+                      className="inline-flex items-center gap-2 text-sm font-bold text-purple-700 hover:text-purple-900 transition-colors"
+                    >
+                      Read Our Editorial Policy <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+              </FadeIn>
             </div>
           </div>
         </Container>

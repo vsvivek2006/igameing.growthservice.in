@@ -1,6 +1,6 @@
 /**
  * iGaming Growth — Agency Services Data Architecture
- * 13 specialist services for high-competition industries.
+ * 12 specialist services for high-competition industries.
  * All content is editable from this single file.
  */
 
@@ -919,39 +919,4 @@ export const SERVICE_CATEGORY_LABELS: Record<ServiceCategory, string> = {
   'paid-acquisition': 'Paid Acquisition',
   'conversion-analytics': 'Conversion & Analytics',
 };
-
-// Case studies (kept minimal — no fabricated metrics)
-export interface CaseStudy {
-  readonly slug: string;
-  readonly industry: string;
-  readonly challenge: string;
-  readonly approach: string;
-  readonly services: readonly string[];
-}
-
-export const caseStudies: readonly CaseStudy[] = [
-  {
-    slug: 'gaming-platform-seo',
-    industry: 'Online Gaming',
-    challenge: 'New gaming platform with no organic visibility competing against established operators with years of domain history.',
-    approach: 'Technical SEO foundation build, programmatic page architecture for game catalogue, and topical authority content programme targeting player intent queries.',
-    services: ['technical-seo', 'programmatic-seo', 'content-strategy'],
-  },
-  {
-    slug: 'financial-platform-content',
-    industry: 'Financial Services',
-    challenge: 'Financial comparison platform losing rankings after Google algorithm update targeting thin YMYL content.',
-    approach: 'Full content audit, E-E-A-T-standard content rewrites, expert authorship framework, and technical trust signal implementation.',
-    services: ['content-strategy', 'on-page-seo', 'technical-seo'],
-  },
-  {
-    slug: 'adult-industry-seo',
-    industry: 'Adult Industry',
-    challenge: 'Adult platform seeking organic visibility in a category where paid advertising options are almost entirely closed.',
-    approach: 'Comprehensive technical SEO audit, content architecture for non-restricted discovery queries, and legitimate authority development.',
-    services: ['seo-audit', 'technical-seo', 'off-page-seo'],
-  },
-];
-
-export const getFeaturedCaseStudies = (): readonly CaseStudy[] => [...caseStudies];
 

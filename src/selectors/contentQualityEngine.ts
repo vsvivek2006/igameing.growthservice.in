@@ -9,6 +9,8 @@
  * never presented externally as a fake SEO ranking metric.
  */
 
+import { businessConfig } from '../config/business';
+
 export interface PageQualityAuditTarget {
   readonly path: string;
   readonly title: string;
@@ -60,7 +62,7 @@ export function evaluatePageQuality(target: PageQualityAuditTarget): QualityScor
     deductions.push('Meta description too brief (< 80 characters)');
   }
 
-  if (!target.canonical || !target.canonical.startsWith('https://igameing.growthservice.in')) {
+  if (!target.canonical || !target.canonical.startsWith(businessConfig.canonicalOrigin)) {
     metadataScore -= 10;
     deductions.push('Invalid or missing canonical URL');
   }

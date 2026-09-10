@@ -142,6 +142,7 @@ export const ContactPage: React.FC = () => {
       trackEvent('generate_lead', {
         form_type: 'contact_proposal',
         vertical: formData.vertical || 'unspecified',
+        submission_id: result.submissionId,
       });
     } else {
       setSubmissionFeedback({
@@ -155,7 +156,7 @@ export const ContactPage: React.FC = () => {
     <>
       <SEOHead
         title="Get a Free iGaming Growth Proposal — Contact Us"
-        description="Tell us about your gaming brand and we'll send a custom growth proposal within 24 hours. Free strategy call for casino operators, sportsbooks, and gaming brands."
+        description="Tell us about your digital platform and we'll prepare a custom growth proposal within one business day. Strategy consultation for operators and gaming brands."
         canonicalPath="/contact"
       />
 

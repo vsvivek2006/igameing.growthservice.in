@@ -11,6 +11,7 @@ import {
   Code2,
 } from 'lucide-react';
 import { SEOHead } from '../seo';
+import { getCanonicalUrl } from '../seo/canonical';
 import { buildArticleSchema, buildBreadcrumbSchema } from '../seo/schema';
 import { Container, Section, Badge, Button, Breadcrumb } from '../components/ui';
 import { getGuideBySlug } from '../data/guidesData';
@@ -33,7 +34,7 @@ export const GuideDetailPage: React.FC = () => {
       : '/resources/seo-guides';
 
   const canonicalPath = `${pathPrefix}/${guide.slug}`;
-  const canonicalUrl = `https://igameing.growthservice.in${canonicalPath}`;
+  const canonicalUrl = getCanonicalUrl(canonicalPath);
 
   const breadcrumbItems = [
     { label: 'Resources', path: '/resources' },
@@ -47,7 +48,7 @@ export const GuideDetailPage: React.FC = () => {
         title={guide.seo.title}
         description={guide.seo.description}
         canonicalPath={canonicalPath}
-        structuredData={[
+        jsonLd={[
           buildBreadcrumbSchema(breadcrumbItems),
           buildArticleSchema({
             title: guide.title,

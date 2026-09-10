@@ -183,7 +183,7 @@ export const Home: React.FC = () => {
         title="SEO & Digital Growth for High-Competition Industries — iGaming Growth"
         description="Specialist SEO, website development, and digital marketing for gaming, casino, financial, and adult industry businesses. Technical SEO, content strategy, and performance marketing for the markets that fight hardest for organic visibility."
         canonicalPath="/"
-        structuredData={[buildOrganizationSchema(), buildWebSiteSchema()]}
+        jsonLd={[buildOrganizationSchema(), buildWebSiteSchema()]}
       />
 
       {/* ── Hero ──────────────────────────────────────────────────── */}

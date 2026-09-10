@@ -37,7 +37,7 @@ export const IndustriesHub: React.FC = () => {
         title="Industries We Serve — High-Competition Digital Marketing Specialists"
         description="Specialist digital marketing for online gaming, casino, cricket gaming, color prediction, stock market, financial, and adult industry businesses. Industry-specific SEO expertise."
         canonicalPath="/industries"
-        structuredData={[buildBreadcrumbSchema(breadcrumbItems)]}
+        jsonLd={[buildBreadcrumbSchema(breadcrumbItems)]}
       />
 
       {/* Hero */}

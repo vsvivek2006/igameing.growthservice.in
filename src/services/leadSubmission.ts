@@ -28,9 +28,12 @@ export interface LeadSubmissionResult {
   readonly success: boolean;
   readonly status: 'submitted' | 'configuration_pending' | 'network_error' | 'validation_error';
   readonly message: string;
+  readonly submissionId?: string;
 }
 
 export async function submitLead(payload: LeadSubmissionPayload): Promise<LeadSubmissionResult> {
+  const submissionId = `sub_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+
   const endpoint =
     typeof import.meta !== 'undefined' && import.meta.env
       ? (import.meta.env.VITE_LEAD_SUBMISSION_ENDPOINT as string)
@@ -43,8 +46,12 @@ export async function submitLead(payload: LeadSubmissionPayload): Promise<LeadSu
       status: 'configuration_pending',
       message:
         'Direct automated transmission is pending endpoint configuration. Please email your request directly to hello@igameing.growthservice.in.',
+      submissionId,
     };
   }
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
 
   try {
     const response = await fetch(endpoint, {
@@ -53,18 +60,23 @@ export async function submitLead(payload: LeadSubmissionPayload): Promise<LeadSu
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
+      signal: controller.signal,
       body: JSON.stringify({
         ...payload,
+        submissionId,
         submittedAt: new Date().toISOString(),
-        origin: window.location.origin,
+        origin: typeof window !== 'undefined' ? window.location.origin : '',
       }),
     });
+
+    clearTimeout(timeoutId);
 
     if (response.ok) {
       return {
         success: true,
         status: 'submitted',
-        message: 'Your inquiry has been transmitted successfully. We will review your request within 24 business hours.',
+        message: 'Your inquiry has been transmitted successfully. We will review your request within one business day.',
+        submissionId,
       };
     }
 
@@ -72,12 +84,18 @@ export async function submitLead(payload: LeadSubmissionPayload): Promise<LeadSu
       success: false,
       status: 'network_error',
       message: `Transmission failed with status ${response.status}. Please email hello@igameing.growthservice.in directly.`,
+      submissionId,
     };
-  } catch {
+  } catch (err: unknown) {
+    clearTimeout(timeoutId);
+    const isTimeout = err instanceof Error && err.name === 'AbortError';
     return {
       success: false,
       status: 'network_error',
-      message: 'Network transmission error. Please email hello@igameing.growthservice.in directly.',
+      message: isTimeout
+        ? 'Transmission timed out. Please email hello@igameing.growthservice.in directly.'
+        : 'Network transmission error. Please email hello@igameing.growthservice.in directly.',
+      submissionId,
     };
   }
 }

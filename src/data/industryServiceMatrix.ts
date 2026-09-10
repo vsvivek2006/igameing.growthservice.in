@@ -5,7 +5,27 @@
  * and distinct search intent. No templated string replacements.
  */
 
-import { ServiceIndustryMatrixEntry } from '../types/content';
+export interface ServiceIndustryMatrixEntry {
+  readonly industrySlug: string;
+  readonly serviceSlug: string;
+  readonly enabled: boolean;
+  readonly priority: number;
+  readonly indexable: boolean;
+  readonly searchIntent: string;
+  readonly specificChallenges: readonly {
+    readonly title: string;
+    readonly description: string;
+  }[];
+  readonly specificApproach: string;
+  readonly specificDeliverables: readonly string[];
+  readonly specificFAQs: readonly {
+    readonly q: string;
+    readonly a: string;
+  }[];
+  readonly uniqueValue: string;
+  readonly conversionFocus: string;
+  readonly estimatedTimelineWeeks: string;
+}
 
 export const industryServiceMatrix: readonly ServiceIndustryMatrixEntry[] = [
   // ─── 1. Online Gaming × SEO ──────────────────────────────────────────────
@@ -54,7 +74,7 @@ export const industryServiceMatrix: readonly ServiceIndustryMatrixEntry[] = [
       },
       {
         q: 'How do you handle game pages built inside single-page applications?',
-        a: 'We implement server-side pre-rendering specifically for search engine user-agents, ensuring Googlebot receives fully populated HTML, Schema.org Game markup, and internal links without running costly client-side JS bundles.',
+        a: 'We deploy Server-Side Rendering (SSR) and pre-rendering to deliver complete HTML, Schema.org Game markup, and internal crawl paths for fast initial paint and crawlability without relying on heavy client bundles.',
       },
     ],
   },
@@ -485,7 +505,7 @@ export const industryServiceMatrix: readonly ServiceIndustryMatrixEntry[] = [
     specificFAQs: [
       {
         q: 'How do you keep interactive stock charts from slowing down search indexing?',
-        a: 'We render static snapshot data and complete semantic financial tables on the server for Googlebot, and lazy-load interactive canvas charting libraries only when human users interact with the component.',
+        a: 'We render complete semantic financial tables on the server via SSR/prerendering for fast initial paint and crawlability, while lazy-loading heavy interactive charting libraries on user interaction.',
       },
     ],
   },

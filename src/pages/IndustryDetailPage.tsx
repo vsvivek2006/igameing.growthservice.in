@@ -44,7 +44,7 @@ const IndustryPage: React.FC<{ industry: IndustryVertical }> = ({ industry }) =>
         title={industry.seo.title}
         description={industry.seo.description}
         canonicalPath={`/industries/${industry.slug}`}
-        structuredData={[buildBreadcrumbSchema(breadcrumbItems)]}
+        jsonLd={[buildBreadcrumbSchema(breadcrumbItems)]}
       />
 
       {/* ── Hero ──────────────────────────────────────────────────── */}

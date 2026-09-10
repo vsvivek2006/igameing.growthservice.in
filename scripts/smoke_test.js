@@ -100,4 +100,60 @@ for (const sample of SMOKE_TEST_PATHS) {
   smokePassCount++;
 }
 
-console.log(`✅ All ${smokePassCount} cornerstone smoke test routes passed verification!`);
+// 2. Alias Resolution Validation (Simulated 301 Permanent Redirect)
+const ALIAS_TESTS = [
+  { from: '/get-proposal', expectedTo: '/contact' },
+  { from: '/guides', expectedTo: '/resources' },
+  { from: '/schedule', expectedTo: '/book-call' },
+  { from: '/services/social-media-marketing', expectedTo: '/services/meta-ads' },
+];
+
+let aliasPassCount = 0;
+for (const alias of ALIAS_TESTS) {
+  const route = resolveRoute(alias.from);
+  const dest = route.to || route.canonical;
+  if (!route || route.status !== 301 || dest !== alias.expectedTo) {
+    console.error(
+      `❌ Smoke Test Alias Failure on ${alias.from}: status ${route?.status}, to ${dest} (expected ${alias.expectedTo})`
+    );
+    process.exit(1);
+  }
+  aliasPassCount++;
+}
+
+// 3. Unknown Route Resolution Validation (Simulated 404 Not Found)
+const NOT_FOUND_TESTS = [
+  '/non-existent-page-xyz',
+  '/games/slots',
+  '/casino-review-xyz',
+];
+
+let notFoundPassCount = 0;
+for (const invalidPath of NOT_FOUND_TESTS) {
+  const route = resolveRoute(invalidPath);
+  if (!route || route.status !== 404) {
+    console.error(`❌ Smoke Test 404 Failure on ${invalidPath}: status ${route?.status} (expected 404)`);
+    process.exit(1);
+  }
+  notFoundPassCount++;
+}
+
+// 4. Static Asset Verification (Filesystem presence and non-empty content)
+import fs from 'fs';
+import path from 'path';
+
+const STATIC_ASSETS = ['public/robots.txt', 'public/sitemap.xml', 'public/llms.txt'];
+for (const asset of STATIC_ASSETS) {
+  const fullPath = path.resolve(asset);
+  if (!fs.existsSync(fullPath) || fs.statSync(fullPath).size === 0) {
+    console.error(`❌ Smoke Test Static Asset Missing or Empty: ${asset}`);
+    process.exit(1);
+  }
+}
+
+console.log(`✅ Smoke Test Suite Passed (Local Resolver & Static Asset Check):`);
+console.log(`   • ${smokePassCount} Canonical routes resolved to 200 OK`);
+console.log(`   • ${aliasPassCount} Route aliases resolved to 301 Permanent Redirect`);
+console.log(`   • ${notFoundPassCount} Unknown routes resolved to 404 Not Found`);
+console.log(`   • ${STATIC_ASSETS.length} Critical static assets confirmed (/robots.txt, /sitemap.xml, /llms.txt)`);
+console.log(`ℹ️ Note: This verifies internal route resolution and static assets. Production HTTP status is governed by Vercel edge configuration.`);

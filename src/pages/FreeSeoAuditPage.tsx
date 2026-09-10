@@ -121,6 +121,7 @@ export const FreeSeoAuditPage: React.FC = () => {
       trackEvent('generate_lead', {
         form_type: 'free_seo_audit',
         market: formData.market || 'all_markets',
+        submission_id: result.submissionId,
       });
     } else {
       setSubmissionFeedback({

@@ -70,9 +70,11 @@ export const trackEvent = (
 
   // Deduplicate high-value conversions to prevent double-firing
   if (event === 'generate_lead') {
-    const dedupeKey = `${event}:${properties.form_type || 'lead'}:${JSON.stringify(
-      properties.market || properties.vertical || ''
-    )}`;
+    const dedupeKey = properties.submission_id
+      ? `${event}:${String(properties.submission_id)}`
+      : `${event}:${properties.form_type || 'lead'}:${JSON.stringify(
+          properties.market || properties.vertical || ''
+        )}`;
     if (recentConversions.has(dedupeKey)) {
       if (analyticsConfig.debug) {
         console.warn('[Telemetry:Deduplication]: Blocked duplicate conversion event:', dedupeKey);

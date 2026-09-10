@@ -1,28 +1,26 @@
 /**
  * iGaming Growth Agency Site Configuration Facade
- * Clean application-level facade over business config, navigation, routes, and agency data.
+ * Thin application-level facade over authoritative business config, navigation, routes, and data.
  */
 
 import { businessConfig, BusinessConfigSchema } from './business';
 import { navigationConfig } from './navigation';
-import { APP_ROUTES, AppRoute } from './routes';
-import {
-  servicesData,
-  caseStudies,
-  industryVerticals,
-  ServiceOffering,
-  CaseStudy,
-  IndustryVertical,
-} from '../data/servicesData';
-import * as selectors from '../selectors';
+import { APP_ROUTES, AppRoute } from '../routing';
+import { servicesData, ServiceOffering } from '../data/servicesData';
+import { industriesData, IndustryVertical } from '../data/industriesData';
+import { industryServiceMatrix, ServiceIndustryMatrixEntry } from '../data/industryServiceMatrix';
+import { EXACT_50_PAGES, PageDefinition } from '../data/pageRegistry';
+import { guidesData, GuidePost } from '../data/guidesData';
 
 export interface SiteConfigSchema {
   readonly business: BusinessConfigSchema;
   readonly navigation: typeof navigationConfig;
   readonly routes: Record<string, AppRoute>;
   readonly services: readonly ServiceOffering[];
-  readonly caseStudies: readonly CaseStudy[];
   readonly industries: readonly IndustryVertical[];
+  readonly matrix: readonly ServiceIndustryMatrixEntry[];
+  readonly pages: readonly PageDefinition[];
+  readonly guides: readonly GuidePost[];
 }
 
 export const siteConfig: SiteConfigSchema = {
@@ -30,8 +28,10 @@ export const siteConfig: SiteConfigSchema = {
   navigation: navigationConfig,
   routes: APP_ROUTES,
   services: servicesData,
-  caseStudies,
-  industries: industryVerticals,
+  industries: industriesData,
+  matrix: industryServiceMatrix,
+  pages: EXACT_50_PAGES,
+  guides: guidesData,
 } as const;
 
 export {
@@ -39,11 +39,8 @@ export {
   navigationConfig,
   APP_ROUTES,
   servicesData,
-  caseStudies,
-  industryVerticals,
-  selectors,
+  industriesData,
+  industryServiceMatrix,
 };
-
-export * from '../selectors';
 
 export default siteConfig;

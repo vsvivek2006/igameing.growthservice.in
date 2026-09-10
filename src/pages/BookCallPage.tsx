@@ -123,6 +123,7 @@ export const BookCallPage: React.FC = () => {
       trackEvent('generate_lead', {
         form_type: 'book_call',
         vertical: formData.vertical || 'unspecified',
+        submission_id: result.submissionId,
       });
     } else {
       setSubmissionFeedback({

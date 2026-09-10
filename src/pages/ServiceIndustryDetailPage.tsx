@@ -65,7 +65,7 @@ export const ServiceIndustryDetailPage: React.FC = () => {
         title={seo.title}
         description={seo.description}
         canonicalPath={`/industries/${industry.slug}/${service.slug}`}
-        structuredData={[
+        jsonLd={[
           buildBreadcrumbSchema(breadcrumbItems),
           buildServiceIndustrySchema(
             service.name,

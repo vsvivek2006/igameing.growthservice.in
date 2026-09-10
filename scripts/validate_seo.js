@@ -28,7 +28,7 @@ const { getAllServices } = await import('./dist/data/servicesData.js');
 const { getAllIndustries } = await import('./dist/data/industriesData.js');
 const { getAllMatrixEntries } = await import('./dist/data/industryServiceMatrix.js');
 const { getAllGuides } = await import('./dist/data/guidesData.js');
-const { validateMatrixEntryDepth } = await import('./dist/selectors/uniquenessEngine.js');
+const { validateMatrixEntryDepth, validateMatrixSemanticUniqueness } = await import('./dist/selectors/uniquenessEngine.js');
 const { evaluatePageQuality } = await import('./dist/selectors/contentQualityEngine.js');
 const { getCompleteSiteInventory } = await import('./dist/routing/index.js');
 
@@ -172,7 +172,11 @@ for (const entry of matrixEntries) {
     );
   }
 }
-console.log(`✅ ${matrixEntries.length} Service × Industry matrix entries passed Uniqueness Engine depth rules`);
+const semanticResult = validateMatrixSemanticUniqueness(matrixEntries);
+if (!semanticResult.isValid) {
+  throw new Error(`Matrix failed semantic uniqueness guardrails:\n${semanticResult.errors.join('\n')}`);
+}
+console.log(`✅ ${matrixEntries.length} Service × Industry matrix entries passed Uniqueness Engine depth and semantic rules`);
 
 // 9. Audit Complete Inventory: Exactly 50 canonical routes
 const inventory = getCompleteSiteInventory();
@@ -192,7 +196,7 @@ for (const item of inventory) {
     path: item.path,
     title: item.label,
     description: `Official ${item.label} digital growth capability and technical SEO architecture by iGaming Growth.`,
-    canonical: `https://igameing.growthservice.in${item.canonical}`,
+    canonical: `${businessConfig.canonicalOrigin}${item.canonical}`,
     hasSchema: true,
     hasCTA: true,
     hasBreadcrumbs: true,

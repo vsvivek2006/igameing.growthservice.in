@@ -26,9 +26,9 @@ export const ServicesHub: React.FC = () => {
     <>
       <SEOHead
         title="SEO & Digital Growth Services for High-Competition Industries — iGaming Growth"
-        description="Specialist SEO, website development, paid acquisition, and conversion services for gaming, casino, financial, and adult industry businesses. 13 services designed for the most competitive digital verticals."
+        description="Specialist SEO, website development, paid acquisition, and conversion services for gaming, casino, financial, and adult industry businesses. 12 services designed for the most competitive digital verticals."
         canonicalPath="/services"
-        structuredData={[buildBreadcrumbSchema(breadcrumbItems)]}
+        jsonLd={[buildBreadcrumbSchema(breadcrumbItems)]}
       />
 
       {/* Hero */}

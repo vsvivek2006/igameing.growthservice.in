@@ -40,7 +40,7 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
         title={service.seo.title}
         description={service.seo.description}
         canonicalPath={`/services/${service.slug}`}
-        structuredData={[
+        jsonLd={[
           buildBreadcrumbSchema(breadcrumbItems),
           buildServiceSchema(service),
         ]}

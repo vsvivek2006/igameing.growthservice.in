@@ -10,6 +10,7 @@ import { SEO_CONFIG, formatPageTitle } from './seo-config';
 import { getCanonicalUrl } from './canonical';
 
 export interface SEOHeadProps extends Partial<PageMetadata> {
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
   children?: React.ReactNode;
 }
 
@@ -26,8 +27,10 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
   ogDescription,
   twitterCard = 'summary_large_image',
   jsonLd,
+  structuredData,
   children,
 }) => {
+  const activeJsonLd = jsonLd || structuredData;
   const formattedTitle = formatPageTitle(title || SEO_CONFIG.defaultTitle);
   const metaDescription = description || SEO_CONFIG.defaultDescription;
 
@@ -67,9 +70,9 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
       <meta name="twitter:image" content={ogImage} />
 
       {/* Structured Data JSON-LD */}
-      {jsonLd && (
+      {activeJsonLd && (
         <script type="application/ld+json">
-          {JSON.stringify(jsonLd)}
+          {JSON.stringify(activeJsonLd)}
         </script>
       )}
 

@@ -8,29 +8,40 @@ import { getCanonicalUrl } from './canonical';
 import { ServiceOffering } from '../data/servicesData';
 
 export function buildOrganizationSchema(): Record<string, unknown> {
-  return {
+  const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     '@id': `${businessConfig.canonicalOrigin}/#organization`,
     name: businessConfig.name,
-    legalName: businessConfig.legalName,
     url: businessConfig.canonicalOrigin,
     logo: `${businessConfig.canonicalOrigin}/logo.webp`,
     description: businessConfig.description,
     email: businessConfig.emails.primary,
-    address: {
-      '@type': 'PostalAddress',
-      addressCountry: businessConfig.address.countryCode,
-      addressLocality: businessConfig.address.city,
+    areaServed: {
+      '@type': 'AdministrativeArea',
+      name: 'Worldwide',
     },
-    sameAs: [
+  };
+
+  if (businessConfig.legalName && businessConfig.legalName !== businessConfig.name) {
+    schema.legalName = businessConfig.legalName;
+  }
+
+  if (businessConfig.social) {
+    const socialLinks = [
       businessConfig.social.twitter,
       businessConfig.social.telegram,
       businessConfig.social.linkedin,
       businessConfig.social.youtube,
       businessConfig.social.instagram,
-    ].filter(Boolean),
-  };
+    ].filter(Boolean) as string[];
+
+    if (socialLinks.length > 0) {
+      schema.sameAs = socialLinks;
+    }
+  }
+
+  return schema;
 }
 
 export function buildWebSiteSchema(): Record<string, unknown> {

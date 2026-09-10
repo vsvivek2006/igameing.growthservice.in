@@ -5,6 +5,7 @@ import { Container, Section, Button, Breadcrumb } from '../components/ui';
 import { FadeIn } from '../components/animations';
 import { trackEvent } from '../analytics/tracking';
 import businessConfig from '../config/business';
+import { submitLead } from '../services/leadSubmission';
 
 interface BookingFormData {
   name: string;
@@ -28,6 +29,10 @@ export const BookCallPage: React.FC = () => {
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof BookingFormData, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submissionFeedback, setSubmissionFeedback] = useState<{
+    status: 'submitted' | 'configuration_pending' | 'network_error' | 'validation_error';
+    message: string;
+  } | null>(null);
   const formStartedRef = React.useRef(false);
 
   // Track form view on initial mount
@@ -81,7 +86,7 @@ export const BookCallPage: React.FC = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Bot trap check
@@ -94,23 +99,37 @@ export const BookCallPage: React.FC = () => {
     }
 
     setIsSubmitting(true);
+    setSubmissionFeedback(null);
 
     trackEvent('cta_click', {
       cta_name: 'book_call_submit',
       cta_location: 'book_call_form',
     });
 
-    // Simulate clean dispatch with production feedback
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
+    const result = await submitLead({
+      formType: 'book_call',
+      name: formData.name,
+      email: formData.email,
+      website: formData.website,
+      vertical: formData.vertical,
+      growthGoal: formData.growthGoal,
+    });
 
-      // Fire generate_lead strictly after successful submission
+    setIsSubmitting(false);
+
+    if (result.success) {
+      setIsSubmitted(true);
+      // Fire generate_lead strictly after confirmed successful submission
       trackEvent('generate_lead', {
         form_type: 'book_call',
         vertical: formData.vertical || 'unspecified',
       });
-    }, 800);
+    } else {
+      setSubmissionFeedback({
+        status: result.status,
+        message: result.message,
+      });
+    }
   };
 
   const breadcrumbItems = [
@@ -449,7 +468,7 @@ export const BookCallPage: React.FC = () => {
                             id="call_goal"
                             rows={3}
                             required
-                            placeholder="e.g. Lost 40% organic traffic after latest Google core update, or scaling player acquisition for a new skill game launch."
+                            placeholder="e.g. Lost 40% organic traffic after latest Google core update, or scaling customer acquisition for a new gaming product launch."
                             value={formData.growthGoal}
                             onChange={(e) => {
                               setFormData({ ...formData, growthGoal: e.target.value });
@@ -466,6 +485,33 @@ export const BookCallPage: React.FC = () => {
                             </p>
                           )}
                         </div>
+
+                        {submissionFeedback && (
+                          <div
+                            role="alert"
+                            className={`p-4 rounded-xl text-xs leading-relaxed border ${
+                              submissionFeedback.status === 'configuration_pending'
+                                ? 'bg-amber-50 text-amber-900 border-amber-200'
+                                : 'bg-rose-50 text-rose-900 border-rose-200'
+                            }`}
+                          >
+                            <p className="font-semibold mb-1">
+                              {submissionFeedback.status === 'configuration_pending'
+                                ? 'Online Booking Endpoint Pending Deployment'
+                                : 'Booking Notice'}
+                            </p>
+                            <p className="mb-2">{submissionFeedback.message}</p>
+                            <p>
+                              Direct Work Email:{' '}
+                              <a
+                                href="mailto:hello@igameing.growthservice.in?subject=Advisory%20Session%20Booking"
+                                className="underline font-bold text-purple-700 hover:text-purple-900"
+                              >
+                                hello@igameing.growthservice.in
+                              </a>
+                            </p>
+                          </div>
+                        )}
 
                         {/* Submit Button */}
                         <div className="pt-2">

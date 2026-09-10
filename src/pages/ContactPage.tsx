@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MessageCircle, Clock, ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Mail, Clock, ArrowRight, CheckCircle2, AlertCircle, Video } from 'lucide-react';
 import { SEOHead } from '../seo';
 import { Container, Section, Badge } from '../components/ui';
 import { FadeIn } from '../components/animations';
 import { trackEvent } from '../analytics/tracking';
 import businessConfig from '../config/business';
+import { submitLead } from '../services/leadSubmission';
 
 interface ContactFormData {
   name: string;
@@ -34,6 +36,10 @@ export const ContactPage: React.FC = () => {
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submissionFeedback, setSubmissionFeedback] = useState<{
+    status: 'submitted' | 'configuration_pending' | 'network_error' | 'validation_error';
+    message: string;
+  } | null>(null);
   const formStartedRef = React.useRef(false);
 
   // Track form view on initial mount
@@ -97,7 +103,7 @@ export const ContactPage: React.FC = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (formData.honeypot) {
@@ -109,22 +115,40 @@ export const ContactPage: React.FC = () => {
     }
 
     setIsSubmitting(true);
+    setSubmissionFeedback(null);
 
     trackEvent('cta_click', {
       cta_name: 'submit_proposal_request',
       cta_location: 'contact_proposal_form',
     });
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
+    const result = await submitLead({
+      formType: 'contact_proposal',
+      name: formData.name,
+      company: formData.company,
+      email: formData.email,
+      website: formData.website,
+      vertical: formData.vertical,
+      services: formData.services,
+      budget: formData.budget,
+      message: formData.message,
+    });
 
-      // Fire generate_lead strictly after successful submission
+    setIsSubmitting(false);
+
+    if (result.success) {
+      setIsSubmitted(true);
+      // Fire generate_lead strictly after confirmed successful submission
       trackEvent('generate_lead', {
         form_type: 'contact_proposal',
         vertical: formData.vertical || 'unspecified',
       });
-    }, 800);
+    } else {
+      setSubmissionFeedback({
+        status: result.status,
+        message: result.message,
+      });
+    }
   };
 
   return (
@@ -370,6 +394,32 @@ export const ContactPage: React.FC = () => {
                       />
                     </div>
 
+                    {submissionFeedback && (
+                      <div
+                        className={`p-4 rounded-xl text-xs leading-relaxed ${
+                          submissionFeedback.status === 'configuration_pending'
+                            ? 'bg-amber-50 border border-amber-200 text-amber-900'
+                            : 'bg-rose-50 border border-rose-200 text-rose-800'
+                        }`}
+                      >
+                        <p className="font-semibold mb-1">
+                          {submissionFeedback.status === 'configuration_pending'
+                            ? 'Online Transmission Endpoint Pending Deployment'
+                            : 'Transmission Notice'}
+                        </p>
+                        <p className="mb-2">{submissionFeedback.message}</p>
+                        <p>
+                          Direct Work Email:{' '}
+                          <a
+                            href="mailto:hello@igameing.growthservice.in?subject=Growth%20Proposal%20Inquiry"
+                            className="underline font-bold text-purple-700 hover:text-purple-900"
+                          >
+                            hello@igameing.growthservice.in
+                          </a>
+                        </p>
+                      </div>
+                    )}
+
                     <button
                       type="submit"
                       disabled={isSubmitting}
@@ -401,7 +451,7 @@ export const ContactPage: React.FC = () => {
                     Prefer to reach out directly?
                   </h3>
                   <p className="text-slate-600 leading-relaxed">
-                    We're available across direct channels for operators who want a quick response or have an urgent campaign requirement.
+                    We're available across direct channels for brands and operators who want a direct response or have immediate technical requirements.
                   </p>
                 </div>
 
@@ -416,39 +466,37 @@ export const ContactPage: React.FC = () => {
                     <div>
                       <div className="text-xs text-slate-500 font-medium">Email Us Directly</div>
                       <div className="font-bold text-slate-900 text-sm">{businessConfig.emails.primary}</div>
-                      <div className="text-xs text-purple-600">Response within 24 hours</div>
+                      <div className="text-xs text-purple-600">Response within 24 business hours</div>
                     </div>
                   </a>
 
-                  <a
-                    href={`tel:${businessConfig.phone.primary}`}
+                  <Link
+                    to="/book-call"
                     className="flex items-center gap-4 p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-purple-200 hover:bg-purple-50/50 transition-all group"
                   >
                     <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-200 transition-colors">
-                      <Phone className="w-6 h-6" />
+                      <Video className="w-6 h-6" />
                     </div>
                     <div>
-                      <div className="text-xs text-slate-500 font-medium">Call Our Strategy Desk</div>
-                      <div className="font-bold text-slate-900 text-sm">{businessConfig.phone.primary}</div>
-                      <div className="text-xs text-emerald-600">Mon–Sat, 9am–7pm IST</div>
+                      <div className="text-xs text-slate-500 font-medium">Schedule Video Consultation</div>
+                      <div className="font-bold text-slate-900 text-sm">Book 30-Min Strategy Call</div>
+                      <div className="text-xs text-emerald-600">Direct architecture & growth session</div>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a
-                    href={businessConfig.phone.whatsapp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-emerald-200 hover:bg-emerald-50/50 transition-all group"
+                  <Link
+                    to="/free-seo-audit"
+                    className="flex items-center gap-4 p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-amber-200 hover:bg-amber-50/50 transition-all group"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-200 transition-colors">
-                      <MessageCircle className="w-6 h-6" />
+                    <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-200 transition-colors">
+                      <Zap className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-xs text-slate-500 font-medium">WhatsApp Business</div>
-                      <div className="font-bold text-slate-900 text-sm">Chat with our team</div>
-                      <div className="text-xs text-emerald-600">Quick response during business hours</div>
+                      <div className="text-xs text-slate-500 font-medium">Free Technical Diagnostic</div>
+                      <div className="font-bold text-slate-900 text-sm">Request Free SEO Audit</div>
+                      <div className="text-xs text-amber-600">Comprehensive foundation analysis</div>
                     </div>
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200">

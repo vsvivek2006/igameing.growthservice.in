@@ -51,7 +51,7 @@ export const servicePillars: readonly ServicePillar[] = [
     name: 'Search Engine Optimization',
     serviceSlug: 'seo',
     coreIntent: 'COMMERCIAL',
-    strategicObjective: 'Dominate organic search for high-competition player acquisition queries.',
+    strategicObjective: 'Dominate organic search for high-competition operator and user acquisition queries.',
     clusters: [
       {
         name: 'Technical SEO',
@@ -281,7 +281,7 @@ export const industryClusters: readonly IndustryCluster[] = [
     coreSearchIntent: 'COMMERCIAL',
     competitionLevel: 'HIGH',
     primaryTopics: [
-      { topic: 'APK Distribution SEO', serviceSlug: 'seo', intent: 'COMMERCIAL' },
+      { topic: 'Mobile App Distribution SEO', serviceSlug: 'seo', intent: 'COMMERCIAL' },
       { topic: 'Programmatic Mini-Game Indexing', serviceSlug: 'programmatic-seo', intent: 'COMMERCIAL' },
     ],
   },

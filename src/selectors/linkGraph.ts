@@ -21,6 +21,8 @@ export interface InternalLinkItem {
  */
 export const getRelatedIndustriesForService = (serviceSlug: string): readonly InternalLinkItem[] => {
   const activeIndustrySlugs = getIndustriesForService(serviceSlug);
+  const srv = getServiceBySlug(serviceSlug);
+  const serviceName = srv ? srv.name : 'Growth Services';
   
   if (activeIndustrySlugs.length > 0) {
     return activeIndustrySlugs
@@ -28,7 +30,7 @@ export const getRelatedIndustriesForService = (serviceSlug: string): readonly In
         const ind = getIndustryBySlug(slug);
         if (!ind) return null;
         return {
-          title: `${ind.name} ${serviceSlug.toUpperCase()}`,
+          title: `${serviceName} for ${ind.name}`,
           path: `/industries/${ind.slug}/${serviceSlug}`,
           description: ind.tagline,
           badge: ind.shortName,
@@ -53,6 +55,8 @@ export const getRelatedIndustriesForService = (serviceSlug: string): readonly In
  */
 export const getRelatedServicesForIndustry = (industrySlug: string): readonly InternalLinkItem[] => {
   const activeServiceSlugs = getServicesForIndustry(industrySlug);
+  const ind = getIndustryBySlug(industrySlug);
+  const industryName = ind ? ind.name : 'Gaming Operators';
 
   if (activeServiceSlugs.length > 0) {
     return activeServiceSlugs
@@ -60,7 +64,7 @@ export const getRelatedServicesForIndustry = (industrySlug: string): readonly In
         const srv = getServiceBySlug(slug);
         if (!srv) return null;
         return {
-          title: `${srv.name} for ${industrySlug}`,
+          title: `${srv.name} for ${industryName}`,
           path: `/industries/${industrySlug}/${srv.slug}`,
           description: srv.tagline,
           badge: srv.shortName,

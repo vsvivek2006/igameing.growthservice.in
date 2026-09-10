@@ -128,13 +128,12 @@ export function buildArticleSchema(params: {
   readonly datePublished?: string;
   readonly authorName?: string;
 }): Record<string, unknown> {
-  return {
+  const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'TechArticle',
     headline: params.title,
     description: params.description,
     url: params.url,
-    datePublished: params.datePublished || '2026-03-01',
     author: {
       '@type': 'Organization',
       name: params.authorName || businessConfig.name,
@@ -144,4 +143,12 @@ export function buildArticleSchema(params: {
       '@id': `${businessConfig.canonicalOrigin}/#organization`,
     },
   };
+
+  if (params.datePublished) {
+    schema.datePublished = params.datePublished;
+  }
+
+  return schema;
 }
+
+export const buildTechArticleSchema = buildArticleSchema;

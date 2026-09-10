@@ -5,6 +5,8 @@ import { Container, Section } from '../components/ui';
 import { FadeIn } from '../components/animations';
 import { trackEvent } from '../analytics/tracking';
 
+import { submitLead } from '../services/leadSubmission';
+
 interface AuditFormData {
   name: string;
   email: string;
@@ -27,6 +29,10 @@ export const FreeSeoAuditPage: React.FC = () => {
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof AuditFormData, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submissionFeedback, setSubmissionFeedback] = useState<{
+    status: 'submitted' | 'configuration_pending' | 'network_error' | 'validation_error';
+    message: string;
+  } | null>(null);
   const formStartedRef = React.useRef(false);
 
   // Track form view on initial mount
@@ -79,7 +85,7 @@ export const FreeSeoAuditPage: React.FC = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (formData.honeypot) {
@@ -91,22 +97,37 @@ export const FreeSeoAuditPage: React.FC = () => {
     }
 
     setIsSubmitting(true);
+    setSubmissionFeedback(null);
 
     trackEvent('cta_click', {
       cta_name: 'submit_audit_request',
       cta_location: 'free_seo_audit_form',
     });
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
+    const result = await submitLead({
+      formType: 'free_seo_audit',
+      name: formData.name,
+      email: formData.email,
+      website: formData.website,
+      market: formData.market,
+      growthGoal: formData.keywords,
+    });
 
-      // Fire generate_lead strictly after successful submission
+    setIsSubmitting(false);
+
+    if (result.success) {
+      setIsSubmitted(true);
+      // Fire generate_lead strictly after confirmed successful submission
       trackEvent('generate_lead', {
         form_type: 'free_seo_audit',
         market: formData.market || 'all_markets',
       });
-    }, 800);
+    } else {
+      setSubmissionFeedback({
+        status: result.status,
+        message: result.message,
+      });
+    }
   };
 
   return (
@@ -250,7 +271,7 @@ export const FreeSeoAuditPage: React.FC = () => {
                         id="audit_website"
                         type="url"
                         required
-                        placeholder="https://your-casino-site.com"
+                        placeholder="https://your-platform.com"
                         value={formData.website}
                         onChange={(e) => {
                           setFormData({ ...formData, website: e.target.value });
@@ -296,12 +317,38 @@ export const FreeSeoAuditPage: React.FC = () => {
                       <textarea
                         id="audit_keywords"
                         rows={3}
-                        placeholder="e.g., online casino India, cricket betting, real money slots..."
+                        placeholder="e.g., casino SEO, gaming portal rankings, financial trading traffic..."
                         value={formData.keywords}
                         onChange={(e) => setFormData({ ...formData, keywords: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors resize-none"
                       />
                     </div>
+
+                    {submissionFeedback && (
+                      <div
+                        className={`p-4 rounded-xl text-xs leading-relaxed ${
+                          submissionFeedback.status === 'configuration_pending'
+                            ? 'bg-amber-50 border border-amber-200 text-amber-900'
+                            : 'bg-rose-50 border border-rose-200 text-rose-800'
+                        }`}
+                      >
+                        <p className="font-semibold mb-1">
+                          {submissionFeedback.status === 'configuration_pending'
+                            ? 'Online Transmission Endpoint Pending Deployment'
+                            : 'Transmission Notice'}
+                        </p>
+                        <p className="mb-2">{submissionFeedback.message}</p>
+                        <p>
+                          Direct Work Email:{' '}
+                          <a
+                            href="mailto:hello@igameing.growthservice.in?subject=Free%20SEO%20Audit%20Request"
+                            className="underline font-bold text-purple-700 hover:text-purple-900"
+                          >
+                            hello@igameing.growthservice.in
+                          </a>
+                        </p>
+                      </div>
+                    )}
 
                     <button
                       type="submit"

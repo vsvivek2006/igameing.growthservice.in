@@ -132,7 +132,7 @@ export const faqData: readonly AgencyFAQItem[] = [
     id: 'faq-web-dev-performance',
     category: 'web-engineering',
     categoryLabel: 'Web Engineering',
-    question: 'Why does website performance directly impact player acquisition costs?',
+    question: 'Why does website performance directly impact customer acquisition costs?',
     answer:
       'Every 100ms of page load latency reduces user conversion rates. In gaming and high-speed trading environments, slow lobby loading and clunky mobile experiences cause immediate bounce. Furthermore, fast sites earn preferential crawl frequency and mobile ranking advantages from Googlebot.',
     relevantServices: ['website-development'],
@@ -143,9 +143,9 @@ export const faqData: readonly AgencyFAQItem[] = [
     id: 'faq-cashier-tracking',
     category: 'analytics-attribution',
     categoryLabel: 'Analytics & Attribution',
-    question: 'How do you track conversions when players register and pay in third-party iframe windows?',
+    question: 'How do you track conversions when users register and transact in third-party iframe windows?',
     answer:
-      'We deploy server-side Google Tag Manager (sGTM) paired with server-to-server webhook listeners. When the external cashier processes a deposit, a secure backend webhook notifies the tracking endpoint, preserving first-party attribution data and accurately crediting the originating organic search keyword.',
+      'We deploy server-side Google Tag Manager (sGTM) paired with server-to-server webhook listeners. When the external transaction system processes a transaction, a secure backend webhook notifies the tracking endpoint, preserving first-party attribution data and accurately crediting the originating organic search keyword.',
     relevantServices: ['analytics'],
   },
 ];

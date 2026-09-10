@@ -9,7 +9,7 @@ const TEAM_VALUES = [
   {
     icon: Target,
     title: 'ROI Over Vanity',
-    desc: 'We measure every campaign against depositing players, revenue, and qualified leads — not impressions or followers.',
+    desc: 'We measure every campaign against qualified customer conversions, pipeline revenue, and business growth — not impressions or vanity metrics.',
   },
   {
     icon: Globe,

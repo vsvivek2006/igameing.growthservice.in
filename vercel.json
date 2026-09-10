@@ -1,4 +1,42 @@
 {
+  "redirects": [
+    { "source": "/get-proposal", "destination": "/contact", "permanent": true },
+    { "source": "/get-a-quote", "destination": "/contact", "permanent": true },
+    { "source": "/hire-us", "destination": "/contact", "permanent": true },
+    { "source": "/our-services", "destination": "/services", "permanent": true },
+    { "source": "/what-we-do", "destination": "/services", "permanent": true },
+    { "source": "/verticals", "destination": "/industries", "permanent": true },
+    { "source": "/who-we-serve", "destination": "/industries", "permanent": true },
+    { "source": "/guides", "destination": "/resources", "permanent": true },
+    { "source": "/articles", "destination": "/resources", "permanent": true },
+    { "source": "/insights", "destination": "/resources", "permanent": true },
+    { "source": "/blog", "destination": "/resources", "permanent": true },
+    { "source": "/case-studies", "destination": "/resources", "permanent": true },
+    { "source": "/results", "destination": "/resources", "permanent": true },
+    { "source": "/portfolio", "destination": "/resources", "permanent": true },
+    { "source": "/work", "destination": "/resources", "permanent": true },
+    { "source": "/faq", "destination": "/resources", "permanent": true },
+    { "source": "/faqs", "destination": "/resources", "permanent": true },
+    { "source": "/help", "destination": "/resources", "permanent": true },
+    { "source": "/seo-audit-free", "destination": "/free-seo-audit", "permanent": true },
+    { "source": "/audit-request", "destination": "/free-seo-audit", "permanent": true },
+    { "source": "/schedule", "destination": "/book-call", "permanent": true },
+    { "source": "/consultation", "destination": "/book-call", "permanent": true },
+    { "source": "/book-strategy-call", "destination": "/book-call", "permanent": true },
+    { "source": "/services/social-media-marketing", "destination": "/services/meta-ads", "permanent": true },
+    { "source": "/resources/guides/technical-seo-audit-checklist", "destination": "/resources/seo-guides/technical-seo-guide", "permanent": true },
+    { "source": "/guides/technical-seo-audit-checklist", "destination": "/resources/seo-guides/technical-seo-guide", "permanent": true },
+    { "source": "/resources/guides/programmatic-seo-architecture", "destination": "/resources/seo-guides/programmatic-seo", "permanent": true },
+    { "source": "/guides/programmatic-seo-architecture", "destination": "/resources/seo-guides/programmatic-seo", "permanent": true },
+    { "source": "/resources/guides/core-web-vitals-spa-gaming", "destination": "/resources/seo-guides/core-web-vitals", "permanent": true },
+    { "source": "/guides/core-web-vitals-spa-gaming", "destination": "/resources/seo-guides/core-web-vitals", "permanent": true },
+    { "source": "/resources/guides/internal-linking-authority-silos", "destination": "/resources/seo-guides/internal-linking", "permanent": true },
+    { "source": "/guides/internal-linking-authority-silos", "destination": "/resources/seo-guides/internal-linking", "permanent": true },
+    { "source": "/resources/guides/high-competition-search-intent", "destination": "/resources/industry-insights/competitive-industry-seo", "permanent": true },
+    { "source": "/guides/high-competition-search-intent", "destination": "/resources/industry-insights/competitive-industry-seo", "permanent": true },
+    { "source": "/resources/guides/ymyl-financial-trading-seo", "destination": "/resources/industry-insights/financial-website-seo", "permanent": true },
+    { "source": "/guides/ymyl-financial-trading-seo", "destination": "/resources/industry-insights/financial-website-seo", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -60,7 +98,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://igameing.growthservice.in https://images.unsplash.com; connect-src 'self'; frame-ancestors 'self';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://igameing.growthservice.in https://images.unsplash.com https://www.facebook.com https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://googleads.g.doubleclick.net; frame-src 'self' https://www.googletagmanager.com; frame-ancestors 'self';"
         },
         {
           "key": "Permissions-Policy",
@@ -71,7 +109,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!assets/|favicon\\.svg|logo\\.svg|robots\\.txt|sitemap\\.xml|.*\\..*).*)",
+      "source": "/((?!assets/|favicon\\.svg|logo\\.svg|robots\\.txt|sitemap\\.xml|llms\\.txt|llm\\.txt|.*\\..*).*)",
       "destination": "/index.html"
     }
   ]

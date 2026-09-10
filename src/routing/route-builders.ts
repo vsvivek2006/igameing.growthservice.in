@@ -1,5 +1,5 @@
 /**
- * Route Path & URL Builders
+ * Route Path & URL Builders — iGaming Growth B2B Agency
  * Centralized typed generators for application paths and canonical absolute URLs.
  */
 
@@ -10,64 +10,58 @@ export function buildHomePath(): string {
   return '/';
 }
 
-export function buildGamesHubPath(): string {
-  return '/games';
+export function buildServicesHubPath(): string {
+  return '/services';
 }
 
-export function buildGameCategoryPath(gameSlug: string): string {
-  const clean = gameSlug.trim().toLowerCase().replace(/^\/+|\/+$/g, '');
-  return `/games/${clean}`;
+export function buildServicePath(slug: string): string {
+  const clean = slug.trim().toLowerCase().replace(/^\/+|\/+$/g, '');
+  return `/services/${clean}`;
 }
 
-export function buildCasinoHubPath(): string {
-  return '/casino';
+export function buildIndustriesHubPath(): string {
+  return '/industries';
 }
 
-export function buildCasinoGuidesHubPath(): string {
-  return '/casino-guides';
+export function buildIndustryPath(slug: string): string {
+  const clean = slug.trim().toLowerCase().replace(/^\/+|\/+$/g, '');
+  return `/industries/${clean}`;
 }
 
-export function buildGameGuidesHubPath(): string {
-  return '/game-guides';
+export function buildIndustryServicePath(industrySlug: string, serviceSlug: string): string {
+  const cleanInd = industrySlug.trim().toLowerCase().replace(/^\/+|\/+$/g, '');
+  const cleanSrv = serviceSlug.trim().toLowerCase().replace(/^\/+|\/+$/g, '');
+  return `/industries/${cleanInd}/${cleanSrv}`;
 }
 
-export function buildGuidePath(guideSlug: string, isGameGuide = false): string {
-  const clean = guideSlug.trim().toLowerCase().replace(/^\/+|\/+$/g, '');
-  return isGameGuide ? `/game-guides/${clean}` : `/casino-guides/${clean}`;
+export function buildResourcesHubPath(): string {
+  return '/resources';
 }
 
-export function buildReviewsHubPath(): string {
-  return '/reviews';
+export function buildSeoGuidePath(slug: string): string {
+  const clean = slug.trim().toLowerCase().replace(/^\/+|\/+$/g, '');
+  return `/resources/seo-guides/${clean}`;
 }
 
-export function buildReviewPath(reviewSlug: string): string {
-  const clean = reviewSlug.trim().toLowerCase().replace(/^\/+|\/+$/g, '');
-  return `/reviews/${clean}`;
+export function buildIndustryInsightPath(slug: string): string {
+  const clean = slug.trim().toLowerCase().replace(/^\/+|\/+$/g, '');
+  return `/resources/industry-insights/${clean}`;
 }
 
-export function buildComparisonsHubPath(): string {
-  return '/comparisons';
+export function buildAuditPath(): string {
+  return '/free-seo-audit';
 }
 
-export function buildPaymentsHubPath(): string {
-  return '/payment-methods';
+export function buildBookCallPath(): string {
+  return '/book-call';
 }
 
-export function buildPaymentMethodPath(methodSlug: string): string {
-  const clean = methodSlug.trim().toLowerCase().replace(/^\/+|\/+$/g, '');
-  return `/payment-methods/${clean}`;
+export function buildContactPath(): string {
+  return '/contact';
 }
 
-export function buildResponsibleGamingPath(): string {
-  return '/responsible-gaming';
-}
-
-export function buildRulesGlossaryPath(): string {
-  return '/rules';
-}
-
-export function buildFAQPath(): string {
-  return '/faq';
+export function buildAboutPath(): string {
+  return '/about';
 }
 
 /**

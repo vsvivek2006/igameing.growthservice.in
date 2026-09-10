@@ -48,7 +48,7 @@ export const MobileNav: React.FC = () => {
             {/* Drawer Header */}
             <div className="p-5 border-b border-slate-100 flex items-center justify-between">
               <span className="font-heading font-bold text-lg text-slate-900">
-                iGAMEING <span className="text-purple-600">GROWTH</span>
+                iGAMING <span className="text-purple-600">GROWTH</span>
               </span>
               <button
                 type="button"

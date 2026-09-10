@@ -23,7 +23,7 @@ export const Brand: React.FC = () => {
         </div>
         <div className="flex flex-col">
           <span className="font-heading font-extrabold text-xl tracking-tight leading-none text-slate-900 group-hover:text-purple-700 transition-colors">
-            iGAMEING <span className="text-gradient-purple">GROWTH</span>
+            iGAMING <span className="text-gradient-purple">GROWTH</span>
           </span>
           <span className="text-[10px] uppercase font-bold tracking-widest text-slate-500 leading-tight mt-0.5">
             DIGITAL GROWTH AGENCY

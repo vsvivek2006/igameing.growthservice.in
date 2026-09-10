@@ -37,15 +37,18 @@ export const ResourcesHub: React.FC = () => {
       />
 
       {/* ── Hero Section ──────────────────────────────────────────── */}
-      <section className="relative bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white py-16 lg:py-24">
-        <Container>
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white overflow-hidden py-20 lg:py-28 border-b border-navy-800/80">
+        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[500px] h-[400px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none" />
+
+        <Container className="relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>
-              <Badge variant="purple" size="sm" className="mb-4">
-                Knowledge Center
-              </Badge>
-              <h1 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white mb-5 leading-tight">
-                Architectural Frameworks & SEO Guides
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider mb-5">
+                <span>Knowledge Base & Technical Publications</span>
+              </div>
+              <h1 className="type-h1 text-white mb-5">
+                Architectural Frameworks & SEO Blueprints
               </h1>
               <p className="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto mb-8">
                 In-depth technical guides, crawl budget blueprints, Core Web Vitals optimization techniques, and compliance documentation for digital growth teams.
@@ -55,23 +58,23 @@ export const ResourcesHub: React.FC = () => {
               <div className="flex flex-wrap items-center justify-center gap-3">
                 <Link
                   to="/services"
-                  className="px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-purple-400 text-xs font-semibold text-slate-300 hover:text-white transition-colors inline-flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-xl bg-navy-900 border border-navy-700 hover:border-purple-500 text-xs font-semibold text-slate-300 hover:text-white transition-colors inline-flex items-center gap-1.5"
                 >
                   <TrendingUp className="w-3.5 h-3.5 text-purple-400" />
                   <span>Growth Services</span>
                 </Link>
                 <Link
                   to="/industries"
-                  className="px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-purple-400 text-xs font-semibold text-slate-300 hover:text-white transition-colors inline-flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-xl bg-navy-900 border border-navy-700 hover:border-amber-400 text-xs font-semibold text-slate-300 hover:text-white transition-colors inline-flex items-center gap-1.5"
                 >
                   <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
                   <span>Target Verticals</span>
                 </Link>
                 <Link
                   to="/free-seo-audit"
-                  className="px-4 py-2 rounded-xl bg-purple-600/30 border border-purple-500/40 hover:bg-purple-600/50 text-xs font-semibold text-purple-200 transition-colors inline-flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-xs font-semibold text-amber-300 transition-colors inline-flex items-center gap-1.5"
                 >
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
                   <span>Free Technical Audit</span>
                 </Link>
               </div>
@@ -160,29 +163,29 @@ export const ResourcesHub: React.FC = () => {
       {/* ── Conversion Section ────────────────────────────────────── */}
       <Section variant="slate" spacing="lg">
         <Container>
-          <div className="bg-white rounded-3xl p-8 lg:p-12 border border-slate-200 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="bg-navy-950 bg-hero-atmosphere text-white rounded-3xl p-8 lg:p-12 border border-navy-800 shadow-card-dark flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="max-w-xl space-y-3">
-              <Badge variant="amber" size="sm">
-                Custom Roadmap
-              </Badge>
-              <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold uppercase tracking-wider">
+                <span>Architecture Review</span>
+              </div>
+              <h2 className="type-h2 text-white">
                 Want Our Engineers to Audit Your Architecture?
               </h2>
-              <p className="text-slate-600 text-sm leading-relaxed">
+              <p className="text-slate-300 text-sm leading-relaxed">
                 We review server logs, crawl budget allocation, and Core Web Vitals to provide a prioritised technical remediation plan.
               </p>
             </div>
             <div className="flex flex-wrap gap-4 flex-shrink-0">
               <Button
                 to="/free-seo-audit"
-                variant="amber"
+                variant="gold"
                 size="lg"
                 icon={<ArrowRight className="w-4 h-4" />}
                 iconPosition="right"
               >
                 Claim Free Technical Audit
               </Button>
-              <Button to="/contact" variant="secondary" size="lg">
+              <Button to="/contact" variant="outline" size="lg" className="border-navy-700 text-white hover:bg-navy-800/60">
                 Speak With an Architect
               </Button>
             </div>

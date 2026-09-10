@@ -48,24 +48,24 @@ const IndustryPage: React.FC<{ industry: IndustryVertical }> = ({ industry }) =>
       />
 
       {/* ── Hero ──────────────────────────────────────────────────── */}
-      <section className="relative bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-1/4 w-[500px] h-[400px] rounded-full bg-purple-600/10 blur-[100px]" />
-        </div>
-        <Container className="relative py-24 lg:py-32">
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white overflow-hidden border-b border-navy-800/80">
+        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[500px] h-[400px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none" />
+
+        <Container className="relative z-10 py-20 lg:py-28">
           <FadeIn>
             <Breadcrumb items={breadcrumbItems} className="mb-6 text-slate-400" />
 
             <div className="max-w-3xl">
-              <span className={`inline-block text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-5 ${colors.badge}`}>
+              <span className={`inline-block text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full mb-5 ${colors.badge}`}>
                 {INDUSTRY_CATEGORY_LABELS[industry.category]}
               </span>
 
-              <h1 className="font-heading font-extrabold text-4xl lg:text-5xl text-white mb-5 leading-tight">
+              <h1 className="type-h1 text-white mb-5">
                 {industry.name}
               </h1>
 
-              <p className="text-xl text-purple-200 font-medium italic mb-5">
+              <p className="text-xl text-purple-300 font-medium mb-5">
                 {industry.tagline}
               </p>
 
@@ -82,7 +82,7 @@ const IndustryPage: React.FC<{ industry: IndustryVertical }> = ({ industry }) =>
                   to="/book-call"
                   variant="outline"
                   size="lg"
-                  className="border-white/20 text-white hover:bg-white/10"
+                  className="border-navy-700 text-white hover:bg-navy-800/60"
                   onClick={() => trackEvent('cta_click', { cta_name: 'book_strategy_call', cta_location: 'industry_hero', industry_slug: industry.slug })}
                 >
                   Book a Strategy Call
@@ -306,17 +306,20 @@ const IndustryPage: React.FC<{ industry: IndustryVertical }> = ({ industry }) =>
       )}
 
       {/* ── CTA ────────────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white py-16">
-        <Container>
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-20 overflow-hidden border-t border-navy-800/80">
+        <div className="absolute inset-0 bg-dark-mesh opacity-20 pointer-events-none" />
+        <Container className="relative z-10">
           <div className="max-w-2xl mx-auto text-center space-y-6">
-            <div className="type-eyebrow text-purple-400">Get Started</div>
-            <h2 className="font-heading font-extrabold text-3xl lg:text-4xl text-white leading-tight">
-              Grow Your {industry.shortName} Business with Organic Search
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider">
+              <span>Platform Scalability</span>
+            </div>
+            <h2 className="type-h2 text-white">
+              Scale Your {industry.shortName} Platform Through Organic Search
             </h2>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Tell us about your business and target market. We'll explain what SEO can realistically deliver in your specific competitive landscape.
+            <p className="text-slate-300 text-sm leading-relaxed max-w-xl mx-auto">
+              Tell us about your current indexing footprint and commercial objectives. We'll map out the technical and content runway required to dominate your category.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-wrap gap-4 justify-center pt-2">
               <Button
                 to="/free-seo-audit"
                 variant="gold"
@@ -329,7 +332,7 @@ const IndustryPage: React.FC<{ industry: IndustryVertical }> = ({ industry }) =>
                 to="/book-call"
                 variant="outline"
                 size="lg"
-                className="border-white/20 text-white hover:bg-white/10"
+                className="border-navy-700 text-white hover:bg-navy-800/60"
                 onClick={() => trackEvent('cta_click', { cta_name: 'book_strategy_call', cta_location: 'industry_bottom_cta', industry_slug: industry.slug })}
               >
                 Book a Strategy Call

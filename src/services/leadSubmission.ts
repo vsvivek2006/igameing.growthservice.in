@@ -31,8 +31,47 @@ export interface LeadSubmissionResult {
   readonly submissionId?: string;
 }
 
+// In-memory duplicate submission protection within 30-second window
+const recentSubmissions = new Map<string, number>();
+const DEDUP_WINDOW_MS = 30000;
+
 export async function submitLead(payload: LeadSubmissionPayload): Promise<LeadSubmissionResult> {
   const submissionId = `sub_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+
+  // 1. Client-Side Payload Hygiene & Size Limit (Max 50KB)
+  const trimmedEmail = payload.email ? payload.email.trim() : '';
+  if (!trimmedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+    return {
+      success: false,
+      status: 'validation_error',
+      message: 'Please provide a valid business or work email address.',
+      submissionId,
+    };
+  }
+
+  const payloadString = JSON.stringify(payload);
+  if (payloadString.length > 50000) {
+    return {
+      success: false,
+      status: 'validation_error',
+      message: 'Request payload exceeds acceptable size limit (max 50KB).',
+      submissionId,
+    };
+  }
+
+  // 2. Duplicate submission throttling
+  const dedupKey = `${payload.formType}:${trimmedEmail.toLowerCase()}`;
+  const lastSubmissionTime = recentSubmissions.get(dedupKey);
+  const now = Date.now();
+  if (lastSubmissionTime && now - lastSubmissionTime < DEDUP_WINDOW_MS) {
+    return {
+      success: false,
+      status: 'validation_error',
+      message: 'A duplicate request was recently submitted. Please wait 30 seconds before trying again.',
+      submissionId,
+    };
+  }
+  recentSubmissions.set(dedupKey, now);
 
   const endpoint =
     typeof import.meta !== 'undefined' && import.meta.env

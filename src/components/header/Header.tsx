@@ -23,13 +23,13 @@ export const Header: React.FC = () => {
               to="/book-call"
               variant="outline"
               size="sm"
-              className="border-slate-300 hover:border-purple-600 text-slate-700 hover:text-purple-700"
+              className="border-slate-200 hover:border-purple-600 text-slate-700 hover:text-purple-700"
             >
               Book Strategy Call
             </Button>
             <Button
               to="/free-seo-audit"
-              variant="primary"
+              variant="gold"
               size="sm"
             >
               Free SEO Audit

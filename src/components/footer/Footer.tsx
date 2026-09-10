@@ -29,13 +29,13 @@ export const Footer: React.FC = () => {
               </div>
               <div>
                 <span className="font-heading font-extrabold text-lg text-white">
-                  iGAMEING <span className="text-purple-400">GROWTH</span>
+                  iGAMING <span className="text-purple-400">GROWTH</span>
                 </span>
               </div>
             </Link>
 
             <p className="text-xs text-slate-400 leading-relaxed">
-              {tagline}. We help casino operators, sportsbooks, and gaming brands scale through specialist SEO, performance marketing, and web development.
+              {tagline}. Specialized SEO, technical web architecture, and performance marketing engineered for gaming, casino, and high-competition digital platforms.
             </p>
 
             <div className="pt-2 space-y-2">
@@ -49,16 +49,29 @@ export const Footer: React.FC = () => {
               </div>
             </div>
 
-            {/* Agency Standard */}
-            <div className="pt-2 border-t border-slate-800">
-              <p className="text-[10px] text-slate-500 mb-1 uppercase tracking-wider font-semibold">Specialist Network</p>
-              <Link
-                to="/about"
-                className="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-purple-400 transition-colors font-semibold"
-              >
-                {businessConfig.name} Agency
-                <ArrowRight className="w-3 h-3" />
-              </Link>
+            {/* Direct Verified Inquiries */}
+            <div className="pt-2 border-t border-slate-800 space-y-1.5">
+              <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Direct Engineering Inquiry</p>
+              <div>
+                <a
+                  href={`mailto:${businessConfig.emails.primary}`}
+                  className="inline-flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300 transition-colors font-semibold"
+                >
+                  {businessConfig.emails.primary}
+                  <ArrowRight className="w-3 h-3" />
+                </a>
+              </div>
+              <div>
+                <a
+                  href="https://wa.me/919341436937"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 transition-colors font-semibold"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>WhatsApp: +91 93414 36937</span>
+                </a>
+              </div>
             </div>
           </div>
 

@@ -32,26 +32,28 @@ export const ServicesHub: React.FC = () => {
       />
 
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-1/3 w-[500px] h-[400px] rounded-full bg-purple-600/10 blur-[100px]" />
-        </div>
-        <Container className="relative py-24 lg:py-32">
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white overflow-hidden border-b border-navy-800/80">
+        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
+        <div className="absolute top-0 right-1/3 w-[500px] h-[400px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none" />
+        
+        <Container className="relative z-10 py-20 lg:py-28">
           <FadeIn>
             <Breadcrumb items={breadcrumbItems} className="mb-6 text-slate-400" />
             <div className="max-w-3xl">
-              <div className="type-eyebrow text-purple-400 mb-4">Our Services</div>
-              <h1 className="font-heading font-extrabold text-4xl lg:text-6xl text-white mb-6 leading-tight">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider mb-5">
+                <span>Disciplines & Capabilities</span>
+              </div>
+              <h1 className="type-h1 text-white mb-6">
                 SEO & Digital Growth Systems Built for High-Competition Markets
               </h1>
-              <p className="text-xl text-slate-300 leading-relaxed mb-8">
+              <p className="text-lg lg:text-xl text-slate-300 leading-relaxed mb-8 max-w-2xl">
                 We combine SEO, technology, content, website development, conversion optimisation, analytics, and paid acquisition into a single coherent growth system — designed specifically for industries that standard agency approaches consistently fail to serve.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button to="/free-seo-audit" variant="gold" size="lg">
                   Free SEO Audit
                 </Button>
-                <Button to="/contact" variant="outline" size="lg" className="border-white/20 text-white hover:bg-white/10">
+                <Button to="/contact" variant="outline" size="lg" className="border-navy-700 text-white hover:bg-navy-800/60">
                   Discuss Your Project
                 </Button>
               </div>
@@ -140,21 +142,32 @@ export const ServicesHub: React.FC = () => {
       })}
 
       {/* CTA */}
-      <section className="bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white py-16">
-        <Container>
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-20 overflow-hidden border-t border-navy-800/80">
+        <div className="absolute inset-0 bg-dark-mesh opacity-20 pointer-events-none" />
+        <Container className="relative z-10">
           <div className="max-w-2xl mx-auto text-center space-y-6">
-            <div className="type-eyebrow text-purple-400">Next Step</div>
-            <h2 className="font-heading font-extrabold text-3xl text-white">
-              Not Sure Which Service Fits Your Situation?
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider">
+              <span>Next Strategic Step</span>
+            </div>
+            <h2 className="type-h2 text-white">
+              Not Sure Which Discipline Fits Your Architecture?
             </h2>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Tell us about your current position, target market, and goals. We'll identify the highest-leverage starting point for your specific competitive situation.
+            <p className="text-slate-300 text-sm leading-relaxed max-w-xl mx-auto">
+              Share your current platform state, target market, and indexing goals. We'll identify the highest-leverage starting point for your competitive profile.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-wrap items-center gap-4 justify-center pt-2">
               <Button to="/free-seo-audit" variant="gold" size="lg">Free SEO Audit</Button>
-              <Button to="/contact" variant="outline" size="lg" className="border-white/20 text-white hover:bg-white/10">
-                Talk to a Specialist
+              <Button to="/contact" variant="outline" size="lg" className="border-navy-700 text-white hover:bg-navy-800/60">
+                Talk to an Engineer
               </Button>
+              <a
+                href="https://wa.me/919341436937"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-md shadow-emerald-950/20 transition-all duration-200 hover:-translate-y-0.5"
+              >
+                <span>Chat on WhatsApp</span>
+              </a>
             </div>
           </div>
         </Container>

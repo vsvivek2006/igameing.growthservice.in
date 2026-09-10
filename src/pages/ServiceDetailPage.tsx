@@ -47,14 +47,12 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
       />
 
       {/* ── Hero ──────────────────────────────────────────────────── */}
-      <section className="relative bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white overflow-hidden">
-        {/* Decorative ambient */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-1/4 w-[500px] h-[400px] rounded-full bg-purple-600/10 blur-[100px]" />
-          <div className="absolute bottom-0 left-1/4 w-[400px] h-[300px] rounded-full bg-violet-600/10 blur-[80px]" />
-        </div>
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white overflow-hidden border-b border-navy-800/80">
+        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[500px] h-[400px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[400px] h-[300px] rounded-full bg-violet-600/10 blur-[80px] pointer-events-none" />
 
-        <Container className="relative py-24 lg:py-32">
+        <Container className="relative z-10 py-20 lg:py-28">
           <FadeIn>
             <Breadcrumb items={breadcrumbItems} className="mb-6 text-slate-400" />
 
@@ -63,20 +61,20 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
                 <div className={`w-12 h-12 rounded-2xl ${colors.bg} ${colors.border} border flex items-center justify-center`}>
                   <ServiceIcon name={service.icon} className={`w-6 h-6 ${colors.text}`} />
                 </div>
-                <span className={`text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded-full ${colors.badge}`}>
+                <span className={`text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full ${colors.badge}`}>
                   {SERVICE_CATEGORY_LABELS[service.category]}
                 </span>
               </div>
 
-              <h1 className="font-heading font-extrabold text-4xl lg:text-5xl text-white mb-5 leading-tight">
+              <h1 className="type-h1 text-white mb-5">
                 {service.heroHeadline || service.name}
               </h1>
 
-              <p className="text-xl text-purple-200 font-medium mb-4 italic">
+              <p className="text-xl text-purple-300 font-medium mb-4">
                 {service.heroSublead || service.tagline}
               </p>
 
-              <p className="text-lg text-slate-300 leading-relaxed mb-8">
+              <p className="text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl">
                 {service.shortDescription}
               </p>
 
@@ -93,7 +91,7 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
                   to="/book-call"
                   variant="outline"
                   size="lg"
-                  className="border-white/20 text-white hover:bg-white/10"
+                  className="border-navy-700 text-white hover:bg-navy-800/60"
                   onClick={() => trackEvent('cta_click', { cta_name: 'book_strategy_call', cta_location: 'service_hero', service_slug: service.slug })}
                 >
                   Book a Strategy Call
@@ -275,17 +273,20 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
       )}
 
       {/* ── CTA ────────────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white py-16">
-        <Container>
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-20 overflow-hidden border-t border-navy-800/80">
+        <div className="absolute inset-0 bg-dark-mesh opacity-20 pointer-events-none" />
+        <Container className="relative z-10">
           <div className="max-w-2xl mx-auto text-center space-y-6">
-            <div className="type-eyebrow text-purple-400">Ready to Start?</div>
-            <h2 className="font-heading font-extrabold text-3xl lg:text-4xl text-white leading-tight">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider">
+              <span>Ready for Strategic Execution?</span>
+            </div>
+            <h2 className="type-h2 text-white">
               Discuss {service.shortName} for Your Business
             </h2>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Tell us about your situation and we'll explain what's possible, what's realistic, and what a programme would look like for your specific market.
+            <p className="text-slate-300 text-sm leading-relaxed max-w-xl mx-auto">
+              Tell us about your platform requirements and we'll outline what's realistic, high-impact, and calibrated to your target market.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-wrap gap-4 justify-center pt-2">
               <Button
                 to="/free-seo-audit"
                 variant="gold"
@@ -298,7 +299,7 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
                 to="/book-call"
                 variant="outline"
                 size="lg"
-                className="border-white/20 text-white hover:bg-white/10"
+                className="border-navy-700 text-white hover:bg-navy-800/60"
                 onClick={() => trackEvent('cta_click', { cta_name: 'book_strategy_call', cta_location: 'service_bottom_cta', service_slug: service.slug })}
               >
                 Book a Strategy Call

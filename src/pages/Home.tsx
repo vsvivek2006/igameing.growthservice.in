@@ -8,28 +8,26 @@ import {
   Target,
   Search,
   CheckCircle2,
-  ChevronRight,
   Zap,
   Shield,
   Globe,
   Layers,
   BookOpen,
-  Check,
 } from 'lucide-react';
 import { SEOHead } from '../seo';
 import { buildOrganizationSchema, buildWebSiteSchema } from '../seo/schema';
-import { Container, Section, Button, FAQAccordion } from '../components/ui';
+import {
+  Container,
+  Section,
+  Button,
+  FAQAccordion,
+  HeroArchitectureVisual,
+  MatrixVisualizer,
+  TechnicalAuditVisual,
+} from '../components/ui';
 import { FadeIn, MotionCard } from '../components/animations';
 import { trackEvent } from '../analytics';
-import { getFeaturedServices } from '../data/servicesData';
-import { getAllIndustries } from '../data/industriesData';
-
-const HERO_STATS = [
-  { value: '8', label: 'High-Competition Verticals' },
-  { value: '12', label: 'Specialist Growth Services' },
-  { value: 'SEO-first', label: 'Every Engagement' },
-  { value: '24h', label: 'Diagnostic Delivery' },
-];
+import { getAllServices } from '../data/servicesData';
 
 const WHAT_WE_DO = [
   {
@@ -38,6 +36,7 @@ const WHAT_WE_DO = [
     desc: 'Technical SEO, content strategy, and authority development engineered for industries that cannot afford to lose the organic channel.',
     link: '/services/seo',
     ctaText: 'Explore SEO Strategy',
+    metric: 'Enterprise Organic',
   },
   {
     icon: Code2,
@@ -45,20 +44,23 @@ const WHAT_WE_DO = [
     desc: 'Websites built with performance, crawlability, and conversion architecture from the specification stage — not retrofitted after launch.',
     link: '/services/website-development',
     ctaText: 'Review Web Architecture',
+    metric: 'Sub-Second LCP',
   },
   {
     icon: BarChart3,
-    title: 'Paid Acquisition',
+    title: 'Paid Acquisition & Compliance',
     desc: 'Google Ads and Meta Ads management for industries where policy compliance and account architecture determine whether campaigns run at all.',
     link: '/services/google-ads',
     ctaText: 'Explore Paid Compliance',
+    metric: 'Policy-Certified',
   },
   {
     icon: Target,
-    title: 'Conversion Optimisation',
+    title: 'Conversion Optimisation (CRO)',
     desc: 'Systematic A/B testing and funnel analysis that converts more of the traffic you already have without increasing acquisition cost.',
     link: '/services/conversion-optimization',
     ctaText: 'Analyze Funnel CRO',
+    metric: 'Data-Driven UX',
   },
 ];
 
@@ -174,8 +176,7 @@ const HOMEPAGE_FAQS = [
 ];
 
 export const Home: React.FC = () => {
-  const featuredServices = getFeaturedServices();
-  const industries = getAllIndustries();
+  const allServices = getAllServices();
 
   return (
     <>
@@ -186,144 +187,155 @@ export const Home: React.FC = () => {
         jsonLd={[buildOrganizationSchema(), buildWebSiteSchema()]}
       />
 
-      {/* ── Hero ──────────────────────────────────────────────────── */}
-      <section className="relative bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white overflow-hidden min-h-[calc(100vh-80px)] flex items-center">
-        {/* Ambient decorations */}
+      {/* ── 1. Hero Section: Architectural Composition ─────────────── */}
+      <section className="relative bg-hero-atmosphere text-white overflow-hidden min-h-[calc(100vh-80px)] flex items-center pt-8 pb-20 lg:py-28">
+        {/* Ambient atmospheric gradients & grid */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-20 right-1/4 w-[600px] h-[500px] rounded-full bg-purple-600/12 blur-[120px]" />
-          <div className="absolute bottom-20 left-1/4 w-[500px] h-[400px] rounded-full bg-violet-600/10 blur-[100px]" />
-          <div className="absolute top-1/2 left-0 w-[300px] h-[300px] rounded-full bg-blue-600/8 blur-[80px]" />
-          {/* Grid pattern */}
+          <div className="absolute top-1/4 right-1/4 w-[600px] h-[500px] rounded-full bg-purple-600/15 blur-[140px]" />
+          <div className="absolute bottom-10 left-10 w-[500px] h-[400px] rounded-full bg-indigo-600/12 blur-[120px]" />
           <div
-            className="absolute inset-0 opacity-[0.04]"
+            className="absolute inset-0 opacity-[0.03]"
             style={{
               backgroundImage: 'linear-gradient(#a78bfa 1px, transparent 1px), linear-gradient(to right, #a78bfa 1px, transparent 1px)',
-              backgroundSize: '60px 60px',
+              backgroundSize: '48px 48px',
             }}
           />
         </div>
 
-        <Container className="relative py-24 lg:py-32 xl:py-40">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            <div className="lg:col-span-7">
+        <Container className="relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left Column: Brand Statement & Primary Actions */}
+            <div className="lg:col-span-6 xl:col-span-7">
               <FadeIn>
-                {/* Eyebrow */}
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/15 border border-purple-500/20 mb-8">
+                {/* Eyebrow badge */}
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/15 border border-purple-500/25 mb-6">
                   <Zap className="w-3.5 h-3.5 text-amber-400" />
                   <span className="text-xs font-bold text-purple-200 tracking-wider uppercase">
-                    Specialist Digital Agency
+                    Specialist Digital Growth Agency
                   </span>
                 </div>
 
-                <h1 className="font-heading font-extrabold text-5xl lg:text-6xl xl:text-7xl text-white leading-[1.05] mb-6">
-                  SEO & Digital Growth for{' '}
+                <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white leading-[1.08] mb-6">
+                  SEO &amp; Digital Growth for{' '}
                   <span className="text-gradient-purple">High-Competition</span>{' '}
                   Industries
                 </h1>
 
-                <p className="text-xl text-slate-300 leading-relaxed mb-8 max-w-2xl">
+                <p className="type-body-lg text-slate-300 leading-relaxed mb-8 max-w-2xl">
                   We build organic search visibility, technical SEO infrastructure, and performance marketing systems for gaming, casino, financial, and adult industry businesses — the markets where standard agency approaches consistently fail.
                 </p>
 
-                <div className="flex flex-wrap gap-4 mb-10">
-                  <Link
+                {/* Primary CTA Pair */}
+                <div className="flex flex-wrap items-center gap-4 mb-10">
+                  <Button
                     to="/free-seo-audit"
+                    variant="gold"
+                    size="lg"
+                    icon={<Search className="w-4 h-4" />}
                     onClick={() => trackEvent('cta_click', { cta_name: 'free_seo_audit', cta_location: 'hero' })}
-                    className="inline-flex items-center gap-2.5 px-7 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-extrabold text-base hover:from-amber-400 hover:to-orange-400 transition-all duration-200 shadow-xl shadow-amber-500/25 hover:-translate-y-1"
                   >
-                    <Search className="w-5 h-5" />
-                    Get a Free SEO Audit
-                  </Link>
-                  <Link
+                    Get Free SEO Audit
+                  </Button>
+                  <Button
                     to="/book-call"
+                    variant="dark"
+                    size="lg"
+                    icon={<ArrowRight className="w-4 h-4" />}
+                    iconPosition="right"
                     onClick={() => trackEvent('cta_click', { cta_name: 'book_strategy_call', cta_location: 'hero' })}
-                    className="inline-flex items-center gap-2 px-7 py-4 rounded-xl border border-white/20 text-white font-bold text-base hover:bg-white/10 transition-all duration-200 backdrop-blur-sm"
                   >
-                    Book a Strategy Call
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
+                    Book Strategy Call
+                  </Button>
+                  <a
+                    href="https://wa.me/919341436937"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5"
+                    onClick={() => trackEvent('cta_click', { cta_name: 'whatsapp_direct', cta_location: 'hero' })}
+                  >
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>WhatsApp Chat</span>
+                  </a>
                 </div>
 
-                {/* Trust line */}
-                <div className="flex flex-wrap items-center gap-5 text-xs text-slate-400">
-                  {[
-                    'Compliance-aware strategy',
-                    'No ranking guarantees',
-                    'Sustainable methods only',
-                    'Honest reporting',
-                  ].map((t) => (
-                    <span key={t} className="flex items-center gap-1.5">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-                      {t}
-                    </span>
-                  ))}
+                {/* Engineering Trust Credentials */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-800/80 text-xs text-slate-300">
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <span>Compliance-Aware</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <span>White-Hat Only</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <span>First-Party Data</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <span>Code Ownership</span>
+                  </div>
                 </div>
               </FadeIn>
             </div>
 
-            {/* Stats panel */}
-            <div className="lg:col-span-5">
-              <FadeIn delay={200}>
-                <div className="grid grid-cols-2 gap-4">
-                  {HERO_STATS.map((s, idx) => (
-                    <div
-                      key={s.label}
-                      className={`p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm ${idx === 0 ? 'col-span-2 md:col-span-1' : ''}`}
-                    >
-                      <div className="text-3xl font-extrabold font-heading text-white mb-1">{s.value}</div>
-                      <div className="text-xs text-slate-400 font-medium">{s.label}</div>
-                    </div>
-                  ))}
-                  {/* CTA card */}
-                  <div className="col-span-2 p-6 rounded-2xl bg-gradient-to-br from-purple-600/20 to-violet-600/20 border border-purple-500/30">
-                    <p className="text-sm text-purple-200 mb-3 leading-relaxed">
-                      Competing in gaming, finance, or adult categories? We understand the specific SEO landscape.
-                    </p>
-                    <Link
-                      to="/industries"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-amber-300 transition-colors"
-                    >
-                      See our industry expertise <ChevronRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </div>
+            {/* Right Column: Interactive Search System Architecture Visual */}
+            <div className="lg:col-span-6 xl:col-span-5">
+              <FadeIn delay={150}>
+                <HeroArchitectureVisual />
               </FadeIn>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* ── What We Do ─────────────────────────────────────────────── */}
+      {/* ── 2. What We Build / Services Section ──────────────────────── */}
       <Section variant="white" spacing="lg">
         <Container>
-          <div className="max-w-2xl mx-auto text-center mb-14">
+          <div className="max-w-3xl mx-auto text-center mb-16">
             <FadeIn>
-              <div className="type-eyebrow mb-3">Our Services</div>
-              <h2 className="font-heading font-extrabold text-4xl lg:text-5xl text-slate-900 leading-tight">
-                What We Build for You
+              <div className="type-eyebrow mb-3">Core Growth Capabilities</div>
+              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-slate-900 leading-tight">
+                Engineering-Led Growth Architecture
               </h2>
-              <p className="text-lg text-slate-500 mt-4 leading-relaxed">
+              <p className="type-body-lg mt-4 text-slate-600 leading-relaxed">
                 An integrated growth system: organic SEO, technical infrastructure, paid acquisition, and conversion architecture — working together, not in silos.
               </p>
             </FadeIn>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* 4 Featured Hero Services */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
             {WHAT_WE_DO.map((item, idx) => {
               const Icon = item.icon;
               return (
-                <MotionCard key={item.title} delay={idx * 80} variant="interactive">
-                  <div className="h-full flex flex-col">
-                    <div className="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center mb-5">
-                      <Icon className="w-6 h-6 text-purple-600" />
+                <MotionCard key={item.title} delay={idx * 80} variant="interactive" className="p-8">
+                  <div className="h-full flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600">
+                          <Icon className="w-6 h-6" />
+                        </div>
+                        <span className="font-mono text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                          {item.metric}
+                        </span>
+                      </div>
+
+                      <h3 className="font-heading font-bold text-xl text-slate-900 mb-3">
+                        {item.title}
+                      </h3>
+                      <p className="type-body text-slate-500 leading-relaxed mb-6">
+                        {item.desc}
+                      </p>
                     </div>
-                    <h3 className="font-heading font-bold text-xl text-slate-900 mb-3">{item.title}</h3>
-                    <p className="text-sm text-slate-500 leading-relaxed flex-1 mb-5">{item.desc}</p>
+
                     <Link
                       to={item.link}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-600 hover:text-purple-800 transition-colors"
+                      className="inline-flex items-center gap-2 text-sm font-bold text-purple-600 hover:text-purple-800 transition-colors pt-4 border-t border-slate-100"
                     >
-                      {item.ctaText} <ArrowRight className="w-3 h-3" />
+                      <span>{item.ctaText}</span>
+                      <ArrowRight className="w-4 h-4" />
                     </Link>
                   </div>
                 </MotionCard>
@@ -331,131 +343,184 @@ export const Home: React.FC = () => {
             })}
           </div>
 
-          <div className="text-center mt-10">
-            <FadeIn>
-              <Button to="/services" variant="primary" size="lg">
-                All Services <ArrowRight className="w-4 h-4 ml-1" />
+          {/* Secondary Disciplines Strip */}
+          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Full Specialized Roster
+                </span>
+                <div className="font-bold text-slate-900 text-sm">
+                  12 Connected Growth Disciplines
+                </div>
+              </div>
+              <Button to="/services" variant="outline" size="sm">
+                View All Services Directory →
               </Button>
-            </FadeIn>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {allServices.map((svc) => (
+                <Link
+                  key={svc.slug}
+                  to={`/services/${svc.slug}`}
+                  className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:border-purple-300 hover:text-purple-700 transition-colors"
+                >
+                  {svc.shortName}
+                </Link>
+              ))}
+            </div>
           </div>
         </Container>
       </Section>
 
-      {/* ── Industries ─────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 py-20 lg:py-28">
+      {/* ── 3. High-Competition Vertical Matrix Visualizer ───────────── */}
+      <section className="bg-gradient-to-br from-slate-950 via-[#0D1220] to-[#070B14] py-20 lg:py-28 text-white border-y border-slate-800">
         <Container>
-          <div className="max-w-2xl mx-auto text-center mb-14">
+          <div className="max-w-3xl mx-auto text-center mb-16">
             <FadeIn>
-              <div className="type-eyebrow text-purple-400 mb-3">Industries</div>
-              <h2 className="font-heading font-extrabold text-4xl lg:text-5xl text-white leading-tight">
-                Expertise in the Markets That Matter
+              <div className="type-eyebrow text-purple-400 mb-3">Vertical Specialization</div>
+              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white leading-tight">
+                Tailored Growth Matrix
               </h2>
-              <p className="text-slate-400 mt-4 text-lg leading-relaxed">
-                We don't try to serve every industry. We go deep in the verticals where specialist knowledge makes the actual difference.
+              <p className="type-body-lg text-slate-400 mt-4 leading-relaxed">
+                Generic agencies fail because casino, gaming, trading, and regulated markets operate under unique search heuristics, compliance restrictions, and authority barriers.
               </p>
             </FadeIn>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {industries.map((industry, idx) => (
-              <FadeIn key={industry.slug} delay={idx * 50}>
-                <Link
-                  to={`/industries/${industry.slug}`}
-                  className="group block p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-purple-500/40 transition-all duration-300 hover:-translate-y-1"
-                >
-                  <div className="font-heading font-bold text-sm text-white mb-2 group-hover:text-purple-300 transition-colors leading-snug">
-                    {industry.name}
-                  </div>
-                  <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
-                    {industry.seoChallenges[0]?.title}
-                  </p>
-                  <div className="mt-3 flex items-center gap-1 text-[10px] font-bold text-purple-400 uppercase tracking-wider group-hover:gap-2 transition-all">
-                    Explore <ChevronRight className="w-3 h-3" />
-                  </div>
-                </Link>
-              </FadeIn>
-            ))}
-          </div>
-
-          <div className="text-center mt-10">
-            <FadeIn>
-              <Link
-                to="/industries"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 text-white font-bold text-sm hover:bg-white/10 transition-all duration-200"
-              >
-                View All Industries <ArrowRight className="w-4 h-4" />
-              </Link>
-            </FadeIn>
-          </div>
+          {/* Interactive Matrix Visualizer Component */}
+          <FadeIn delay={100}>
+            <MatrixVisualizer />
+          </FadeIn>
         </Container>
       </section>
 
-      {/* ── Why Specialised ────────────────────────────────────────── */}
+      {/* ── 4. Technical Depth & Code-Level Auditing ─────────────────── */}
+      <Section variant="subtle" spacing="lg">
+        <Container>
+          <FadeIn>
+            <TechnicalAuditVisual />
+          </FadeIn>
+        </Container>
+      </Section>
+
+      {/* ── 5. Why Specialised / Agency Manifesto ───────────────────── */}
       <Section variant="white" spacing="lg">
         <Container>
-          <div className="max-w-2xl mx-auto text-center mb-14">
-            <FadeIn>
-              <div className="type-eyebrow mb-3">Why Specialised SEO</div>
-              <h2 className="font-heading font-extrabold text-4xl lg:text-5xl text-slate-900 leading-tight">
-                Why Standard Agencies Don't Work in These Markets
-              </h2>
-            </FadeIn>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto">
+            {/* Left Column: Large Editorial Statement */}
+            <div className="lg:col-span-5 sticky top-28">
+              <FadeIn>
+                <div className="type-eyebrow mb-3">Agency Differentiation</div>
+                <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight mb-6">
+                  Why Standard Agencies Fail in High-Competition Markets
+                </h2>
+                <p className="type-body text-slate-600 leading-relaxed mb-8">
+                  Generalist marketing agencies rely on generic templates, surface-level keyword research, and black-box reporting. In high-competition categories, ranking signals require code-level optimization and deep vertical understanding.
+                </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {WHY_SPECIALISED.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <MotionCard key={item.title} delay={idx * 70} variant="default">
-                  <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5 text-purple-600" />
+                <div className="p-6 rounded-2xl bg-purple-50/60 border border-purple-100 space-y-3">
+                  <div className="font-bold text-slate-900 text-sm">
+                    Our Operational Commitment
                   </div>
-                  <h3 className="font-heading font-bold text-base text-slate-900 mb-2">{item.title}</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
-                </MotionCard>
-              );
-            })}
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Zero fake reviews, zero manufactured logos, zero ranking guarantees. Credibility is demonstrated through code architecture, crawl governance, and verifiable lead generation.
+                  </p>
+                  <Link
+                    to="/about"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-700 hover:text-purple-900 transition-colors"
+                  >
+                    Read Our Agency Manifesto →
+                  </Link>
+                </div>
+              </FadeIn>
+            </div>
+
+            {/* Right Column: 4 Core Architectural Principles */}
+            <div className="lg:col-span-7 space-y-4">
+              {WHY_SPECIALISED.map((item, idx) => {
+                const Icon = item.icon;
+                return (
+                  <MotionCard key={item.title} delay={idx * 80} variant="default" className="p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 flex-shrink-0 mt-0.5">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-heading font-bold text-base text-slate-900 mb-2">
+                          {item.title}
+                        </h3>
+                        <p className="text-xs text-slate-500 leading-relaxed">
+                          {item.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </MotionCard>
+                );
+              })}
+            </div>
           </div>
         </Container>
       </Section>
 
-      {/* ── Our Process ────────────────────────────────────────────── */}
+      {/* ── 6. Engineering Journey / Process Flow ───────────────────── */}
       <Section variant="subtle" spacing="lg">
         <Container>
-          <div className="max-w-2xl mx-auto text-center mb-14">
+          <div className="max-w-3xl mx-auto text-center mb-16">
             <FadeIn>
-              <div className="type-eyebrow mb-3">Our Process</div>
-              <h2 className="font-heading font-extrabold text-4xl text-slate-900 leading-tight">
-                How We Work
+              <div className="type-eyebrow mb-3">Structured Methodology</div>
+              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight">
+                Phased Engineering Journey
               </h2>
-              <p className="text-slate-500 mt-4 leading-relaxed">
-                Every engagement follows a structured programme. No guesswork, no black boxes, no undocumented activity.
+              <p className="type-body text-slate-500 mt-4 leading-relaxed">
+                Every engagement follows an explicit programmatic flow. No guesswork, no black boxes, no undocumented activity.
               </p>
             </FadeIn>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 max-w-6xl mx-auto">
+          {/* 5-Step Process Rail */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
             {PROCESS.map((step, idx) => (
-              <MotionCard key={step.n} delay={idx * 80} variant="default">
-                <div className="text-4xl font-extrabold font-heading text-purple-100 mb-3">{step.n}</div>
-                <h3 className="font-heading font-bold text-slate-900 text-base mb-2">{step.title}</h3>
-                <p className="text-xs text-slate-500 leading-relaxed">{step.desc}</p>
-              </MotionCard>
+              <div
+                key={step.n}
+                className="relative p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between hover:border-purple-300 hover:shadow-md transition-all duration-200"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="font-mono text-2xl font-black text-purple-600/40">
+                      {step.n}
+                    </span>
+                    <span className="w-2 h-2 rounded-full bg-purple-600/30" />
+                  </div>
+                  <h3 className="font-heading font-bold text-base text-slate-900 mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-xs text-slate-500 leading-relaxed">
+                    {step.desc}
+                  </p>
+                </div>
+
+                <div className="mt-6 pt-3 border-t border-slate-100 flex items-center justify-between text-[10px] font-mono text-slate-400">
+                  <span>STAGE 0{idx + 1}</span>
+                  <span>ACTIVE</span>
+                </div>
+              </div>
             ))}
           </div>
         </Container>
       </Section>
 
-      {/* ── How We Think: Methodology ──────────────────────────────── */}
+      {/* ── 7. Strategic Principles Section ─────────────────────────── */}
       <Section variant="white" spacing="lg">
         <Container>
-          <div className="max-w-2xl mx-auto text-center mb-14">
+          <div className="max-w-3xl mx-auto text-center mb-16">
             <FadeIn>
               <div className="type-eyebrow mb-3">Our Methodology</div>
-              <h2 className="font-heading font-extrabold text-4xl lg:text-5xl text-slate-900 leading-tight">
-                How We Think About Search & Growth
+              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight">
+                How We Think About Search &amp; Growth
               </h2>
-              <p className="text-slate-500 mt-4 text-lg leading-relaxed">
+              <p className="type-body text-slate-500 mt-4 leading-relaxed">
                 Strategic principles that separate durable market leaders from volatile, update-vulnerable platforms.
               </p>
             </FadeIn>
@@ -463,179 +528,98 @@ export const Home: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {METHODOLOGY_PRINCIPLES.map((principle, idx) => (
-              <MotionCard key={principle.number} delay={idx * 70} variant="default" className={idx === 4 ? 'md:col-span-2 lg:col-span-1' : ''}>
+              <MotionCard
+                key={principle.number}
+                delay={idx * 70}
+                variant="default"
+                className={`p-6 ${idx === 4 ? 'md:col-span-2 lg:col-span-1' : ''}`}
+              >
                 <div className="flex items-baseline justify-between mb-3 border-b border-slate-100 pb-3">
-                  <span className="text-xs font-bold uppercase tracking-widest text-purple-600 font-mono">{principle.number}</span>
-                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">{principle.tagline}</span>
+                  <span className="text-xs font-bold uppercase tracking-widest text-purple-600 font-mono">
+                    {principle.number}
+                  </span>
+                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                    {principle.tagline}
+                  </span>
                 </div>
-                <h3 className="font-heading font-bold text-lg text-slate-900 mb-2">{principle.title}</h3>
-                <p className="text-xs text-slate-500 leading-relaxed">{principle.desc}</p>
+                <h3 className="font-heading font-bold text-lg text-slate-900 mb-2">
+                  {principle.title}
+                </h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  {principle.desc}
+                </p>
               </MotionCard>
             ))}
           </div>
         </Container>
       </Section>
 
-      {/* ── Trust & Transparency ───────────────────────────────────── */}
+      {/* ── 8. Authoritative Knowledge Base / Resources ────────────── */}
       <Section variant="subtle" spacing="lg">
         <Container>
-          <div className="max-w-5xl mx-auto rounded-3xl bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white p-8 md:p-12 border border-purple-500/20 shadow-2xl">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-5">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-bold uppercase tracking-wider mb-4">
-                  <Shield className="w-3.5 h-3.5 text-emerald-400" /> Transparent Operations
-                </div>
-                <h2 className="font-heading font-extrabold text-3xl md:text-4xl text-white leading-tight mb-4">
-                  Built on Technical Depth, Not Fabricated Proof
-                </h2>
-                <p className="text-slate-300 text-sm leading-relaxed mb-6">
-                  We don't publish manufactured client logos, synthetic 5-star badges, or impossible 30-day ranking guarantees. In high-competition niches, credibility comes from demonstrable technical expertise and measurable delivery.
-                </p>
-                <div className="flex items-center gap-3">
-                  <Link
-                    to="/free-seo-audit"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-xs hover:from-amber-400 hover:to-orange-400 transition-all"
-                  >
-                    Request Technical Diagnostic <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </div>
-
-              <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  {
-                    title: 'Code-Level Diagnostics',
-                    desc: 'Every audit inspects raw DOM trees, server log files, and crawl graphs—not generic automated exports.',
-                  },
-                  {
-                    title: 'Verifiable White-Hat Standards',
-                    desc: 'Zero PBNs, zero cloaking, zero link schemes. We protect domain equity and withstand algorithm updates.',
-                  },
-                  {
-                    title: 'First-Party Attribution',
-                    desc: 'Cookieless server-side tracking, GTM data layers, and GA4 custom events so conversion attribution is factual.',
-                  },
-                  {
-                    title: 'Senior-Level Engagement',
-                    desc: 'You work directly with experienced search architects and developers, not junior account coordinators.',
-                  },
-                ].map((pillar) => (
-                  <div key={pillar.title} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                    <div className="flex items-center gap-2 text-amber-400 font-bold text-sm mb-1.5">
-                      <Check className="w-4 h-4 text-emerald-400 shrink-0" />
-                      {pillar.title}
-                    </div>
-                    <p className="text-xs text-slate-400 leading-relaxed">{pillar.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Featured Services ───────────────────────────────────────── */}
-      <Section variant="white" spacing="md">
-        <Container>
-          <div className="max-w-2xl mx-auto text-center mb-12">
+          <div className="max-w-3xl mx-auto text-center mb-16">
             <FadeIn>
-              <div className="type-eyebrow mb-3">Core Services</div>
-              <h2 className="font-heading font-extrabold text-3xl text-slate-900 leading-tight">
-                Where Most Clients Start
-              </h2>
-            </FadeIn>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {featuredServices.slice(0, 4).map((svc, idx) => {
-              const ctaLabel =
-                svc.slug === 'seo'
-                  ? 'Explore Organic SEO'
-                  : svc.slug === 'technical-seo'
-                  ? 'Fix Technical Foundations'
-                  : svc.slug === 'content-strategy'
-                  ? 'Review Content Strategy'
-                  : svc.slug === 'website-development'
-                  ? 'Inspect Web Architecture'
-                  : `Explore ${svc.shortName}`;
-
-              return (
-                <MotionCard key={svc.slug} delay={idx * 60} variant="interactive">
-                  <div className="h-full flex flex-col">
-                    <h3 className="font-heading font-bold text-slate-900 text-base mb-2">{svc.shortName}</h3>
-                    <p className="text-xs text-slate-500 leading-relaxed flex-1 mb-4">{svc.tagline}</p>
-                    <Link
-                      to={`/services/${svc.slug}`}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-600 hover:text-purple-800 transition-colors mt-auto"
-                    >
-                      {ctaLabel} <ArrowRight className="w-3 h-3" />
-                    </Link>
-                  </div>
-                </MotionCard>
-              );
-            })}
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Resource Authority ─────────────────────────────────────── */}
-      <Section variant="white" spacing="lg">
-        <Container>
-          <div className="max-w-2xl mx-auto text-center mb-14">
-            <FadeIn>
-              <div className="type-eyebrow mb-3">Knowledge Base</div>
-              <h2 className="font-heading font-extrabold text-4xl text-slate-900 leading-tight">
+              <div className="type-eyebrow mb-3">Resource Center</div>
+              <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight">
                 Authoritative Engineering Guides
               </h2>
-              <p className="text-slate-500 mt-4 text-lg leading-relaxed">
+              <p className="type-body text-slate-500 mt-4 leading-relaxed">
                 In-depth technical blueprints, audit checklists, and market breakdowns written for engineers, founders, and growth leaders.
               </p>
             </FadeIn>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-10">
             {FEATURED_RESOURCES.map((resource, idx) => (
-              <MotionCard key={resource.path} delay={idx * 80} variant="interactive">
-                <div className="h-full flex flex-col">
-                  <div className="flex items-center justify-between text-xs text-slate-400 mb-3">
-                    <span className="font-semibold text-purple-600 bg-purple-50 px-2 py-0.5 rounded text-[11px] uppercase tracking-wider">{resource.category}</span>
-                    <span className="flex items-center gap-1"><BookOpen className="w-3 h-3" /> {resource.readTime}</span>
+              <MotionCard key={resource.path} delay={idx * 80} variant="interactive" className="p-6">
+                <div className="h-full flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between text-xs text-slate-400 mb-3">
+                      <span className="font-semibold text-purple-700 bg-purple-50 border border-purple-200/60 px-2.5 py-0.5 rounded text-[11px] uppercase tracking-wider">
+                        {resource.category}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>{resource.readTime}</span>
+                      </span>
+                    </div>
+                    <h3 className="font-heading font-bold text-base text-slate-900 mb-3 line-clamp-2">
+                      {resource.title}
+                    </h3>
+                    <p className="text-xs text-slate-500 leading-relaxed mb-5">
+                      {resource.desc}
+                    </p>
                   </div>
-                  <h3 className="font-heading font-bold text-base text-slate-900 mb-3 line-clamp-2">{resource.title}</h3>
-                  <p className="text-xs text-slate-500 leading-relaxed flex-1 mb-5">{resource.desc}</p>
+
                   <Link
                     to={resource.path}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 hover:text-purple-800 transition-colors mt-auto"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 hover:text-purple-800 transition-colors pt-4 border-t border-slate-100"
                   >
-                    Read Technical Guide <ArrowRight className="w-3 h-3" />
+                    <span>Read Technical Blueprint</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </MotionCard>
             ))}
           </div>
 
-          <div className="text-center mt-10">
-            <FadeIn>
-              <Link
-                to="/resources"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 text-slate-800 font-bold text-sm hover:bg-slate-50 transition-all duration-200"
-              >
-                Browse All 10 Technical Guides & Insights <ArrowRight className="w-4 h-4" />
-              </Link>
-            </FadeIn>
+          <div className="text-center">
+            <Button to="/resources" variant="outline" size="md">
+              Explore All 10 Technical Guides &amp; Insights →
+            </Button>
           </div>
         </Container>
       </Section>
 
-      {/* ── FAQ ────────────────────────────────────────────────────── */}
-      <Section variant="subtle" spacing="lg">
+      {/* ── 9. Common Questions / FAQ ───────────────────────────────── */}
+      <Section variant="white" spacing="lg">
         <Container>
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
               <FadeIn>
-                <div className="type-eyebrow mb-3">FAQ</div>
-                <h2 className="font-heading font-extrabold text-3xl text-slate-900 leading-tight">
-                  Common Questions
+                <div className="type-eyebrow mb-3">Technical FAQ</div>
+                <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight">
+                  Frequently Asked Questions
                 </h2>
               </FadeIn>
             </div>
@@ -646,37 +630,55 @@ export const Home: React.FC = () => {
         </Container>
       </Section>
 
-      {/* ── Final CTA ──────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 py-20 text-white">
-        <Container>
-          <div className="max-w-2xl mx-auto text-center space-y-6">
-            <div className="type-eyebrow text-purple-400">Get Started</div>
-            <h2 className="font-heading font-extrabold text-4xl lg:text-5xl text-white leading-tight">
-              Understand Your SEO Position — Free
+      {/* ── 10. Final Closing CTA ───────────────────────────────────── */}
+      <section className="bg-hero-atmosphere text-white py-20 lg:py-28 relative overflow-hidden border-t border-slate-800">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-purple-600/10 blur-[140px]" />
+        </div>
+
+        <Container className="relative z-10">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            <div className="type-eyebrow text-purple-300">Ready to Scale</div>
+            <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white leading-tight">
+              Request Your Free Code-Level SEO Diagnostic
             </h2>
-            <p className="text-slate-400 text-lg leading-relaxed">
-              A senior specialist reviews your site against your target keywords and competitive landscape. No automated tool report. An actual diagnostic.
+            <p className="type-body-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
+              A senior search architect reviews your platform DOM tree, crawl budget, parameter configuration, and competitive keyword gap. No automated report — an actual engineering diagnostic.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link
+
+            <div className="flex flex-wrap items-center gap-4 justify-center pt-4">
+              <Button
                 to="/free-seo-audit"
+                variant="gold"
+                size="lg"
+                icon={<Search className="w-4 h-4" />}
                 onClick={() => trackEvent('cta_click', { cta_name: 'free_seo_audit', cta_location: 'bottom_cta' })}
-                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-extrabold text-base hover:from-amber-400 hover:to-orange-400 transition-all duration-200 shadow-xl shadow-amber-500/25 hover:-translate-y-1"
               >
-                <Search className="w-5 h-5" />
                 Request Free SEO Audit
-              </Link>
-              <Link
+              </Button>
+              <Button
                 to="/book-call"
+                variant="dark"
+                size="lg"
+                icon={<ArrowRight className="w-4 h-4" />}
+                iconPosition="right"
                 onClick={() => trackEvent('cta_click', { cta_name: 'book_strategy_call', cta_location: 'bottom_cta' })}
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-white/20 text-white font-bold text-base hover:bg-white/10 transition-all duration-200"
               >
                 Book a Strategy Call
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+              </Button>
+              <a
+                href="https://wa.me/919341436937"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-lg shadow-emerald-950/30 transition-all duration-200 hover:-translate-y-0.5"
+                onClick={() => trackEvent('cta_click', { cta_name: 'whatsapp_direct', cta_location: 'bottom_cta' })}
+              >
+                <span>Chat on WhatsApp</span>
+              </a>
             </div>
-            <p className="text-xs text-slate-500">
-              No ranking guarantees. No spam. No obligation.
+
+            <p className="text-xs text-slate-400 pt-2">
+              Strict 24-hour turnaround • No automated templates • Direct senior advisory
             </p>
           </div>
         </Container>

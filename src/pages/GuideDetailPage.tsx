@@ -61,11 +61,10 @@ export const GuideDetailPage: React.FC = () => {
       />
 
       {/* ── Hero Section ──────────────────────────────────────────── */}
-      <section className="relative bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white py-16 lg:py-20 border-b border-slate-800">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-1/4 w-[450px] h-[350px] rounded-full bg-purple-600/10 blur-[90px]" />
-          <div className="absolute bottom-0 left-1/3 w-[350px] h-[250px] rounded-full bg-amber-500/10 blur-[80px]" />
-        </div>
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-16 lg:py-24 border-b border-navy-800/80 overflow-hidden">
+        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[450px] h-[350px] rounded-full bg-purple-600/10 blur-[90px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/3 w-[350px] h-[250px] rounded-full bg-amber-500/10 blur-[80px] pointer-events-none" />
 
         <Container className="relative z-10">
           <div className="mb-6">
@@ -91,7 +90,7 @@ export const GuideDetailPage: React.FC = () => {
               </div>
             </div>
 
-            <h1 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white mb-5 leading-tight">
+            <h1 className="type-h1 text-white mb-5">
               {guide.title}
             </h1>
 
@@ -100,8 +99,8 @@ export const GuideDetailPage: React.FC = () => {
             </p>
 
             {/* Author Byline */}
-            <div className="flex items-center gap-3 pt-2 border-t border-slate-800/80">
-              <div className="w-10 h-10 rounded-full bg-purple-600/30 border border-purple-500/40 flex items-center justify-center text-purple-300">
+            <div className="flex items-center gap-3 pt-3 border-t border-navy-800/90">
+              <div className="w-10 h-10 rounded-full bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-300">
                 <User className="w-5 h-5" />
               </div>
               <div>
@@ -256,12 +255,12 @@ export const GuideDetailPage: React.FC = () => {
               </div>
 
               {/* Contextual CTA Banner */}
-              <div className="bg-slate-900 rounded-2xl p-8 text-white mt-12">
+              <div className="bg-navy-950 bg-hero-atmosphere rounded-2xl p-8 text-white mt-12 border border-navy-800 shadow-card-dark">
                 <div className="max-w-xl">
-                  <Badge variant="amber" size="sm" className="mb-3">
-                    Action Plan
-                  </Badge>
-                  <h3 className="font-heading font-extrabold text-2xl text-white mb-2">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold uppercase tracking-wider mb-4">
+                    <span>Engineering Action Plan</span>
+                  </div>
+                  <h3 className="type-h2 text-white mb-2">
                     {guide.cta.title}
                   </h3>
                   <p className="text-slate-300 text-sm mb-6 leading-relaxed">
@@ -269,7 +268,7 @@ export const GuideDetailPage: React.FC = () => {
                   </p>
                   <Button
                     to={guide.cta.href}
-                    variant="amber"
+                    variant="gold"
                     size="lg"
                     icon={<ArrowRight className="w-4 h-4" />}
                     iconPosition="right"

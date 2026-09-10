@@ -11,3 +11,7 @@ export * from './LoadingFallback';
 export * from './ProcessTimeline';
 export * from './FAQAccordion';
 export * from './ServiceIcon';
+export * from './HeroArchitectureVisual';
+export * from './MatrixVisualizer';
+export * from './TechnicalAuditVisual';
+export * from './FloatingWhatsApp';

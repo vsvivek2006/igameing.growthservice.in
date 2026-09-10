@@ -78,11 +78,10 @@ export const ServiceIndustryDetailPage: React.FC = () => {
       />
 
       {/* ── Hero ──────────────────────────────────────────────────── */}
-      <section className="relative bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white overflow-hidden py-16 lg:py-24">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-1/4 w-[500px] h-[400px] rounded-full bg-purple-600/10 blur-[100px]" />
-          <div className="absolute bottom-0 left-1/3 w-[400px] h-[300px] rounded-full bg-amber-500/10 blur-[80px]" />
-        </div>
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white overflow-hidden py-20 lg:py-28 border-b border-navy-800/80">
+        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[500px] h-[400px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/3 w-[400px] h-[300px] rounded-full bg-amber-500/10 blur-[80px] pointer-events-none" />
 
         <Container className="relative z-10">
           <div className="mb-6">
@@ -103,20 +102,20 @@ export const ServiceIndustryDetailPage: React.FC = () => {
               </div>
             </div>
 
-            <h1 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white mb-5 leading-tight">
+            <h1 className="type-h1 text-white mb-5">
               {service.name} for{' '}
               <span className="bg-gradient-to-r from-purple-400 via-amber-300 to-amber-400 bg-clip-text text-transparent">
                 {industry.name}
               </span>
             </h1>
 
-            <p className="text-lg text-slate-300 mb-8 leading-relaxed">
+            <p className="text-lg text-slate-300 mb-8 leading-relaxed max-w-2xl">
               {matrix.uniqueValue}
             </p>
 
             <div className="flex flex-wrap gap-4">
               <Button
-                variant="amber"
+                variant="gold"
                 size="lg"
                 href="/free-seo-audit"
                 icon={<ArrowRight className="w-4 h-4" />}
@@ -133,9 +132,10 @@ export const ServiceIndustryDetailPage: React.FC = () => {
                 Get Free {industry.shortName} Audit
               </Button>
               <Button
-                variant="secondary"
+                variant="outline"
                 size="lg"
                 href="/book-call"
+                className="border-navy-700 text-white hover:bg-navy-800/60"
                 onClick={() =>
                   trackEvent('cta_click', {
                     cta_name: 'book_strategy_call',
@@ -153,13 +153,13 @@ export const ServiceIndustryDetailPage: React.FC = () => {
       </section>
 
       {/* ── Conversion Focus Bar ──────────────────────────────────── */}
-      <div className="bg-slate-900 border-y border-slate-800 text-slate-300 py-4">
+      <div className="bg-navy-900 border-y border-navy-800 text-slate-300 py-3.5">
         <Container>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-sm">
             <div className="flex items-center gap-2">
               <Target className="w-4 h-4 text-amber-400 flex-shrink-0" />
               <span className="font-semibold text-white">Conversion Focus:</span>
-              <span>{matrix.conversionFocus}</span>
+              <span className="text-slate-300">{matrix.conversionFocus}</span>
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-400">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
@@ -346,22 +346,23 @@ export const ServiceIndustryDetailPage: React.FC = () => {
       </Section>
 
       {/* ── Contextual CTA ────────────────────────────────────────── */}
-      <Section variant="dark" spacing="lg">
-        <Container>
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-20 overflow-hidden border-t border-navy-800/80">
+        <div className="absolute inset-0 bg-dark-mesh opacity-20 pointer-events-none" />
+        <Container className="relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>
-              <Badge variant="amber" size="sm" className="mb-4">
-                Ready to Scale?
-              </Badge>
-              <h2 className="font-heading font-extrabold text-3xl lg:text-4xl text-white mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold uppercase tracking-wider mb-5">
+                <span>Enterprise Growth Trajectory</span>
+              </div>
+              <h2 className="type-h2 text-white mb-4">
                 Dominate {industry.name} Search Results
               </h2>
-              <p className="text-slate-300 mb-8 max-w-xl mx-auto">
+              <p className="text-slate-300 mb-8 max-w-xl mx-auto text-sm leading-relaxed">
                 Schedule a confidential consultation with our technical SEO architects. We will audit your current positioning and model your organic growth trajectory.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button
-                  variant="amber"
+                  variant="gold"
                   size="lg"
                   href="/free-seo-audit"
                   icon={<ArrowRight className="w-4 h-4" />}
@@ -378,9 +379,10 @@ export const ServiceIndustryDetailPage: React.FC = () => {
                   Claim Free Technical Audit
                 </Button>
                 <Button
-                  variant="secondary"
+                  variant="outline"
                   size="lg"
                   href="/book-call"
+                  className="border-navy-700 text-white hover:bg-navy-800/60"
                   onClick={() =>
                     trackEvent('cta_click', {
                       cta_name: 'book_strategy_call',
@@ -396,7 +398,7 @@ export const ServiceIndustryDetailPage: React.FC = () => {
             </FadeIn>
           </div>
         </Container>
-      </Section>
+      </section>
     </>
   );
 };

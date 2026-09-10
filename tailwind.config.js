@@ -4,6 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
+        navy: {
+          950: '#070B14', // Deep Obsidian Background
+          900: '#0B1120', // Atmospheric Hero Background
+          850: '#0E172A', // Elevated Dark Surface
+          800: '#131D33', // Card Surface Dark
+          700: '#1E293B', // Border Dark Surface
+        },
         purple: {
           50: '#faf5ff',
           100: '#f3e8ff',
@@ -12,9 +19,9 @@ export default {
           400: '#c084fc',
           500: '#a855f7',
           600: '#6A0DAD', // Royal Purple - Primary (Brand Locked)
-          700: '#7c3aed',
+          700: '#7c3aed', // Bright Violet Accent
           800: '#6b21a8',
-          900: '#581c87',
+          900: '#581c87', // Deep Royal Shadow
         },
         yellow: {
           50: '#fefce8',
@@ -69,8 +76,12 @@ export default {
       boxShadow: {
         'glow': '0 0 20px rgba(106, 13, 173, 0.3)',
         'glow-lg': '0 0 40px rgba(106, 13, 173, 0.4)',
+        'glow-purple-sm': '0 0 15px rgba(124, 58, 237, 0.3)',
+        'glow-gold-sm': '0 0 15px rgba(245, 158, 11, 0.25)',
         'card': '0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03)',
         'card-hover': '0 20px 35px -4px rgba(106, 13, 173, 0.12), 0 8px 16px -2px rgba(15, 23, 42, 0.04)',
+        'card-dark': '0 4px 24px -2px rgba(0, 0, 0, 0.4), 0 2px 8px -2px rgba(0, 0, 0, 0.3)',
+        'card-dark-hover': '0 16px 40px -4px rgba(106, 13, 173, 0.25), 0 4px 16px -2px rgba(0, 0, 0, 0.4)',
         'inner-soft': 'inset 0 1px 2px 0 rgba(255, 255, 255, 0.15)',
       },
     },

@@ -47,17 +47,19 @@ export interface BusinessConfigSchema extends CommunicationChannels {
     readonly displayString?: string;
     readonly sourceText?: string;
   };
-  readonly address: {
-    readonly city: string;
-    readonly state: string;
-    readonly country: string;
-    readonly countryCode: string;
+  readonly areaServed: string;
+  readonly operationalModel: string;
+  readonly address?: {
+    readonly city?: string;
+    readonly state?: string;
+    readonly country?: string;
+    readonly countryCode?: string;
   };
 }
 
 export const businessConfig: BusinessConfigSchema = {
   name: "iGaming Growth",
-  legalName: "iGaming Growth Agency",
+  legalName: "iGaming Growth",
   tagline: "Specialist Digital Growth Agency for Gaming & High-Competition Verticals",
   shortTagline: "Scale Your Gaming Brand",
   domain: "https://igameing.growthservice.in",
@@ -71,6 +73,9 @@ export const businessConfig: BusinessConfigSchema = {
   parentBrand: "iGaming Growth",
   parentBrandUrl: "https://igameing.growthservice.in",
 
+  operationalModel: "Remote-First Distributed Agency",
+  areaServed: "Worldwide",
+
   heroStats: [
     { value: "8", label: "Specialist High-Competition Verticals", color: "gold" },
     { value: "12", label: "Specialist Growth Disciplines" },
@@ -78,17 +83,15 @@ export const businessConfig: BusinessConfigSchema = {
     { value: "White-Hat", label: "Sustainable Search Engineering" },
   ],
 
-  address: {
-    city: "Remote-First",
-    state: "Global Operations",
-    country: "India & International",
-    countryCode: "IN",
-  },
-
   emails: {
     primary: "hello@igameing.growthservice.in",
     business: "business@igameing.growthservice.in",
     support: "support@igameing.growthservice.in",
+  },
+
+  phone: {
+    primary: "+91 93414 36937",
+    whatsapp: "919341436937",
   },
 } as const;
 

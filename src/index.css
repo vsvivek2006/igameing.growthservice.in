@@ -64,7 +64,7 @@
     background-clip: text;
   }
 
-  /* === Glassmorphism === */
+  /* === Glassmorphism & Atmospheric Surfaces === */
   .glass-card {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
@@ -73,36 +73,58 @@
   }
 
   .glass-card-dark {
-    background: rgba(15, 23, 42, 0.75);
+    background: rgba(11, 17, 32, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .bg-hero-atmosphere {
+    background: radial-gradient(circle at 50% -10%, rgba(124, 58, 237, 0.25) 0%, rgba(106, 13, 173, 0.14) 35%, rgba(7, 11, 20, 0.98) 75%), #070B14;
+  }
+
+  .bg-dark-mesh {
+    background: radial-gradient(circle at 80% 20%, rgba(106, 13, 173, 0.16) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(79, 70, 229, 0.12) 0%, transparent 50%), #070B14;
   }
 
   .hero-mesh {
-    background: radial-gradient(circle at 50% 20%, rgba(106, 13, 173, 0.45) 0%, rgba(15, 23, 42, 0.95) 75%);
+    background: radial-gradient(circle at 50% 20%, rgba(106, 13, 173, 0.45) 0%, rgba(7, 11, 20, 0.98) 75%);
   }
 
   /* === Design System Surface Tokens === */
   .surface-base {
-    @apply bg-white border border-slate-200/80;
+    @apply bg-white border border-slate-200/90;
   }
   .surface-subtle {
-    @apply bg-slate-50/80 border border-slate-200/60;
+    @apply bg-slate-50/90 border border-slate-200/70;
   }
   .surface-elevated {
-    @apply bg-white border border-slate-200/80 shadow-card;
+    @apply bg-white border border-slate-200/90 shadow-card;
   }
   .surface-dark {
-    @apply bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 border border-white/10 text-white;
+    @apply bg-navy-900 border border-slate-800 text-white shadow-card-dark;
   }
   .surface-interactive {
-    @apply bg-white border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift;
+    @apply bg-white border border-slate-200/90 shadow-card hover:shadow-card-hover hover:border-purple-300/90;
+    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1), border-color 300ms ease;
+  }
+  .surface-interactive:hover {
+    transform: translateY(-6px);
+  }
+  .surface-card-dark {
+    @apply bg-navy-900/80 border border-slate-800/80 backdrop-blur-md text-white rounded-2xl shadow-card-dark transition-all duration-300;
+  }
+  .surface-card-dark:hover {
+    border-color: rgba(167, 139, 250, 0.4);
+    box-shadow: 0 16px 40px -4px rgba(106, 13, 173, 0.25), 0 4px 16px -2px rgba(0, 0, 0, 0.4);
   }
 
   /* === Centralized Typography Hierarchy Tokens === */
   .type-display {
     @apply text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.08];
+  }
+  .type-h1 {
+    @apply text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1];
   }
   .type-h2 {
     @apply text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15];
@@ -121,6 +143,9 @@
   }
   .type-eyebrow {
     @apply text-xs font-bold uppercase tracking-widest text-purple-600;
+  }
+  .type-mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }
 }
 

@@ -21,12 +21,10 @@ export const NotFound: React.FC = () => {
         robots="noindex, follow"
       />
 
-      <div className="relative min-h-[75vh] flex items-center justify-center py-20 bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white overflow-hidden">
-        {/* Ambient lighting */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-[450px] h-[350px] rounded-full bg-purple-600/10 blur-[120px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[300px] rounded-full bg-indigo-600/10 blur-[100px]" />
-        </div>
+      <div className="relative min-h-[75vh] flex items-center justify-center py-20 bg-navy-950 bg-hero-atmosphere text-white overflow-hidden border-b border-navy-800/80">
+        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 w-[450px] h-[350px] rounded-full bg-purple-600/10 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[300px] rounded-full bg-indigo-600/10 blur-[100px] pointer-events-none" />
 
         <Container size="md" className="relative text-center space-y-8">
           <FadeIn>

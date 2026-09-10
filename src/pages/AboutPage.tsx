@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Target, Globe, TrendingUp, Users, Award, Zap } from 'lucide-react';
 import { SEOHead } from '../seo';
-import { Container, Section, Badge, Button } from '../components/ui';
+import { Container, Section, Button } from '../components/ui';
 import { FadeIn, MotionCard } from '../components/animations';
 
 const TEAM_VALUES = [
@@ -48,16 +48,21 @@ export const AboutPage: React.FC = () => {
       />
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 text-white py-20">
-        <Container>
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-20 lg:py-28 overflow-hidden border-b border-navy-800/80">
+        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[500px] h-[400px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none" />
+
+        <Container className="relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>
-              <Badge variant="purple" size="sm" className="mb-6">About Us</Badge>
-              <h1 className="font-heading font-extrabold text-4xl lg:text-5xl text-white mb-5 leading-tight">
-                The Agency Built for iGaming — and Only iGaming
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider mb-6">
+                <span>Agency Manifesto & Operating DNA</span>
+              </div>
+              <h1 className="type-h1 text-white mb-5">
+                The Agency Built for High-Competition Verticals
               </h1>
-              <p className="text-lg text-slate-300 leading-relaxed">
-                iGaming Growth is a specialist digital growth agency. We don't serve retail, SaaS, or e-commerce brands. We work exclusively with casino operators, sportsbooks, fantasy sports platforms, affiliates, and game studios.
+              <p className="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
+                iGaming Growth is an engineering-led B2B growth agency. We do not serve generic retail or consumer brands. We build proprietary organic systems exclusively for casino operators, gaming platforms, fintech portals, and high-velocity digital niches.
               </p>
             </FadeIn>
           </div>
@@ -170,20 +175,34 @@ export const AboutPage: React.FC = () => {
       </Section>
 
       {/* CTA */}
-      <Section variant="gradient" spacing="md">
-        <Container>
-          <div className="max-w-2xl mx-auto text-center text-white space-y-5">
-            <h2 className="font-heading font-extrabold text-3xl">Ready to Scale Together?</h2>
-            <p className="text-slate-300">Tell us about your gaming brand and growth ambitions. We'll send a tailored proposal within 24 hours.</p>
-            <div className="flex flex-wrap gap-4 justify-center">
+      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-20 overflow-hidden border-t border-navy-800/80">
+        <div className="absolute inset-0 bg-dark-mesh opacity-20 pointer-events-none" />
+        <Container className="relative z-10">
+          <div className="max-w-2xl mx-auto text-center space-y-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider">
+              <span>Direct Commercial Partnership</span>
+            </div>
+            <h2 className="type-h2 text-white">Ready to Scale Together?</h2>
+            <p className="text-slate-300 text-sm leading-relaxed max-w-xl mx-auto">
+              Tell us about your digital platform and target growth goals. We will prepare an architectural roadmap and competitive gap analysis within 24 business hours.
+            </p>
+            <div className="flex flex-wrap items-center gap-4 justify-center pt-2">
               <Button to="/contact" variant="gold" size="lg">Get a Free Proposal</Button>
-              <Button to="/case-studies" variant="outline" size="lg" className="border-white/25 text-white hover:bg-white/10">
-                See Our Results
+              <Button to="/resources" variant="outline" size="lg" className="border-navy-700 text-white hover:bg-navy-800/60">
+                Explore Engineering Guides
               </Button>
+              <a
+                href="https://wa.me/919341436937"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-md shadow-emerald-950/20 transition-all duration-200 hover:-translate-y-0.5"
+              >
+                <span>Chat on WhatsApp</span>
+              </a>
             </div>
           </div>
         </Container>
-      </Section>
+      </section>
     </>
   );
 };

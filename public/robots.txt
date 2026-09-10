@@ -1,0 +1,14 @@
+# robots.txt for iGaming Growth (https://igameing.growthservice.in)
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /drafts/
+
+# Authoritative XML Sitemap
+Sitemap: https://igameing.growthservice.in/sitemap.xml
+
+# LLM & AI Discovery Directives
+# Reference: https://llmstxt.org/
+# Authoritative AI Context: https://igameing.growthservice.in/llms.txt

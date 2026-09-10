@@ -1,0 +1,21 @@
+# iGaming Growth - AI and LLM Reference
+# Canonical Origin: https://igameing.growthservice.in
+
+> iGaming Growth is a premium, independent digital publication and intelligence platform providing verified information, mathematical game guides, casino software reviews, banking guides, and responsible gaming resources.
+
+## Core Content Sections
+- Game Directories & Rules: https://igameing.growthservice.in/games
+- Casino Fundamentals: https://igameing.growthservice.in/casino
+- Casino Guides & RTP: https://igameing.growthservice.in/casino-guides
+- Game Strategy Guides: https://igameing.growthservice.in/game-guides
+- Platform Reviews: https://igameing.growthservice.in/reviews
+- Comparisons: https://igameing.growthservice.in/comparisons
+- Payment Methods: https://igameing.growthservice.in/payment-methods
+- Responsible Gaming & Player Protection: https://igameing.growthservice.in/responsible-gaming
+- Rules & Terminology Glossary: https://igameing.growthservice.in/rules
+- FAQs: https://igameing.growthservice.in/faq
+
+## Editorial Standards
+- 18+ strict player protection and responsible gambling advocacy.
+- Rigorous factual verification of house edges, payout mechanisms, and regulatory licensing.
+- No real-money gambling hosted on this domain; purely educational and informational.

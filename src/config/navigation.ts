@@ -1,19 +1,30 @@
 /**
- * iGaming Growth Agency — Navigation Configuration
- * B2B agency navigation: Services, Industries, Work, Resources, Contact
+ * Navigation configuration — iGaming Growth Agency
+ * Drives the header, mobile nav, and footer from a single source of truth.
  */
+
+export interface NavChild {
+  readonly label: string;
+  readonly path: string;
+  readonly description?: string;
+}
 
 export interface NavItem {
   readonly label: string;
   readonly path: string;
   readonly badge?: string;
   readonly description?: string;
-  readonly children?: readonly NavItem[];
+  readonly children?: readonly NavChild[];
+}
+
+export interface FooterLink {
+  readonly label: string;
+  readonly path: string;
 }
 
 export interface FooterSection {
   readonly title: string;
-  readonly links: readonly { readonly label: string; readonly path: string }[];
+  readonly links: readonly FooterLink[];
 }
 
 export const navigationConfig = {
@@ -21,45 +32,44 @@ export const navigationConfig = {
     {
       label: 'Services',
       path: '/services',
-      description: 'Full-stack digital growth for iGaming brands.',
+      description: 'SEO, web dev, paid acquisition, and conversion for high-competition industries',
       children: [
-        { label: 'All Services', path: '/services', description: 'Complete agency capability overview' },
-        { label: 'iGaming SEO', path: '/services/igaming-seo', description: 'Organic growth for gaming brands' },
-        { label: 'Performance Marketing', path: '/services/performance-marketing', description: 'ROI-first paid acquisition' },
-        { label: 'Web Development', path: '/services/web-development', description: 'High-performance gaming platforms' },
-        { label: 'Content Strategy', path: '/services/content-strategy', description: 'Authority content that ranks & converts' },
-        { label: 'Social Media Marketing', path: '/services/social-media-marketing', description: 'Build gaming brand communities' },
-        { label: 'CRO & Optimisation', path: '/services/conversion-optimisation', description: 'More depositing players from existing traffic' },
+        { label: 'All Services', path: '/services', description: 'Full service overview' },
+        { label: 'SEO', path: '/services/seo', description: 'Organic growth for competitive markets' },
+        { label: 'Technical SEO', path: '/services/technical-seo', description: 'Infrastructure, Core Web Vitals, schema' },
+        { label: 'Content Strategy', path: '/services/content-strategy', description: 'Topical authority & E-E-A-T' },
+        { label: 'Programmatic SEO', path: '/services/programmatic-seo', description: 'Scale content, capture long-tail' },
+        { label: 'Website Development', path: '/services/website-development', description: 'SEO-first web development' },
+        { label: 'Google Ads', path: '/services/google-ads', description: 'Paid search for complex verticals' },
+        { label: 'Conversion Optimisation', path: '/services/conversion-optimization', description: 'More from existing traffic' },
+        { label: 'SEO Audit', path: '/services/seo-audit', description: 'Diagnostic foundation for any SEO programme' },
       ],
     },
     {
       label: 'Industries',
       path: '/industries',
-      description: 'Verticals we serve across the iGaming ecosystem.',
+      description: 'Specialist expertise across competitive and high-risk verticals',
       children: [
-        { label: 'All Industries', path: '/industries', description: 'iGaming verticals we specialise in' },
-        { label: 'Online Casinos', path: '/industries/online-casinos', description: 'Casino operators across regulated markets' },
-        { label: 'Sports Betting', path: '/industries/sports-betting', description: 'Sportsbooks & exchange platforms' },
-        { label: 'Fantasy Sports', path: '/industries/fantasy-sports', description: 'Cricket & multi-sport fantasy apps' },
-        { label: 'Crypto & Web3 Gaming', path: '/industries/crypto-gaming', description: 'Blockchain casinos & NFT gaming' },
-        { label: 'Gaming Affiliates', path: '/industries/gaming-affiliates', description: 'Review networks & comparison portals' },
-        { label: 'Game Studios', path: '/industries/game-studios', description: 'Slot studios & content providers' },
+        { label: 'All Industries', path: '/industries', description: 'Full industry overview' },
+        { label: 'Online Gaming', path: '/industries/gaming', description: 'Gaming platforms and portals' },
+        { label: 'Online Casino', path: '/industries/casino', description: 'Casino operators and affiliates' },
+        { label: 'Cricket Gaming', path: '/industries/cricket-gaming', description: 'Fantasy sports & cricket prediction' },
+        { label: 'Skill Games (Yono)', path: '/industries/yono', description: 'Real-money skill gaming' },
+        { label: 'Color Prediction', path: '/industries/color-prediction', description: 'Color gaming platforms' },
+        { label: 'Color Trading', path: '/industries/color-trading', description: 'Trading platform SEO' },
+        { label: 'Stock Market', path: '/industries/stock-market', description: 'Financial & trading platforms' },
+        { label: 'Adult Industry', path: '/industries/adult-escort', description: 'Adult platforms & directories' },
       ],
-    },
-    {
-      label: 'Results',
-      path: '/case-studies',
-      description: 'Verified results and client case studies.',
     },
     {
       label: 'Resources',
       path: '/resources',
-      description: 'Free guides, tools, and insights for gaming brands.',
+      description: 'Knowledge center, technical guides, and vertical teardowns',
       children: [
-        { label: 'iGaming Blog', path: '/blog', description: 'Marketing insights for gaming businesses' },
-        { label: 'Free SEO Audit', path: '/free-seo-audit', description: 'Instant site health check', badge: 'Free' },
-        { label: 'Gaming Marketing Guides', path: '/resources', description: 'Strategy guides for operators' },
-        { label: 'FAQ', path: '/faq', description: 'Common questions about our services' },
+        { label: 'All Resources', path: '/resources', description: 'Complete library of 10 engineering guides' },
+        { label: 'Technical SEO Guide', path: '/resources/seo-guides/technical-seo-guide', description: '47-point technical audit checklist' },
+        { label: 'Programmatic SEO Guide', path: '/resources/seo-guides/programmatic-seo', description: 'Database architecture without doorway risks' },
+        { label: 'Gaming SEO Blueprint', path: '/resources/industry-insights/gaming-seo', description: 'High-competition organic penetration' },
       ],
     },
     {
@@ -67,54 +77,60 @@ export const navigationConfig = {
       path: '/about',
     },
     {
-      label: 'Get a Proposal',
-      path: '/contact',
+      label: 'Free SEO Audit',
+      path: '/free-seo-audit',
       badge: '→',
     },
   ] as readonly NavItem[],
 
   footer: [
     {
-      title: 'Our Services',
+      title: 'SEO Services',
       links: [
-        { label: 'iGaming SEO', path: '/services/igaming-seo' },
-        { label: 'Performance Marketing', path: '/services/performance-marketing' },
-        { label: 'Web Development', path: '/services/web-development' },
+        { label: 'SEO Overview', path: '/services/seo' },
+        { label: 'Technical SEO', path: '/services/technical-seo' },
+        { label: 'On-Page SEO', path: '/services/on-page-seo' },
+        { label: 'Off-Page SEO', path: '/services/off-page-seo' },
+        { label: 'Programmatic SEO', path: '/services/programmatic-seo' },
         { label: 'Content Strategy', path: '/services/content-strategy' },
-        { label: 'Social Media Marketing', path: '/services/social-media-marketing' },
-        { label: 'CRO & Optimisation', path: '/services/conversion-optimisation' },
+        { label: 'SEO Audit', path: '/services/seo-audit' },
       ],
     },
     {
-      title: 'Industries We Serve',
+      title: 'Growth Services',
       links: [
-        { label: 'Online Casinos', path: '/industries/online-casinos' },
-        { label: 'Sports Betting', path: '/industries/sports-betting' },
-        { label: 'Fantasy Sports', path: '/industries/fantasy-sports' },
-        { label: 'Crypto & Web3 Gaming', path: '/industries/crypto-gaming' },
-        { label: 'Gaming Affiliates', path: '/industries/gaming-affiliates' },
-        { label: 'Game Studios', path: '/industries/game-studios' },
+        { label: 'Website Development', path: '/services/website-development' },
+        { label: 'Google Ads Management', path: '/services/google-ads' },
+        { label: 'Meta Ads Acquisition', path: '/services/meta-ads' },
+        { label: 'Conversion Optimisation', path: '/services/conversion-optimization' },
+        { label: 'Analytics & Tracking', path: '/services/analytics' },
       ],
     },
     {
-      title: 'Resources',
+      title: 'Target Industries',
       links: [
-        { label: 'Case Studies', path: '/case-studies' },
-        { label: 'iGaming Marketing Blog', path: '/blog' },
+        { label: 'Online Gaming', path: '/industries/gaming' },
+        { label: 'Online Casino', path: '/industries/casino' },
+        { label: 'Cricket Gaming', path: '/industries/cricket-gaming' },
+        { label: 'Skill Games (Yono)', path: '/industries/yono' },
+        { label: 'Color Prediction', path: '/industries/color-prediction' },
+        { label: 'Color Trading', path: '/industries/color-trading' },
+        { label: 'Stock Market', path: '/industries/stock-market' },
+        { label: 'Adult Industry', path: '/industries/adult-escort' },
+      ],
+    },
+    {
+      title: 'Company & Advisory',
+      links: [
+        { label: 'About Agency', path: '/about' },
+        { label: 'Knowledge Base', path: '/resources' },
         { label: 'Free SEO Audit', path: '/free-seo-audit' },
-        { label: 'Gaming Marketing Guides', path: '/resources' },
-        { label: 'FAQ', path: '/faq' },
-      ],
-    },
-    {
-      title: 'Company',
-      links: [
-        { label: 'About iGaming Growth', path: '/about' },
-        { label: 'Get a Proposal', path: '/contact' },
+        { label: 'Book Strategy Call', path: '/book-call' },
+        { label: 'Direct Contact', path: '/contact' },
         { label: 'Editorial Standards', path: '/editorial-policy' },
-        { label: 'Terms of Service', path: '/terms' },
-        { label: 'Privacy Policy', path: '/privacy' },
       ],
     },
   ] as readonly FooterSection[],
-};
+} as const;
+
+export default navigationConfig;

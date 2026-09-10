@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { TrendingUp, ArrowRight } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 import { SEOHead } from '../seo';
-import { Container, Section, SectionHeader, Badge, Button } from '../components/ui';
+import { Container, Section, Badge, Button } from '../components/ui';
 import { FadeIn, MotionCard } from '../components/animations';
 import { getFeaturedCaseStudies } from '../data/servicesData';
 

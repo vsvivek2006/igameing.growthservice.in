@@ -16,7 +16,10 @@
     "images:webp": "python scripts/convert_to_webp.py",
     "routes:validate": "node scripts/validate_routes.js",
     "sitemap:generate": "node scripts/generate_sitemap.js",
-    "seo:validate": "node scripts/validate_seo.js"
+    "seo:validate": "node scripts/validate_seo.js",
+    "seo:monitor": "node scripts/monitor_seo_health.js",
+    "seo:gate": "node scripts/seo_gate.js",
+    "smoke:test": "node scripts/smoke_test.js"
   },
   "dependencies": {
     "lucide-react": "^0.344.0",

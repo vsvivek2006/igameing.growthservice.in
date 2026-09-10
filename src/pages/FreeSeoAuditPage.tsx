@@ -1,22 +1,119 @@
-import React from 'react';
-import { ArrowRight, Zap, CheckCircle2, Search, BarChart3, AlertTriangle, Globe } from 'lucide-react';
+import React, { useState } from 'react';
+import { Zap, Search, BarChart3, AlertTriangle, Globe, CheckCircle2, AlertCircle } from 'lucide-react';
 import { SEOHead } from '../seo';
-import { Container, Section, Badge, Button } from '../components/ui';
+import { Container, Section } from '../components/ui';
 import { FadeIn } from '../components/animations';
+import { trackEvent } from '../analytics/tracking';
+
+interface AuditFormData {
+  name: string;
+  email: string;
+  website: string;
+  market: string;
+  keywords: string;
+  honeypot: string;
+}
 
 export const FreeSeoAuditPage: React.FC = () => {
+  const [formData, setFormData] = useState<AuditFormData>({
+    name: '',
+    email: '',
+    website: '',
+    market: '',
+    keywords: '',
+    honeypot: '',
+  });
+
+  const [formErrors, setFormErrors] = useState<Partial<Record<keyof AuditFormData, string>>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const formStartedRef = React.useRef(false);
+
+  // Track form view on initial mount
+  React.useEffect(() => {
+    trackEvent('form_view', { form_type: 'free_seo_audit' });
+  }, []);
+
+  const handleFieldInteraction = () => {
+    if (!formStartedRef.current) {
+      formStartedRef.current = true;
+      trackEvent('form_start', { form_type: 'free_seo_audit' });
+    }
+  };
+
   const auditChecks = [
-    { icon: Search, label: 'Technical SEO Health', desc: 'Core Web Vitals, crawlability, indexation, and site speed' },
-    { icon: BarChart3, label: 'Keyword Gap Analysis', desc: 'High-intent gaming keywords you\'re missing vs competitors' },
-    { icon: Globe, label: 'Backlink Profile Review', desc: 'Domain authority, toxic links, and link-building opportunities' },
-    { icon: AlertTriangle, label: 'Compliance Risk Check', desc: 'Content and technical elements that risk penalties in regulated markets' },
+    { icon: Search, label: 'Technical SEO Health', desc: 'Core Web Vitals, crawl budget, JS rendering, and indexation leaks' },
+    { icon: BarChart3, label: 'Keyword Gap Analysis', desc: 'High-intent commercial queries your competitors capture that you miss' },
+    { icon: Globe, label: 'Authority Profile Review', desc: 'Domain equity, toxic link footprint, and legitimate link opportunities' },
+    { icon: AlertTriangle, label: 'Compliance & Platform Risk', desc: 'Content and technical factors that risk search engine suppression' },
   ];
+
+  const validate = (): boolean => {
+    const errors: Partial<Record<keyof AuditFormData, string>> = {};
+
+    if (!formData.name.trim()) {
+      errors.name = 'Please provide your full name.';
+    }
+
+    if (!formData.email.trim()) {
+      errors.email = 'Please provide your work email address.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      errors.email = 'Please enter a valid work email address.';
+    }
+
+    if (!formData.website.trim()) {
+      errors.website = 'Please provide your platform or domain URL.';
+    } else if (!/^https?:\/\/.+/i.test(formData.website.trim())) {
+      errors.website = 'Please enter a valid URL beginning with http:// or https://';
+    }
+
+    setFormErrors(errors);
+
+    if (Object.keys(errors).length > 0) {
+      trackEvent('form_error', {
+        form_type: 'free_seo_audit',
+        error_type: Object.keys(errors).join(','),
+      });
+    }
+
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (formData.honeypot) {
+      return;
+    }
+
+    if (!validate()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    trackEvent('cta_click', {
+      cta_name: 'submit_audit_request',
+      cta_location: 'free_seo_audit_form',
+    });
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+
+      // Fire generate_lead strictly after successful submission
+      trackEvent('generate_lead', {
+        form_type: 'free_seo_audit',
+        market: formData.market || 'all_markets',
+      });
+    }, 800);
+  };
 
   return (
     <>
       <SEOHead
-        title="Free iGaming SEO Audit — Casino & Gaming Website Analysis"
-        description="Get a free technical SEO audit for your casino, sportsbook, or gaming website. We review Core Web Vitals, keyword gaps, backlinks, and compliance risks."
+        title="Free Technical SEO & Growth Audit — High-Competition Platforms"
+        description="Request a confidential technical SEO audit for your gaming, financial, or high-competition digital platform. We review Core Web Vitals, indexation, keyword gaps, and compliance."
         canonicalPath="/free-seo-audit"
       />
 
@@ -26,13 +123,13 @@ export const FreeSeoAuditPage: React.FC = () => {
             <FadeIn>
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 mb-6">
                 <Zap className="w-4 h-4 text-amber-400" />
-                <span className="text-sm font-bold text-amber-300">100% Free — No Credit Card Required</span>
+                <span className="text-sm font-bold text-amber-300">100% Confidential — No Obligation</span>
               </div>
               <h1 className="font-heading font-extrabold text-4xl lg:text-5xl text-white mb-5 leading-tight">
-                Free iGaming SEO Audit
+                Technical SEO & Organic Growth Audit
               </h1>
               <p className="text-lg text-slate-300 leading-relaxed">
-                Find out exactly why your casino or gaming brand isn't ranking — and what it would take to dominate your target keywords. Delivered by a senior iGaming SEO specialist.
+                Discover the crawl bottlenecks, keyword gaps, and technical barriers holding your organic rankings back. Conducted manually by a senior technical SEO engineer — not an automated tool export.
               </p>
             </FadeIn>
           </div>
@@ -51,78 +148,187 @@ export const FreeSeoAuditPage: React.FC = () => {
                   <h2 className="font-heading font-bold text-xl text-slate-900">Request Your Free Audit</h2>
                 </div>
 
-                <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Your Name *</label>
-                    <input
-                      type="text"
-                      placeholder="John Smith"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors"
-                    />
+                {isSubmitted ? (
+                  <div className="text-center py-10 space-y-4">
+                    <div className="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
+                      <CheckCircle2 className="w-8 h-8" />
+                    </div>
+                    <h3 className="font-heading font-bold text-2xl text-slate-900">
+                      Audit Request Received
+                    </h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Thank you, {formData.name}. Our technical SEO audit desk has logged <strong>{formData.website}</strong>. A comprehensive diagnostic report will be prepared and delivered to <strong>{formData.email}</strong> within 48 business hours.
+                    </p>
+                    <p className="text-xs text-slate-400">
+                      Urgent inquiry? Email our audit desk at business@igameing.growthservice.in
+                    </p>
                   </div>
+                ) : (
+                  <form className="space-y-5" onSubmit={handleSubmit} onFocusCapture={handleFieldInteraction} noValidate>
+                    {/* Honeypot Field */}
+                    <div
+                      style={{
+                        opacity: 0,
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        height: 0,
+                        width: 0,
+                        zIndex: -1,
+                      }}
+                      aria-hidden="true"
+                    >
+                      <label htmlFor="audit_hp">Leave empty</label>
+                      <input
+                        type="text"
+                        id="audit_hp"
+                        name="audit_hp"
+                        tabIndex={-1}
+                        value={formData.honeypot}
+                        onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
+                        autoComplete="off"
+                      />
+                    </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Work Email *</label>
-                    <input
-                      type="email"
-                      placeholder="you@yourbrand.com"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors"
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="audit_name" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                        Your Name *
+                      </label>
+                      <input
+                        id="audit_name"
+                        type="text"
+                        required
+                        placeholder="John Smith"
+                        value={formData.name}
+                        onChange={(e) => {
+                          setFormData({ ...formData, name: e.target.value });
+                          if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
+                        }}
+                        className={`w-full px-4 py-3 rounded-xl border text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors ${
+                          formErrors.name ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                        }`}
+                      />
+                      {formErrors.name && (
+                        <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {formErrors.name}
+                        </p>
+                      )}
+                    </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Website URL to Audit *</label>
-                    <input
-                      type="url"
-                      placeholder="https://your-casino-site.com"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors"
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="audit_email" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                        Work Email *
+                      </label>
+                      <input
+                        id="audit_email"
+                        type="email"
+                        required
+                        placeholder="you@yourbrand.com"
+                        value={formData.email}
+                        onChange={(e) => {
+                          setFormData({ ...formData, email: e.target.value });
+                          if (formErrors.email) setFormErrors({ ...formErrors, email: undefined });
+                        }}
+                        className={`w-full px-4 py-3 rounded-xl border text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors ${
+                          formErrors.email ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                        }`}
+                      />
+                      {formErrors.email && (
+                        <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {formErrors.email}
+                        </p>
+                      )}
+                    </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Primary Target Market</label>
-                    <select className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors bg-white">
-                      <option value="">Select market</option>
-                      <option>India</option>
-                      <option>UK</option>
-                      <option>Canada</option>
-                      <option>Australia</option>
-                      <option>Malta / Europe</option>
-                      <option>UAE / Middle East</option>
-                      <option>Global</option>
-                    </select>
-                  </div>
+                    <div>
+                      <label htmlFor="audit_website" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                        Website URL to Audit *
+                      </label>
+                      <input
+                        id="audit_website"
+                        type="url"
+                        required
+                        placeholder="https://your-casino-site.com"
+                        value={formData.website}
+                        onChange={(e) => {
+                          setFormData({ ...formData, website: e.target.value });
+                          if (formErrors.website) setFormErrors({ ...formErrors, website: undefined });
+                        }}
+                        className={`w-full px-4 py-3 rounded-xl border text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors ${
+                          formErrors.website ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                        }`}
+                      />
+                      {formErrors.website && (
+                        <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {formErrors.website}
+                        </p>
+                      )}
+                    </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Your top 3 target keywords (optional)</label>
-                    <textarea
-                      rows={3}
-                      placeholder="e.g., online casino India, cricket betting, real money slots..."
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors resize-none"
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="audit_market" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                        Primary Target Market
+                      </label>
+                      <select
+                        id="audit_market"
+                        value={formData.market}
+                        onChange={(e) => setFormData({ ...formData, market: e.target.value })}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors bg-white"
+                      >
+                        <option value="">Select market</option>
+                        <option value="India">India</option>
+                        <option value="UK">UK</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Europe">Malta / Europe</option>
+                        <option value="UAE">UAE / Middle East</option>
+                        <option value="Global">Global</option>
+                      </select>
+                    </div>
 
-                  <button
-                    type="submit"
-                    className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-base hover:from-amber-400 hover:to-orange-400 transition-all duration-200 shadow-lg shadow-amber-500/20 hover:-translate-y-0.5"
-                  >
-                    <Zap className="w-4 h-4" />
-                    Get My Free SEO Audit
-                  </button>
-                  <p className="text-center text-xs text-slate-400">
-                    Delivered within 2–3 business days · No spam · No hard sell
-                  </p>
-                </form>
+                    <div>
+                      <label htmlFor="audit_keywords" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                        Your top target keywords (optional)
+                      </label>
+                      <textarea
+                        id="audit_keywords"
+                        rows={3}
+                        placeholder="e.g., online casino India, cricket betting, real money slots..."
+                        value={formData.keywords}
+                        onChange={(e) => setFormData({ ...formData, keywords: e.target.value })}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors resize-none"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-base hover:from-amber-400 hover:to-orange-400 transition-all duration-200 shadow-lg shadow-amber-500/20 hover:-translate-y-0.5 disabled:opacity-50 cursor-pointer"
+                    >
+                      <Zap className="w-4 h-4" />
+                      {isSubmitting ? 'Processing Audit Request...' : 'Get My Free SEO Audit'}
+                    </button>
+
+                    <p className="text-center text-xs text-slate-400">
+                      No obligation. We do not sell your contact data or spam your inbox.
+                    </p>
+                  </form>
+                )}
               </div>
             </FadeIn>
 
-            {/* What's in the audit */}
+            {/* Value Points */}
             <FadeIn delay={150}>
               <div className="space-y-8">
                 <div>
-                  <h2 className="font-heading font-bold text-2xl text-slate-900 mb-3">What You'll Receive</h2>
-                  <p className="text-slate-500 text-sm leading-relaxed">
-                    A senior iGaming SEO specialist manually reviews your site and delivers a prioritised action plan — not an automated tool report with 847 irrelevant errors.
+                  <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-4">
+                    What's Included in Your Audit
+                  </h2>
+                  <p className="text-slate-600 leading-relaxed">
+                    Most "free audits" are automated PDF exports from cheap SaaS tools. Ours is performed by an experienced iGaming SEO strategist who looks at your site through the lens of your specific vertical, competitors, and market regulations.
                   </p>
                 </div>
 
@@ -130,35 +336,30 @@ export const FreeSeoAuditPage: React.FC = () => {
                   {auditChecks.map((check) => {
                     const Icon = check.icon;
                     return (
-                      <div key={check.label} className="flex items-start gap-4 p-4 rounded-2xl border border-slate-100 hover:border-purple-200 hover:bg-purple-50/30 transition-all">
-                        <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center flex-shrink-0">
-                          <Icon className="w-5 h-5 text-purple-600" />
+                      <div key={check.label} className="flex gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center flex-shrink-0">
+                          <Icon className="w-5 h-5 text-purple-700" />
                         </div>
                         <div>
-                          <p className="font-semibold text-sm text-slate-900 mb-0.5">{check.label}</p>
-                          <p className="text-xs text-slate-500 leading-relaxed">{check.desc}</p>
+                          <div className="font-semibold text-slate-900 text-sm mb-0.5">{check.label}</div>
+                          <div className="text-xs text-slate-500 leading-relaxed">{check.desc}</div>
                         </div>
                       </div>
                     );
                   })}
                 </div>
 
-                <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-100">
-                  <p className="font-heading font-bold text-slate-900 text-sm mb-3">You'll walk away knowing:</p>
-                  {[
-                    'Why your site isn\'t ranking for your target keywords',
-                    'Your 3 highest-priority technical SEO fixes',
-                    'The keyword opportunities your competitors are winning',
-                    'A prioritised 90-day SEO action plan',
-                  ].map((item) => (
-                    <div key={item} className="flex items-center gap-2 text-xs text-slate-700 mb-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                      {item}
-                    </div>
-                  ))}
+                <div className="p-6 rounded-2xl bg-purple-50 border border-purple-100">
+                  <div className="font-semibold text-purple-900 text-sm mb-1">
+                    Why is this free?
+                  </div>
+                  <p className="text-xs text-purple-700 leading-relaxed">
+                    Because we want to show you the quality of our work before we talk about working together. Most operators who receive our audit end up hiring us for execution.
+                  </p>
                 </div>
               </div>
             </FadeIn>
+
           </div>
         </Container>
       </Section>

@@ -1,46 +1,25 @@
 /**
  * Agency Content Selectors
- * Thin accessor layer over servicesData for the B2B agency site.
+ * Thin accessor layer over servicesData and industriesData.
  */
 
-import {
-  servicesData,
-  caseStudies,
-  industryVerticals,
-  ServiceOffering,
-  CaseStudy,
-  IndustryVertical,
-  getFeaturedServices,
-  getAllServices,
-  getServiceBySlug,
-  getFeaturedCaseStudies,
-  getAllIndustryVerticals,
-} from '../data/servicesData';
-
-// Re-export for direct usage
 export {
   getFeaturedServices,
   getAllServices,
   getServiceBySlug,
-  getFeaturedCaseStudies,
-  getAllIndustryVerticals,
-  ServiceOffering,
-  CaseStudy,
-  IndustryVertical,
-};
+  getServicesByCategory,
+  getTopLevelServices,
+  getSubServices,
+  SERVICE_CATEGORY_LABELS,
+  type ServiceOffering,
+  type ServiceCategory,
+  type FAQItem,
+} from '../data/servicesData';
 
-export function getAllCaseStudies(): readonly CaseStudy[] {
-  return caseStudies;
-}
-
-export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
-  return caseStudies.find((c) => c.slug === slug);
-}
-
-export function getIndustryBySlug(slug: string): IndustryVertical | undefined {
-  return industryVerticals.find((v) => v.slug === slug);
-}
-
-export function getServicesByColor(color: ServiceOffering['color']): readonly ServiceOffering[] {
-  return servicesData.filter((s) => s.color === color);
-}
+export {
+  getAllIndustries,
+  getIndustryBySlug,
+  getIndustriesByCategory,
+  INDUSTRY_CATEGORY_LABELS,
+  type IndustryVertical,
+} from '../data/industriesData';

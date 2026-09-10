@@ -30,12 +30,6 @@ export function buildOrganizationSchema(): Record<string, unknown> {
       businessConfig.social.youtube,
       businessConfig.social.instagram,
     ].filter(Boolean),
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: businessConfig.ratings.average,
-      reviewCount: businessConfig.ratings.reviewCount,
-      bestRating: 5,
-    },
   };
 }
 
@@ -80,8 +74,8 @@ export function buildServiceSchema(service: ServiceOffering): Record<string, unk
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: service.title,
-    description: service.description,
+    name: service.name,
+    description: service.shortDescription,
     provider: {
       '@id': `${businessConfig.canonicalOrigin}/#organization`,
     },
@@ -90,19 +84,64 @@ export function buildServiceSchema(service: ServiceOffering): Record<string, unk
   };
 }
 
+export function buildServiceIndustrySchema(
+  serviceName: string,
+  industryName: string,
+  description: string,
+  canonicalUrl: string
+): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: `${serviceName} for ${industryName}`,
+    description,
+    provider: {
+      '@id': `${businessConfig.canonicalOrigin}/#organization`,
+    },
+    url: canonicalUrl,
+    areaServed: 'Global',
+    serviceType: serviceName,
+  };
+}
+
 export function buildFAQSchema(
-  faqs: readonly { question: string; answer: string }[]
+  faqs: readonly { q?: string; a?: string; question?: string; answer?: string }[]
 ): Record<string, unknown> {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqs.map((f) => ({
       '@type': 'Question',
-      name: f.question,
+      name: f.question || f.q || '',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: f.answer,
+        text: f.answer || f.a || '',
       },
     })),
+  };
+}
+
+export function buildArticleSchema(params: {
+  readonly title: string;
+  readonly description: string;
+  readonly url: string;
+  readonly datePublished?: string;
+  readonly authorName?: string;
+}): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: params.title,
+    description: params.description,
+    url: params.url,
+    datePublished: params.datePublished || '2026-03-01',
+    author: {
+      '@type': 'Organization',
+      name: params.authorName || businessConfig.name,
+      url: businessConfig.canonicalOrigin,
+    },
+    publisher: {
+      '@id': `${businessConfig.canonicalOrigin}/#organization`,
+    },
   };
 }

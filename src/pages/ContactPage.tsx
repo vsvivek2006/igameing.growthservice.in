@@ -1,11 +1,132 @@
-import React from 'react';
-import { ArrowRight, Mail, Phone, MessageCircle, Clock } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mail, Phone, MessageCircle, Clock, ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react';
 import { SEOHead } from '../seo';
-import { Container, Section, Badge, Button } from '../components/ui';
+import { Container, Section, Badge } from '../components/ui';
 import { FadeIn } from '../components/animations';
+import { trackEvent } from '../analytics/tracking';
 import businessConfig from '../config/business';
 
+interface ContactFormData {
+  name: string;
+  company: string;
+  email: string;
+  website: string;
+  vertical: string;
+  services: string[];
+  budget: string;
+  message: string;
+  honeypot: string;
+}
+
 export const ContactPage: React.FC = () => {
+  const [formData, setFormData] = useState<ContactFormData>({
+    name: '',
+    company: '',
+    email: '',
+    website: '',
+    vertical: '',
+    services: [],
+    budget: '',
+    message: '',
+    honeypot: '',
+  });
+
+  const [formErrors, setFormErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const formStartedRef = React.useRef(false);
+
+  // Track form view on initial mount
+  React.useEffect(() => {
+    trackEvent('form_view', { form_type: 'contact_proposal' });
+  }, []);
+
+  const handleFieldInteraction = () => {
+    if (!formStartedRef.current) {
+      formStartedRef.current = true;
+      trackEvent('form_start', { form_type: 'contact_proposal' });
+    }
+  };
+
+  const availableServices = [
+    'Technical SEO Audit',
+    'Organic SEO Strategy',
+    'Website Development',
+    'Content Strategy',
+    'Programmatic SEO',
+    'Conversion Optimization (CRO)',
+    'Analytics & Attribution',
+    'Policy-Compliant Paid Ads',
+  ];
+
+  const handleCheckboxToggle = (serviceName: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      services: prev.services.includes(serviceName)
+        ? prev.services.filter((s) => s !== serviceName)
+        : [...prev.services, serviceName],
+    }));
+  };
+
+  const validate = (): boolean => {
+    const errors: Partial<Record<keyof ContactFormData, string>> = {};
+
+    if (!formData.name.trim()) {
+      errors.name = 'Please provide your full name.';
+    }
+
+    if (!formData.email.trim()) {
+      errors.email = 'Please provide your work email address.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      errors.email = 'Please enter a valid work email address.';
+    }
+
+    if (!formData.vertical) {
+      errors.vertical = 'Please select your industry vertical.';
+    }
+
+    setFormErrors(errors);
+
+    if (Object.keys(errors).length > 0) {
+      trackEvent('form_error', {
+        form_type: 'contact_proposal',
+        error_type: Object.keys(errors).join(','),
+      });
+    }
+
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (formData.honeypot) {
+      return;
+    }
+
+    if (!validate()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    trackEvent('cta_click', {
+      cta_name: 'submit_proposal_request',
+      cta_location: 'contact_proposal_form',
+    });
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+
+      // Fire generate_lead strictly after successful submission
+      trackEvent('generate_lead', {
+        form_type: 'contact_proposal',
+        vertical: formData.vertical || 'unspecified',
+      });
+    }, 800);
+  };
+
   return (
     <>
       <SEOHead
@@ -23,7 +144,7 @@ export const ContactPage: React.FC = () => {
                 Let's Grow Your Gaming Brand
               </h1>
               <p className="text-lg text-slate-300 leading-relaxed">
-                Tell us about your brand, your market, and your growth goals. We'll review your situation and send a tailored proposal within 24 hours — no generic templates, no obligation.
+                Tell us about your brand, your market, and your growth goals. We'll review your situation and send a tailored proposal within 24 business hours — no generic templates, no obligation.
               </p>
             </FadeIn>
           </div>
@@ -39,194 +160,320 @@ export const ContactPage: React.FC = () => {
               <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-8 lg:p-10">
                 <h2 className="font-heading font-bold text-2xl text-slate-900 mb-6">Request a Free Proposal</h2>
 
-                <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-1.5">Name *</label>
+                {isSubmitted ? (
+                  <div className="text-center py-10 space-y-4">
+                    <div className="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
+                      <CheckCircle2 className="w-8 h-8" />
+                    </div>
+                    <h3 className="font-heading font-bold text-2xl text-slate-900">
+                      Proposal Request Received
+                    </h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Thank you, {formData.name}. Our commercial growth team has received your briefing. A custom growth outline will be prepared and delivered to <strong>{formData.email}</strong> within 24 business hours.
+                    </p>
+                    <p className="text-xs text-slate-400">
+                      Need immediate assistance? Email {businessConfig.emails.business} directly.
+                    </p>
+                  </div>
+                ) : (
+                  <form className="space-y-5" onSubmit={handleSubmit} onFocusCapture={handleFieldInteraction} noValidate>
+                    {/* Honeypot Field */}
+                    <div
+                      style={{
+                        opacity: 0,
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        height: 0,
+                        width: 0,
+                        zIndex: -1,
+                      }}
+                      aria-hidden="true"
+                    >
+                      <label htmlFor="contact_hp">Leave empty</label>
                       <input
                         type="text"
-                        placeholder="Your full name"
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors"
+                        id="contact_hp"
+                        name="contact_hp"
+                        tabIndex={-1}
+                        value={formData.honeypot}
+                        onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
+                        autoComplete="off"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-1.5">Company</label>
-                      <input
-                        type="text"
-                        placeholder="Your brand or company"
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors"
-                      />
-                    </div>
-                  </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Email *</label>
-                    <input
-                      type="email"
-                      placeholder="your@email.com"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Website URL</label>
-                    <input
-                      type="url"
-                      placeholder="https://your-casino.com"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">What best describes your business? *</label>
-                    <select className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors bg-white">
-                      <option value="">Select your vertical</option>
-                      <option>Online Casino Operator</option>
-                      <option>Sports Betting Platform</option>
-                      <option>Fantasy Sports App</option>
-                      <option>Crypto / Web3 Gaming Brand</option>
-                      <option>Gaming Affiliate / Publisher</option>
-                      <option>Game Studio / Software Provider</option>
-                      <option>Other iGaming Business</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Services you're interested in</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {['iGaming SEO', 'Performance Marketing', 'Web Development', 'Content Strategy', 'Social Media', 'CRO'].map((s) => (
-                        <label key={s} className="flex items-center gap-2 text-xs text-slate-600 cursor-pointer">
-                          <input type="checkbox" className="rounded border-slate-300 text-purple-600 focus:ring-purple-500" />
-                          {s}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label htmlFor="contact_name" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                          Name *
                         </label>
-                      ))}
+                        <input
+                          id="contact_name"
+                          type="text"
+                          required
+                          placeholder="Your full name"
+                          value={formData.name}
+                          onChange={(e) => {
+                            setFormData({ ...formData, name: e.target.value });
+                            if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
+                          }}
+                          className={`w-full px-4 py-3 rounded-xl border text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors ${
+                            formErrors.name ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                          }`}
+                        />
+                        {formErrors.name && (
+                          <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" />
+                            {formErrors.name}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label htmlFor="contact_company" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                          Company
+                        </label>
+                        <input
+                          id="contact_company"
+                          type="text"
+                          placeholder="Your brand or company"
+                          value={formData.company}
+                          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors"
+                        />
+                      </div>
                     </div>
-                  </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Monthly budget range</label>
-                    <select className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors bg-white">
-                      <option value="">Select a range</option>
-                      <option>Under $1,000/mo</option>
-                      <option>$1,000 – $3,000/mo</option>
-                      <option>$3,000 – $10,000/mo</option>
-                      <option>$10,000 – $30,000/mo</option>
-                      <option>$30,000+/mo</option>
-                    </select>
-                  </div>
+                    <div>
+                      <label htmlFor="contact_email" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                        Email *
+                      </label>
+                      <input
+                        id="contact_email"
+                        type="email"
+                        required
+                        placeholder="your@email.com"
+                        value={formData.email}
+                        onChange={(e) => {
+                          setFormData({ ...formData, email: e.target.value });
+                          if (formErrors.email) setFormErrors({ ...formErrors, email: undefined });
+                        }}
+                        className={`w-full px-4 py-3 rounded-xl border text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors ${
+                          formErrors.email ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                        }`}
+                      />
+                      {formErrors.email && (
+                        <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {formErrors.email}
+                        </p>
+                      )}
+                    </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Tell us about your goals</label>
-                    <textarea
-                      rows={4}
-                      placeholder="What are you trying to achieve? Any specific markets, competition, or challenges we should know about..."
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors resize-none"
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="contact_website" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                        Website URL
+                      </label>
+                      <input
+                        id="contact_website"
+                        type="url"
+                        placeholder="https://your-casino.com"
+                        value={formData.website}
+                        onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors"
+                      />
+                    </div>
 
-                  <button
-                    type="submit"
-                    className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-base hover:from-amber-400 hover:to-orange-400 transition-all duration-200 shadow-lg shadow-amber-500/20 hover:-translate-y-0.5"
-                  >
-                    Send Free Proposal Request
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
+                    <div>
+                      <label htmlFor="contact_vertical" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                        What best describes your business? *
+                      </label>
+                      <select
+                        id="contact_vertical"
+                        required
+                        value={formData.vertical}
+                        onChange={(e) => {
+                          setFormData({ ...formData, vertical: e.target.value });
+                          if (formErrors.vertical) setFormErrors({ ...formErrors, vertical: undefined });
+                        }}
+                        className={`w-full px-4 py-3 rounded-xl border text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors bg-white ${
+                          formErrors.vertical ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                        }`}
+                      >
+                        <option value="">Select your vertical</option>
+                        <option value="Online Casino Operator">Online Casino Operator</option>
+                        <option value="Online Gaming Platform">Online Gaming Platform</option>
+                        <option value="YONO / Skill Game App">YONO / Skill Game App</option>
+                        <option value="Cricket / Fantasy Sports">Cricket / Fantasy Sports</option>
+                        <option value="Color Prediction / Trading">Color Prediction / Trading Platform</option>
+                        <option value="Stock Market / Finance Portal">Stock Market / Financial Portal</option>
+                        <option value="Adult Entertainment Directory">Adult Entertainment Directory</option>
+                        <option value="Other iGaming Business">Other iGaming Business</option>
+                      </select>
+                      {formErrors.vertical && (
+                        <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {formErrors.vertical}
+                        </p>
+                      )}
+                    </div>
 
-                  <p className="text-center text-xs text-slate-400">
-                    We respond within 24 hours. No spam, no hard sell — just a tailored proposal.
-                  </p>
-                </form>
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-1.5">
+                        Services you're interested in
+                      </label>
+                      <div className="grid grid-cols-2 gap-2">
+                        {availableServices.map((s) => (
+                          <label key={s} className="flex items-center gap-2 text-xs text-slate-600 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={formData.services.includes(s)}
+                              onChange={() => handleCheckboxToggle(s)}
+                              className="rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+                            />
+                            {s}
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="contact_budget" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                        Monthly Marketing Budget
+                      </label>
+                      <select
+                        id="contact_budget"
+                        value={formData.budget}
+                        onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors bg-white"
+                      >
+                        <option value="">Select budget range</option>
+                        <option value="under_3k">Under $3,000 / month</option>
+                        <option value="3k_5k">$3,000 – $5,000 / month</option>
+                        <option value="5k_10k">$5,000 – $10,000 / month</option>
+                        <option value="10k_plus">$10,000+ / month</option>
+                        <option value="custom">Custom project / One-time audit</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label htmlFor="contact_message" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                        Tell us about your project & goals
+                      </label>
+                      <textarea
+                        id="contact_message"
+                        rows={4}
+                        placeholder="Current challenges, target keywords, markets, timelines..."
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-400 transition-colors resize-none"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-purple-600 text-white font-bold text-base hover:bg-purple-700 transition-colors shadow-lg shadow-purple-600/20 disabled:opacity-50 cursor-pointer"
+                    >
+                      {isSubmitting ? (
+                        <span>Preparing Your Proposal...</span>
+                      ) : (
+                        <>
+                          <span>Request My Free Proposal</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </>
+                      )}
+                    </button>
+
+                    <p className="text-center text-xs text-slate-400">
+                      We sign NDAs on request. Your project details are kept strictly confidential.
+                    </p>
+                  </form>
+                )}
               </div>
             </FadeIn>
 
-            {/* Contact Info */}
-            <FadeIn delay={200}>
-              <div className="space-y-8 lg:pt-4">
+            {/* Direct Contact Options */}
+            <FadeIn delay={150}>
+              <div className="space-y-8">
                 <div>
-                  <h2 className="font-heading font-bold text-2xl text-slate-900 mb-2">Other Ways to Reach Us</h2>
-                  <p className="text-slate-500 text-sm leading-relaxed">
-                    Prefer a direct conversation? Reach out on any channel and we'll get back to you within the same business day.
+                  <h3 className="font-heading font-extrabold text-2xl text-slate-900 mb-3">
+                    Prefer to reach out directly?
+                  </h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    We're available across direct channels for operators who want a quick response or have an urgent campaign requirement.
                   </p>
                 </div>
 
                 <div className="space-y-4">
-                  {[
-                    {
-                      icon: Mail,
-                      label: 'Email',
-                      value: businessConfig.emails.primary,
-                      href: `mailto:${businessConfig.emails.primary}`,
-                    },
-                    {
-                      icon: MessageCircle,
-                      label: 'WhatsApp',
-                      value: 'Chat on WhatsApp',
-                      href: businessConfig.phone.whatsapp,
-                    },
-                    {
-                      icon: Phone,
-                      label: 'Business Enquiries',
-                      value: businessConfig.emails.business,
-                      href: `mailto:${businessConfig.emails.business}`,
-                    },
-                  ].map((c) => {
-                    const Icon = c.icon;
-                    return (
-                      <a
-                        key={c.label}
-                        href={c.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-4 p-4 rounded-2xl border border-slate-200 hover:border-purple-300 hover:bg-purple-50/50 transition-all duration-200 group"
-                      >
-                        <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center flex-shrink-0 group-hover:bg-purple-100 transition-colors">
-                          <Icon className="w-5 h-5 text-purple-600" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{c.label}</div>
-                          <div className="text-sm font-medium text-slate-800">{c.value}</div>
-                        </div>
-                      </a>
-                    );
-                  })}
-                </div>
-
-                {/* Response promise */}
-                <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-50 to-violet-50 border border-purple-100">
-                  <div className="flex items-start gap-3 mb-3">
-                    <Clock className="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-heading font-bold text-slate-900 text-sm mb-1">Our Response Guarantee</p>
-                      <p className="text-xs text-slate-600 leading-relaxed">
-                        Every proposal request is reviewed by a senior iGaming growth strategist — not a junior account manager. You'll receive a personalised, actionable response within 24 business hours.
-                      </p>
+                  <a
+                    href={`mailto:${businessConfig.emails.primary}`}
+                    className="flex items-center gap-4 p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-purple-200 hover:bg-purple-50/50 transition-all group"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors">
+                      <Mail className="w-6 h-6" />
                     </div>
-                  </div>
+                    <div>
+                      <div className="text-xs text-slate-500 font-medium">Email Us Directly</div>
+                      <div className="font-bold text-slate-900 text-sm">{businessConfig.emails.primary}</div>
+                      <div className="text-xs text-purple-600">Response within 24 hours</div>
+                    </div>
+                  </a>
+
+                  <a
+                    href={`tel:${businessConfig.phone.primary}`}
+                    className="flex items-center gap-4 p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-purple-200 hover:bg-purple-50/50 transition-all group"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-200 transition-colors">
+                      <Phone className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="text-xs text-slate-500 font-medium">Call Our Strategy Desk</div>
+                      <div className="font-bold text-slate-900 text-sm">{businessConfig.phone.primary}</div>
+                      <div className="text-xs text-emerald-600">Mon–Sat, 9am–7pm IST</div>
+                    </div>
+                  </a>
+
+                  <a
+                    href={businessConfig.phone.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-emerald-200 hover:bg-emerald-50/50 transition-all group"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-200 transition-colors">
+                      <MessageCircle className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="text-xs text-slate-500 font-medium">WhatsApp Business</div>
+                      <div className="font-bold text-slate-900 text-sm">Chat with our team</div>
+                      <div className="text-xs text-emerald-600">Quick response during business hours</div>
+                    </div>
+                  </a>
                 </div>
 
-                {/* Social */}
-                <div>
-                  <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-3">Follow Us</p>
-                  <div className="flex gap-3">
-                    {[
-                      { label: 'LinkedIn', href: businessConfig.social.linkedin },
-                      { label: 'Twitter/X', href: businessConfig.social.twitter },
-                      { label: 'Telegram', href: businessConfig.social.telegram },
-                    ].map((s) => (
-                      <a
-                        key={s.label}
-                        href={s.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-4 py-2 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600 hover:border-purple-300 hover:text-purple-600 transition-colors"
-                      >
-                        {s.label}
-                      </a>
-                    ))}
+                <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Clock className="w-4 h-4 text-purple-600" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-700">What Happens Next?</span>
                   </div>
+                  <ol className="space-y-2 text-xs text-slate-600">
+                    <li className="flex gap-2">
+                      <span className="font-bold text-purple-600">1.</span>
+                      <span>We review your website and current search visibility</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="font-bold text-purple-600">2.</span>
+                      <span>A senior strategist prepares an initial analysis</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="font-bold text-purple-600">3.</span>
+                      <span>We send a tailored proposal with scope, timeline, and deliverables</span>
+                    </li>
+                  </ol>
                 </div>
               </div>
             </FadeIn>
+
           </div>
         </Container>
       </Section>

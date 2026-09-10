@@ -1,122 +1,219 @@
-import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { ChevronDown, Search, ArrowRight, HelpCircle } from 'lucide-react';
 import { SEOHead } from '../seo';
+import { buildFAQSchema } from '../seo/schema';
 import { Container, Section, Badge, Button } from '../components/ui';
 import { FadeIn } from '../components/animations';
-
-const FAQ_ITEMS = [
-  {
-    q: 'What types of gaming businesses do you work with?',
-    a: 'We work exclusively with iGaming businesses: online casino operators, sports betting platforms, fantasy sports apps, crypto and Web3 gaming brands, gaming affiliate sites and publishers, and game studios. We do not serve consumer-facing non-gaming clients.',
-  },
-  {
-    q: 'Do you operate in regulated markets?',
-    a: 'Yes — regulated markets are our specialty. We understand compliance constraints in the UK (UKGC), Malta (MGA), India, Canada, Australia, and the UAE. Every strategy we build is compliant from day one. We will not take on work that puts a client\'s licence at risk.',
-  },
-  {
-    q: 'What does a typical engagement look like?',
-    a: 'We start with a discovery call and free audit to understand your current situation and goals. We then deliver a tailored proposal with scope, timelines, and expected outcomes. Engagements typically start on a 3-month retainer basis, with monthly strategy reviews and transparent reporting.',
-  },
-  {
-    q: 'How quickly can you start?',
-    a: 'For most clients, we can begin onboarding within 5–7 business days of agreement. Urgent launch support (new casino launch, affiliate site migration) can be expedited. Contact us to discuss your timeline.',
-  },
-  {
-    q: 'What\'s your minimum engagement size?',
-    a: 'Our minimum retainer is typically $1,500/month for a focused single-service engagement (e.g., SEO only or content only). Full-stack growth programmes start from $3,000/month. Project-based work (website builds, audits) is quoted separately.',
-  },
-  {
-    q: 'Can you work with new casino brands with no organic presence?',
-    a: 'Absolutely — this is one of our core specialities. We\'ve taken multiple gaming brands from zero domain authority and zero organic traffic to category-leading positions. We build the foundation and scale systematically.',
-  },
-  {
-    q: 'Do you provide white-label services for agencies?',
-    a: 'Yes, we offer white-label SEO, content, and web development for digital agencies that have iGaming clients but lack the vertical expertise in-house. Speak to us about partnership options.',
-  },
-  {
-    q: 'How do you measure and report results?',
-    a: 'We track everything to business outcomes: organic traffic growth, keyword rankings, FTD volume from organic, CPA on paid campaigns, and revenue directly attributable to our work. You receive a monthly performance dashboard with full transparency.',
-  },
-  {
-    q: 'Is the free SEO audit really free?',
-    a: 'Yes, entirely free with no obligation. A senior iGaming SEO specialist manually reviews your site and delivers a prioritised action plan. We don\'t use automated tools to generate a 500-line report — it\'s a real human review. We offer it because it demonstrates our expertise and often surfaces opportunities you\'ll want our help executing.',
-  },
-  {
-    q: 'How does iGaming Growth relate to Growth Service?',
-    a: 'iGaming Growth is the specialist gaming vertical division of Growth Service, a full-service digital marketing agency. Our iGaming clients benefit from Growth Service\'s broader infrastructure — design, video, analytics, and enterprise SEO tooling — while working with a dedicated team that\'s exclusively focused on gaming verticals.',
-  },
-];
+import {
+  getAllAgencyFAQs,
+  FAQ_CATEGORY_LABELS,
+  FAQCategory,
+  AgencyFAQItem,
+} from '../data/faqData';
+import { trackEvent } from '../analytics/tracking';
 
 export const FAQPage: React.FC = () => {
-  const [open, setOpen] = useState<number | null>(0);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [openId, setOpenId] = useState<string | null>(null);
+
+  const allFaqs = getAllAgencyFAQs();
+
+  const filteredFaqs = useMemo(() => {
+    return allFaqs.filter((faq) => {
+      const matchesCategory =
+        selectedCategory === 'all' || faq.category === selectedCategory;
+      const matchesQuery =
+        searchQuery.trim() === '' ||
+        faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesQuery;
+    });
+  }, [allFaqs, selectedCategory, searchQuery]);
+
+  const categories = useMemo(() => {
+    const unique = Array.from(new Set(allFaqs.map((f) => f.category))) as FAQCategory[];
+    return unique;
+  }, [allFaqs]);
 
   return (
     <>
       <SEOHead
-        title="FAQ — iGaming Growth Digital Agency"
-        description="Frequently asked questions about iGaming Growth's services, process, pricing, and how we help casino operators, sportsbooks, and gaming brands scale."
+        title="Agency FAQ — iGaming Growth Digital Strategy"
+        description="Clear answers on technical SEO, compliance, engineering pipelines, cashier attribution, and client engagement for high-competition industries."
         canonicalPath="/faq"
+        structuredData={[
+          buildFAQSchema(
+            allFaqs.map((f) => ({ question: f.question, answer: f.answer }))
+          ),
+        ]}
       />
 
-      <section className="bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 text-white py-20">
+      {/* ── Hero ──────────────────────────────────────────────────── */}
+      <section className="relative bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white py-16 lg:py-24">
         <Container>
-          <div className="max-w-2xl mx-auto text-center">
+          <div className="max-w-3xl mx-auto text-center">
             <FadeIn>
-              <Badge variant="purple" size="sm" className="mb-6">FAQ</Badge>
-              <h1 className="font-heading font-extrabold text-4xl lg:text-5xl text-white mb-5 leading-tight">
-                Common Questions About Working With Us
+              <Badge variant="purple" size="sm" className="mb-4">
+                Knowledge Base & FAQ
+              </Badge>
+              <h1 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white mb-5 leading-tight">
+                Frequently Asked Questions
               </h1>
-              <p className="text-lg text-slate-300">
-                Straight answers about our process, pricing, and what to expect when you partner with iGaming Growth.
+              <p className="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
+                Direct, transparent answers regarding our technical methodologies, compliance standards, engineering stacks, and partnership models.
               </p>
+
+              {/* Search Bar */}
+              <div className="mt-8 max-w-xl mx-auto relative">
+                <Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Search questions (e.g. crawl budget, compliance, attribution)..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all text-sm shadow-inner"
+                />
+              </div>
             </FadeIn>
           </div>
         </Container>
       </section>
 
+      {/* ── Category Filters & Accordion ─────────────────────────── */}
       <Section variant="white" spacing="lg">
         <Container>
-          <div className="max-w-3xl mx-auto space-y-3">
-            {FAQ_ITEMS.map((item, idx) => (
-              <FadeIn key={idx} delay={idx * 30}>
-                <div className={`rounded-2xl border transition-all duration-200 ${
-                  open === idx ? 'border-purple-300 shadow-md shadow-purple-100' : 'border-slate-200 hover:border-purple-200'
-                }`}>
-                  <button
-                    onClick={() => setOpen(open === idx ? null : idx)}
-                    className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
-                  >
-                    <span className={`font-heading font-bold text-base transition-colors ${
-                      open === idx ? 'text-purple-700' : 'text-slate-900'
-                    }`}>
-                      {item.q}
-                    </span>
-                    <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform duration-200 ${
-                      open === idx ? 'rotate-180 text-purple-600' : 'text-slate-400'
-                    }`} />
-                  </button>
+          {/* Category Tabs */}
+          <div className="flex flex-wrap gap-2 justify-center mb-10">
+            <button
+              onClick={() => setSelectedCategory('all')}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                selectedCategory === 'all'
+                  ? 'bg-purple-600 text-white shadow-sm'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+            >
+              All Topics ({allFaqs.length})
+            </button>
+            {categories.map((cat) => {
+              const count = allFaqs.filter((f) => f.category === cat).length;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                    selectedCategory === cat
+                      ? 'bg-purple-600 text-white shadow-sm'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  {FAQ_CATEGORY_LABELS[cat]} ({count})
+                </button>
+              );
+            })}
+          </div>
 
-                  {open === idx && (
-                    <div className="px-6 pb-5 text-sm text-slate-600 leading-relaxed border-t border-purple-100 pt-4">
-                      {item.a}
-                    </div>
-                  )}
-                </div>
-              </FadeIn>
-            ))}
+          {/* Results List */}
+          <div className="max-w-3xl mx-auto space-y-3.5">
+            {filteredFaqs.length === 0 ? (
+              <div className="text-center py-12 bg-slate-50 rounded-2xl border border-slate-200 p-8">
+                <HelpCircle className="w-10 h-10 text-slate-400 mx-auto mb-3" />
+                <h3 className="font-heading font-bold text-lg text-slate-800 mb-1">
+                  No matching questions found
+                </h3>
+                <p className="text-sm text-slate-500 mb-4">
+                  Try searching for a different keyword or view all categories.
+                </p>
+                <button
+                  onClick={() => {
+                    setSearchQuery('');
+                    setSelectedCategory('all');
+                  }}
+                  className="text-xs font-bold text-purple-600 hover:underline"
+                >
+                  Reset filters
+                </button>
+              </div>
+            ) : (
+              filteredFaqs.map((faq: AgencyFAQItem) => {
+                const isOpen = openId === faq.id;
+                return (
+                  <div
+                    key={faq.id}
+                    className={`rounded-2xl border transition-all duration-200 ${
+                      isOpen
+                        ? 'border-purple-300 shadow-md shadow-purple-50 bg-white'
+                        : 'border-slate-200 hover:border-purple-200 bg-white'
+                    }`}
+                  >
+                    <button
+                      onClick={() => setOpenId(isOpen ? null : faq.id)}
+                      className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
+                    >
+                      <div className="space-y-1">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-600 block">
+                          {faq.categoryLabel}
+                        </span>
+                        <span
+                          className={`font-heading font-bold text-base block transition-colors ${
+                            isOpen ? 'text-purple-700' : 'text-slate-900'
+                          }`}
+                        >
+                          {faq.question}
+                        </span>
+                      </div>
+                      <ChevronDown
+                        className={`w-5 h-5 flex-shrink-0 transition-transform duration-200 ${
+                          isOpen ? 'rotate-180 text-purple-600' : 'text-slate-400'
+                        }`}
+                      />
+                    </button>
+
+                    {isOpen && (
+                      <div className="px-6 pb-6 text-sm text-slate-600 leading-relaxed border-t border-purple-100 pt-4">
+                        {faq.answer}
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            )}
           </div>
         </Container>
       </Section>
 
-      <Section variant="gradient" spacing="md">
+      {/* ── Contextual Conversion Section ─────────────────────────── */}
+      <Section variant="dark" spacing="lg">
         <Container>
-          <div className="max-w-2xl mx-auto text-center text-white space-y-5">
-            <h2 className="font-heading font-extrabold text-3xl">Still Have Questions?</h2>
-            <p className="text-slate-300">Our team responds to all enquiries within one business day.</p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Button to="/contact" variant="gold" size="lg">Get in Touch</Button>
-              <Button to="/free-seo-audit" variant="outline" size="lg" className="border-white/25 text-white hover:bg-white/10">
-                Free SEO Audit
+          <div className="max-w-2xl mx-auto text-center space-y-5">
+            <Badge variant="amber" size="sm">
+              Custom Architecture
+            </Badge>
+            <h2 className="font-heading font-extrabold text-3xl text-white">
+              Have a Vertical-Specific Technical Challenge?
+            </h2>
+            <p className="text-slate-300 text-base leading-relaxed">
+              Every platform has unique server rendering, cashier attribution, and search engine crawl patterns. Connect directly with our technical architecture team.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center pt-2">
+              <Button
+                to="/free-seo-audit"
+                variant="amber"
+                size="lg"
+                icon={<ArrowRight className="w-4 h-4" />}
+                iconPosition="right"
+                onClick={() =>
+                  trackEvent({
+                    event: 'cta_click',
+                    location: 'faq_footer',
+                    cta: 'free_seo_audit',
+                  })
+                }
+              >
+                Claim Free Technical Audit
+              </Button>
+              <Button to="/contact" variant="secondary" size="lg">
+                Schedule Discovery Call
               </Button>
             </div>
           </div>

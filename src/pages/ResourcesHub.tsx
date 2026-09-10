@@ -1,111 +1,191 @@
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  ArrowRight,
+  Clock,
+  CheckCircle2,
+  HelpCircle,
+  TrendingUp,
+} from 'lucide-react';
 import { SEOHead } from '../seo';
 import { Container, Section, Badge, Button } from '../components/ui';
 import { FadeIn, MotionCard } from '../components/animations';
-
-const RESOURCES = [
-  {
-    title: 'The iGaming SEO Checklist (2024)',
-    description: 'A 47-point technical and on-page SEO checklist built specifically for casino, sportsbook, and affiliate websites.',
-    type: 'Checklist',
-    free: true,
-  },
-  {
-    title: 'iGaming Affiliate Commission Calculator',
-    description: 'Calculate the true value of CPA vs revenue share deals across different player LTV models for your vertical.',
-    type: 'Tool',
-    free: true,
-  },
-  {
-    title: 'Casino Content Compliance Guide',
-    description: 'What you can and can\'t say in gambling content across UK, Malta, India, and Canadian regulated markets.',
-    type: 'Guide',
-    free: true,
-  },
-  {
-    title: 'Gaming Landing Page Template Pack',
-    description: 'High-converting landing page wireframes for casino registration, sports bonus, and fantasy sports onboarding campaigns.',
-    type: 'Templates',
-    free: false,
-  },
-  {
-    title: 'iGaming Keyword Research Framework',
-    description: 'A proven framework for identifying high-intent, achievable keywords in competitive casino and sports betting SERPs.',
-    type: 'Framework',
-    free: true,
-  },
-  {
-    title: 'Player Acquisition Channel Comparison Matrix',
-    description: 'Compare SEO, PPC, affiliate, social, and email channels across CAC, LTV, compliance risk, and scale potential.',
-    type: 'Matrix',
-    free: false,
-  },
-];
+import { getAllGuides, GuideArticle } from '../data/guidesData';
+import { trackEvent } from '../analytics/tracking';
 
 export const ResourcesHub: React.FC = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const guides = getAllGuides();
+
+  const categories = [
+    { id: 'all', label: 'All Resources' },
+    { id: 'seo-guide', label: 'Technical SEO Guides' },
+    { id: 'industry-insight', label: 'Industry Market Insights' },
+  ];
+
+  const filteredGuides = useMemo(() => {
+    if (selectedCategory === 'all') return guides;
+    return guides.filter((g) => g.category === selectedCategory);
+  }, [guides, selectedCategory]);
+
   return (
     <>
       <SEOHead
-        title="iGaming Marketing Resources — Free Guides, Tools & Frameworks"
-        description="Free resources for iGaming brands: SEO checklists, compliance guides, affiliate calculators, and landing page templates for casino and gaming operators."
+        title="Knowledge Hub & Technical SEO Guides — iGaming Growth"
+        description="Authoritative B2B engineering guides, technical audit checklists, and architecture frameworks for digital platforms operating in high-competition verticals."
         canonicalPath="/resources"
       />
 
-      <section className="bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 text-white py-20">
+      {/* ── Hero Section ──────────────────────────────────────────── */}
+      <section className="relative bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white py-16 lg:py-24">
         <Container>
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>
-              <Badge variant="purple" size="sm" className="mb-6">Free Resources</Badge>
-              <h1 className="font-heading font-extrabold text-4xl lg:text-5xl text-white mb-5 leading-tight">
-                iGaming Growth Resources
+              <Badge variant="purple" size="sm" className="mb-4">
+                Knowledge Center
+              </Badge>
+              <h1 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white mb-5 leading-tight">
+                Architectural Frameworks & SEO Guides
               </h1>
-              <p className="text-lg text-slate-300 leading-relaxed">
-                Free tools, templates, guides, and frameworks to help gaming brands grow faster — with or without us.
+              <p className="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto mb-8">
+                In-depth technical guides, crawl budget blueprints, Core Web Vitals optimization techniques, and compliance documentation for digital growth teams.
               </p>
+
+              {/* Quick Jump Hub Links */}
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  to="/services"
+                  className="px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-purple-400 text-xs font-semibold text-slate-300 hover:text-white transition-colors inline-flex items-center gap-1.5"
+                >
+                  <TrendingUp className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Growth Services</span>
+                </Link>
+                <Link
+                  to="/industries"
+                  className="px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-purple-400 text-xs font-semibold text-slate-300 hover:text-white transition-colors inline-flex items-center gap-1.5"
+                >
+                  <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Target Verticals</span>
+                </Link>
+                <Link
+                  to="/free-seo-audit"
+                  className="px-4 py-2 rounded-xl bg-purple-600/30 border border-purple-500/40 hover:bg-purple-600/50 text-xs font-semibold text-purple-200 transition-colors inline-flex items-center gap-1.5"
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Free Technical Audit</span>
+                </Link>
+              </div>
             </FadeIn>
           </div>
         </Container>
       </section>
 
+      {/* ── Category Filter Tabs ──────────────────────────────────── */}
       <Section variant="white" spacing="lg">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {RESOURCES.map((r, idx) => (
-              <MotionCard key={r.title} delay={idx * 60} variant="interactive">
-                <div className="h-full flex flex-col">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-purple-100 text-purple-700">
-                      {r.type}
-                    </span>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${r.free ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
-                      {r.free ? 'Free' : 'Premium'}
-                    </span>
-                  </div>
-
-                  <h2 className="font-heading font-bold text-lg text-slate-900 mb-2 leading-snug flex-1">
-                    {r.title}
-                  </h2>
-
-                  <p className="text-xs text-slate-500 leading-relaxed mb-5">{r.description}</p>
-
-                  <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 font-semibold text-sm transition-colors">
-                    {r.free ? 'Download Free' : 'Get Access'}
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </MotionCard>
+          <div className="flex flex-wrap gap-2 justify-center mb-12">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-4 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                  selectedCategory === cat.id
+                    ? 'bg-purple-600 text-white shadow-sm'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+              >
+                {cat.label}
+              </button>
             ))}
+          </div>
+
+          {/* Guides Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredGuides.map((guide: GuideArticle, idx: number) => {
+              const guidePath =
+                guide.category === 'industry-insight'
+                  ? `/resources/industry-insights/${guide.slug}`
+                  : `/resources/seo-guides/${guide.slug}`;
+
+              return (
+                <MotionCard key={guide.slug} delay={idx * 60} variant="default">
+                  <div className="p-7 flex flex-col h-full">
+                    <div className="flex items-center justify-between gap-2 mb-4">
+                      <Badge variant="purple" size="sm">
+                        {guide.categoryLabel}
+                      </Badge>
+                      <div className="flex items-center gap-1 text-xs text-slate-400">
+                        <Clock className="w-3.5 h-3.5 text-amber-500" />
+                        <span>{guide.readTime}</span>
+                      </div>
+                    </div>
+
+                    <h2 className="font-heading font-bold text-lg text-slate-900 mb-3 leading-snug group-hover:text-purple-600 transition-colors">
+                      <Link to={guidePath} className="hover:text-purple-600">
+                        {guide.title}
+                      </Link>
+                    </h2>
+
+                    <p className="text-xs text-slate-600 leading-relaxed mb-6 flex-1">
+                      {guide.excerpt}
+                    </p>
+
+                    <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                      <span className="font-medium text-slate-400">
+                        Level: <strong className="text-slate-700">{guide.difficulty}</strong>
+                      </span>
+                      <Link
+                        to={guidePath}
+                        className="inline-flex items-center gap-1 text-purple-600 font-bold hover:underline"
+                        onClick={() =>
+                          trackEvent('guide_click', {
+                            location: 'resources_grid',
+                            guide_slug: guide.slug,
+                            guide_title: guide.title,
+                          })
+                        }
+                      >
+                        <span>Read Guide</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </div>
+                </MotionCard>
+              );
+            })}
           </div>
         </Container>
       </Section>
 
-      <Section variant="gradient" spacing="md">
+      {/* ── Conversion Section ────────────────────────────────────── */}
+      <Section variant="slate" spacing="lg">
         <Container>
-          <div className="max-w-2xl mx-auto text-center text-white space-y-5">
-            <h2 className="font-heading font-extrabold text-3xl">Need More Than Resources?</h2>
-            <p className="text-slate-300">Our team applies these frameworks to your brand with a custom growth strategy.</p>
-            <Button to="/contact" variant="gold" size="lg">Work With Us</Button>
+          <div className="bg-white rounded-3xl p-8 lg:p-12 border border-slate-200 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="max-w-xl space-y-3">
+              <Badge variant="amber" size="sm">
+                Custom Roadmap
+              </Badge>
+              <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900">
+                Want Our Engineers to Audit Your Architecture?
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                We review server logs, crawl budget allocation, and Core Web Vitals to provide a prioritised technical remediation plan.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-4 flex-shrink-0">
+              <Button
+                to="/free-seo-audit"
+                variant="amber"
+                size="lg"
+                icon={<ArrowRight className="w-4 h-4" />}
+                iconPosition="right"
+              >
+                Claim Free Technical Audit
+              </Button>
+              <Button to="/contact" variant="secondary" size="lg">
+                Speak With an Architect
+              </Button>
+            </div>
           </div>
         </Container>
       </Section>

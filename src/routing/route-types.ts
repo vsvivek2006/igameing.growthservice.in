@@ -5,17 +5,17 @@
 
 export type RouteCategory =
   | 'primary'
-  | 'games'
-  | 'casino'
-  | 'guides'
-  | 'reviews'
-  | 'comparisons'
-  | 'payments'
+  | 'services'
+  | 'industries'
+  | 'resources'
   | 'compliance'
   | 'legal';
 
 export type RouteKind =
   | 'static'
+  | 'dynamic-service'
+  | 'dynamic-industry'
+  | 'dynamic-service-industry'
   | 'dynamic-game'
   | 'dynamic-guide'
   | 'dynamic-review'

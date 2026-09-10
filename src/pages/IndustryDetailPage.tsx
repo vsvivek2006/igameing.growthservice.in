@@ -1,113 +1,356 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowRight, AlertTriangle, ChevronRight, Shield, Clock } from 'lucide-react';
 import { SEOHead } from '../seo';
-import { Container, Section, Badge, Button } from '../components/ui';
-import { FadeIn } from '../components/animations';
-import { getAllIndustryVerticals, getFeaturedServices } from '../data/servicesData';
-import { NotFound } from './NotFound';
-import { Link } from 'react-router-dom';
-import { TrendingUp, BarChart3, Code2, FileText, Share2, Target } from 'lucide-react';
+import { buildBreadcrumbSchema } from '../seo/schema';
+import { Container, Section, Button, FAQAccordion, Breadcrumb } from '../components/ui';
+import { FadeIn, MotionCard } from '../components/animations';
+import { trackEvent } from '../analytics';
+import { getIndustryBySlug, getServiceBySlug, INDUSTRY_CATEGORY_LABELS } from '../selectors';
+import { getServicesForIndustry, getMatrixEntry } from '../data/industryServiceMatrix';
+import type { IndustryVertical } from '../data/industriesData';
+import NotFound from './NotFound';
 
-const SERVICE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
-  TrendingUp, BarChart3, Code2, FileText, Share2, Target,
+const CATEGORY_COLORS: Record<IndustryVertical['category'], { bg: string; text: string; badge: string }> = {
+  gaming: { bg: 'bg-purple-50', text: 'text-purple-700', badge: 'bg-purple-100 text-purple-700' },
+  finance: { bg: 'bg-blue-50', text: 'text-blue-700', badge: 'bg-blue-100 text-blue-700' },
+  adult: { bg: 'bg-rose-50', text: 'text-rose-700', badge: 'bg-rose-100 text-rose-700' },
+  'gaming-skill': { bg: 'bg-amber-50', text: 'text-amber-700', badge: 'bg-amber-100 text-amber-700' },
 };
 
-const SERVICE_COLORS: Record<string, string> = {
-  purple: 'from-purple-600 to-violet-700',
-  gold: 'from-amber-500 to-orange-600',
-  blue: 'from-blue-600 to-cyan-600',
-  green: 'from-emerald-500 to-teal-600',
-  rose: 'from-rose-500 to-pink-600',
-  indigo: 'from-indigo-600 to-blue-700',
-};
+const IndustryPage: React.FC<{ industry: IndustryVertical }> = ({ industry }) => {
+  const colors = CATEGORY_COLORS[industry.category];
+  const breadcrumbItems = [
+    { label: 'Industries', path: '/industries' },
+    { label: industry.name },
+  ];
 
-export const IndustryDetailPage: React.FC = () => {
-  const { industrySlug } = useParams<{ industrySlug: string }>();
-  const verticals = getAllIndustryVerticals();
-  const vertical = verticals.find((v) => v.slug === industrySlug);
+  const matrixServiceSlugs = getServicesForIndustry(industry.slug);
+  const matrixCombinations = matrixServiceSlugs
+    .map((serviceSlug) => {
+      const matrixEntry = getMatrixEntry(industry.slug, serviceSlug);
+      const service = getServiceBySlug(serviceSlug);
+      return { serviceSlug, matrixEntry, service };
+    })
+    .filter((m) => m.matrixEntry && m.service);
 
-  if (!vertical) return <NotFound />;
-
-  const featuredServices = getFeaturedServices();
+  const recommendedServices = industry.recommendedServices
+    .map((slug) => getServiceBySlug(slug))
+    .filter(Boolean) as ReturnType<typeof getServiceBySlug>[];
 
   return (
     <>
       <SEOHead
-        title={`${vertical.title} Digital Growth Services — iGaming Growth Agency`}
-        description={`Specialist digital growth for ${vertical.title.toLowerCase()}. ${vertical.description}`}
-        canonicalPath={`/industries/${vertical.slug}`}
+        title={industry.seo.title}
+        description={industry.seo.description}
+        canonicalPath={`/industries/${industry.slug}`}
+        structuredData={[buildBreadcrumbSchema(breadcrumbItems)]}
       />
 
-      <section className="bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 text-white py-20">
-        <Container>
-          <div className="max-w-3xl mx-auto text-center">
-            <FadeIn>
-              <div className="text-6xl mb-6">{vertical.icon}</div>
-              <Badge variant="purple" size="sm" className="mb-4">Specialist Vertical</Badge>
+      {/* ── Hero ──────────────────────────────────────────────────── */}
+      <section className="relative bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-1/4 w-[500px] h-[400px] rounded-full bg-purple-600/10 blur-[100px]" />
+        </div>
+        <Container className="relative py-24 lg:py-32">
+          <FadeIn>
+            <Breadcrumb items={breadcrumbItems} className="mb-6 text-slate-400" />
+
+            <div className="max-w-3xl">
+              <span className={`inline-block text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-5 ${colors.badge}`}>
+                {INDUSTRY_CATEGORY_LABELS[industry.category]}
+              </span>
+
               <h1 className="font-heading font-extrabold text-4xl lg:text-5xl text-white mb-5 leading-tight">
-                {vertical.title}
+                {industry.name}
               </h1>
-              <p className="text-lg text-slate-300 leading-relaxed mb-8">{vertical.description}</p>
-              <div className="flex flex-wrap justify-center gap-2 mb-8">
-                {vertical.examples.map((ex) => (
-                  <span key={ex} className="px-3 py-1.5 bg-white/10 border border-white/20 rounded-lg text-sm text-white/80 font-medium">
-                    {ex}
-                  </span>
-                ))}
+
+              <p className="text-xl text-purple-200 font-medium italic mb-5">
+                {industry.tagline}
+              </p>
+
+              <div className="flex flex-wrap gap-4 mt-8">
+                <Button
+                  to="/free-seo-audit"
+                  variant="gold"
+                  size="lg"
+                  onClick={() => trackEvent('cta_click', { cta_name: 'free_seo_audit', cta_location: 'industry_hero', industry_slug: industry.slug })}
+                >
+                  Free SEO Audit for {industry.shortName}
+                </Button>
+                <Button
+                  to="/book-call"
+                  variant="outline"
+                  size="lg"
+                  className="border-white/20 text-white hover:bg-white/10"
+                  onClick={() => trackEvent('cta_click', { cta_name: 'book_strategy_call', cta_location: 'industry_hero', industry_slug: industry.slug })}
+                >
+                  Book a Strategy Call
+                </Button>
               </div>
-              <Button to="/contact" variant="gold" size="lg" icon={<ArrowRight className="w-4 h-4" />}>
-                Get a Free Growth Strategy
-              </Button>
-            </FadeIn>
-          </div>
+            </div>
+          </FadeIn>
         </Container>
       </section>
 
-      <Section variant="white" spacing="lg">
+      {/* ── Overview ────────────────────────────────────────────────── */}
+      <Section variant="white" spacing="md">
         <Container>
-          <h2 className="font-heading font-bold text-2xl text-slate-900 mb-8 text-center">
-            Services We Deliver for {vertical.title}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {featuredServices.map((service) => {
-              const Icon = SERVICE_ICONS[service.icon] || TrendingUp;
-              return (
-                <Link key={service.slug} to={`/services/${service.slug}`} className="group">
-                  <div className="p-6 rounded-2xl border border-slate-200 hover:border-purple-300 hover:shadow-lg transition-all duration-200">
-                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${SERVICE_COLORS[service.color]} flex items-center justify-center mb-4`}>
-                      <Icon className="w-5 h-5 text-white" />
-                    </div>
-                    <h3 className="font-heading font-bold text-lg text-slate-900 mb-1 group-hover:text-purple-600 transition-colors">
-                      {service.shortTitle}
-                    </h3>
-                    <p className="text-xs text-slate-500 leading-relaxed">{service.tagline}</p>
-                  </div>
-                </Link>
-              );
-            })}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <FadeIn>
+              <div className="type-eyebrow mb-3">Industry Overview</div>
+              <h2 className="font-heading font-extrabold text-3xl text-slate-900 mb-5 leading-tight">
+                Digital Growth in {industry.shortName}
+              </h2>
+              <p className="text-slate-600 leading-relaxed mb-4">{industry.overview}</p>
+            </FadeIn>
+
+            <FadeIn delay={150}>
+              <div className={`p-7 rounded-3xl border ${industry.category === 'gaming' ? 'border-purple-100' : industry.category === 'finance' ? 'border-blue-100' : industry.category === 'adult' ? 'border-rose-100' : 'border-amber-100'} ${colors.bg}`}>
+                <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Market Characteristics</p>
+                <p className="text-sm text-slate-700 leading-relaxed">{industry.competitionCharacteristics}</p>
+              </div>
+            </FadeIn>
           </div>
         </Container>
       </Section>
 
-      <Section variant="gradient" spacing="md">
+      {/* ── SEO Challenges ──────────────────────────────────────────── */}
+      <Section variant="subtle" spacing="md">
         <Container>
-          <div className="max-w-2xl mx-auto text-center text-white space-y-5">
-            <h2 className="font-heading font-extrabold text-3xl">
-              Ready to Scale Your {vertical.title} Brand?
+          <div className="max-w-2xl mx-auto text-center mb-10">
+            <FadeIn>
+              <div className="type-eyebrow mb-3">SEO Challenges</div>
+              <h2 className="font-heading font-extrabold text-3xl text-slate-900 leading-tight">
+                The Specific Challenges in {industry.shortName} SEO
+              </h2>
+            </FadeIn>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto">
+            {industry.seoChallenges.map((c, idx) => (
+              <MotionCard key={c.title} delay={idx * 60} variant="default">
+                <div className="flex items-start gap-3 mb-3">
+                  <AlertTriangle className={`w-5 h-5 ${colors.text} flex-shrink-0 mt-0.5`} />
+                  <h3 className="font-heading font-bold text-slate-900 text-sm leading-snug">{c.title}</h3>
+                </div>
+                <p className="text-xs text-slate-500 leading-relaxed pl-8">{c.description}</p>
+              </MotionCard>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── Technical + Content + Compliance ─────────────────────── */}
+      <Section variant="white" spacing="md">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: 'Technical Requirements',
+                items: industry.technicalRequirements,
+                color: 'text-purple-600',
+              },
+              {
+                title: 'Content Considerations',
+                items: industry.contentConsiderations,
+                color: 'text-blue-600',
+              },
+              {
+                title: 'Compliance Considerations',
+                items: industry.complianceConsiderations,
+                color: 'text-amber-600',
+              },
+            ].map((col) => (
+              <FadeIn key={col.title}>
+                <div className="h-full p-7 rounded-3xl bg-white border border-slate-200">
+                  <h3 className={`font-heading font-bold text-base mb-5 ${col.color}`}>{col.title}</h3>
+                  <ul className="space-y-2.5">
+                    {col.items.map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-xs text-slate-600 leading-relaxed">
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-400 mt-0.5 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── Specialized Matrix Blueprints (Group D) ────────────────── */}
+      {matrixCombinations.length > 0 && (
+        <Section variant="subtle" spacing="md">
+          <Container>
+            <div className="max-w-2xl mx-auto text-center mb-10">
+              <FadeIn>
+                <div className="type-eyebrow mb-3">Specialized Blueprints</div>
+                <h2 className="font-heading font-extrabold text-3xl text-slate-900 leading-tight">
+                  Dedicated {industry.shortName} Growth Solutions
+                </h2>
+                <p className="text-slate-500 text-sm mt-3 leading-relaxed">
+                  Engineered specifically for {industry.name} operational conditions, crawl topologies, and search landscape.
+                </p>
+              </FadeIn>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {matrixCombinations.map((m, idx) => (
+                <MotionCard key={m.serviceSlug} delay={idx * 70} variant="interactive">
+                  <div className="h-full flex flex-col">
+                    <div className="flex items-center justify-between text-xs text-slate-400 mb-3">
+                      <span className="font-bold text-purple-600 bg-purple-50 px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider">
+                        {m.service.shortName} Blueprint
+                      </span>
+                      {m.matrixEntry.estimatedTimelineWeeks && (
+                        <span className="flex items-center gap-1 text-[11px]">
+                          <Clock className="w-3 h-3 text-slate-400" />
+                          {m.matrixEntry.estimatedTimelineWeeks.split(' ')[0]} wks
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="font-heading font-bold text-slate-900 text-lg mb-2">
+                      {industry.shortName} {m.service.name}
+                    </h3>
+                    <p className="text-xs text-slate-500 leading-relaxed mb-4 flex-1">
+                      {m.matrixEntry.uniqueValue}
+                    </p>
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 mb-4 text-[11px] text-slate-600">
+                      <span className="font-semibold text-slate-900">Conversion Target:</span> {m.matrixEntry.conversionFocus}
+                    </div>
+                    <Link
+                      to={`/industries/${industry.slug}/${m.serviceSlug}`}
+                      onClick={() => trackEvent('cta_click', { cta_name: 'view_matrix_blueprint', industry_slug: industry.slug, service_slug: m.serviceSlug })}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 hover:text-purple-800 transition-colors mt-auto"
+                    >
+                      View {industry.shortName} {m.service.shortName} Strategy <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  </div>
+                </MotionCard>
+              ))}
+            </div>
+          </Container>
+        </Section>
+      )}
+
+      {/* ── Recommended Services ────────────────────────────────────── */}
+      {recommendedServices.length > 0 && (
+        <Section variant={matrixCombinations.length > 0 ? 'white' : 'subtle'} spacing="md">
+          <Container>
+            <div className="max-w-2xl mx-auto text-center mb-10">
+              <FadeIn>
+                <div className="type-eyebrow mb-3">Supporting Capabilities</div>
+                <h2 className="font-heading font-extrabold text-3xl text-slate-900 leading-tight">
+                  Additional Capabilities for {industry.shortName}
+                </h2>
+              </FadeIn>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+              {recommendedServices.map((svc, idx) => {
+                if (!svc) return null;
+                return (
+                  <MotionCard key={svc.slug} delay={idx * 60} variant="interactive">
+                    <div className="h-full flex flex-col">
+                      <h3 className="font-heading font-bold text-slate-900 text-base mb-2">{svc.shortName}</h3>
+                      <p className="text-xs text-slate-500 leading-relaxed flex-1 mb-4">{svc.shortDescription}</p>
+                      <Link
+                        to={`/services/${svc.slug}`}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-600 hover:text-purple-800 transition-colors"
+                      >
+                        Explore {svc.shortName} <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </div>
+                  </MotionCard>
+                );
+              })}
+            </div>
+          </Container>
+        </Section>
+      )}
+
+      {/* ── Regulatory & Platform Notice ──────────────────────────── */}
+      <div className="bg-amber-50/60 border-y border-amber-200/60 py-6">
+        <Container>
+          <div className="max-w-4xl mx-auto flex items-start gap-4">
+            <Shield className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <div className="text-xs text-amber-950/80 leading-relaxed">
+              <span className="font-bold text-amber-950">Compliance & Regulatory Notice: </span>
+              All search strategies, website architectures, and marketing consulting for {industry.name} are provided strictly where permitted by applicable local laws and relevant platform policies. We collaborate exclusively with verified, authorized operators and do not facilitate unlicensed operations, cloaking, or policy circumvention.
+            </div>
+          </div>
+        </Container>
+      </div>
+
+      {/* ── FAQ ────────────────────────────────────────────────────── */}
+      {industry.faqs.length > 0 && (
+        <Section variant="white" spacing="md">
+          <Container>
+            <div className="max-w-3xl mx-auto">
+              <div className="text-center mb-10">
+                <FadeIn>
+                  <div className="type-eyebrow mb-3">Common Questions</div>
+                  <h2 className="font-heading font-extrabold text-3xl text-slate-900">
+                    {industry.shortName} SEO: Frequently Asked Questions
+                  </h2>
+                </FadeIn>
+              </div>
+              <FadeIn delay={100}>
+                <FAQAccordion items={industry.faqs} defaultOpen={0} />
+              </FadeIn>
+            </div>
+          </Container>
+        </Section>
+      )}
+
+      {/* ── CTA ────────────────────────────────────────────────────── */}
+      <section className="bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white py-16">
+        <Container>
+          <div className="max-w-2xl mx-auto text-center space-y-6">
+            <div className="type-eyebrow text-purple-400">Get Started</div>
+            <h2 className="font-heading font-extrabold text-3xl lg:text-4xl text-white leading-tight">
+              Grow Your {industry.shortName} Business with Organic Search
             </h2>
-            <p className="text-slate-300">Get a custom growth roadmap tailored to your vertical and market stage.</p>
+            <p className="text-slate-400 text-sm leading-relaxed">
+              Tell us about your business and target market. We'll explain what SEO can realistically deliver in your specific competitive landscape.
+            </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button to="/contact" variant="gold" size="lg">Book a Free Strategy Call</Button>
-              <Button to="/industries" variant="outline" size="lg" className="border-white/25 text-white hover:bg-white/10">
-                ← All Verticals
+              <Button
+                to="/free-seo-audit"
+                variant="gold"
+                size="lg"
+                onClick={() => trackEvent('cta_click', { cta_name: 'free_seo_audit', cta_location: 'industry_bottom_cta', industry_slug: industry.slug })}
+              >
+                Free SEO Audit
+              </Button>
+              <Button
+                to="/book-call"
+                variant="outline"
+                size="lg"
+                className="border-white/20 text-white hover:bg-white/10"
+                onClick={() => trackEvent('cta_click', { cta_name: 'book_strategy_call', cta_location: 'industry_bottom_cta', industry_slug: industry.slug })}
+              >
+                Book a Strategy Call
               </Button>
             </div>
           </div>
         </Container>
-      </Section>
+      </section>
     </>
   );
+};
+
+export const IndustryDetailPage: React.FC = () => {
+  const { industrySlug } = useParams<{ industrySlug: string }>();
+  const industry = getIndustryBySlug(industrySlug ?? '');
+
+  if (!industry) {
+    return <NotFound />;
+  }
+
+  return <IndustryPage industry={industry} />;
 };
 
 export default IndustryDetailPage;

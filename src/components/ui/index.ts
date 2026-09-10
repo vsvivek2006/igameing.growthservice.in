@@ -8,3 +8,6 @@ export * from './Breadcrumb';
 export * from './BentoGrid';
 export * from './DecorativeGrid';
 export * from './LoadingFallback';
+export * from './ProcessTimeline';
+export * from './FAQAccordion';
+export * from './ServiceIcon';

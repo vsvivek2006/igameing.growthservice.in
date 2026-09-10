@@ -71,21 +71,21 @@ export const businessConfig: BusinessConfigSchema = {
     "Specialist digital growth agency for iGaming & casino brands. We deliver SEO, performance marketing, web development & content strategy that drives qualified player acquisition and revenue growth.",
   themeColor: "#7C3AED",
   establishedYear: 2024,
-  parentBrand: "Growth Service",
-  parentBrandUrl: "https://www.growthservice.in",
+  parentBrand: "iGaming Growth",
+  parentBrandUrl: "https://igameing.growthservice.in",
 
   heroStats: [
-    { value: "3x–12x", label: "Average ROI Delivered", color: "gold" },
-    { value: "50+", label: "Gaming Brands Scaled" },
-    { value: "#1", label: "Rankings Achieved" },
-    { value: "100%", label: "Regulated Market Focus" },
+    { value: "8", label: "Specialist High-Competition Verticals", color: "gold" },
+    { value: "12", label: "Specialist Growth Disciplines" },
+    { value: "100%", label: "Client Code & Architecture Ownership" },
+    { value: "White-Hat", label: "Sustainable Search Engineering" },
   ],
 
   ratings: {
-    average: 4.9,
-    reviewCount: 87,
-    displayString: "4.9/5",
-    sourceText: "Rated 4.9/5 by iGaming operators for campaign ROI & delivery speed",
+    average: 5.0,
+    reviewCount: 0,
+    displayString: "Enterprise SLA",
+    sourceText: "Engineered for compliance-aware digital growth in competitive markets",
   },
 
   address: {

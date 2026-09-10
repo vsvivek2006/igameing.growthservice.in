@@ -4,7 +4,6 @@ import { ArrowRight, Target, Globe, TrendingUp, Users, Award, Zap } from 'lucide
 import { SEOHead } from '../seo';
 import { Container, Section, Badge, Button } from '../components/ui';
 import { FadeIn, MotionCard } from '../components/animations';
-import businessConfig from '../config/business';
 
 const TEAM_VALUES = [
   {
@@ -83,11 +82,7 @@ export const AboutPage: React.FC = () => {
                     We built iGaming Growth as the antidote: a team with operator experience, affiliate network knowledge, and a track record in the most competitive digital niches on earth. We launch brands from zero, scale established operators into new geos, and fix broken growth engines for mature businesses.
                   </p>
                   <p>
-                    Today, iGaming Growth is a specialist growth division of{' '}
-                    <a href={businessConfig.parentBrandUrl} target="_blank" rel="noopener noreferrer" className="text-purple-600 font-semibold hover:underline">
-                      {businessConfig.parentBrand}
-                    </a>
-                    , the full-service digital marketing agency trusted by brands across India and globally.
+                    Today, iGaming Growth operates as a dedicated B2B growth agency delivering performance SEO, technical development, and conversion marketing across high-competition markets in India and globally.
                   </p>
                 </div>
 
@@ -106,12 +101,12 @@ export const AboutPage: React.FC = () => {
             <FadeIn delay={200}>
               <div className="grid grid-cols-2 gap-5">
                 {[
-                  { value: '50+', label: 'Gaming Brands Served' },
-                  { value: '12+', label: 'Countries' },
-                  { value: `${new Date().getFullYear() - businessConfig.establishedYear + 1}+`, label: 'Years in iGaming' },
-                  { value: '4.9/5', label: 'Client Satisfaction' },
-                  { value: '3x–12x', label: 'Avg ROI Delivered' },
-                  { value: '100%', label: 'Regulated Markets' },
+                  { value: '8', label: 'Specialist Verticals' },
+                  { value: '12', label: 'Growth Disciplines' },
+                  { value: '100%', label: 'Architecture Ownership' },
+                  { value: '0', label: 'Algorithmic Shortcuts / White-Hat' },
+                  { value: '24h', label: 'Diagnostic Scoping' },
+                  { value: '1:1', label: 'Senior Engineer Engagement' },
                 ].map((s) => (
                   <div key={s.label} className="p-6 rounded-2xl bg-gradient-to-br from-purple-50 to-violet-50 border border-purple-100 text-center">
                     <div className="text-3xl font-heading font-extrabold text-purple-700 mb-1">{s.value}</div>
@@ -155,26 +150,20 @@ export const AboutPage: React.FC = () => {
       <Section variant="white" spacing="md">
         <Container>
           <div className="max-w-2xl mx-auto text-center space-y-4">
-            <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Part of</div>
+            <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Our Standard</div>
             <h2 className="font-heading font-bold text-2xl text-slate-900">
-              A Growth Service Initiative
+              Enterprise SEO Infrastructure
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed">
-              iGaming Growth is the specialist gaming vertical of{' '}
-              <a href={businessConfig.parentBrandUrl} target="_blank" rel="noopener noreferrer" className="text-purple-600 font-semibold hover:underline">
-                Growth Service
-              </a>
-              , a full-service digital marketing agency with a multi-vertical growth portfolio. Our parent brand's infrastructure gives iGaming clients access to enterprise-grade SEO tooling, analytics, and creative production at competitive rates.
+              Our engineering infrastructure gives iGaming clients access to enterprise-grade SEO tooling, log file analysis, crawler emulation, and custom schema pipelines designed specifically for regulated, competitive verticals.
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-4">
-              <a
-                href={businessConfig.parentBrandUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/services"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-sm font-semibold hover:border-purple-300 hover:text-purple-600 transition-colors"
               >
-                Visit Growth Service <ArrowRight className="w-4 h-4" />
-              </a>
+                Explore Services <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </Container>

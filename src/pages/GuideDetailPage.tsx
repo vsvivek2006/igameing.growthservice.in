@@ -1,82 +1,290 @@
 import React from 'react';
-import { useParams, Navigate } from 'react-router-dom';
-import { SEOHead, buildArticleSchema, buildBreadcrumbSchema } from '../seo';
-import { Container, Section, Card, Badge, Button, Breadcrumb } from '../components/ui';
-import { getGuideBySlug } from '../selectors';
-import { Calendar, User, ArrowLeft } from 'lucide-react';
+import { useParams, Link } from 'react-router-dom';
+import {
+  ArrowRight,
+  Calendar,
+  Clock,
+  User,
+  CheckCircle2,
+  ChevronRight,
+  Bookmark,
+  Code2,
+} from 'lucide-react';
+import { SEOHead } from '../seo';
+import { buildArticleSchema, buildBreadcrumbSchema } from '../seo/schema';
+import { Container, Section, Badge, Button, Breadcrumb } from '../components/ui';
+import { getGuideBySlug } from '../data/guidesData';
+import { getServiceBySlug } from '../data/servicesData';
+import { getIndustryBySlug } from '../data/industriesData';
+import { trackEvent } from '../analytics/tracking';
+import NotFound from './NotFound';
 
 export const GuideDetailPage: React.FC = () => {
   const { guideSlug } = useParams<{ guideSlug: string }>();
   const guide = guideSlug ? getGuideBySlug(guideSlug) : undefined;
 
   if (!guide) {
-    return <Navigate to="/casino-guides" replace />;
+    return <NotFound />;
   }
 
-  const parentPath = guide.category === 'game-guides' ? '/game-guides' : '/casino-guides';
-  const parentLabel = guide.category === 'game-guides' ? 'Game Guides' : 'Casino Guides';
+  const pathPrefix =
+    guide.category === 'industry-insight'
+      ? '/resources/industry-insights'
+      : '/resources/seo-guides';
 
-  const breadcrumbs = [
-    { label: parentLabel, path: parentPath },
-    { label: guide.title, path: `${parentPath}/${guide.slug}`, current: true },
+  const canonicalPath = `${pathPrefix}/${guide.slug}`;
+  const canonicalUrl = `https://igameing.growthservice.in${canonicalPath}`;
+
+  const breadcrumbItems = [
+    { label: 'Resources', path: '/resources' },
+    { label: guide.categoryLabel, path: '/resources' },
+    { label: guide.title },
   ];
-
-  const combinedSchema = [buildArticleSchema(guide), buildBreadcrumbSchema(breadcrumbs)];
 
   return (
     <>
       <SEOHead
-        title={`${guide.title} | iGaming Growth`}
-        description={guide.excerpt}
-        canonicalPath={`${parentPath}/${guide.slug}`}
-        jsonLd={combinedSchema}
+        title={guide.seo.title}
+        description={guide.seo.description}
+        canonicalPath={canonicalPath}
+        structuredData={[
+          buildBreadcrumbSchema(breadcrumbItems),
+          buildArticleSchema({
+            title: guide.title,
+            description: guide.excerpt,
+            url: canonicalUrl,
+            datePublished: guide.lastUpdated,
+            authorName: guide.author,
+          }),
+        ]}
       />
 
-      <div className="bg-slate-900 text-white py-12 border-b border-purple-900/40">
-        <Container>
-          <Breadcrumb items={breadcrumbs} dark className="mb-4" />
-          <div className="flex flex-wrap items-center gap-3 text-xs text-slate-300 mb-3">
-            <Badge variant="purple" size="sm">{guide.difficulty}</Badge>
-            <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-yellow-400" /> Updated: {guide.lastUpdated}</span>
-            <span>•</span>
-            <span className="flex items-center gap-1"><User className="w-3.5 h-3.5 text-purple-400" /> {guide.author}</span>
+      {/* ── Hero Section ──────────────────────────────────────────── */}
+      <section className="relative bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white py-16 lg:py-20 border-b border-slate-800">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-1/4 w-[450px] h-[350px] rounded-full bg-purple-600/10 blur-[90px]" />
+          <div className="absolute bottom-0 left-1/3 w-[350px] h-[250px] rounded-full bg-amber-500/10 blur-[80px]" />
+        </div>
+
+        <Container className="relative z-10">
+          <div className="mb-6">
+            <Breadcrumb items={breadcrumbItems} variant="light" />
           </div>
-          <h1 className="type-h2 text-white mb-3 max-w-4xl">{guide.title}</h1>
-          <p className="type-body-lg text-slate-300 max-w-3xl">{guide.excerpt}</p>
+
+          <div className="max-w-4xl">
+            <div className="flex flex-wrap items-center gap-3 mb-4 text-xs text-slate-300">
+              <Badge variant="purple" size="sm">
+                {guide.categoryLabel}
+              </Badge>
+              <Badge variant="amber" size="sm">
+                {guide.difficulty} Level
+              </Badge>
+              <div className="flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5 text-amber-400" />
+                <span>{guide.readTime}</span>
+              </div>
+              <span>•</span>
+              <div className="flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                <span>Updated {guide.lastUpdated}</span>
+              </div>
+            </div>
+
+            <h1 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white mb-5 leading-tight">
+              {guide.title}
+            </h1>
+
+            <p className="text-lg text-slate-300 leading-relaxed max-w-3xl mb-6">
+              {guide.excerpt}
+            </p>
+
+            {/* Author Byline */}
+            <div className="flex items-center gap-3 pt-2 border-t border-slate-800/80">
+              <div className="w-10 h-10 rounded-full bg-purple-600/30 border border-purple-500/40 flex items-center justify-center text-purple-300">
+                <User className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="text-sm font-bold text-white">{guide.author}</div>
+                <div className="text-xs text-slate-400">{guide.authorRole}</div>
+              </div>
+            </div>
+          </div>
         </Container>
-      </div>
+      </section>
 
-      <Section variant="white" spacing="md">
-        <Container size="md">
-          <div className="space-y-6 text-slate-700 leading-relaxed text-sm">
-            <Card variant="base" className="space-y-4">
-              <h2 className="font-heading font-bold text-xl text-slate-900">
-                Core Theoretical Principles
-              </h2>
-              <p>
-                In this educational module, our research desk evaluates the mathematical baseline of {guide.title.toLowerCase()}. Understanding the difference between empirical sample results and theoretical probability is essential for disciplined play.
-              </p>
-              <p>
-                No betting system (such as Martingale, Fibonacci, or D’Alembert) can mathematically convert a negative expected value (-EV) game into a positive expectation (+EV) over time. Every round remains an independent statistical trial governed by the operator's audited RNG.
-              </p>
-            </Card>
+      {/* ── Guide Body with Sticky TOC ────────────────────────────── */}
+      <Section variant="white" spacing="lg">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            {/* Left Column: Sticky Table of Contents */}
+            <aside className="lg:col-span-4 order-2 lg:order-1">
+              <div className="sticky top-28 space-y-6">
+                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">
+                    <Bookmark className="w-4 h-4 text-purple-600" />
+                    <span>Table of Contents</span>
+                  </div>
+                  <nav className="space-y-2">
+                    {guide.tableOfContents.map((toc) => (
+                      <a
+                        key={toc.id}
+                        href={`#${toc.id}`}
+                        onClick={() =>
+                          trackEvent('guide_toc_click', {
+                            toc_id: toc.id,
+                            guide_slug: guide.slug,
+                            heading_text: toc.title,
+                          })
+                        }
+                        className="block text-xs font-semibold text-slate-600 hover:text-purple-600 hover:translate-x-0.5 transition-all py-1 border-l-2 border-transparent hover:border-purple-600 pl-3"
+                      >
+                        {toc.title}
+                      </a>
+                    ))}
+                  </nav>
+                </div>
 
-            <div className="flex flex-wrap gap-2 pt-2">
-              {guide.tags.map((t) => (
-                <span key={t} className="text-xs bg-purple-50 text-purple-700 px-3 py-1 rounded-full font-medium">
-                  #{t}
-                </span>
-              ))}
-            </div>
+                {/* Related Capabilities Box */}
+                <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                  <div className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                    Relevant Services
+                  </div>
+                  <div className="space-y-2">
+                    {guide.relatedServices.map((slug) => {
+                      const srv = getServiceBySlug(slug);
+                      if (!srv) return null;
+                      return (
+                        <Link
+                          key={slug}
+                          to={`/services/${slug}`}
+                          className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-purple-50 text-xs font-bold text-slate-800 hover:text-purple-700 transition-colors group"
+                        >
+                          <span>{srv.name}</span>
+                          <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all" />
+                        </Link>
+                      );
+                    })}
+                  </div>
 
-            <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
-              <Button to={parentPath} variant="outline" size="sm" icon={<ArrowLeft className="w-4 h-4" />}>
-                Back to {parentLabel}
-              </Button>
-              <Button to="/responsible-gaming" variant="secondary" size="sm">
-                Player Safety Rules →
-              </Button>
-            </div>
+                  <div className="pt-2 border-t border-slate-100">
+                    <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                      Industry Applications
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {guide.relatedIndustries.map((slug) => {
+                        const ind = getIndustryBySlug(slug);
+                        if (!ind) return null;
+                        return (
+                          <Link
+                            key={slug}
+                            to={`/industries/${slug}`}
+                            className="px-2.5 py-1 rounded-lg bg-slate-100 text-[11px] font-semibold text-slate-700 hover:bg-purple-100 hover:text-purple-700 transition-colors"
+                          >
+                            {ind.shortName}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            {/* Right Column: Main Content Content */}
+            <article className="lg:col-span-8 order-1 lg:order-2 space-y-8">
+              {/* Key Takeaways Callout Box */}
+              <div className="bg-gradient-to-r from-purple-50 to-indigo-50 border-l-4 border-purple-600 rounded-2xl p-6 shadow-sm">
+                <h2 className="font-heading font-bold text-base text-purple-950 mb-3 flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-purple-600 flex-shrink-0" />
+                  <span>Key Architectural Takeaways</span>
+                </h2>
+                <ul className="space-y-2 text-sm text-purple-900/90 leading-relaxed">
+                  {guide.keyTakeaways.map((takeaway, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-purple-600 flex-shrink-0 mt-2" />
+                      <span>{takeaway}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Sections */}
+              <div className="space-y-12">
+                {guide.sections.map((sec) => (
+                  <section key={sec.id} id={sec.id} className="scroll-mt-32 space-y-4">
+                    <h2 className="font-heading font-bold text-2xl text-slate-900 border-b border-slate-100 pb-3">
+                      {sec.heading}
+                    </h2>
+                    <p className="text-slate-700 leading-relaxed text-base">
+                      {sec.body}
+                    </p>
+
+                    {sec.codeSnippet && (
+                      <div className="rounded-2xl bg-slate-950 text-slate-200 p-5 overflow-x-auto border border-slate-800 shadow-inner">
+                        <div className="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2 mb-3">
+                          <span className="flex items-center gap-1.5 font-mono">
+                            <Code2 className="w-4 h-4 text-purple-400" />
+                            {sec.codeLang?.toUpperCase() || 'CODE'}
+                          </span>
+                          <span>Architectural Blueprint</span>
+                        </div>
+                        <pre className="font-mono text-xs leading-relaxed">
+                          <code>{sec.codeSnippet}</code>
+                        </pre>
+                      </div>
+                    )}
+                  </section>
+                ))}
+              </div>
+
+              {/* Tags */}
+              <div className="pt-8 border-t border-slate-200">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mr-2">
+                    Topic Index:
+                  </span>
+                  {guide.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 rounded-lg bg-slate-100 text-xs font-medium text-slate-600"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Contextual CTA Banner */}
+              <div className="bg-slate-900 rounded-2xl p-8 text-white mt-12">
+                <div className="max-w-xl">
+                  <Badge variant="amber" size="sm" className="mb-3">
+                    Action Plan
+                  </Badge>
+                  <h3 className="font-heading font-extrabold text-2xl text-white mb-2">
+                    {guide.cta.title}
+                  </h3>
+                  <p className="text-slate-300 text-sm mb-6 leading-relaxed">
+                    {guide.cta.description}
+                  </p>
+                  <Button
+                    to={guide.cta.href}
+                    variant="amber"
+                    size="lg"
+                    icon={<ArrowRight className="w-4 h-4" />}
+                    iconPosition="right"
+                    onClick={() =>
+                      trackEvent('cta_click', {
+                        cta_location: 'guide_bottom_cta',
+                        cta_name: guide.cta.buttonLabel,
+                        guide_slug: guide.slug,
+                      })
+                    }
+                  >
+                    {guide.cta.buttonLabel}
+                  </Button>
+                </div>
+              </div>
+            </article>
           </div>
         </Container>
       </Section>

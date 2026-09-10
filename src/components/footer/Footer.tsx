@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Lock, ExternalLink } from 'lucide-react';
+import { Shield, Lock, ArrowRight } from 'lucide-react';
 import { navigationConfig, FooterSection } from '../../config/navigation';
 import { getBusinessName, getBusinessTagline } from '../../selectors';
 import businessConfig from '../../config/business';
@@ -49,18 +49,16 @@ export const Footer: React.FC = () => {
               </div>
             </div>
 
-            {/* Parent brand */}
+            {/* Agency Standard */}
             <div className="pt-2 border-t border-slate-800">
-              <p className="text-[10px] text-slate-500 mb-1 uppercase tracking-wider font-semibold">Part of</p>
-              <a
-                href={businessConfig.parentBrandUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <p className="text-[10px] text-slate-500 mb-1 uppercase tracking-wider font-semibold">Specialist Network</p>
+              <Link
+                to="/about"
                 className="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-purple-400 transition-colors font-semibold"
               >
-                {businessConfig.parentBrand}
-                <ExternalLink className="w-3 h-3" />
-              </a>
+                {businessConfig.name} Agency
+                <ArrowRight className="w-3 h-3" />
+              </Link>
             </div>
           </div>
 

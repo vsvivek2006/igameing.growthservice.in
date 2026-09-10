@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Menu, X, ChevronRight, ShieldCheck, HelpCircle } from 'lucide-react';
+import { Menu, X, ChevronRight, PhoneCall, FileSearch } from 'lucide-react';
 import { navigationConfig, NavItem } from '../../config/navigation';
 import { Button } from '../ui/Button';
 
@@ -135,23 +135,23 @@ export const MobileNav: React.FC = () => {
           {/* Drawer Footer / Trust Actions */}
           <div className="p-5 border-t border-slate-100 bg-slate-50 space-y-3">
             <Link
-              to="/responsible-gaming"
+              to="/book-call"
               onClick={closeNav}
-              className="flex items-center gap-2 text-xs font-semibold text-slate-700 hover:text-purple-600"
+              className="flex items-center gap-2 text-xs font-semibold text-slate-700 hover:text-purple-600 transition-colors"
             >
-              <ShieldCheck className="w-4 h-4 text-purple-600" />
-              <span>18+ Responsible Gaming Policy</span>
+              <PhoneCall className="w-4 h-4 text-purple-600" />
+              <span>Schedule 30-Min Strategy Call</span>
             </Link>
             <Link
-              to="/faq"
+              to="/resources"
               onClick={closeNav}
-              className="flex items-center gap-2 text-xs font-medium text-slate-600 hover:text-purple-600"
+              className="flex items-center gap-2 text-xs font-medium text-slate-600 hover:text-purple-600 transition-colors"
             >
-              <HelpCircle className="w-4 h-4 text-slate-400" />
-              <span>Frequently Asked Questions</span>
+              <FileSearch className="w-4 h-4 text-slate-400" />
+              <span>Explore Technical Guides</span>
             </Link>
-            <Button to="/casino-guides" variant="primary" size="md" className="w-full mt-2">
-              Explore Guides
+            <Button to="/free-seo-audit" variant="primary" size="md" className="w-full mt-2" onClick={closeNav}>
+              Get Free SEO Audit
             </Button>
           </div>
         </aside>

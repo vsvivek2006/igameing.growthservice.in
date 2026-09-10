@@ -1,27 +1,15 @@
 /**
- * iGaming Growth Route Resolver
+ * iGaming Growth Route Resolver — Agency Operating System
  * Resolves application paths to 200 OK canonical routes, 301 alias redirects, or 404 errors.
  */
 
 import { RouteResolution } from './route-types';
 import { normalizePath } from './route-normalization';
 import { APP_ROUTES, getRouteAliases } from './route-registry';
-import {
-  buildGameCategoryPath,
-  buildGuidePath,
-  buildReviewPath,
-  buildPaymentMethodPath,
-} from './route-builders';
-import { gameCategories } from '../data/gameCategories';
-import { guidesData } from '../data/guidesData';
-import { reviewsData } from '../data/reviewsData';
-import { paymentMethodsData } from '../data/paymentMethods';
-
-// Map lookups for fast resolution
-const gameMap = new Map(gameCategories.map((g) => [g.slug.toLowerCase(), g]));
-const guideMap = new Map(guidesData.map((g) => [g.slug.toLowerCase(), g]));
-const reviewMap = new Map(reviewsData.map((r) => [r.slug.toLowerCase(), r]));
-const paymentMap = new Map(paymentMethodsData.map((p) => [p.slug.toLowerCase(), p]));
+import { getServiceBySlug } from '../data/servicesData';
+import { getIndustryBySlug } from '../data/industriesData';
+import { getMatrixEntry } from '../data/industryServiceMatrix';
+import { getGuideBySlug } from '../data/guidesData';
 
 export function resolveRoute(rawPath: string): RouteResolution {
   const clean = normalizePath(rawPath);
@@ -53,38 +41,84 @@ export function resolveRoute(rawPath: string): RouteResolution {
     }
   }
 
-  // 3. Dynamic Game Category (/games/:gameSlug)
-  const gameMatch = clean.match(/^\/games\/([^/]+)$/);
-  if (gameMatch) {
-    const slug = gameMatch[1];
-    const game = gameMap.get(slug);
-    if (game) {
+  // 3. Dynamic Service × Industry Composite (/industries/:industrySlug/:serviceSlug)
+  const serviceIndustryMatch = clean.match(/^\/industries\/([^/]+)\/([^/]+)$/);
+  if (serviceIndustryMatch) {
+    const [, indSlug, srvSlug] = serviceIndustryMatch;
+    const matrixEntry = getMatrixEntry(indSlug, srvSlug);
+    if (matrixEntry && matrixEntry.enabled) {
+      const industry = getIndustryBySlug(indSlug);
+      const service = getServiceBySlug(srvSlug);
       return {
         status: 200,
-        kind: 'dynamic-game',
-        canonical: buildGameCategoryPath(game.slug),
-        entityId: game.slug,
-        label: `${game.title} Guide & House Edge Analysis`,
-        params: { gameSlug: game.slug },
+        kind: 'dynamic-service-industry',
+        canonical: `/industries/${indSlug}/${srvSlug}`,
+        entityId: `${indSlug}-${srvSlug}`,
+        label: `${service?.name || srvSlug} for ${industry?.name || indSlug}`,
+        params: { industrySlug: indSlug, serviceSlug: srvSlug },
       };
     }
     return {
       status: 404,
       kind: 'not-found',
-      reason: `Game category "${slug}" not found`,
+      reason: `Service x Industry combination "${indSlug}/${srvSlug}" not active or found`,
     };
   }
 
-  // 4. Dynamic Casino Guides (/casino-guides/:guideSlug)
-  const casinoGuideMatch = clean.match(/^\/casino-guides\/([^/]+)$/);
-  if (casinoGuideMatch) {
-    const slug = casinoGuideMatch[1];
-    const guide = guideMap.get(slug);
-    if (guide && guide.category === 'casino-guides') {
+  // 4. Dynamic Industry Route (/industries/:industrySlug)
+  const industryMatch = clean.match(/^\/industries\/([^/]+)$/);
+  if (industryMatch) {
+    const slug = industryMatch[1];
+    const industry = getIndustryBySlug(slug);
+    if (industry) {
+      return {
+        status: 200,
+        kind: 'dynamic-industry',
+        canonical: `/industries/${industry.slug}`,
+        entityId: industry.slug,
+        label: `${industry.name} Digital Growth & SEO`,
+        params: { industrySlug: industry.slug },
+      };
+    }
+    return {
+      status: 404,
+      kind: 'not-found',
+      reason: `Industry vertical "${slug}" not found`,
+    };
+  }
+
+  // 5. Dynamic Service Route (/services/:serviceSlug)
+  const serviceMatch = clean.match(/^\/services\/([^/]+)$/);
+  if (serviceMatch) {
+    const slug = serviceMatch[1];
+    const service = getServiceBySlug(slug);
+    if (service) {
+      return {
+        status: 200,
+        kind: 'dynamic-service',
+        canonical: `/services/${service.slug}`,
+        entityId: service.slug,
+        label: `${service.name} Services`,
+        params: { serviceSlug: service.slug },
+      };
+    }
+    return {
+      status: 404,
+      kind: 'not-found',
+      reason: `Service "${slug}" not found`,
+    };
+  }
+
+  // 6. Dynamic SEO Guides (/resources/seo-guides/:guideSlug)
+  const seoGuideMatch = clean.match(/^\/resources\/seo-guides\/([^/]+)$/);
+  if (seoGuideMatch) {
+    const slug = seoGuideMatch[1];
+    const guide = getGuideBySlug(slug);
+    if (guide && guide.category === 'seo-guide') {
       return {
         status: 200,
         kind: 'dynamic-guide',
-        canonical: buildGuidePath(guide.slug, false),
+        canonical: `/resources/seo-guides/${guide.slug}`,
         entityId: guide.slug,
         label: guide.title,
         params: { guideSlug: guide.slug },
@@ -93,20 +127,20 @@ export function resolveRoute(rawPath: string): RouteResolution {
     return {
       status: 404,
       kind: 'not-found',
-      reason: `Casino guide "${slug}" not found`,
+      reason: `SEO Guide "${slug}" not found`,
     };
   }
 
-  // 5. Dynamic Game Strategy Guides (/game-guides/:guideSlug)
-  const gameGuideMatch = clean.match(/^\/game-guides\/([^/]+)$/);
-  if (gameGuideMatch) {
-    const slug = gameGuideMatch[1];
-    const guide = guideMap.get(slug);
-    if (guide && (guide.category === 'game-guides' || guide.category === 'bankroll')) {
+  // 7. Dynamic Industry Insights (/resources/industry-insights/:insightSlug)
+  const insightMatch = clean.match(/^\/resources\/industry-insights\/([^/]+)$/);
+  if (insightMatch) {
+    const slug = insightMatch[1];
+    const guide = getGuideBySlug(slug);
+    if (guide && guide.category === 'industry-insight') {
       return {
         status: 200,
         kind: 'dynamic-guide',
-        canonical: buildGuidePath(guide.slug, true),
+        canonical: `/resources/industry-insights/${guide.slug}`,
         entityId: guide.slug,
         label: guide.title,
         params: { guideSlug: guide.slug },
@@ -115,55 +149,34 @@ export function resolveRoute(rawPath: string): RouteResolution {
     return {
       status: 404,
       kind: 'not-found',
-      reason: `Game strategy guide "${slug}" not found`,
+      reason: `Industry Insight "${slug}" not found`,
     };
   }
 
-  // 6. Dynamic Platform / Software Reviews (/reviews/:reviewSlug)
-  const reviewMatch = clean.match(/^\/reviews\/([^/]+)$/);
-  if (reviewMatch) {
-    const slug = reviewMatch[1];
-    const review = reviewMap.get(slug);
-    if (review) {
+  // 8. Legacy Guide Paths (/resources/guides/:slug or /guides/:slug) -> 301 Redirect to canonical
+  const legacyGuideMatch = clean.match(/^\/(?:resources\/guides|guides)\/([^/]+)$/);
+  if (legacyGuideMatch) {
+    const slug = legacyGuideMatch[1];
+    const guide = getGuideBySlug(slug);
+    if (guide) {
+      const destPrefix = guide.category === 'industry-insight' ? '/resources/industry-insights' : '/resources/seo-guides';
       return {
-        status: 200,
-        kind: 'dynamic-review',
-        canonical: buildReviewPath(review.slug),
-        entityId: review.slug,
-        label: `${review.name} Review & Rating`,
-        params: { reviewSlug: review.slug },
+        status: 301,
+        kind: 'alias',
+        canonical: `${destPrefix}/${guide.slug}`,
+        from: clean,
+        to: `${destPrefix}/${guide.slug}`,
+        permanent: true,
       };
     }
     return {
       status: 404,
       kind: 'not-found',
-      reason: `Review "${slug}" not found`,
+      reason: `Legacy guide "${slug}" not found`,
     };
   }
 
-  // 7. Dynamic Payment Method Guides (/payment-methods/:methodSlug)
-  const paymentMatch = clean.match(/^\/payment-methods\/([^/]+)$/);
-  if (paymentMatch) {
-    const slug = paymentMatch[1];
-    const method = paymentMap.get(slug);
-    if (method) {
-      return {
-        status: 200,
-        kind: 'dynamic-payment',
-        canonical: buildPaymentMethodPath(method.slug),
-        entityId: method.slug,
-        label: `${method.name} Deposit & Withdrawal Guide`,
-        params: { methodSlug: method.slug },
-      };
-    }
-    return {
-      status: 404,
-      kind: 'not-found',
-      reason: `Payment method "${slug}" not found`,
-    };
-  }
-
-  // 8. Unknown route
+  // 9. Unknown route
   return {
     status: 404,
     kind: 'not-found',

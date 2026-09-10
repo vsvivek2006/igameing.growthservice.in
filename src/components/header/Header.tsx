@@ -20,19 +20,19 @@ export const Header: React.FC = () => {
 
           <div className="hidden sm:flex items-center gap-3">
             <Button
-              to="/responsible-gaming"
+              to="/book-call"
               variant="outline"
               size="sm"
-              className="border-purple-200 hover:border-purple-600 text-purple-700"
+              className="border-slate-300 hover:border-purple-600 text-slate-700 hover:text-purple-700"
             >
-              18+ Safety
+              Book Strategy Call
             </Button>
             <Button
-              to="/games"
+              to="/free-seo-audit"
               variant="primary"
               size="sm"
             >
-              Explore Games
+              Free SEO Audit
             </Button>
           </div>
 

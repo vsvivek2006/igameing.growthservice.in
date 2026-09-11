@@ -6,8 +6,10 @@ import { LoadingFallback } from './components/ui/LoadingFallback';
 import { APP_ROUTES, getRouteAliases } from './routing';
 import { AnalyticsTracker } from './analytics';
 
-// Lazy-loaded page components
-const Home = lazy(() => import('./pages/Home'));
+// Eagerly loaded primary entry page (eliminates lazy-chunk waterfall on root URL)
+import HomePage from './pages/Home';
+
+// Lazy-loaded secondary & deep-link page components
 const ServicesHub = lazy(() => import('./pages/ServicesHub'));
 const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'));
 const IndustriesHub = lazy(() => import('./pages/IndustriesHub'));
@@ -26,7 +28,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Authoritative static route to component binding
 const ROUTE_COMPONENTS: Record<string, React.ComponentType> = {
-  [APP_ROUTES.home.path]: Home,
+  [APP_ROUTES.home.path]: HomePage,
   [APP_ROUTES.services.path]: ServicesHub,
   [APP_ROUTES.industries.path]: IndustriesHub,
   [APP_ROUTES.resources.path]: ResourcesHub,

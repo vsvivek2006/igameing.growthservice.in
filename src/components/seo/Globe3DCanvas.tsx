@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 // ─── High-Contrast 3D Luminous Gaming & Traffic Globe ─────────────────────────
 // Responsive on mobile (320px) and desktop (4K).
@@ -29,6 +29,14 @@ const ORBITAL_RINGS = [
 
 export const Globe3DCanvas: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 768);
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop, { passive: true });
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
 
   // Subtle mouse parallax on desktop only; passive and non-blocking
   useEffect(() => {
@@ -150,7 +158,7 @@ export const Globe3DCanvas: React.FC = () => {
                 />
               </ellipse>
               {/* Orbiting Satellite Node */}
-              <circle cx={250 + ring.rx} cy="250" r="4.5" fill={ring.color} filter="url(#globe-glow-gold)">
+              <circle cx={250 + ring.rx} cy="250" r="4.5" fill={ring.color} filter={isDesktop ? "url(#globe-glow-gold)" : undefined}>
                 <animateTransform
                   attributeName="transform"
                   type="rotate"
@@ -165,7 +173,7 @@ export const Globe3DCanvas: React.FC = () => {
 
           {/* ── 2. Sphere Solid Body ────────────────────────────────────────── */}
           {/* Base Rim Glow */}
-          <circle cx="250" cy="250" r="148" fill="none" stroke="#a855f7" strokeWidth="2.5" strokeOpacity="0.4" filter="url(#globe-glow-purple)" />
+          <circle cx="250" cy="250" r="148" fill="none" stroke="#a855f7" strokeWidth="2.5" strokeOpacity="0.4" filter={isDesktop ? "url(#globe-glow-purple)" : undefined} />
           <circle cx="250" cy="250" r="146" fill="url(#globe-sphere-body)" stroke="#f59e0b" strokeWidth="1.8" strokeOpacity="0.6" />
           {/* Inner Light Infill */}
           <circle cx="250" cy="250" r="145" fill="url(#globe-rim-light)" pointerEvents="none" />
@@ -226,7 +234,7 @@ export const Globe3DCanvas: React.FC = () => {
             stroke="url(#arc-gradient-1)"
             strokeWidth="2.4"
             strokeOpacity="0.9"
-            filter="url(#globe-glow-gold)"
+            filter={isDesktop ? "url(#globe-glow-gold)" : undefined}
           />
           {/* Arc 3: Nepal/India -> SE Asia */}
           <path
@@ -235,7 +243,7 @@ export const Globe3DCanvas: React.FC = () => {
             stroke="url(#arc-gradient-2)"
             strokeWidth="2.2"
             strokeOpacity="0.85"
-            filter="url(#globe-glow-cyan)"
+            filter={isDesktop ? "url(#globe-glow-cyan)" : undefined}
           />
 
           {/* ── 6. Active Gaming Nodes & Verified Hotspots ──────────────────── */}
@@ -254,7 +262,7 @@ export const Globe3DCanvas: React.FC = () => {
                 fill={hub.color}
                 stroke="#ffffff"
                 strokeWidth="1.2"
-                filter="url(#globe-glow-gold)"
+                filter={isDesktop ? "url(#globe-glow-gold)" : undefined}
               />
             </g>
           ))}
@@ -273,7 +281,7 @@ export const Globe3DCanvas: React.FC = () => {
               stroke="#f59e0b"
               strokeWidth="1.2"
               strokeOpacity="0.6"
-              filter="url(#globe-glow-gold)"
+              filter={isDesktop ? "url(#globe-glow-gold)" : undefined}
             />
             {/* Live Indicator */}
             <circle cx="-48" cy="-10" r="3.5" fill="#10b981">

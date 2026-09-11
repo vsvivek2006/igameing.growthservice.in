@@ -8,7 +8,6 @@ import {
   CheckCircle2,
   ChevronRight,
   Bookmark,
-  Code2,
   ShieldCheck,
   Menu,
   X,
@@ -545,22 +544,43 @@ export const GuideDetailPage: React.FC = () => {
                     <h2 className="font-heading font-bold text-xl sm:text-2xl text-white border-b border-white/10 pb-3">
                       {sec.heading}
                     </h2>
-                    <p className="text-slate-300 leading-relaxed text-sm sm:text-base">
-                      {sec.body}
-                    </p>
+                    <div className="space-y-4 text-slate-300 leading-relaxed text-sm sm:text-base">
+                      {sec.body.split('\n\n').map((paragraph, pIdx) => (
+                        <p key={pIdx}>{paragraph}</p>
+                      ))}
+                    </div>
 
-                    {sec.codeSnippet && (
-                      <div className="rounded-2xl bg-slate-950 text-slate-200 p-5 overflow-x-auto border border-slate-800 shadow-inner">
-                        <div className="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2 mb-3">
-                          <span className="flex items-center gap-1.5 font-mono">
-                            <Code2 className="w-4 h-4 text-purple-400" />
-                            {sec.codeLang?.toUpperCase() || 'CODE'}
+                    {sec.agencySafeguard && (
+                      <div className="rounded-2xl bg-gradient-to-r from-purple-950/40 via-model3-base to-amber-950/20 border border-amber-500/25 p-5 sm:p-6 shadow-xl space-y-3 mt-4">
+                        <div className="flex items-center justify-between gap-2 border-b border-white/10 pb-2.5">
+                          <div className="flex items-center gap-2 text-xs font-bold font-mono uppercase tracking-wider text-amber-300">
+                            <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
+                            <span>Agency Production Safeguard: {sec.agencySafeguard.title}</span>
+                          </div>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/25 shrink-0 font-bold">
+                            Active Governance
                           </span>
-                          <span>Architectural Blueprint</span>
                         </div>
-                        <pre className="font-mono text-xs leading-relaxed">
-                          <code>{sec.codeSnippet}</code>
-                        </pre>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
+                          <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 space-y-1">
+                            <div className="text-[10px] font-mono uppercase text-slate-400 font-bold">
+                              What Our Engineers Take Care Of:
+                            </div>
+                            <p className="text-xs text-slate-200 leading-relaxed font-medium">
+                              {sec.agencySafeguard.whatWeMonitor}
+                            </p>
+                          </div>
+
+                          <div className="p-3.5 rounded-xl bg-emerald-500/[0.03] border border-emerald-500/15 space-y-1">
+                            <div className="text-[10px] font-mono uppercase text-emerald-400 font-bold">
+                              Your Operational Protection:
+                            </div>
+                            <p className="text-xs text-slate-300 leading-relaxed">
+                              {sec.agencySafeguard.operatorBenefit}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     )}
                   </section>

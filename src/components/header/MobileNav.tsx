@@ -117,6 +117,8 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isDark = false }) => {
                   alt="iGaming Growth Logo"
                   width={32}
                   height={32}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-contain"
                 />
               </div>

@@ -15,7 +15,7 @@ import { SEOHead } from '../seo';
 import { buildBreadcrumbSchema, buildServiceSchema } from '../seo/schema';
 import { Container, Section, Button, ProcessTimeline, FAQAccordion, Breadcrumb, ServiceIcon, Reveal } from '../components/ui';
 import { trackEvent } from '../analytics';
-import { getServiceBySlug, SERVICE_CATEGORY_LABELS } from '../data/servicesData';
+import { getServiceBySlug, getAllServices, SERVICE_CATEGORY_LABELS } from '../data/servicesData';
 import type { ServiceOffering } from '../data/servicesData';
 import { getAllIndustries } from '../data/industriesData';
 import { MAIN_PACKAGES, PAID_ACQUISITION_PACKAGE, PRICING_DISCLAIMER } from '../data/pricingData';

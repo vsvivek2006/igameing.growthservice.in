@@ -23,6 +23,8 @@ export const Brand: React.FC<BrandProps> = ({ isDark: _isDark = false }) => {
               alt="iGaming Growth Logo"
               width={36}
               height={36}
+              fetchPriority="high"
+              decoding="async"
               className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
             />
           </div>

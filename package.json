@@ -19,7 +19,9 @@
     "seo:validate": "node scripts/validate_seo.js",
     "seo:monitor": "node scripts/monitor_seo_health.js",
     "seo:gate": "node scripts/seo_gate.js",
-    "smoke:test": "node scripts/smoke_test.js"
+    "smoke:test": "node scripts/smoke_test.js",
+    "render:test": "node scripts/test_react_render_all.js",
+    "pages:audit": "node scripts/test_all_live_pages.js"
   },
   "dependencies": {
     "lucide-react": "^0.344.0",

@@ -522,7 +522,7 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
                 <Link
                   key={ind.slug}
                   to={`/industries/${ind.slug}`}
-                  className="p-5 rounded-2xl bg-model3-deep/80 border border-white/10 hover:border-amber-400/40 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between"
+                  className="p-5 rounded-2xl bg-model3-deep/80 border border-white/10 hover:border-amber-400/40 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between shadow-lg"
                 >
                   <div>
                     <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block mb-2">
@@ -536,45 +536,52 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
                     </p>
                   </div>
                   <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-amber-400">
-                    <span>{ind.shortName} Blueprint</span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    <span>{ind.shortName} Architecture</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
               ))}
             </div>
 
-            {/* Related Services & Deep Guides */}
-            <div className="mt-8 pt-8 border-t border-white/10 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Link
-                to="/services/website-development"
-                className="p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-cyan-400/40 transition-colors flex items-center justify-between"
-              >
-                <div>
-                  <div className="text-[10px] font-mono text-cyan-400 uppercase">Core Capability</div>
-                  <div className="text-sm font-bold text-white">Website &amp; PWA Build (from ₹15K)</div>
-                </div>
-                <ArrowRight className="w-4 h-4 text-cyan-400" />
-              </Link>
-              <Link
-                to="/services/seo"
-                className="p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-amber-400/40 transition-colors flex items-center justify-between"
-              >
-                <div>
-                  <div className="text-[10px] font-mono text-amber-400 uppercase">Organic Growth</div>
-                  <div className="text-sm font-bold text-white">Rank-1 SEO Dominance (from ₹35K)</div>
-                </div>
-                <ArrowRight className="w-4 h-4 text-amber-400" />
-              </Link>
-              <Link
-                to="/free-seo-audit"
-                className="p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-emerald-400/40 transition-colors flex items-center justify-between"
-              >
-                <div>
-                  <div className="text-[10px] font-mono text-emerald-400 uppercase">Complimentary</div>
-                  <div className="text-sm font-bold text-white">Free Technical Code Audit</div>
-                </div>
-                <ArrowRight className="w-4 h-4 text-emerald-400" />
-              </Link>
+            {/* Complementary Services (Never Self-Linking) */}
+            <div className="mt-8 pt-8 border-t border-white/10">
+              <div className="text-xs font-mono uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-400" />
+                <span>Complementary Engineering Capabilities</span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {getAllServices()
+                  .filter((s) => s.slug !== service.slug)
+                  .slice(0, 3)
+                  .map((relSrv) => (
+                    <Link
+                      key={relSrv.slug}
+                      to={`/services/${relSrv.slug}`}
+                      className="p-5 rounded-2xl bg-model3-base/90 border border-white/10 hover:border-amber-400/40 transition-all duration-200 hover:-translate-y-0.5 group flex flex-col justify-between shadow-lg"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between gap-2 mb-2">
+                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-400">
+                            {relSrv.category}
+                          </span>
+                          <span className="text-[10px] font-mono text-slate-400">
+                            {relSrv.slug === 'website-development' ? 'From ₹15,000' : 'From ₹35,000/mo'}
+                          </span>
+                        </div>
+                        <h4 className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors mb-1.5 font-heading">
+                          {relSrv.name}
+                        </h4>
+                        <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                          {relSrv.shortDescription}
+                        </p>
+                      </div>
+                      <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs font-semibold text-slate-300 group-hover:text-amber-400">
+                        <span>Explore Blueprint</span>
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-amber-400" />
+                      </div>
+                    </Link>
+                  ))}
+              </div>
             </div>
           </div>
         </Container>

@@ -439,37 +439,90 @@ const IndustryPage: React.FC<{ industry: IndustryVertical }> = ({ industry }) =>
             </div>
 
             {/* Core Capability Shortcuts */}
-            <div className="mt-8 pt-8 border-t border-white/10 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Link
-                to="/services/website-development"
-                className="p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-cyan-400/40 transition-colors flex items-center justify-between"
-              >
-                <div>
-                  <div className="text-[10px] font-mono text-cyan-400 uppercase">Turnkey Stack</div>
-                  <div className="text-sm font-bold text-white">{industry.shortName} Web Build (from ₹15K)</div>
-                </div>
-                <ArrowRight className="w-4 h-4 text-cyan-400" />
-              </Link>
-              <Link
-                to="/services/seo"
-                className="p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-amber-400/40 transition-colors flex items-center justify-between"
-              >
-                <div>
-                  <div className="text-[10px] font-mono text-amber-400 uppercase">Organic Rank-1</div>
-                  <div className="text-sm font-bold text-white">{industry.shortName} SEO Sprint (from ₹35K)</div>
-                </div>
-                <ArrowRight className="w-4 h-4 text-amber-400" />
-              </Link>
-              <Link
-                to="/free-seo-audit"
-                className="p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-emerald-400/40 transition-colors flex items-center justify-between"
-              >
-                <div>
-                  <div className="text-[10px] font-mono text-emerald-400 uppercase">Zero Cost</div>
-                  <div className="text-sm font-bold text-white">Free {industry.shortName} Technical Audit</div>
-                </div>
-                <ArrowRight className="w-4 h-4 text-emerald-400" />
-              </Link>
+            <div className="mt-8 pt-8 border-t border-white/10">
+              <div className="text-xs font-mono uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-400" />
+                <span>Dedicated Services for {industry.shortName}</span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Link
+                  to="/services/website-development"
+                  className="p-5 rounded-2xl bg-model3-base/90 border border-white/10 hover:border-cyan-400/40 transition-all duration-200 hover:-translate-y-0.5 group flex flex-col justify-between shadow-lg"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400">
+                        Turnkey Stack
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-400">
+                        From ₹15,000
+                      </span>
+                    </div>
+                    <h4 className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors mb-1.5 font-heading">
+                      {industry.shortName} Web &amp; PWA Build
+                    </h4>
+                    <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                      Custom edge-cached platform with WhatsApp cashier integration and sub-35ms loading speed.
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs font-semibold text-slate-300 group-hover:text-cyan-400">
+                    <span>Inspect Platform Stack</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-cyan-400" />
+                  </div>
+                </Link>
+
+                <Link
+                  to="/services/seo"
+                  className="p-5 rounded-2xl bg-model3-base/90 border border-white/10 hover:border-amber-400/40 transition-all duration-200 hover:-translate-y-0.5 group flex flex-col justify-between shadow-lg"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-400">
+                        Organic Dominance
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-400">
+                        From ₹35,000/mo
+                      </span>
+                    </div>
+                    <h4 className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors mb-1.5 font-heading">
+                      {industry.shortName} SEO Sprint
+                    </h4>
+                    <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                      Programmatic keyword cluster targeting high-intent deposit terms with zero algorithmic bans.
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs font-semibold text-slate-300 group-hover:text-amber-400">
+                    <span>Inspect SEO Architecture</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-amber-400" />
+                  </div>
+                </Link>
+
+                <Link
+                  to="/free-seo-audit"
+                  className="p-5 rounded-2xl bg-model3-base/90 border border-white/10 hover:border-emerald-400/40 transition-all duration-200 hover:-translate-y-0.5 group flex flex-col justify-between shadow-lg"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400">
+                        Complimentary
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-400">
+                        Zero Obligation
+                      </span>
+                    </div>
+                    <h4 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors mb-1.5 font-heading">
+                      Free {industry.shortName} Technical Audit
+                    </h4>
+                    <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                      200-point diagnostic on indexation leaks, rendering bottlenecks, and Core Web Vitals telemetry.
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs font-semibold text-slate-300 group-hover:text-emerald-400">
+                    <span>Request Code Audit</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-emerald-400" />
+                  </div>
+                </Link>
+              </div>
             </div>
           </div>
         </Container>

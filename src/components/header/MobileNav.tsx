@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { NavLink, Link } from 'react-router-dom';
 import {
   Menu,
@@ -91,22 +92,21 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isDark = false }) => {
         )}
       </button>
 
-      {/* Backdrop overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 transition-opacity duration-300"
-          onClick={closeMenu}
-          aria-hidden="true"
-        />
-      )}
+      {/* Backdrop overlay & Drawer Portal */}
+      {isOpen && typeof document !== 'undefined' && createPortal(
+        <div className="fixed inset-0 z-[9999]">
+          {/* Backdrop overlay */}
+          <div
+            className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity duration-300 animate-fade-in"
+            onClick={closeMenu}
+            aria-hidden="true"
+          />
 
-      {/* Drawer panel */}
-      <aside
-        aria-label="Mobile Navigation Menu"
-        className={`fixed top-0 right-0 w-full sm:w-[380px] max-w-full h-full bg-[#050505] border-l border-white/10 text-white z-50 shadow-2xl flex flex-col justify-between overflow-y-auto transition-transform duration-300 ease-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
+          {/* Drawer panel */}
+          <aside
+            aria-label="Mobile Navigation Menu"
+            className="fixed top-0 right-0 w-full sm:w-[380px] max-w-full h-full bg-[#050505] border-l border-white/10 text-white z-10 shadow-2xl flex flex-col justify-between overflow-y-auto animate-slide-in-right"
+          >
         {/* Drawer Header */}
         <div>
           <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between bg-[#050505]/95 sticky top-0 z-10 backdrop-blur-md">
@@ -356,6 +356,9 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isDark = false }) => {
           </p>
         </div>
       </aside>
+    </div>,
+    document.body
+  )}
     </div>
   );
 };

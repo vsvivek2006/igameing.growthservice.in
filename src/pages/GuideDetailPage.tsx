@@ -13,8 +13,10 @@ import {
   Menu,
   X,
   FileCheck,
-  AlertTriangle,
-  ListChecks,
+  Layers,
+  Sparkles,
+  XCircle,
+  Activity,
 } from 'lucide-react';
 import { SEOHead } from '../seo';
 import { getCanonicalUrl } from '../seo/canonical';
@@ -225,45 +227,86 @@ const DEFAULT_FAQS = [
   },
 ];
 
-const DEPLOYMENT_CHECKLIST = [
+interface PipelineTier {
+  tier: string;
+  name: string;
+  subtitle: string;
+  badge: string;
+  deliverables: string[];
+  techStack: string;
+}
+
+const AGENCY_PIPELINE_TIERS: PipelineTier[] = [
   {
-    title: 'Staging Crawl Simulation',
-    desc: 'Execute headless crawler audits on staging using Googlebot user-agents to detect 4xx status leaks and hydration timeouts prior to production deployment.',
+    tier: '01',
+    name: 'Edge Gateway & Bot Routing Layer',
+    subtitle: 'Ultra-low latency crawler ingestion and cache governance at the CDN edge',
+    badge: '<35ms Global TTFB',
+    deliverables: [
+      'Edge Workers routing Googlebot directly to instant pre-rendered HTML cache',
+      'Deterministic HTTP cache-control & dynamic bypass for real-time odds & game feeds',
+      'Strict robots.txt and edge canonical header enforcement eliminating parameter bloat',
+    ],
+    techStack: 'Cloudflare Workers · Varnish Edge · HTTP/3 QUIC',
   },
   {
-    title: 'Edge Server Header Governance',
-    desc: 'Enforce deterministic Cache-Control, strict transport security, and canonical Link headers at the CDN edge layer to minimize origin server load.',
+    tier: '02',
+    name: 'Headless Pre-Rendering & Semantic Schema Engine',
+    subtitle: 'Eliminating two-wave JavaScript rendering delays with instant semantic HTML',
+    badge: '100% Core Web Vitals Pass',
+    deliverables: [
+      'Complete semantic HTML delivered on the initial server byte (zero hydration lag)',
+      'Automated JSON-LD schema injection (Organization, Service, FAQ, BreadcrumbList)',
+      'Zero layout shift (CLS < 0.05) with pre-allocated viewports and modern WebP/AVIF',
+    ],
+    techStack: 'Next.js SSR · Vite Headless · JSON-LD Linked Data',
   },
   {
-    title: 'Schema Entity Graph Validation',
-    desc: 'Run automated CI/CD schema linter checks to ensure Organization, WebPage, and BreadcrumbList nodes connect without orphan properties.',
+    tier: '03',
+    name: 'Programmatic Keyword & Entity Silo Matrix',
+    subtitle: 'Capturing thousands of high-intent transactional search queries across verticals',
+    badge: '5,000+ Keyword Hubs',
+    deliverables: [
+      'Topical cluster taxonomy preventing internal keyword cannibalization',
+      'Contextual internal PageRank routing funneling equity directly into commercial hubs',
+      'Dedicated landing page templates engineered for rapid mobile player conversion',
+    ],
+    techStack: 'Deterministic Silo Routing · Custom Taxonomy Engine',
   },
   {
-    title: 'Hydration Mismatch Sentinel',
-    desc: 'Configure automated browser testing to trap React hydration errors in the console, ensuring server-rendered HTML matches initial client state.',
-  },
-  {
-    title: 'Mobile Network Throttle Testing',
-    desc: 'Simulate 4G mobile network speeds during synthetic testing to guarantee Largest Contentful Paint (LCP) remains under 2.2 seconds.',
-  },
-  {
-    title: 'Search Console Sitemaps & Telemetry',
-    desc: 'Submit versioned XML sitemaps partitioned by category and monitor Googlebot real-time crawl curves in Google Search Console.',
+    tier: '04',
+    name: '24/7 Telemetry & Algorithmic Penalty Watchdog',
+    subtitle: 'Proactive surveillance protecting organic player inflow from algorithmic shifts',
+    badge: 'Real-Time GSC Watchdog',
+    deliverables: [
+      'Automated server access log parsing trapping 4xx leaks and redirect chains weekly',
+      'Google Search Console API telemetry monitoring crawl curves and snippet CTR shifts',
+      'Continuous white-hat compliance auditing preventing cloaking and doorway penalties',
+    ],
+    techStack: 'LogStream Telemetry · GSC API · Lighthouse CI',
   },
 ];
 
-const FAILURE_MODES = [
+const AGENCY_VS_TRADITIONAL = [
   {
-    title: 'Relying Solely on JavaScript Canonical Tags',
-    desc: 'Placing rel=canonical tags inside client-rendered scripts often fails because crawlers evaluate the raw HTTP payload first. Canonical tags must exist in raw server HTML.',
+    area: 'Delivery & Execution',
+    traditional: '40-page PDF audit reports lecturing your internal team on what they should fix',
+    agency: 'Direct code commits, GitHub Pull Requests, edge configs, and production deployments',
   },
   {
-    title: 'Ignoring User-Agent Rendering Divergence',
-    desc: 'Serving different content or structure between desktop and mobile bots risks algorithmic cloaking penalties. Ensure responsive hydration matches across both user-agents.',
+    area: 'Infrastructure Speed',
+    traditional: 'Recommends third-party CMS plugins that bloat client scripts and degrade TTFB',
+    agency: 'Custom edge caching and headless architecture delivering sub-35ms response times',
   },
   {
-    title: 'Neglecting Edge Cache Invalidation on Dynamic Feeds',
-    desc: 'Failing to purge edge cache when game odds or category listings change leads to stale content indexing and inconsistent search snippets.',
+    area: 'Keyword Strategy',
+    traditional: 'Chases generic informational keywords that generate empty, non-converting traffic',
+    agency: 'Laser-focused on high-intent deposit, rule, and player registration search terms',
+  },
+  {
+    area: 'Accountability & Proof',
+    traditional: 'Blames Google algorithm updates and search fluctuations for stagnant results',
+    agency: 'Transparent Search Console telemetry access backed by verified 15.9M click proof',
   },
 ];
 
@@ -524,48 +567,138 @@ export const GuideDetailPage: React.FC = () => {
                 ))}
               </div>
 
-              {/* ── 4. Production Deployment & Verification Protocol ──── */}
-              <div className="bg-navy-900/80 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-lg space-y-5">
-                <div className="flex items-center gap-2 text-white font-bold text-base">
-                  <ListChecks className="w-5 h-5 text-purple-400 flex-shrink-0" />
-                  <span>Production Deployment &amp; Verification Protocol</span>
+              {/* ── 4. Proprietary Architecture & Deployment Pipeline (What WE Deploy) ──── */}
+              <div className="bg-navy-900/90 rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-300 text-xs font-bold uppercase tracking-wider mb-2">
+                      <Layers className="w-3.5 h-3.5 text-purple-400" />
+                      <span>How We Deploy &amp; Manage This For You</span>
+                    </div>
+                    <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-white">
+                      Proprietary 4-Tier Engineering &amp; Search Pipeline
+                    </h3>
+                  </div>
+                  <span className="self-start sm:self-auto px-3 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-mono font-bold">
+                    Production Active
+                  </span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  Before promoting architectural updates or programmatic catalogs to production, engineering teams must validate each deployment against this rigorous verification checklist:
+
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  Instead of handing you theoretical checklists or advice, our senior engineering squad takes full operational responsibility. We architect, write the code, configure edge servers, and maintain this 4-tier pipeline directly on your infrastructure:
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {DEPLOYMENT_CHECKLIST.map((item) => (
-                    <div key={item.title} className="p-4 rounded-xl bg-navy-950/70 border border-white/10 shadow-xs space-y-1">
-                      <div className="text-xs font-bold text-white flex items-center gap-1.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-                        <span>{item.title}</span>
+                {/* 4-Tier Visual Cards Stack */}
+                <div className="space-y-4">
+                  {AGENCY_PIPELINE_TIERS.map((tier) => (
+                    <div
+                      key={tier.tier}
+                      className="p-5 sm:p-6 rounded-2xl bg-model3-base/80 border border-white/10 hover:border-amber-400/40 transition-all duration-200 group"
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                        <div className="flex items-center gap-3">
+                          <span className="w-8 h-8 rounded-xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center font-mono font-black text-xs text-amber-400 shrink-0">
+                            {tier.tier}
+                          </span>
+                          <div>
+                            <h4 className="font-heading font-bold text-base text-white group-hover:text-amber-300 transition-colors">
+                              {tier.name}
+                            </h4>
+                            <p className="text-xs text-slate-400">{tier.subtitle}</p>
+                          </div>
+                        </div>
+                        <span className="self-start sm:self-auto px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-[11px] font-mono text-amber-400 shrink-0">
+                          {tier.badge}
+                        </span>
                       </div>
-                      <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed">
-                        {item.desc}
-                      </p>
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-3 border-t border-white/5">
+                        {tier.deliverables.map((del, dIdx) => (
+                          <div key={dIdx} className="flex items-start gap-2 text-xs text-slate-300 bg-white/[0.02] p-2.5 rounded-xl border border-white/5">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                            <span className="leading-snug">{del}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="mt-3 pt-2.5 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+                        <span className="text-slate-400">Stack: <strong className="text-slate-200">{tier.techStack}</strong></span>
+                        <span className="text-emerald-400 font-semibold">100% Agency Managed</span>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* ── 5. Common Architectural Failure Modes ─────────────── */}
-              <div className="bg-rose-500/10 rounded-2xl p-6 sm:p-8 border border-rose-500/20 space-y-4">
-                <div className="flex items-center gap-2 text-white font-bold text-base">
-                  <AlertTriangle className="w-5 h-5 text-rose-400 flex-shrink-0" />
-                  <span>Common Architectural Failure Modes &amp; Prevention</span>
+              {/* ── 5. The Agency Reality: Generic Retainers vs iGaming Growth Squad ── */}
+              <div className="bg-navy-900/90 rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl space-y-6">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-wider mb-2">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Execution Comparison</span>
+                  </div>
+                  <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-white">
+                    Why Operators Retain Us: What We Build vs Generic Agencies
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+                    Most agencies deliver slide decks with recommendations for your team to do the work. We function as your embedded senior engineering unit:
+                  </p>
                 </div>
-                <div className="space-y-3">
-                  {FAILURE_MODES.map((mode) => (
-                    <div key={mode.title} className="p-4 rounded-xl bg-navy-950/70 border border-rose-500/20 shadow-xs space-y-1">
-                      <div className="text-xs font-bold text-rose-300">
-                        {mode.title}
-                      </div>
-                      <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed">
-                        {mode.desc}
-                      </p>
-                    </div>
-                  ))}
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse min-w-[540px]">
+                    <thead>
+                      <tr className="border-b border-white/10 text-xs font-mono text-slate-400 uppercase tracking-wider">
+                        <th className="py-3 px-4 w-1/4">Delivery Dimension</th>
+                        <th className="py-3 px-4 w-3/8 text-rose-400">Typical Generic Retainer</th>
+                        <th className="py-3 px-4 w-3/8 text-emerald-400">iGaming Growth Engineering</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5 text-xs">
+                      {AGENCY_VS_TRADITIONAL.map((row) => (
+                        <tr key={row.area} className="hover:bg-white/[0.02] transition-colors">
+                          <td className="py-3.5 px-4 font-bold text-white font-heading">{row.area}</td>
+                          <td className="py-3.5 px-4 text-slate-400 leading-relaxed">
+                            <div className="flex items-start gap-2">
+                              <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                              <span>{row.traditional}</span>
+                            </div>
+                          </td>
+                          <td className="py-3.5 px-4 text-slate-200 leading-relaxed bg-emerald-500/[0.04] rounded-xl font-medium">
+                            <div className="flex items-start gap-2">
+                              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                              <span>{row.agency}</span>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* ── 5.5 Verified Performance Telemetry Banner ──── */}
+              <div className="p-6 rounded-3xl bg-gradient-to-r from-amber-500/10 via-purple-900/20 to-slate-900 border border-amber-500/30 shadow-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                <div>
+                  <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-widest mb-1">
+                    <Activity className="w-4 h-4" />
+                    <span>Real-World Validation Delivered</span>
+                  </div>
+                  <h4 className="font-heading font-black text-lg sm:text-xl text-white">
+                    15,900,000+ Real Organic Players Delivered
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl leading-relaxed">
+                    This exact architecture generated 15.9M verified search clicks for skill gaming and 22K monthly player inquiries for betting exchanges on Google.
+                  </p>
+                </div>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 shrink-0">
+                  <Link
+                    to="/#proof"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs shadow-md transition-colors"
+                  >
+                    <span>Inspect Proof Telemetry</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-slate-950" />
+                  </Link>
                 </div>
               </div>
 

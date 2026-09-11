@@ -13,10 +13,10 @@ export interface BreadcrumbProps {
 export const Breadcrumb: React.FC<BreadcrumbProps> = ({
   items,
   className = '',
-  dark = false,
+  dark = true,
   variant,
 }) => {
-  const isDark = dark || variant === 'light';
+  const isDark = variant === 'light' ? false : (dark || variant === 'dark');
 
   return (
     <nav aria-label="Breadcrumb" className={`flex items-center text-xs sm:text-sm ${className}`}>
@@ -24,11 +24,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
         <li>
           <Link
             to="/"
-            className={`inline-flex items-center gap-1 transition-colors ${
-              isDark
-                ? 'text-slate-400 hover:text-white'
-                : 'text-slate-500 hover:text-purple-600'
-            }`}
+            className="inline-flex items-center gap-1 transition-colors text-slate-400 hover:text-amber-400"
           >
             <Home className="w-3.5 h-3.5" />
             <span className="sr-only">Home</span>
@@ -41,25 +37,19 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
           return (
             <li key={index} className="flex items-center gap-1 sm:gap-2">
               <ChevronRight
-                className={`w-3.5 h-3.5 ${isDark ? 'text-slate-600' : 'text-slate-400'}`}
+                className="w-3.5 h-3.5 text-slate-500 shrink-0"
               />
               {isLast || !item.path ? (
                 <span
                   aria-current={isLast ? 'page' : undefined}
-                  className={`font-semibold truncate max-w-[200px] sm:max-w-[300px] ${
-                    isDark ? 'text-yellow-400' : 'text-purple-700'
-                  }`}
+                  className="font-semibold truncate max-w-[200px] sm:max-w-[300px] text-amber-400"
                 >
                   {item.label}
                 </span>
               ) : (
                 <Link
                   to={item.path}
-                  className={`transition-colors truncate max-w-[150px] sm:max-w-[250px] ${
-                    isDark
-                      ? 'text-slate-300 hover:text-white'
-                      : 'text-slate-600 hover:text-purple-600'
-                  }`}
+                  className="transition-colors truncate max-w-[150px] sm:max-w-[250px] text-slate-300 hover:text-amber-300"
                 >
                   {item.label}
                 </Link>

@@ -468,79 +468,79 @@ export const industriesData: readonly IndustryVertical[] = [
     },
   },
 
-  // ─── Adult / Escort ────────────────────────────────────────────
+  // ─── Lotus365 & Betting Exchanges ────────────────────────────
   {
-    slug: 'adult-escort',
-    name: 'Adult Industry & Escort Directories',
-    shortName: 'Adult Industry',
-    category: 'adult',
-    tagline: 'Technical SEO and organic visibility for adult industry businesses where paid advertising is unavailable',
+    slug: 'betting-exchange',
+    name: 'Lotus365 & Betting Exchanges',
+    shortName: 'Betting Exchange',
+    category: 'gaming',
+    tagline: 'Turnkey engineering and Rank-1 SEO for betting exchanges, Lotus365-style platforms, and Cricket ID portals',
     overview:
-      'The adult industry operates with almost no paid advertising options on major platforms. Organic search is the primary acquisition channel, making SEO not a competitive advantage but an operational necessity. We provide technical SEO, content architecture, and authority development for adult industry businesses operating legally in their markets — with no content creation for exploitative or illegal purposes.',
+      'Betting exchanges and Lotus365-style platforms require high-frequency odds updates, peer-to-peer liquidity management, instant Cricket ID generation, and multi-tier agent balance systems. We provide full-stack platform engineering, WhatsApp/Telegram deposit automation, and aggressive organic search dominance for volatile high-intent betting queries.',
     competitionCharacteristics:
-      'Adult search categories have high established competition from long-running sites with substantial historical backlink profiles. Newer operators must find differentiated positioning through technical quality, user experience, and content in underserved query categories.',
+      'Extreme search volume surges during ICC tournaments, IPL seasons, and bilateral cricket series. Legacy bookmakers rely on brand recall, while agile exchange operators capture massive search volume through real-time match landing pages, programmatic keyword clustering, and 1-tap WhatsApp onboarding.',
 
     seoChallenges: [
       {
-        title: 'No Paid Advertising Fallback',
-        description: 'Google Ads, Meta Ads, and most major advertising platforms do not permit adult industry advertising. SEO is the only sustainable digital acquisition channel, making organic performance critical.',
+        title: 'Real-Time Match Odds & Fixture Volatility',
+        description: 'Cricket exchange queries surge and disappear within 48-hour windows around live matches. Standard static sitemaps fail to index time-sensitive match pages in time without instant Google indexation webhooks.',
       },
       {
-        title: 'Platform Restrictions',
-        description: 'Some content delivery networks, hosting providers, and technical services restrict adult industry clients. Technical infrastructure must account for this and maintain reliable performance.',
+        title: 'High-Intent "Cricket ID" & "Online Betting ID" SERP Competition',
+        description: 'Queries like "Lotus365 ID", "Cricket ID online", and "best betting exchange" face intense organic competition. Dominance requires rigorous entity schema, high-authority backlink networks, and programmatic clustering.',
       },
       {
-        title: 'Domain Reputation Management',
-        description: 'Adult sites frequently accumulate low-quality backlinks from spam link schemes. Maintaining a clean backlink profile and managing disavow processes is an ongoing technical requirement.',
+        title: 'Telegram & WhatsApp Conversion Friction',
+        description: 'Exchange players expect instant 1-tap WhatsApp ID generation and UPI/QR deposit routing rather than traditional lengthy KYC registration forms.',
       },
       {
-        title: 'Local Discovery',
-        description: 'For escort directories with location-specific listings, local SEO — structured data, location-specific content, and proximity signals — is a primary organic opportunity.',
+        title: 'Anti-DDoS & Edge Match Traffic Spikes',
+        description: 'Traffic spikes 100x during live ball-by-ball cricket matches. Platform architecture must deliver sub-650ms response times under extreme concurrent load.',
       },
       {
-        title: 'Content Indexation Management',
-        description: 'Large adult directories with thousands of listing pages require careful crawl budget management to ensure priority pages are indexed efficiently.',
+        title: 'Strict Ad Policy Restrictions on Paid Channels',
+        description: 'Google and Meta strictly restrict gambling ads. Operators need whitelisted agency ad accounts and compliant pre-lander funnels with zero account bans.',
       },
     ],
 
     technicalRequirements: [
-      'Robust hosting and CDN capable of handling adult content at scale',
-      'Efficient crawl management for large listing inventories',
-      'Schema markup for local business or classified listing types where applicable',
-      'Mobile-optimised architecture (adult search is predominantly mobile)',
-      'Age verification compliance architecture where required by jurisdiction',
+      'Headless React 18 + PWA edge architecture with sub-650ms LCP',
+      'WebSocket live score and back/lay odds streaming infrastructure',
+      'Automated WhatsApp and Telegram instant ID issuance webhooks',
+      'Super-admin, master agent, and player balance ledger hierarchy',
+      'Cloudflare Enterprise WAF shielding against competitor Layer-7 DDoS attacks',
     ],
 
     contentConsiderations: [
-      'We do not create sexual services content or anything that could facilitate exploitation or trafficking',
-      'Technical and informational SEO content for the platform itself is within scope',
-      'Platform guides, safety information, and category pages are appropriate content targets',
-      'Content must not make any misleading claims about services provided through the platform',
+      'Real-time automated cricket match fixture previews with structured schema',
+      'Responsible gaming disclaimers and jurisdictional compliance notices',
+      'Step-by-step interactive visual guides for depositing, betting, and instant withdrawals',
+      'Transparent rulebooks for back, lay, and exchange commission calculations',
     ],
 
     complianceConsiderations: [
-      'Adult platforms must comply with applicable age verification laws in target jurisdictions (BBFC, DSA)',
-      'CSAM-free status and verification is a non-negotiable operational requirement',
-      'GDPR and data protection compliance in EU/UK markets',
-      'Payment processing compliance for adult category businesses',
+      'State-level gaming compliance notices and self-exclusion controls',
+      'Cryptographic SSL shielding and secure automated UPI payment routing',
+      'Player data protection and zero-log Telegram/WhatsApp session security',
+      'Transparent ledger reconciliation for master agents and sub-agents',
     ],
 
     conversionConsiderations: [
-      'Search and filter UX is the primary conversion experience for directory sites',
-      'Trust signals — verification systems, review frameworks — directly impact engagement',
-      'Mobile-first layout is critical for the adult search user base',
+      'Instant 1-tap WhatsApp Cricket ID creation directly from mobile landing pages',
+      'Live dynamic odds widgets displaying real-time liquidity and match status',
+      'Automated deposit confirmation and fast payout verification badges',
     ],
 
-    recommendedServices: ['technical-seo', 'seo-audit', 'off-page-seo', 'analytics', 'website-development'],
+    recommendedServices: ['website-development', 'seo', 'technical-seo', 'google-ads', 'meta-ads', 'conversion-optimization'],
 
     faqs: [
-      { q: 'What adult industry work will you not do?', a: 'We do not create sexual services content, directory listings for individuals, or anything that could facilitate exploitation, trafficking, or illegal sexual services. We work with platforms at the technical and SEO infrastructure level only.' },
-      { q: 'Do you work with adult platforms in the UK after BBFC age verification requirements?', a: 'We can advise on the technical SEO implications of age verification requirements and how to structure content architecture around them. Legal compliance advice should come from a specialist legal firm.' },
+      { q: 'Can you build a custom Lotus365-style betting exchange platform?', a: 'Yes. We engineer turnkey betting exchange platforms with real-time odds feeds, custom UI/UX, multi-tier agent and super-admin balance panels, and automated WhatsApp/Telegram ID provisioning.' },
+      { q: 'How do you rank for "Cricket ID" and betting exchange keywords?', a: 'We deploy programmatic event-driven landing pages, entity schema graphs, dynamic indexation webhooks, and contextual high-authority backlinks tailored for high-volatility sports betting SERPs.' },
     ],
 
     seo: {
-      title: 'SEO for Adult Industry & Escort Directories — iGaming Growth',
-      description: 'Technical SEO and organic visibility for adult industry businesses where paid advertising is unavailable. Compliance-aware digital marketing for legal adult platforms.',
+      title: 'Lotus365 & Betting Exchange Platform Engineering & SEO — iGaming Growth',
+      description: 'Turnkey development and Rank-1 SEO for Lotus365-style betting exchanges, cricket ID platforms, and live bookmaker sites with zero-ban ad whitelisting.',
     },
   },
 

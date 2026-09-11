@@ -4,7 +4,7 @@ import { trackEvent } from '../../analytics/tracking';
 
 export const FloatingWhatsApp: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const whatsappNumber = businessConfig.phone?.whatsapp || '919341436937';
+  const whatsappNumber = businessConfig.phone?.whatsapp || '917654928455';
   const message = encodeURIComponent(
     'Hi iGaming Growth team, I am looking for strategic growth and SEO engineering for my gaming platform.'
   );
@@ -20,7 +20,7 @@ export const FloatingWhatsApp: React.FC = () => {
   return (
     <aside
       aria-label="Direct WhatsApp Consultation"
-      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-3"
+      className="fixed bottom-6 right-6 z-40 hidden sm:flex items-center gap-3"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

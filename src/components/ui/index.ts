@@ -15,3 +15,5 @@ export * from './HeroArchitectureVisual';
 export * from './MatrixVisualizer';
 export * from './TechnicalAuditVisual';
 export * from './FloatingWhatsApp';
+export * from './MobileBottomBar';
+export * from './Reveal';

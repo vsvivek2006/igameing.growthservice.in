@@ -23,7 +23,6 @@ const EditorialPolicyPage = lazy(() => import('./pages/EditorialPolicyPage'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
-const Model3Page = lazy(() => import('./pages/Model3Page'));
 
 // Authoritative static route to component binding
 const ROUTE_COMPONENTS: Record<string, React.ComponentType> = {
@@ -70,9 +69,9 @@ export const App: React.FC = () => {
               {/* Dynamic Industry Insights (3 Insights) */}
               <Route path="/resources/industry-insights/:guideSlug" element={<GuideDetailPage />} />
 
-              {/* Model 3 Performance-Proof SEO Showcase Route */}
-              <Route path="/model-3" element={<Model3Page />} />
-              <Route path="/model3" element={<Navigate to="/model-3" replace />} />
+              {/* Model 3 Performance-Proof SEO Showcase Route (Redirects to canonical /services/seo) */}
+              <Route path="/model-3" element={<Navigate to="/services/seo" replace />} />
+              <Route path="/model3" element={<Navigate to="/services/seo" replace />} />
 
               {/* Registered Alias 301-equivalent client redirects */}
               {routeAliases.map((alias) => (

@@ -22,7 +22,7 @@ const PRODUCTION_HOSTNAME = 'igameing.growthservice.in';
 
 const resolveEnvironment = (): 'development' | 'preview' | 'production' => {
   if (typeof window === 'undefined') {
-    return import.meta.env.PROD ? 'production' : 'development';
+    return import.meta?.env?.PROD ? 'production' : 'development';
   }
 
   const hostname = window.location.hostname;
@@ -42,11 +42,11 @@ const getEnvironmentConfig = (): AnalyticsConfig => {
   const isPrev = env === 'preview';
 
   // Debug is active in local development or if explicitly set via VITE_ANALYTICS_DEBUG
-  const debug = isDev || import.meta.env.VITE_ANALYTICS_DEBUG === 'true';
+  const debug = isDev || import.meta?.env?.VITE_ANALYTICS_DEBUG === 'true';
 
   // Analytics is active in production, or when forced via VITE_ENABLE_ANALYTICS in staging
   const enabled =
-    isProd || (isPrev && import.meta.env.VITE_ENABLE_ANALYTICS === 'true');
+    isProd || (isPrev && import.meta?.env?.VITE_ENABLE_ANALYTICS === 'true');
 
   return {
     enabled,
@@ -55,11 +55,11 @@ const getEnvironmentConfig = (): AnalyticsConfig => {
     isProduction: isProd,
     isPreview: isPrev,
     isDevelopment: isDev,
-    googleAnalyticsId: (import.meta.env.VITE_GA_MEASUREMENT_ID as string) || undefined,
-    googleAdsId: (import.meta.env.VITE_GOOGLE_ADS_ID as string) || undefined,
+    googleAnalyticsId: (import.meta?.env?.VITE_GA_MEASUREMENT_ID as string) || undefined,
+    googleAdsId: (import.meta?.env?.VITE_GOOGLE_ADS_ID as string) || undefined,
     googleAdsConversionLabel:
-      (import.meta.env.VITE_GOOGLE_ADS_CONVERSION_LABEL as string) || undefined,
-    metaPixelId: (import.meta.env.VITE_META_PIXEL_ID as string) || undefined,
+      (import.meta?.env?.VITE_GOOGLE_ADS_CONVERSION_LABEL as string) || undefined,
+    metaPixelId: (import.meta?.env?.VITE_META_PIXEL_ID as string) || undefined,
   };
 };
 

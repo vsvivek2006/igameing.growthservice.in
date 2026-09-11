@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { getAllIndustries } from '../../data/industriesData';
 import { getAllMatrixEntries } from '../../data/industryServiceMatrix';
+import { getServiceBySlug } from '../../data/servicesData';
 
 export const MatrixVisualizer: React.FC = () => {
   const industries = getAllIndustries();
@@ -104,7 +105,7 @@ export const MatrixVisualizer: React.FC = () => {
 
             {/* Context Narrative */}
             <p className="text-sm text-slate-300 leading-relaxed mb-8">
-              {selectedIndustry.description}
+              {selectedIndustry.overview || selectedIndustry.tagline}
             </p>
 
             {/* Matrix Service Nodes */}
@@ -115,56 +116,62 @@ export const MatrixVisualizer: React.FC = () => {
 
               {industryPairs.length > 0 ? (
                 <div className="grid grid-cols-1 gap-4">
-                  {industryPairs.map((pair) => (
-                    <div
-                      key={`${pair.industrySlug}-${pair.serviceSlug}`}
-                      className="p-5 rounded-2xl bg-slate-950/70 border border-slate-800 hover:border-purple-500/40 transition-all duration-200"
-                    >
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-lg bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-300 font-bold text-xs">
-                            <Layers className="w-4 h-4" />
-                          </div>
-                          <div>
-                            <div className="font-bold text-white text-base">
-                              {pair.heroTitle}
+                  {industryPairs.map((pair) => {
+                    const service = getServiceBySlug(pair.serviceSlug);
+                    const title = service
+                      ? `${service.name} for ${selectedIndustry.shortName || selectedIndustry.name}`
+                      : `${selectedIndustry.shortName || selectedIndustry.name} × ${pair.serviceSlug}`;
+                    return (
+                      <div
+                        key={`${pair.industrySlug}-${pair.serviceSlug}`}
+                        className="p-5 rounded-2xl bg-slate-950/70 border border-slate-800 hover:border-purple-500/40 transition-all duration-200"
+                      >
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-8 h-8 rounded-lg bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-300 font-bold text-xs">
+                              <Layers className="w-4 h-4" />
                             </div>
-                            <div className="text-xs text-purple-300 font-medium">
-                              {pair.heroSubtitle}
+                            <div>
+                              <div className="font-bold text-white text-base">
+                                {title}
+                              </div>
+                              <div className="text-xs text-purple-300 font-medium">
+                                {pair.conversionFocus || pair.estimatedTimelineWeeks}
+                              </div>
                             </div>
                           </div>
+
+                          <Link
+                            to={`/industries/${pair.industrySlug}/${pair.serviceSlug}`}
+                            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-950 bg-amber-400 hover:bg-amber-300 px-3.5 py-1.5 rounded-lg transition-colors flex-shrink-0"
+                          >
+                            <span>Explore Architecture</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
                         </div>
 
-                        <Link
-                          to={`/industries/${pair.industrySlug}/${pair.serviceSlug}`}
-                          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-950 bg-amber-400 hover:bg-amber-300 px-3.5 py-1.5 rounded-lg transition-colors flex-shrink-0"
-                        >
-                          <span>Explore Architecture</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </Link>
-                      </div>
+                        <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                          {pair.uniqueValue}
+                        </p>
 
-                      <p className="text-xs text-slate-400 leading-relaxed mb-4">
-                        {pair.uniqueValueProp}
-                      </p>
-
-                      {/* Deliverables Pills */}
-                      <div className="pt-3 border-t border-slate-800/80">
-                        <div className="text-[11px] font-semibold text-slate-400 mb-2">Key Tailored Deliverables:</div>
-                        <div className="flex flex-wrap gap-2">
-                          {pair.deliverables.slice(0, 3).map((d) => (
-                            <span
-                              key={d.title}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-[11px] text-slate-300"
-                            >
-                              <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                              <span>{d.title}</span>
-                            </span>
-                          ))}
+                        {/* Deliverables Pills */}
+                        <div className="pt-3 border-t border-slate-800/80">
+                          <div className="text-[11px] font-semibold text-slate-400 mb-2">Key Tailored Deliverables:</div>
+                          <div className="flex flex-wrap gap-2">
+                            {(pair.specificDeliverables || []).slice(0, 3).map((d) => (
+                              <span
+                                key={d}
+                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-[11px] text-slate-300"
+                              >
+                                <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                                <span>{d}</span>
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="p-6 rounded-2xl bg-slate-950/60 border border-slate-800 text-center text-xs text-slate-400">

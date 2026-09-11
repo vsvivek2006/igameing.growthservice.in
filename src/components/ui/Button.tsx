@@ -26,15 +26,15 @@ export const Button: React.FC<ButtonProps> = ({
     primary:
       'bg-gradient-to-r from-purple-700 via-purple-600 to-indigo-600 hover:from-purple-600 hover:to-indigo-500 text-white shadow-md shadow-purple-950/30 border border-purple-400/20 font-semibold hover:shadow-glow-purple-sm',
     secondary:
-      'bg-white text-slate-900 hover:bg-slate-50 border border-slate-200/90 shadow-sm font-semibold hover:border-purple-200 hover:text-purple-700',
+      'bg-[#0B0B12] hover:bg-[#12121F] text-white border border-white/15 shadow-sm font-semibold hover:border-amber-400/50 hover:text-amber-300',
     gold:
-      'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 shadow-md shadow-amber-950/20 border border-amber-300/30 font-bold hover:shadow-glow-gold-sm',
+      'bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-slate-950 shadow-lg shadow-amber-400/20 hover:shadow-amber-400/40 border border-amber-300/40 font-bold',
     dark:
       'bg-white/10 hover:bg-white/15 text-white border border-white/15 backdrop-blur-sm font-semibold hover:border-white/30',
     outline:
-      'border border-slate-300 hover:border-purple-600 text-slate-700 hover:text-purple-700 bg-transparent font-semibold',
+      'border border-white/20 hover:border-amber-400 text-slate-200 hover:text-white hover:bg-white/5 bg-transparent font-semibold',
     ghost:
-      'text-slate-600 hover:text-purple-600 hover:bg-purple-50/80 bg-transparent font-medium',
+      'text-slate-300 hover:text-white hover:bg-white/10 bg-transparent font-medium',
   };
 
   const sizeMap = {

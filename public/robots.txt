@@ -1,4 +1,5 @@
 # robots.txt for iGaming Growth (https://igameing.growthservice.in)
+# Headquartered in Kathmandu, Nepal | GrowthService Group (https://growthservice.in)
 
 User-agent: *
 Allow: /
@@ -6,9 +7,28 @@ Disallow: /admin/
 Disallow: /private/
 Disallow: /drafts/
 
+# Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# AI Crawlers & Scrapers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
 # Authoritative XML Sitemap
 Sitemap: https://igameing.growthservice.in/sitemap.xml
 
-# LLM & AI Discovery Directives
-# Reference: https://llmstxt.org/
-# Authoritative AI Context: https://igameing.growthservice.in/llms.txt
+# LLM & AI Discovery Directives (https://llmstxt.org/)
+# Canonical AI Context: https://igameing.growthservice.in/llms.txt

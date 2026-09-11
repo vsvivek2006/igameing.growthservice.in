@@ -8,7 +8,7 @@ export const EditorialPolicyPage: React.FC = () => {
   const breadcrumbs = [{ label: 'Editorial Policy', path: '/editorial-policy', current: true }];
 
   return (
-    <>
+    <div className="bg-model3-base text-white selection:bg-amber-400 selection:text-black font-sans antialiased overflow-x-hidden">
       <SEOHead
         title="Editorial Policy & Content Standards | iGaming Growth"
         description="How iGaming Growth maintains factual accuracy, technical transparency, and B2B editorial integrity across its engineering guides, industry insights, and agency resources."
@@ -16,7 +16,7 @@ export const EditorialPolicyPage: React.FC = () => {
         jsonLd={buildBreadcrumbSchema(breadcrumbs)}
       />
 
-      <div className="relative bg-navy-950 bg-hero-atmosphere text-white py-16 sm:py-20 overflow-hidden border-b border-navy-800/80">
+      <div className="relative bg-model3-base bg-hero-atmosphere text-white py-16 sm:py-20 overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
         <div className="absolute top-1/4 left-1/4 w-[450px] h-[350px] rounded-full bg-purple-600/10 blur-[120px] pointer-events-none" />
         <Container className="relative z-10">
@@ -30,9 +30,9 @@ export const EditorialPolicyPage: React.FC = () => {
 
       <Section variant="white" spacing="lg">
         <Container size="md">
-          <div className="space-y-6 text-slate-700 leading-relaxed text-sm">
+          <div className="space-y-6 text-slate-300 leading-relaxed text-sm">
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 1. Purpose &amp; Scope of This Policy
               </h2>
               <p>
@@ -44,7 +44,7 @@ export const EditorialPolicyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 2. Fact-Checking, Research Standards &amp; Source Verification
               </h2>
               <p>
@@ -56,13 +56,13 @@ export const EditorialPolicyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 3. Application of Google's E-E-A-T Framework
               </h2>
               <p>
                 We apply Google's Experience, Expertise, Authoritativeness, and Trustworthiness (E-E-A-T) principles rigorously to our own content pipeline:
               </p>
-              <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
+              <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
                 <li><strong>Experience:</strong> Guides are written solely by practitioners who have actively implemented the documented architectures on high-traffic production platforms.</li>
                 <li><strong>Expertise:</strong> Technical code snippets (robots.txt, Next.js SSR configurations, JSON-LD schemas) are validated for syntax correctness and edge compatibility.</li>
                 <li><strong>Authoritativeness:</strong> Content is authored or reviewed by identified team leads whose professional bios and focus disciplines are clearly attributed.</li>
@@ -71,13 +71,13 @@ export const EditorialPolicyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 4. Strict Prohibition of Synthetic Proof &amp; Manufactured Social Proof
               </h2>
               <p>
                 In strict adherence to our core ethics and platform standards (igaming.md §13), {businessName} maintains a zero-tolerance policy regarding synthetic marketing artifacts. We never publish:
               </p>
-              <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
+              <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
                 <li>Fabricated client testimonials or purchased endorsement quotes.</li>
                 <li>Unverifiable corporate client logos without explicit written authorization.</li>
                 <li>Manufactured ranking screenshots or manipulated Search Console performance graphs.</li>
@@ -89,7 +89,7 @@ export const EditorialPolicyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 5. Regulatory &amp; Platform Advertising Policy Alignment
               </h2>
               <p>
@@ -101,7 +101,7 @@ export const EditorialPolicyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 6. Technical Code &amp; Architectural Blueprint Standards
               </h2>
               <p>
@@ -113,13 +113,13 @@ export const EditorialPolicyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 7. Content Review, Deprecation &amp; Timestamp Governance
               </h2>
               <p>
                 Search algorithms, browser rendering engines, and platform compliance policies evolve continuously. To prevent stale advice from misleading engineering teams, all core guides undergo systematic reviews:
               </p>
-              <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
+              <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
                 <li>Major Core Update Audits: Following confirmed Google Core Algorithm or Helpful Content updates, affected ranking methodologies are re-benchmarked within 30 days.</li>
                 <li>Annual Full-Architecture Audits: All technical guides undergo a mandatory annual audit by the lead architecture team.</li>
                 <li>Timestamp Integrity: We only update "Last Reviewed" or "Updated" dates when substantive technical revisions have been made. Cosmetic edits do not alter published timestamps.</li>
@@ -127,7 +127,7 @@ export const EditorialPolicyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 8. Commercial Independence &amp; Tool Disclosures
               </h2>
               <p>
@@ -139,13 +139,13 @@ export const EditorialPolicyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 9. Corrections, Retractions &amp; Reader Feedback
               </h2>
               <p>
                 We welcome scrutiny from software engineers, search researchers, and industry practitioners. If a technical error, deprecated API reference, or factual inaccuracy is identified in any published resource:
               </p>
-              <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
+              <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
                 <li>Substantive factual corrections are implemented promptly upon verification.</li>
                 <li>Significant revisions include an editorial correction note detailing the change and the date of modification.</li>
                 <li>To report an inaccuracy or request clarification, contact our editorial team at <a href="mailto:hello@igameing.growthservice.in" className="text-purple-600 underline font-semibold">hello@igameing.growthservice.in</a> with the URL and specific code or claim in question.</li>
@@ -153,7 +153,7 @@ export const EditorialPolicyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 10. Editorial Governance &amp; Contact Information
               </h2>
               <p>
@@ -162,15 +162,17 @@ export const EditorialPolicyPage: React.FC = () => {
               <p>
                 For editorial inquiries, academic citations, or technical feedback, contact our desk at:
                 <br />
-                <strong>Email:</strong> hello@igameing.growthservice.in
+                <strong>Headquarters:</strong> Kathmandu, Nepal
                 <br />
-                <strong>Direct Line:</strong> +91 93414 36937
+                <strong>Parent Group:</strong> <a href="https://growthservice.in" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:underline">GrowthService (https://growthservice.in)</a>
+                <br />
+                <strong>Email:</strong> hello@igameing.growthservice.in
               </p>
             </Card>
           </div>
         </Container>
       </Section>
-    </>
+    </div>
   );
 };
 

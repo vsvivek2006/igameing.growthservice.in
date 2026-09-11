@@ -4,8 +4,30 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Centralized Surface Tokens (Model 3 as Single Source of Truth)
+        surface: {
+          page: '#050505',       // Primary Dark Background
+          section: '#0B0B12',    // Secondary Dark Surface
+          card: '#0D0D18',       // Card Surface
+          deep: '#08080F',       // Deep Surface
+          elevated: '#12121F',   // Elevated Surface
+          glass: 'rgba(13, 13, 24, 0.75)',
+        },
+        obsidian: {
+          950: '#050505',
+          900: '#0B0B12',
+          850: '#0D0D18',
+          800: '#08080F',
+          700: '#12121F',
+        },
+        model3: {
+          base: '#050505',
+          surface: '#0B0B12',
+          panel: '#08080F',
+          deep: '#0D0D18',
+        },
         navy: {
-          950: '#070B14', // Deep Obsidian Background
+          950: '#070B14', // Deep Obsidian Background (Brand Locked)
           900: '#0B1120', // Atmospheric Hero Background
           850: '#0E172A', // Elevated Dark Surface
           800: '#131D33', // Card Surface Dark
@@ -76,6 +98,7 @@ export default {
       boxShadow: {
         'glow': '0 0 20px rgba(106, 13, 173, 0.3)',
         'glow-lg': '0 0 40px rgba(106, 13, 173, 0.4)',
+        'glow-purple': '0 0 25px rgba(124, 58, 237, 0.35)',
         'glow-purple-sm': '0 0 15px rgba(124, 58, 237, 0.3)',
         'glow-gold-sm': '0 0 15px rgba(245, 158, 11, 0.25)',
         'card': '0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03)',

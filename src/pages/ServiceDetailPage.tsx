@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
   CheckCircle2,
   XCircle,
@@ -8,56 +8,31 @@ import {
   Shield,
   Layers,
   Terminal,
+  ArrowRight,
+  Globe,
 } from 'lucide-react';
 import { SEOHead } from '../seo';
 import { buildBreadcrumbSchema, buildServiceSchema } from '../seo/schema';
-import { Container, Section, Button, ProcessTimeline, FAQAccordion, Breadcrumb, ServiceIcon } from '../components/ui';
+import { Container, Section, Button, ProcessTimeline, FAQAccordion, Breadcrumb, ServiceIcon, Reveal } from '../components/ui';
 import { trackEvent } from '../analytics';
 import { getServiceBySlug, SERVICE_CATEGORY_LABELS } from '../data/servicesData';
 import type { ServiceOffering } from '../data/servicesData';
-import { PRICING_CATEGORIES, PRICING_DISCLAIMER } from '../data/pricingData';
-import useInView from '../hooks/useInView';
+import { getAllIndustries } from '../data/industriesData';
+import { MAIN_PACKAGES, PAID_ACQUISITION_PACKAGE, PRICING_DISCLAIMER } from '../data/pricingData';
 import NotFound from './NotFound';
 
+
 const COLOR_CLASSES: Record<string, { bg: string; text: string; border: string; badge: string }> = {
-  purple: { bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200', badge: 'bg-purple-100 text-purple-700' },
-  violet: { bg: 'bg-violet-50', text: 'text-violet-700', border: 'border-violet-200', badge: 'bg-violet-100 text-violet-700' },
-  blue: { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', badge: 'bg-blue-100 text-blue-700' },
-  indigo: { bg: 'bg-indigo-50', text: 'text-indigo-700', border: 'border-indigo-200', badge: 'bg-indigo-100 text-indigo-700' },
-  cyan: { bg: 'bg-cyan-50', text: 'text-cyan-700', border: 'border-cyan-200', badge: 'bg-cyan-100 text-cyan-700' },
-  green: { bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-200', badge: 'bg-green-100 text-green-700' },
-  emerald: { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', badge: 'bg-emerald-100 text-emerald-700' },
-  amber: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700' },
-  orange: { bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200', badge: 'bg-orange-100 text-orange-700' },
-  rose: { bg: 'bg-rose-50', text: 'text-rose-700', border: 'border-rose-200', badge: 'bg-rose-100 text-rose-700' },
-};
-
-// ─── Reusable Reveal Component ────────────────────────────────────────────────
-const Reveal: React.FC<{
-  children: React.ReactNode;
-  direction?: 'up' | 'left' | 'right' | 'scale';
-  delay?: number;
-  className?: string;
-}> = ({ children, direction = 'up', delay = 0, className = '' }) => {
-  const [ref, isInView] = useInView({ threshold: 0.1, once: true });
-  const animClass =
-    direction === 'left'
-      ? 'reveal-left'
-      : direction === 'right'
-      ? 'reveal-right'
-      : direction === 'scale'
-      ? 'reveal-scale'
-      : 'reveal-up';
-
-  return (
-    <div
-      ref={ref}
-      className={`${animClass} ${isInView ? 'in-view' : ''} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </div>
-  );
+  purple: { bg: 'bg-purple-500/15', text: 'text-purple-300', border: 'border-purple-500/30', badge: 'bg-purple-500/15 text-purple-300 border border-purple-500/30' },
+  violet: { bg: 'bg-purple-500/15', text: 'text-purple-300', border: 'border-purple-500/30', badge: 'bg-purple-500/15 text-purple-300 border border-purple-500/30' },
+  blue: { bg: 'bg-blue-500/15', text: 'text-blue-300', border: 'border-blue-500/30', badge: 'bg-blue-500/15 text-blue-300 border border-blue-500/30' },
+  indigo: { bg: 'bg-indigo-500/15', text: 'text-indigo-300', border: 'border-indigo-500/30', badge: 'bg-indigo-500/15 text-indigo-300 border border-indigo-500/30' },
+  cyan: { bg: 'bg-cyan-500/15', text: 'text-cyan-300', border: 'border-cyan-500/30', badge: 'bg-cyan-500/15 text-cyan-300 border border-cyan-500/30' },
+  green: { bg: 'bg-emerald-500/15', text: 'text-emerald-300', border: 'border-emerald-500/30', badge: 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30' },
+  emerald: { bg: 'bg-emerald-500/15', text: 'text-emerald-300', border: 'border-emerald-500/30', badge: 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30' },
+  amber: { bg: 'bg-amber-500/15', text: 'text-amber-300', border: 'border-amber-500/30', badge: 'bg-amber-500/15 text-amber-300 border border-amber-500/30' },
+  orange: { bg: 'bg-amber-500/15', text: 'text-amber-300', border: 'border-amber-500/30', badge: 'bg-amber-500/15 text-amber-300 border border-amber-500/30' },
+  rose: { bg: 'bg-rose-500/15', text: 'text-rose-300', border: 'border-rose-500/30', badge: 'bg-rose-500/15 text-rose-300 border border-rose-500/30' },
 };
 
 const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
@@ -67,16 +42,13 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
     { label: service.name },
   ];
 
-  // Map service category to pricing category
-  const pricingCategory =
-    service.category === 'web-development'
-      ? PRICING_CATEGORIES[1]
-      : service.category === 'paid-acquisition'
-      ? PRICING_CATEGORIES[2]
-      : PRICING_CATEGORIES[0];
+  const pricingTiers =
+    service.category === 'paid-acquisition'
+      ? [PAID_ACQUISITION_PACKAGE]
+      : MAIN_PACKAGES;
 
   return (
-    <>
+    <div className="bg-model3-base text-white selection:bg-amber-400 selection:text-black font-sans antialiased overflow-x-hidden">
       <SEOHead
         title={service.seo.title}
         description={service.seo.description}
@@ -88,24 +60,26 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
       />
 
       {/* ── 1. HERO ──────────────────────────────────────────────────── */}
-      <section className="relative bg-navy-950 bg-hero-atmosphere text-white overflow-hidden border-b border-navy-800/80">
+      <section className="relative bg-model3-base bg-hero-atmosphere text-white overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
         <div className="absolute top-0 right-1/4 w-[500px] h-[400px] rounded-full bg-purple-600/15 blur-[120px] pointer-events-none" />
         <div className="absolute -bottom-20 -left-20 w-[400px] h-[300px] rounded-full bg-blue-600/10 blur-[100px] pointer-events-none" />
 
         <Container className="relative z-10 py-16 sm:py-20 lg:py-28">
-          <Breadcrumb items={breadcrumbItems} className="mb-6 text-slate-400" />
+          <div className="w-full text-left mb-6 sm:mb-8">
+            <Breadcrumb items={breadcrumbItems} className="text-slate-400" />
+          </div>
 
-          <div className="max-w-4xl">
-            <div className="flex flex-wrap items-center gap-3 mb-5">
-              <div className={`w-11 h-11 rounded-2xl ${colors.bg} ${colors.border} border flex items-center justify-center`}>
+          <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+            <div className="flex flex-wrap items-center justify-center gap-3 mb-5">
+              <div className={`w-11 h-11 rounded-2xl ${colors.bg} ${colors.border} border flex items-center justify-center shadow-inner`}>
                 <ServiceIcon name={service.icon} className={`w-5 h-5 ${colors.text}`} />
               </div>
               <span className={`text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full ${colors.badge}`}>
                 {SERVICE_CATEGORY_LABELS[service.category]}
               </span>
               {service.featured && (
-                <span className="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-amber-100 text-amber-900">
+                <span className="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
                   Core Enterprise Discipline
                 </span>
               )}
@@ -115,7 +89,7 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
               {service.heroHeadline || service.name}
             </h1>
 
-            <p className="text-lg sm:text-xl text-purple-300 font-semibold mb-4 leading-relaxed">
+            <p className="text-lg sm:text-xl text-amber-300 font-semibold mb-4 leading-relaxed max-w-3xl">
               {service.heroSublead || service.tagline}
             </p>
 
@@ -123,11 +97,12 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
               {service.longDescription || service.shortDescription}
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-10">
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10 w-full sm:w-auto">
               <Button
                 to="/free-seo-audit"
                 variant="gold"
                 size="lg"
+                className="w-full sm:w-auto justify-center"
                 icon={<Zap className="w-4 h-4" />}
                 onClick={() => trackEvent('cta_click', { cta_name: 'free_seo_audit', cta_location: 'service_hero', service_slug: service.slug })}
               >
@@ -137,7 +112,7 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
                 to="/book-call"
                 variant="outline"
                 size="lg"
-                className="border-navy-700 text-white hover:bg-navy-800/60"
+                className="w-full sm:w-auto justify-center border-white/15 text-white hover:bg-white/10 hover:border-amber-400/50"
                 onClick={() => trackEvent('cta_click', { cta_name: 'book_strategy_call', cta_location: 'service_hero', service_slug: service.slug })}
               >
                 Schedule Diagnostic Call
@@ -145,7 +120,7 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
             </div>
 
             {/* Capability assurance bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-5 border-t border-navy-800/80">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-5 border-t border-white/10 w-full max-w-3xl">
               <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
                 <div className="text-xs font-bold text-slate-400">Core Web Vitals</div>
                 <div className="text-base font-extrabold text-emerald-400">LCP &le; 2.5s Target</div>
@@ -172,25 +147,25 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
         <Container>
           <Reveal direction="up" className="max-w-3xl mx-auto text-center mb-12">
             <div className="type-eyebrow mb-2">The Strategic Challenge</div>
-            <h2 className="type-h2 text-slate-900 mb-4">
+            <h2 className="type-h2 text-white mb-4">
               Why Standard Agency Approaches Consistently Fail Here
             </h2>
-            <p className="text-slate-600 text-base leading-relaxed">
+            <p className="text-slate-300 text-base leading-relaxed">
               Mainstream digital marketing playbooks assume low-friction environments with relaxed ad policies and modest domain authority thresholds. In contested verticals, those assumptions lead directly to wasted budget.
             </p>
           </Reveal>
 
           <Reveal direction="up" delay={100} className="max-w-4xl mx-auto">
-            <div className="p-8 sm:p-10 rounded-3xl bg-white border border-slate-200 shadow-sm leading-relaxed">
+            <div className="p-8 sm:p-10 rounded-3xl bg-[#0D0D18]/90 border border-white/10 shadow-xl leading-relaxed">
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center flex-shrink-0 text-purple-700">
+                <div className="w-10 h-10 rounded-xl bg-purple-500/15 border border-purple-500/25 flex items-center justify-center flex-shrink-0 text-purple-400">
                   <Layers className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-heading font-extrabold text-slate-900 text-xl mb-2">
+                  <h3 className="font-heading font-extrabold text-white text-xl mb-2">
                     The Competitive Impediment
                   </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
+                  <p className="text-slate-300 text-sm leading-relaxed">
                     {service.problemStatement}
                   </p>
                 </div>
@@ -206,27 +181,27 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <Reveal direction="left">
               <div className="type-eyebrow mb-3">Engineered Solution</div>
-              <h2 className="type-h2 text-slate-900 mb-6">
+              <h2 className="type-h2 text-white mb-6">
                 How We Engineer {service.shortName} For Lasting Compounding
               </h2>
-              <p className="text-slate-600 leading-relaxed text-sm mb-6">
+              <p className="text-slate-300 leading-relaxed text-sm mb-6">
                 {service.approach}
               </p>
-              <p className="text-slate-600 leading-relaxed text-sm">
+              <p className="text-slate-300 leading-relaxed text-sm">
                 Rather than applying cosmetic adjustments, our senior technical engineers dig into server access logs, canonical mapping trees, structured data syntax, and client-side rendering bottlenecks to establish permanent competitive advantages.
               </p>
             </Reveal>
 
             <Reveal direction="right" delay={150}>
-              <div className="bg-gradient-to-br from-purple-50 via-slate-50 to-indigo-50 rounded-3xl border border-purple-100 p-8 shadow-sm">
-                <div className="text-xs font-bold uppercase tracking-widest text-purple-700 mb-6 flex items-center gap-2">
+              <div className="bg-[#0D0D18]/90 rounded-3xl border border-white/10 p-8 shadow-xl">
+                <div className="text-xs font-bold uppercase tracking-widest text-purple-400 mb-6 flex items-center gap-2">
                   <Shield className="w-4 h-4" />
                   <span>Verifiable Outcomes You Can Expect</span>
                 </div>
                 <ul className="space-y-4">
                   {service.benefits.map((b, bIdx) => (
-                    <li key={bIdx} className="flex items-start gap-3 text-sm text-slate-800">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                    <li key={bIdx} className="flex items-start gap-3 text-sm text-slate-200">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                       <span className="font-medium leading-snug">{b}</span>
                     </li>
                   ))}
@@ -242,10 +217,10 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
         <Container>
           <Reveal direction="up" className="max-w-2xl mx-auto text-center mb-12">
             <div className="type-eyebrow mb-2">Scope of Work</div>
-            <h2 className="type-h2 text-slate-900 mb-4">
+            <h2 className="type-h2 text-white mb-4">
               Concrete Deliverables You Receive
             </h2>
-            <p className="text-slate-600 text-sm">
+            <p className="text-slate-300 text-sm">
               We do not produce generic 80-page PDFs that gather dust. Every deliverable is an actionable code artifact, specification blueprint, or verified deployment.
             </p>
           </Reveal>
@@ -253,16 +228,16 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {service.deliverables.map((d, idx) => (
               <Reveal key={idx} direction="up" delay={(idx % 3) * 80}>
-                <div className="p-7 rounded-3xl bg-white border border-slate-200 shadow-sm hover:border-purple-300 hover:shadow-card transition-all h-full flex flex-col justify-between">
+                <div className="p-7 rounded-3xl bg-[#0D0D18]/90 border border-white/10 shadow-xl hover:border-amber-400/30 transition-all h-full flex flex-col justify-between">
                   <div>
-                    <div className={`w-9 h-9 rounded-xl ${colors.bg} flex items-center justify-center mb-4 flex-shrink-0`}>
-                      <span className={`text-xs font-black ${colors.text}`}>{String(idx + 1).padStart(2, '0')}</span>
+                    <div className="w-9 h-9 rounded-xl bg-purple-500/15 border border-purple-500/25 flex items-center justify-center mb-4 flex-shrink-0">
+                      <span className="text-xs font-black text-purple-400">{String(idx + 1).padStart(2, '0')}</span>
                     </div>
-                    <h3 className="text-sm font-bold text-slate-900 leading-snug mb-2">{d}</h3>
+                    <h3 className="text-sm font-bold text-white leading-snug mb-2">{d}</h3>
                   </div>
-                  <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+                  <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
                     <span>Engineering artifact</span>
-                    <span className="text-emerald-600 font-bold">Production Ready</span>
+                    <span className="text-emerald-400 font-bold">Production Ready</span>
                   </div>
                 </div>
               </Reveal>
@@ -277,16 +252,16 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <Reveal direction="left">
               <div className="type-eyebrow mb-3">Service Scope</div>
-              <h2 className="type-h2 text-slate-900 mb-6">
+              <h2 className="type-h2 text-white mb-6">
                 Technical Capabilities Covered
               </h2>
-              <p className="text-slate-600 text-sm leading-relaxed mb-6">
+              <p className="text-slate-300 text-sm leading-relaxed mb-6">
                 Our comprehensive {service.name} scope spans foundational architecture through continuous performance attribution.
               </p>
               <ul className="space-y-3">
                 {service.features.map((f, fIdx) => (
-                  <li key={fIdx} className="flex items-start gap-3 text-sm text-slate-700">
-                    <ChevronRight className={`w-4 h-4 ${colors.text} mt-0.5 flex-shrink-0`} />
+                  <li key={fIdx} className="flex items-start gap-3 text-sm text-slate-300">
+                    <ChevronRight className={`w-4 h-4 text-purple-400 mt-0.5 flex-shrink-0`} />
                     <span className="leading-snug">{f}</span>
                   </li>
                 ))}
@@ -296,7 +271,7 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
             {/* Process */}
             <Reveal direction="right" delay={150}>
               <div className="type-eyebrow mb-3">Sprint Cadence</div>
-              <h3 className="type-h3 text-slate-900 mb-6">
+              <h3 className="type-h3 text-white mb-6">
                 How We Deliver {service.shortName}
               </h3>
               <ProcessTimeline steps={service.process} />
@@ -306,7 +281,7 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
       </Section>
 
       {/* ── 6. TECHNICAL ARCHITECTURE BENCHMARK ─────────────────────────── */}
-      <section className="bg-navy-950 text-white py-20 lg:py-24 relative overflow-hidden">
+      <section className="bg-model3-base text-white py-20 lg:py-24 relative overflow-hidden border-t border-white/10">
         <div className="absolute inset-0 bg-dark-mesh opacity-20 pointer-events-none" />
         <Container className="relative z-10">
           <Reveal direction="up" className="max-w-3xl mx-auto text-center mb-14">
@@ -324,18 +299,18 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <Reveal direction="up" delay={0}>
-              <div className="p-7 rounded-3xl bg-navy-900/70 border border-slate-800 h-full flex flex-col justify-between">
+              <div className="p-7 rounded-3xl bg-[#0D0D18]/90 border border-white/10 h-full flex flex-col justify-between">
                 <div>
                   <div className="text-xs font-bold uppercase tracking-wider text-purple-400 mb-2">
                     Core Web Vitals Thresholds
                   </div>
                   <h4 className="text-lg font-bold text-white mb-3">Performance SLA</h4>
                   <ul className="space-y-2 text-xs text-slate-300">
-                    <li className="flex justify-between border-b border-slate-800 py-1.5">
+                    <li className="flex justify-between border-b border-white/10 py-1.5">
                       <span>Largest Contentful Paint (LCP)</span>
                       <strong className="text-emerald-400">&le; 2.5s</strong>
                     </li>
-                    <li className="flex justify-between border-b border-slate-800 py-1.5">
+                    <li className="flex justify-between border-b border-white/10 py-1.5">
                       <span>Interaction to Next Paint (INP)</span>
                       <strong className="text-emerald-400">&le; 200ms</strong>
                     </li>
@@ -349,18 +324,18 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
             </Reveal>
 
             <Reveal direction="up" delay={100}>
-              <div className="p-7 rounded-3xl bg-navy-900/70 border border-slate-800 h-full flex flex-col justify-between">
+              <div className="p-7 rounded-3xl bg-[#0D0D18]/90 border border-white/10 h-full flex flex-col justify-between">
                 <div>
                   <div className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-2">
                     Crawl Efficiency
                   </div>
                   <h4 className="text-lg font-bold text-white mb-3">Bot Quota Governance</h4>
                   <ul className="space-y-2 text-xs text-slate-300">
-                    <li className="flex justify-between border-b border-slate-800 py-1.5">
+                    <li className="flex justify-between border-b border-white/10 py-1.5">
                       <span>Log File Analysis Cadence</span>
                       <strong className="text-slate-100">Weekly</strong>
                     </li>
-                    <li className="flex justify-between border-b border-slate-800 py-1.5">
+                    <li className="flex justify-between border-b border-white/10 py-1.5">
                       <span>Faceted Parameter Handling</span>
                       <strong className="text-slate-100">Canonical / Disallow</strong>
                     </li>
@@ -374,18 +349,18 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
             </Reveal>
 
             <Reveal direction="up" delay={200}>
-              <div className="p-7 rounded-3xl bg-navy-900/70 border border-slate-800 h-full flex flex-col justify-between">
+              <div className="p-7 rounded-3xl bg-[#0D0D18]/90 border border-white/10 h-full flex flex-col justify-between">
                 <div>
                   <div className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
                     Schema & Entity
                   </div>
                   <h4 className="text-lg font-bold text-white mb-3">Semantic Modeling</h4>
                   <ul className="space-y-2 text-xs text-slate-300">
-                    <li className="flex justify-between border-b border-slate-800 py-1.5">
+                    <li className="flex justify-between border-b border-white/10 py-1.5">
                       <span>Schema.org Validation</span>
                       <strong className="text-emerald-400">100% Clean</strong>
                     </li>
-                    <li className="flex justify-between border-b border-slate-800 py-1.5">
+                    <li className="flex justify-between border-b border-white/10 py-1.5">
                       <span>Entity Disambiguation</span>
                       <strong className="text-slate-100">Wikidata / Knowledge Graph</strong>
                     </li>
@@ -406,15 +381,15 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Reveal direction="up">
-              <div className={`p-8 rounded-3xl border ${colors.border} bg-white shadow-sm h-full flex flex-col`}>
+              <div className="p-8 rounded-3xl border border-amber-400/30 bg-[#0D0D18]/90 shadow-xl h-full flex flex-col">
                 <div className="flex items-center gap-2.5 mb-5">
-                  <CheckCircle2 className={`w-5 h-5 ${colors.text}`} />
-                  <h3 className="font-heading font-extrabold text-xl text-slate-900">Ideal For</h3>
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                  <h3 className="font-heading font-extrabold text-xl text-white">Ideal For</h3>
                 </div>
                 <ul className="space-y-3 flex-1">
                   {service.idealFor.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
-                      <span className="w-1.5 h-1.5 rounded-full bg-purple-600 mt-2 flex-shrink-0" />
+                    <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2 flex-shrink-0" />
                       <span className="leading-relaxed">{item}</span>
                     </li>
                   ))}
@@ -424,14 +399,14 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
 
             {service.notFor.length > 0 && (
               <Reveal direction="up" delay={100}>
-                <div className="p-8 rounded-3xl border border-slate-200 bg-slate-50/50 shadow-sm h-full flex flex-col">
+                <div className="p-8 rounded-3xl border border-white/10 bg-[#0D0D18]/60 shadow-xl h-full flex flex-col">
                   <div className="flex items-center gap-2.5 mb-5">
-                    <XCircle className="w-5 h-5 text-rose-500" />
-                    <h3 className="font-heading font-extrabold text-xl text-slate-900">Not For</h3>
+                    <XCircle className="w-5 h-5 text-rose-400" />
+                    <h3 className="font-heading font-extrabold text-xl text-white">Not For</h3>
                   </div>
                   <ul className="space-y-3 flex-1">
                     {service.notFor.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-500">
+                      <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-400">
                         <span className="w-1.5 h-1.5 rounded-full bg-rose-400 mt-2 flex-shrink-0" />
                         <span className="leading-relaxed">{item}</span>
                       </li>
@@ -449,33 +424,33 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
         <Container>
           <Reveal direction="up" className="max-w-3xl mx-auto text-center mb-10">
             <div className="type-eyebrow mb-2">Transparent Scoping</div>
-            <h2 className="type-h2 text-slate-900 mb-3">
+            <h2 className="type-h2 text-white mb-3">
               Investment & Engagement Starting Points
             </h2>
-            <p className="text-slate-600 text-sm">
+            <p className="text-slate-300 text-sm">
               Indicative tiers for {service.shortName}. Final investment scope is defined after our initial code-level diagnostic.
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-6">
-            {pricingCategory.tiers.map((tier, idx) => (
+          <div className={`grid grid-cols-1 ${pricingTiers.length === 1 ? 'max-w-md' : 'md:grid-cols-3 max-w-5xl'} gap-6 mx-auto mb-6`}>
+            {pricingTiers.map((tier, idx) => (
               <Reveal key={tier.id} direction="up" delay={idx * 80}>
-                <div className="p-7 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between h-full">
+                <div className="p-7 rounded-3xl bg-[#0D0D18]/90 border border-white/10 shadow-xl flex flex-col justify-between h-full hover:border-amber-400/30 transition-colors">
                   <div>
-                    <h4 className="font-heading font-extrabold text-lg text-slate-900 mb-1">{tier.name}</h4>
-                    <p className="text-xs text-slate-500 mb-4">{tier.tagline}</p>
-                    <div className="text-2xl font-black text-purple-700 mb-1">{tier.priceINR}</div>
+                    <h4 className="font-heading font-extrabold text-lg text-white mb-1">{tier.name}</h4>
+                    <p className="text-xs text-slate-400 mb-4">{tier.tagline}</p>
+                    <div className="text-2xl font-black text-amber-300 mb-1">{tier.priceINR}</div>
                     <div className="text-[11px] text-slate-400 mb-5">{tier.billingNote}</div>
                     <ul className="space-y-2 mb-6">
                       {tier.features.slice(0, 3).map((f, fIdx) => (
-                        <li key={fIdx} className="flex items-start gap-2 text-xs text-slate-600">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                        <li key={fIdx} className="flex items-start gap-2 text-xs text-slate-300">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
                           <span className="leading-tight">{f}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                  <Button to={tier.ctaPath} variant="outline" size="sm" className="w-full justify-center">
+                  <Button to={tier.ctaPath} variant="primary" size="sm" className="w-full justify-center">
                     {tier.cta}
                   </Button>
                 </div>
@@ -498,10 +473,10 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
             <div className="max-w-3xl mx-auto">
               <Reveal direction="up" className="text-center mb-12">
                 <div className="type-eyebrow mb-2">Technical Guidance</div>
-                <h2 className="type-h2 text-slate-900 mb-4">
+                <h2 className="type-h2 text-white mb-4">
                   Frequently Asked Questions About {service.shortName}
                 </h2>
-                <p className="text-slate-600 text-sm">
+                <p className="text-slate-300 text-sm">
                   Empirical considerations on technical scoping, crawling mechanics, and timeline expectations.
                 </p>
               </Reveal>
@@ -519,12 +494,98 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
         </Section>
       )}
 
+      {/* ── 9.5 INTERNAL CROSS-LINK GRAPH ─────────────────────────────── */}
+      <section className="py-16 lg:py-20 bg-model3-surface/70 border-t border-white/10">
+        <Container>
+          <div className="max-w-5xl mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-2">
+                  <Globe className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Cross-Vertical Architecture</span>
+                </div>
+                <h3 className="font-heading font-extrabold text-2xl lg:text-3xl text-white">
+                  Interlinked Industries &amp; Production Deployments
+                </h3>
+              </div>
+              <Link
+                to="/industries"
+                className="text-xs font-bold text-amber-400 hover:text-amber-300 inline-flex items-center gap-1 shrink-0"
+              >
+                <span>View All 8 Regulated Verticals</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {getAllIndustries().slice(0, 4).map((ind) => (
+                <Link
+                  key={ind.slug}
+                  to={`/industries/${ind.slug}`}
+                  className="p-5 rounded-2xl bg-model3-deep/80 border border-white/10 hover:border-amber-400/40 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between"
+                >
+                  <div>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block mb-2">
+                      {ind.shortName}
+                    </span>
+                    <h4 className="font-heading font-bold text-sm text-white group-hover:text-amber-300 transition-colors mb-2">
+                      {ind.name}
+                    </h4>
+                    <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                      {ind.shortDescription}
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-amber-400">
+                    <span>{ind.shortName} Blueprint</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            {/* Related Services & Deep Guides */}
+            <div className="mt-8 pt-8 border-t border-white/10 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Link
+                to="/services/website-development"
+                className="p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-cyan-400/40 transition-colors flex items-center justify-between"
+              >
+                <div>
+                  <div className="text-[10px] font-mono text-cyan-400 uppercase">Core Capability</div>
+                  <div className="text-sm font-bold text-white">Website &amp; PWA Build (from ₹15K)</div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-cyan-400" />
+              </Link>
+              <Link
+                to="/services/seo"
+                className="p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-amber-400/40 transition-colors flex items-center justify-between"
+              >
+                <div>
+                  <div className="text-[10px] font-mono text-amber-400 uppercase">Organic Growth</div>
+                  <div className="text-sm font-bold text-white">Rank-1 SEO Dominance (from ₹35K)</div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-amber-400" />
+              </Link>
+              <Link
+                to="/free-seo-audit"
+                className="p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-emerald-400/40 transition-colors flex items-center justify-between"
+              >
+                <div>
+                  <div className="text-[10px] font-mono text-emerald-400 uppercase">Complimentary</div>
+                  <div className="text-sm font-bold text-white">Free Technical Code Audit</div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-emerald-400" />
+              </Link>
+            </div>
+          </div>
+        </Container>
+      </section>
+
       {/* ── 10. CLOSING ACTION CTA ───────────────────────────────────────── */}
-      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-20 lg:py-24 overflow-hidden border-t border-navy-800/80">
+      <section className="relative bg-model3-base bg-hero-atmosphere text-white py-20 lg:py-24 overflow-hidden border-t border-white/10">
         <div className="absolute inset-0 bg-dark-mesh opacity-20 pointer-events-none" />
         <Container className="relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/20 text-amber-300 text-xs font-semibold uppercase tracking-wider">
               <span>Ready for Measurable Impact?</span>
             </div>
             <h2 className="type-h2 text-white">
@@ -547,12 +608,12 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
                 to="/contact"
                 variant="outline"
                 size="lg"
-                className="border-navy-700 text-white hover:bg-navy-800/60"
+                className="border-white/15 text-white hover:bg-white/10 hover:border-amber-400/50"
               >
                 Submit Project RFP
               </Button>
               <a
-                href="https://wa.me/919341436937"
+                href="https://wa.me/917654928455"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-md shadow-emerald-950/20 transition-all duration-200 hover:-translate-y-0.5"
@@ -563,7 +624,7 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
           </div>
         </Container>
       </section>
-    </>
+    </div>
   );
 };
 
@@ -573,6 +634,7 @@ export const ServiceDetailPage: React.FC = () => {
   if (!serviceSlug) {
     return <NotFound />;
   }
+
 
   const service = getServiceBySlug(serviceSlug);
 

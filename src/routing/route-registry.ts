@@ -218,6 +218,13 @@ export function getRouteAliases(): RouteAlias[] {
     permanent: true,
   });
 
+  // Industry legacy alias
+  aliases.push({
+    from: '/industries/adult-escort',
+    to: '/industries/betting-exchange',
+    permanent: true,
+  });
+
   // 3. Legacy guide route aliases (redirecting to new canonical paths)
   aliases.push(
     { from: '/resources/guides/technical-seo-audit-checklist', to: '/resources/seo-guides/technical-seo-guide', permanent: true },

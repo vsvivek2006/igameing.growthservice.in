@@ -19,7 +19,17 @@ export function buildOrganizationSchema(): Record<string, unknown> {
     email: businessConfig.emails.primary,
     areaServed: {
       '@type': 'AdministrativeArea',
-      name: 'Worldwide',
+      name: 'South Asia & Worldwide',
+    },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: businessConfig.address?.city || 'Kathmandu',
+      addressCountry: businessConfig.address?.countryCode || 'NP',
+    },
+    parentOrganization: {
+      '@type': 'Organization',
+      name: businessConfig.parentBrand || 'GrowthService',
+      url: businessConfig.parentBrandUrl || 'https://growthservice.in',
     },
   };
 

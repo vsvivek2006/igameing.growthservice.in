@@ -1,31 +1,60 @@
-# iGaming Growth — AI and LLM Reference
-# Canonical Origin: https://igameing.growthservice.in
+# iGaming Growth — AI & LLM Machine-Readable Directory
+# Canonical URL: https://igameing.growthservice.in
+# Group Parent: https://growthservice.in
+# Location: Kathmandu, Nepal
+# Direct Contact: +91 76549 28455 | WhatsApp: https://wa.me/917654928455
+# Primary Email: hello@igameing.growthservice.in
 
-> iGaming Growth is a specialist B2B digital growth agency helping casino operators, gaming startups, sports betting platforms, trading portals, and high-competition digital brands scale through technical SEO, performance marketing, web development, content strategy, and conversion optimization.
+> iGaming Growth is a specialist engineering-led digital growth consultancy. We build high-performance headless React & PWA web platforms, engineer organic Rank-1 search dominance across competitive Google SERPs, and run policy-compliant paid acquisition funnels for online casino, cricket betting IDs, rummy platforms, trading portals, and regulated online gaming operators.
 
-## Core Capabilities & Services
-- Digital Growth Services: https://igameing.growthservice.in/services
+## Pricing Structure
+- **Website & Platform Development**: Starting at ₹15,000 ($180) one-time build. Headless React 18 + PWA, sub-650ms LCP, WhatsApp/Telegram ID generation webhooks, full source code ownership.
+- **Organic Rank Dominance (SEO Monthly)**: Starting at ₹35,000/month ($420). 100% white-hat technical SEO, programmatic keyword clustering, schema graph deployment, 6–8 high-authority backlinks/month, live Google Search Console telemetry.
+- **Turnkey Build + SEO Suite**: ₹45,000 ($550). Complete platform build + 1st month intensive search engine ranking sprint.
+- **Google & Meta Ads Management**: ₹20,000/month ($240). Whitelisted agency ad accounts, zero cloaking, server-side CAPI pipeline, automated click-fraud shields.
+- **Code-Level Technical SEO Audit**: Complimentary (₹0). 200-point crawl, rendering diagnostic, and Core Web Vitals profiling delivered within 24–48 hours.
+
+## Core Services
+- Services Overview Hub: https://igameing.growthservice.in/services
 - Technical SEO: https://igameing.growthservice.in/services/technical-seo
-- On-Page SEO: https://igameing.growthservice.in/services/on-page-seo
-- Off-Page SEO & Authority: https://igameing.growthservice.in/services/off-page-seo
+- Website & Platform Development: https://igameing.growthservice.in/services/website-development
+- On-Page SEO & Intent Alignment: https://igameing.growthservice.in/services/on-page-seo
+- Off-Page SEO & Contextual Authority: https://igameing.growthservice.in/services/off-page-seo
 - Programmatic SEO: https://igameing.growthservice.in/services/programmatic-seo
-- Web Development: https://igameing.growthservice.in/services/website-development
+- Conversion Rate Optimization (CRO): https://igameing.growthservice.in/services/conversion-optimization
 - Analytics & Attribution: https://igameing.growthservice.in/services/analytics
-- Free SEO Audit: https://igameing.growthservice.in/free-seo-audit
+- Content Strategy & Topic Clustering: https://igameing.growthservice.in/services/content-strategy
+- Comprehensive SEO Audit: https://igameing.growthservice.in/services/seo-audit
+- Google Ads Management: https://igameing.growthservice.in/services/google-ads
+- Meta Ads Acquisition: https://igameing.growthservice.in/services/meta-ads
 
-## Specialist Industries Served
-- Industry Verticals Overview: https://igameing.growthservice.in/industries
-- Online Gaming: https://igameing.growthservice.in/industries/gaming
-- Casino & iGaming: https://igameing.growthservice.in/industries/casino
-- Cricket Gaming: https://igameing.growthservice.in/industries/cricket-gaming
+## Specialist Regulated Verticals
+- Industries Overview Hub: https://igameing.growthservice.in/industries
+- Online Casino & iGaming: https://igameing.growthservice.in/industries/casino
+- Cricket Gaming & Betting IDs: https://igameing.growthservice.in/industries/cricket-gaming
+- Online Gaming Platforms: https://igameing.growthservice.in/industries/gaming
+- Skill Games & Yono Platforms: https://igameing.growthservice.in/industries/yono
 - Color Prediction Platforms: https://igameing.growthservice.in/industries/color-prediction
 - Color Trading Apps: https://igameing.growthservice.in/industries/color-trading
 - Stock Market Portals: https://igameing.growthservice.in/industries/stock-market
-- Adult & Regulated Classifieds: https://igameing.growthservice.in/industries/adult-escort
-- Yono & Skill Gaming: https://igameing.growthservice.in/industries/yono
+- Regulated Classifieds: https://igameing.growthservice.in/industries/adult-escort
 
-## Agency Standards & Compliance
-- Case Studies: https://igameing.growthservice.in/case-studies
+## Architectural Guides & Resources
+- Resources Hub: https://igameing.growthservice.in/resources
+- Technical SEO Engineering Guide: https://igameing.growthservice.in/resources/seo-guides/technical-seo-guide
+- SEO Site Architecture Blueprint: https://igameing.growthservice.in/resources/seo-guides/seo-site-architecture
+- Internal Linking Graph Optimization: https://igameing.growthservice.in/resources/seo-guides/internal-linking
+- Programmatic SEO at Scale: https://igameing.growthservice.in/resources/seo-guides/programmatic-seo
+- SEO Audit Framework: https://igameing.growthservice.in/resources/seo-guides/seo-audit
+- High-Performance Web Development: https://igameing.growthservice.in/resources/seo-guides/seo-friendly-web-development
+- Core Web Vitals Optimization: https://igameing.growthservice.in/resources/seo-guides/core-web-vitals
+
+## Conversion & Diagnostic Entry Points
+- Free Technical SEO Audit: https://igameing.growthservice.in/free-seo-audit
+- Book Strategy Consultation: https://igameing.growthservice.in/book-call
+- Case Studies & Client Metrics: https://igameing.growthservice.in/case-studies
+- About the Agency & Ethics: https://igameing.growthservice.in/about
+- Direct Proposal & RFP: https://igameing.growthservice.in/contact
 - Editorial & Compliance Policy: https://igameing.growthservice.in/editorial-policy
-- About the Agency: https://igameing.growthservice.in/about
-- Contact & Proposals: https://igameing.growthservice.in/contact
+- Terms of Service: https://igameing.growthservice.in/terms
+- Privacy Policy: https://igameing.growthservice.in/privacy

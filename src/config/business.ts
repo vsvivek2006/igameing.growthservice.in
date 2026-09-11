@@ -21,6 +21,11 @@ export interface CommunicationChannels {
     readonly youtube?: string;
     readonly instagram?: string;
   };
+  contact?: {
+    readonly phone?: string;
+    readonly whatsapp?: string;
+    readonly email?: string;
+  };
 }
 
 export interface BusinessConfigSchema extends CommunicationChannels {
@@ -70,11 +75,16 @@ export const businessConfig: BusinessConfigSchema = {
     "Specialist B2B digital growth agency for iGaming, casino, and high-competition digital brands. Search engineering, technical architecture, and qualified conversion growth.",
   themeColor: "#7C3AED",
 
-  parentBrand: "iGaming Growth",
-  parentBrandUrl: "https://igameing.growthservice.in",
+  parentBrand: "GrowthService",
+  parentBrandUrl: "https://growthservice.in",
 
-  operationalModel: "Remote-First Distributed Agency",
-  areaServed: "Worldwide",
+  operationalModel: "Enterprise Engineering & Growth Studio",
+  areaServed: "South Asia & Worldwide",
+  address: {
+    city: "Kathmandu",
+    country: "Nepal",
+    countryCode: "NP",
+  },
 
   heroStats: [
     { value: "8", label: "Specialist High-Competition Verticals", color: "gold" },
@@ -90,8 +100,14 @@ export const businessConfig: BusinessConfigSchema = {
   },
 
   phone: {
-    primary: "+91 93414 36937",
-    whatsapp: "919341436937",
+    primary: "+91 76549 28455",
+    whatsapp: "917654928455",
+  },
+
+  contact: {
+    phone: "+91 76549 28455",
+    whatsapp: "917654928455",
+    email: "hello@igameing.growthservice.in",
   },
 } as const;
 

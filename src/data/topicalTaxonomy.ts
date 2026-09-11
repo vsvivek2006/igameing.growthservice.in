@@ -266,13 +266,13 @@ export const industryClusters: readonly IndustryCluster[] = [
     ],
   },
   {
-    industrySlug: 'adult-escort',
-    industryName: 'Adult & Regulated Classifieds',
+    industrySlug: 'betting-exchange',
+    industryName: 'Lotus365 & Betting Exchanges',
     coreSearchIntent: 'COMMERCIAL',
-    competitionLevel: 'RESTRICTED',
+    competitionLevel: 'HIGH',
     primaryTopics: [
-      { topic: 'SafeSearch Semantic SEO', serviceSlug: 'seo', intent: 'COMMERCIAL' },
-      { topic: 'High-Volume Directory Technical SEO', serviceSlug: 'technical-seo', intent: 'COMMERCIAL' },
+      { topic: 'Betting Exchange Search Architecture', serviceSlug: 'seo', intent: 'COMMERCIAL' },
+      { topic: 'Cricket ID Platform Engineering', serviceSlug: 'technical-seo', intent: 'COMMERCIAL' },
     ],
   },
   {

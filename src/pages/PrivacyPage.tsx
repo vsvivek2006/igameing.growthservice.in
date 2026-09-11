@@ -8,7 +8,7 @@ export const PrivacyPage: React.FC = () => {
   const breadcrumbs = [{ label: 'Privacy Policy', path: '/privacy', current: true }];
 
   return (
-    <>
+    <div className="bg-model3-base text-white selection:bg-amber-400 selection:text-black font-sans antialiased overflow-x-hidden">
       <SEOHead
         title="Privacy Policy | iGaming Growth"
         description="How iGaming Growth collects, protects, processes, and respects corporate and personal data across its B2B digital growth platform and diagnostic tools."
@@ -16,7 +16,7 @@ export const PrivacyPage: React.FC = () => {
         jsonLd={buildBreadcrumbSchema(breadcrumbs)}
       />
 
-      <div className="relative bg-navy-950 bg-hero-atmosphere text-white py-16 sm:py-20 overflow-hidden border-b border-navy-800/80">
+      <div className="relative bg-model3-base bg-hero-atmosphere text-white py-16 sm:py-20 overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
         <div className="absolute top-1/4 left-1/4 w-[450px] h-[350px] rounded-full bg-purple-600/10 blur-[120px] pointer-events-none" />
         <Container className="relative z-10">
@@ -30,9 +30,9 @@ export const PrivacyPage: React.FC = () => {
 
       <Section variant="white" spacing="lg">
         <Container size="md">
-          <div className="space-y-6 text-slate-700 leading-relaxed text-sm">
+          <div className="space-y-6 text-slate-300 leading-relaxed text-sm">
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 1. Scope &amp; Commitment to Data Privacy
               </h2>
               <p>
@@ -44,13 +44,13 @@ export const PrivacyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 2. Information We Collect &amp; Information We Deliberately Refuse to Collect
               </h2>
               <p>
                 When you interact with our platform, we may collect the following corporate and contact details voluntarily submitted by you:
               </p>
-              <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
+              <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
                 <li>Contact Information: Full name, professional work email address, company name, and optional telephone/WhatsApp number.</li>
                 <li>Platform Technical Parameters: Target website URL, operating industry vertical, target geographic markets, and primary diagnostic priorities.</li>
                 <li>Commercial Parameters: Estimated monthly marketing budget, target keywords, and descriptions of current technical or indexing challenges.</li>
@@ -61,13 +61,13 @@ export const PrivacyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 3. Lawful Basis for Processing
               </h2>
               <p>
                 We process your submitted data under specific lawful bases established by global privacy regulations:
               </p>
-              <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
+              <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
                 <li><strong>Legitimate Interests:</strong> Processing website URLs and contact information to prepare and deliver requested technical SEO audits, evaluate competitive keyword landscapes, and communicate diagnostic findings.</li>
                 <li><strong>Contractual Necessity:</strong> Processing company and representative information to prepare proposals, execute non-disclosure agreements, and fulfill contracted Statement of Work obligations.</li>
                 <li><strong>Consent:</strong> Where you explicitly opt in to receive periodic technical research papers or engineering updates from our editorial team.</li>
@@ -75,13 +75,13 @@ export const PrivacyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 4. Use of Lead Intake &amp; Diagnostic Audit Data
               </h2>
               <p>
                 Data submitted through our Free SEO Audit or Strategy Call intake forms is utilized strictly for:
               </p>
-              <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
+              <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
                 <li>Performing manual and automated crawl simulations on the specified domain.</li>
                 <li>Assessing Core Web Vitals, server response headers, and structured schema implementation.</li>
                 <li>Benchmarking domain visibility against top 50 competitive queries in your vertical.</li>
@@ -91,7 +91,7 @@ export const PrivacyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 5. Zero Sale, Leasing, or Commercialization of Personal Data
               </h2>
               <p>
@@ -103,13 +103,13 @@ export const PrivacyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 6. Privacy-Preserving Telemetry &amp; Cookie Governance
               </h2>
               <p>
                 We prioritize user privacy and web performance. Our website operates with a lightweight, privacy-preserving analytics infrastructure designed to minimize tracking overhead:
               </p>
-              <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
+              <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
                 <li>No Invasive Third-Party Ad Pixels: We do not deploy invasive retargeting pixels (e.g., Facebook Pixel, TikTok Tracker) across our educational guides.</li>
                 <li>Anonymized Performance Telemetry: Interaction tracking (e.g., table of contents clicks, form start events) is aggregated anonymously to optimize user experience and eliminate broken navigation paths.</li>
                 <li>Strict Cookie Hygiene: We do not store persistent cross-site tracking cookies. Essential session cookies are utilized only to manage user state and prevent automated form spam.</li>
@@ -117,13 +117,13 @@ export const PrivacyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 7. Technical Infrastructure, Encryption &amp; Data Security
               </h2>
               <p>
                 We implement enterprise-grade technical and organizational safeguards to protect collected data against unauthorized access, loss, or alteration:
               </p>
-              <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
+              <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
                 <li>Encryption in Transit: All website traffic and form submissions are transmitted exclusively over Transport Layer Security (TLS 1.3 / HTTPS) with strict HSTS headers.</li>
                 <li>Encrypted Storage: Diagnostic records, contact submissions, and client documentation are stored in encrypted databases protected by strict multi-factor authentication and role-based access controls.</li>
                 <li>Access Restriction: Only senior technical directors and assigned account architects have access to client audit submissions.</li>
@@ -131,7 +131,7 @@ export const PrivacyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 8. International Data Transfers &amp; Cross-Border Processing
               </h2>
               <p>
@@ -140,26 +140,26 @@ export const PrivacyPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 9. Data Retention Schedules &amp; Scheduled Purging
               </h2>
               <p>
                 We retain diagnostic intake submissions only as long as necessary to complete your audit review and evaluate potential commercial collaboration:
               </p>
-              <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
+              <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
                 <li>Unconverted Audit Inquiries: Technical crawl data and diagnostic submissions from non-contracting parties are purged from active systems within twelve (12) months.</li>
                 <li>Active Client Records: Operational documentation and engagement deliverables are maintained for the duration of the commercial agreement plus statutory tax and legal limitation periods.</li>
               </ul>
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 10. Your Statutory Rights &amp; Data Protection Officer Contact
               </h2>
               <p>
                 Regardless of your geographic location, you retain statutory rights regarding your personal and corporate information, including:
               </p>
-              <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
+              <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
                 <li>The right to request confirmation of whether we hold personal data concerning you and obtain a copy thereof.</li>
                 <li>The right to request immediate correction of inaccurate or incomplete corporate records.</li>
                 <li>The right to request permanent deletion (the "Right to be Forgotten") of your contact information and audit data from our systems.</li>
@@ -168,15 +168,17 @@ export const PrivacyPage: React.FC = () => {
               <p className="pt-2">
                 To exercise any of these rights or to submit an inquiry to our Data Protection Officer, contact:
                 <br />
-                <strong>Privacy Desk:</strong> hello@igameing.growthservice.in
+                <strong>Headquarters:</strong> Kathmandu, Nepal
                 <br />
-                <strong>Direct Telephone:</strong> +91 93414 36937
+                <strong>Parent Group:</strong> <a href="https://growthservice.in" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:underline">GrowthService (https://growthservice.in)</a>
+                <br />
+                <strong>Privacy Desk:</strong> hello@igameing.growthservice.in
               </p>
             </Card>
           </div>
         </Container>
       </Section>
-    </>
+    </div>
   );
 };
 

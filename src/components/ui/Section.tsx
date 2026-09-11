@@ -13,13 +13,14 @@ export const Section: React.FC<SectionProps> = ({
   className = '',
   ...props
 }) => {
+  // Note: 'surface-dark' and 'bg-hero-atmosphere' are custom CSS utilities defined in src/index.css
   const variantMap = {
-    white: 'bg-white text-slate-900',
-    subtle: 'bg-slate-50/80 text-slate-900 border-y border-slate-200/60',
-    slate: 'bg-slate-100/70 text-slate-900 border-y border-slate-200/80',
-    dark: 'bg-navy-950 text-white',
+    white: 'bg-surface-page text-white',
+    subtle: 'bg-surface-section text-white border-y border-white/10',
+    slate: 'bg-surface-dark text-white border-y border-white/10',
+    dark: 'bg-surface-page text-white',
     gradient: 'surface-dark text-white',
-    mesh: 'bg-navy-950 bg-hero-atmosphere text-white border-y border-navy-800/80',
+    mesh: 'bg-surface-page bg-hero-atmosphere text-white border-y border-white/10',
   };
 
   const spacingMap = {

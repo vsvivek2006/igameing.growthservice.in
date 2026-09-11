@@ -293,7 +293,7 @@ export const GuideDetailPage: React.FC = () => {
   const guideFAQs = GUIDE_FAQS[guide.slug] || DEFAULT_FAQS;
 
   return (
-    <>
+    <div className="bg-model3-base text-white selection:bg-amber-400 selection:text-black font-sans antialiased overflow-x-hidden">
       <SEOHead
         title={guide.seo.title}
         description={guide.seo.description}
@@ -312,18 +312,17 @@ export const GuideDetailPage: React.FC = () => {
       />
 
       {/* ── 1. Hero Section ───────────────────────────────────────── */}
-      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-16 sm:py-20 lg:py-24 border-b border-navy-800/80 overflow-hidden">
-        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
-        <div className="absolute top-0 right-1/4 w-[320px] sm:w-[450px] h-[250px] sm:h-[350px] rounded-full bg-purple-600/10 blur-[90px] pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 w-[260px] sm:w-[350px] h-[180px] sm:h-[250px] rounded-full bg-amber-500/10 blur-[80px] pointer-events-none" />
+      <section className="relative bg-model3-base text-white py-16 sm:py-20 lg:py-24 border-b border-white/10 overflow-hidden">
+        <div className="absolute top-0 right-1/4 w-[450px] h-[350px] rounded-full bg-purple-900/15 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/3 w-[350px] h-[250px] rounded-full bg-amber-500/10 blur-[100px] pointer-events-none" />
 
         <Container className="relative z-10">
-          <div className="mb-6 overflow-x-auto py-1">
+          <div className="w-full text-left mb-6 sm:mb-8 overflow-x-auto py-1">
             <Breadcrumb items={breadcrumbItems} variant="light" />
           </div>
 
-          <div className="max-w-4xl">
-            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-4 text-xs text-slate-300">
+          <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+            <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 mb-4 text-xs text-slate-300">
               <Badge variant="purple" size="sm">
                 {guide.categoryLabel}
               </Badge>
@@ -350,11 +349,11 @@ export const GuideDetailPage: React.FC = () => {
             </p>
 
             {/* Author Byline */}
-            <div className="flex items-center gap-3 pt-3 border-t border-navy-800/90">
-              <div className="w-10 h-10 rounded-full bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-300">
+            <div className="flex items-center justify-center gap-3 pt-4 border-t border-white/10 w-full max-w-md">
+              <div className="w-10 h-10 rounded-full bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-300 shadow-inner">
                 <User className="w-5 h-5" />
               </div>
-              <div>
+              <div className="text-left">
                 <div className="text-sm font-bold text-white">{guide.author}</div>
                 <div className="text-xs text-slate-400">{guide.authorRole}</div>
               </div>
@@ -364,11 +363,11 @@ export const GuideDetailPage: React.FC = () => {
       </section>
 
       {/* ── 2. Mobile Quick TOC Bar (<lg) ─────────────────────────── */}
-      <div className="lg:hidden sticky top-16 z-30 bg-slate-900 border-b border-navy-800 text-white px-4 py-2.5 shadow-md">
+      <div className="lg:hidden sticky top-16 z-30 bg-[#0B0B12] border-b border-white/10 text-white px-4 py-2.5 shadow-md">
         <button
           type="button"
           onClick={() => setMobileTocOpen(!mobileTocOpen)}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-purple-300 cursor-pointer"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-amber-300 cursor-pointer"
         >
           <span className="flex items-center gap-2">
             <Bookmark className="w-4 h-4 text-amber-400" />
@@ -378,7 +377,7 @@ export const GuideDetailPage: React.FC = () => {
         </button>
 
         {mobileTocOpen && (
-          <nav className="mt-3 pt-3 border-t border-navy-800 space-y-1 max-h-60 overflow-y-auto">
+          <nav className="mt-3 pt-3 border-t border-white/10 space-y-1 max-h-60 overflow-y-auto">
             {guide.tableOfContents.map((toc) => (
               <a
                 key={toc.id}
@@ -391,7 +390,7 @@ export const GuideDetailPage: React.FC = () => {
                     heading_text: toc.title,
                   });
                 }}
-                className="block text-xs py-1.5 px-2 text-slate-300 hover:text-white hover:bg-navy-800 rounded transition-colors"
+                className="block text-xs py-1.5 px-2 text-slate-300 hover:text-amber-300 hover:bg-white/5 rounded transition-colors"
               >
                 {toc.title}
               </a>
@@ -407,9 +406,9 @@ export const GuideDetailPage: React.FC = () => {
             {/* Desktop Sticky Table of Contents */}
             <aside className="hidden lg:block lg:col-span-4 order-2 lg:order-1">
               <div className="sticky top-28 space-y-6">
-                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">
-                    <Bookmark className="w-4 h-4 text-purple-600" />
+                <div className="bg-surface-card rounded-2xl p-6 border border-white/10 shadow-lg backdrop-blur-sm">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
+                    <Bookmark className="w-4 h-4 text-amber-400" />
                     <span>Table of Contents</span>
                   </div>
                   <nav className="space-y-2">
@@ -424,7 +423,7 @@ export const GuideDetailPage: React.FC = () => {
                             heading_text: toc.title,
                           })
                         }
-                        className="block text-xs font-semibold text-slate-600 hover:text-purple-600 hover:translate-x-0.5 transition-all py-1 border-l-2 border-transparent hover:border-purple-600 pl-3"
+                        className="block text-xs font-semibold text-slate-400 hover:text-amber-300 hover:translate-x-0.5 transition-all py-1 border-l-2 border-transparent hover:border-amber-400 pl-3"
                       >
                         {toc.title}
                       </a>
@@ -433,8 +432,8 @@ export const GuideDetailPage: React.FC = () => {
                 </div>
 
                 {/* Related Capabilities Box */}
-                <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                  <div className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                <div className="bg-surface-card rounded-2xl p-6 border border-white/10 shadow-lg backdrop-blur-sm space-y-4">
+                  <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
                     Relevant Services
                   </div>
                   <div className="space-y-2">
@@ -445,17 +444,17 @@ export const GuideDetailPage: React.FC = () => {
                         <Link
                           key={slug}
                           to={`/services/${slug}`}
-                          className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-purple-50 text-xs font-bold text-slate-800 hover:text-purple-700 transition-colors group"
+                          className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 hover:bg-amber-400/10 text-xs font-bold text-slate-200 hover:text-amber-300 border border-white/5 transition-colors group"
                         >
                           <span>{srv.name}</span>
-                          <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all" />
+                          <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
                         </Link>
                       );
                     })}
                   </div>
 
-                  <div className="pt-2 border-t border-slate-100">
-                    <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                  <div className="pt-2 border-t border-white/10">
+                    <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
                       Industry Applications
                     </div>
                     <div className="flex flex-wrap gap-1.5">
@@ -466,7 +465,7 @@ export const GuideDetailPage: React.FC = () => {
                           <Link
                             key={slug}
                             to={`/industries/${slug}`}
-                            className="px-2.5 py-1 rounded-lg bg-slate-100 text-[11px] font-semibold text-slate-700 hover:bg-purple-100 hover:text-purple-700 transition-colors"
+                            className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-semibold text-slate-300 hover:bg-purple-500/20 hover:text-purple-300 transition-colors"
                           >
                             {ind.shortName}
                           </Link>
@@ -479,17 +478,17 @@ export const GuideDetailPage: React.FC = () => {
             </aside>
 
             {/* Main Article Content */}
-            <article className="lg:col-span-8 order-1 lg:order-2 space-y-8">
+            <article className="lg:col-span-8 order-1 lg:order-2 space-y-8 break-words min-w-0">
               {/* Key Takeaways Callout Box */}
-              <div className="bg-gradient-to-r from-purple-50 to-indigo-50 border-l-4 border-purple-600 rounded-2xl p-6 shadow-sm">
-                <h2 className="font-heading font-bold text-base text-purple-950 mb-3 flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-purple-600 flex-shrink-0" />
+              <div className="bg-purple-950/25 border border-purple-500/30 border-l-4 border-l-purple-500 rounded-2xl p-6 shadow-sm">
+                <h2 className="font-heading font-bold text-base text-purple-200 mb-3 flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0" />
                   <span>Key Architectural Takeaways</span>
                 </h2>
-                <ul className="space-y-2 text-sm text-purple-900/90 leading-relaxed">
+                <ul className="space-y-2 text-sm text-purple-200/90 leading-relaxed">
                   {guide.keyTakeaways.map((takeaway, idx) => (
                     <li key={idx} className="flex items-start gap-2.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-purple-600 flex-shrink-0 mt-2" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0 mt-2" />
                       <span>{takeaway}</span>
                     </li>
                   ))}
@@ -500,10 +499,10 @@ export const GuideDetailPage: React.FC = () => {
               <div className="space-y-12">
                 {guide.sections.map((sec) => (
                   <section key={sec.id} id={sec.id} className="scroll-mt-32 space-y-4">
-                    <h2 className="font-heading font-bold text-xl sm:text-2xl text-slate-900 border-b border-slate-100 pb-3">
+                    <h2 className="font-heading font-bold text-xl sm:text-2xl text-white border-b border-white/10 pb-3">
                       {sec.heading}
                     </h2>
-                    <p className="text-slate-700 leading-relaxed text-sm sm:text-base">
+                    <p className="text-slate-300 leading-relaxed text-sm sm:text-base">
                       {sec.body}
                     </p>
 
@@ -526,23 +525,23 @@ export const GuideDetailPage: React.FC = () => {
               </div>
 
               {/* ── 4. Production Deployment & Verification Protocol ──── */}
-              <div className="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 space-y-5">
-                <div className="flex items-center gap-2 text-slate-900 font-bold text-base">
-                  <ListChecks className="w-5 h-5 text-purple-600 flex-shrink-0" />
+              <div className="bg-navy-900/80 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-lg space-y-5">
+                <div className="flex items-center gap-2 text-white font-bold text-base">
+                  <ListChecks className="w-5 h-5 text-purple-400 flex-shrink-0" />
                   <span>Production Deployment &amp; Verification Protocol</span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
                   Before promoting architectural updates or programmatic catalogs to production, engineering teams must validate each deployment against this rigorous verification checklist:
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {DEPLOYMENT_CHECKLIST.map((item) => (
-                    <div key={item.title} className="p-4 rounded-xl bg-white border border-slate-200 shadow-xs space-y-1">
-                      <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                    <div key={item.title} className="p-4 rounded-xl bg-navy-950/70 border border-white/10 shadow-xs space-y-1">
+                      <div className="text-xs font-bold text-white flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
                         <span>{item.title}</span>
                       </div>
-                      <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed">
+                      <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed">
                         {item.desc}
                       </p>
                     </div>
@@ -551,18 +550,18 @@ export const GuideDetailPage: React.FC = () => {
               </div>
 
               {/* ── 5. Common Architectural Failure Modes ─────────────── */}
-              <div className="bg-rose-50/40 rounded-2xl p-6 sm:p-8 border border-rose-200/70 space-y-4">
-                <div className="flex items-center gap-2 text-slate-900 font-bold text-base">
-                  <AlertTriangle className="w-5 h-5 text-rose-600 flex-shrink-0" />
+              <div className="bg-rose-500/10 rounded-2xl p-6 sm:p-8 border border-rose-500/20 space-y-4">
+                <div className="flex items-center gap-2 text-white font-bold text-base">
+                  <AlertTriangle className="w-5 h-5 text-rose-400 flex-shrink-0" />
                   <span>Common Architectural Failure Modes &amp; Prevention</span>
                 </div>
                 <div className="space-y-3">
                   {FAILURE_MODES.map((mode) => (
-                    <div key={mode.title} className="p-4 rounded-xl bg-white border border-rose-100 shadow-xs space-y-1">
-                      <div className="text-xs font-bold text-rose-950">
+                    <div key={mode.title} className="p-4 rounded-xl bg-navy-950/70 border border-rose-500/20 shadow-xs space-y-1">
+                      <div className="text-xs font-bold text-rose-300">
                         {mode.title}
                       </div>
-                      <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed">
+                      <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed">
                         {mode.desc}
                       </p>
                     </div>
@@ -571,17 +570,17 @@ export const GuideDetailPage: React.FC = () => {
               </div>
 
               {/* ── 6. Engineering Standards & Peer-Review Verification ─ */}
-              <div className="bg-slate-50 rounded-2xl p-6 sm:p-7 border border-slate-200 space-y-3">
-                <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
-                  <ShieldCheck className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+              <div className="bg-navy-900/80 rounded-2xl p-6 sm:p-7 border border-white/10 space-y-3">
+                <div className="flex items-center gap-2 text-white font-bold text-sm">
+                  <ShieldCheck className="w-5 h-5 text-emerald-400 flex-shrink-0" />
                   <span>Engineering Methodology &amp; Peer-Review Standard</span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
                   Every technical framework documented in this guide is verified against Google Search Central developer specifications, W3C HTML5 standards, and schema.org vocabularies. Our engineering recommendations are tested across staging environments, validated through real-world server log crawls, and benchmarked against Google Core Web Vitals telemetry under mobile network constraints.
                 </p>
-                <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-slate-500 font-medium">
+                <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-slate-400 font-medium">
                   <span className="flex items-center gap-1.5">
-                    <FileCheck className="w-3.5 h-3.5 text-purple-600" />
+                    <FileCheck className="w-3.5 h-3.5 text-purple-400" />
                     <span>Peer-Reviewed Architecture</span>
                   </span>
                   <span>•</span>
@@ -592,15 +591,15 @@ export const GuideDetailPage: React.FC = () => {
               </div>
 
               {/* ── 7. Technical Implementation FAQs ─────────────────── */}
-              <div className="pt-6 border-t border-slate-200 space-y-6">
+              <div className="pt-6 border-t border-white/10 space-y-6">
                 <div>
                   <Badge variant="purple" size="sm" className="mb-2">
                     Implementation Q&amp;A
                   </Badge>
-                  <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-slate-900">
+                  <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-white">
                     Frequently Asked Technical Questions
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                  <p className="text-xs sm:text-sm text-slate-400 mt-1">
                     Direct answers to practical architectural and deployment challenges encountered by engineering teams.
                   </p>
                 </div>
@@ -614,7 +613,7 @@ export const GuideDetailPage: React.FC = () => {
               </div>
 
               {/* Tags */}
-              <div className="pt-6 border-t border-slate-200">
+              <div className="pt-6 border-t border-white/10">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mr-2">
                     Topic Index:
@@ -622,7 +621,7 @@ export const GuideDetailPage: React.FC = () => {
                   {guide.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 rounded-lg bg-slate-100 text-xs font-medium text-slate-600"
+                      className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium text-slate-300"
                     >
                       #{tag}
                     </span>
@@ -631,8 +630,8 @@ export const GuideDetailPage: React.FC = () => {
               </div>
 
               {/* Mobile-only Related Capabilities (<lg) */}
-              <div className="lg:hidden pt-6 border-t border-slate-200 space-y-4">
-                <div className="text-xs font-bold uppercase tracking-wider text-slate-500">
+              <div className="lg:hidden pt-6 border-t border-white/10 space-y-4">
+                <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
                   Relevant Services &amp; Verticals
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -643,10 +642,10 @@ export const GuideDetailPage: React.FC = () => {
                       <Link
                         key={slug}
                         to={`/services/${slug}`}
-                        className="flex items-center justify-between p-3 rounded-xl bg-slate-50 text-xs font-bold text-slate-800 hover:text-purple-700"
+                        className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 text-xs font-bold text-slate-200 hover:text-purple-300"
                       >
                         <span>{srv.name}</span>
-                        <ChevronRight className="w-4 h-4 text-slate-400" />
+                        <ChevronRight className="w-4 h-4 text-slate-500" />
                       </Link>
                     );
                   })}
@@ -688,7 +687,7 @@ export const GuideDetailPage: React.FC = () => {
           </div>
         </Container>
       </Section>
-    </>
+    </div>
   );
 };
 

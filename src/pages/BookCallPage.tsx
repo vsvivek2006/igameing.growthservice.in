@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Clock,
   Video,
@@ -9,6 +10,7 @@ import {
   AlertCircle,
   XCircle,
   FileCheck,
+  Sparkles,
 } from 'lucide-react';
 import { SEOHead } from '../seo';
 import { buildBreadcrumbSchema, buildFAQSchema } from '../seo/schema';
@@ -228,7 +230,7 @@ export const BookCallPage: React.FC = () => {
   ];
 
   return (
-    <>
+    <div className="bg-model3-base text-white selection:bg-amber-400 selection:text-black font-sans antialiased overflow-x-hidden">
       <SEOHead
         title="Book a Strategy Call — iGaming Growth Advisory Session"
         description="Schedule a private 30-minute growth architecture review with a senior agency strategist. Review your domain, identify competitor blind spots, and plan acquisition."
@@ -240,10 +242,9 @@ export const BookCallPage: React.FC = () => {
       />
 
       {/* ── 1. Hero Section ───────────────────────────────────────── */}
-      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-16 sm:py-20 lg:py-24 overflow-hidden border-b border-navy-800/80">
-        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
-        <div className="absolute top-0 right-1/4 w-[320px] sm:w-[500px] h-[280px] sm:h-[400px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-[280px] sm:w-[400px] h-[220px] sm:h-[300px] rounded-full bg-violet-600/10 blur-[80px] pointer-events-none" />
+      <section className="relative min-h-[60vh] pt-24 pb-16 lg:pt-32 lg:pb-20 bg-model3-base overflow-hidden flex items-center border-b border-white/10">
+        <div className="absolute top-0 right-1/4 w-[600px] h-[400px] rounded-full bg-purple-900/15 blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-[450px] h-[350px] rounded-full bg-amber-500/10 blur-[130px] pointer-events-none" />
 
         <Container className="relative z-10">
           <div className="mb-6 overflow-x-auto py-1">
@@ -252,13 +253,16 @@ export const BookCallPage: React.FC = () => {
 
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-semibold uppercase tracking-wider mb-6">
-                <Video className="w-3.5 h-3.5 text-purple-400" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/15 text-slate-300 text-xs font-semibold uppercase tracking-wider mb-6">
+                <Video className="w-3.5 h-3.5 text-amber-400" />
                 <span>30-Minute Growth Advisory Session</span>
               </div>
 
-              <h1 className="type-h1 text-white mb-5 leading-tight">
-                Private Strategy Session with a Senior Growth Architect
+              <h1 className="text-4xl sm:text-5xl xl:text-6xl font-extrabold tracking-tight text-white font-heading leading-[1.08] mb-5">
+                Private Strategy Session with a <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500">
+                  Senior Growth Architect
+                </span>
               </h1>
 
               <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl mx-auto">
@@ -267,7 +271,7 @@ export const BookCallPage: React.FC = () => {
 
               <div className="flex flex-wrap justify-center items-center gap-6 text-xs text-slate-400">
                 <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-purple-400" />
+                  <Clock className="w-4 h-4 text-amber-400" />
                   <span>30 Minutes via Google Meet / Zoom</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -292,10 +296,10 @@ export const BookCallPage: React.FC = () => {
             <div className="lg:col-span-5 space-y-6 order-1">
               <FadeIn>
                 <div>
-                  <h2 className="font-heading font-extrabold text-2xl text-slate-950 mb-3">
+                  <h2 className="font-heading font-extrabold text-2xl text-white mb-3">
                     What We Cover in 30 Minutes
                   </h2>
-                  <p className="text-sm text-slate-600 leading-relaxed">
+                  <p className="text-sm text-slate-400 leading-relaxed">
                     Our strategy sessions are focused entirely on diagnosing growth bottlenecks and modeling high-leverage commercial actions.
                   </p>
                 </div>
@@ -304,21 +308,21 @@ export const BookCallPage: React.FC = () => {
                   {agendaItems.map((item, idx) => (
                     <div
                       key={item.title}
-                      className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-purple-200 transition-colors"
+                      className="flex items-start gap-4 p-4 rounded-2xl bg-surface-card border border-white/10 hover:border-amber-400/40 transition-colors"
                     >
-                      <div className="w-8 h-8 rounded-xl bg-purple-50 border border-purple-100 text-purple-700 font-bold text-xs flex items-center justify-center flex-shrink-0">
+                      <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 font-bold text-xs flex items-center justify-center flex-shrink-0">
                         0{idx + 1}
                       </div>
                       <div>
                         <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-heading font-bold text-sm text-slate-900">
+                          <h3 className="font-heading font-bold text-sm text-white">
                             {item.title}
                           </h3>
-                          <span className="text-[10px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-200">
+                          <span className="text-[10px] font-semibold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
                             {item.time}
                           </span>
                         </div>
-                        <p className="text-xs text-slate-600 leading-relaxed">
+                        <p className="text-xs text-slate-400 leading-relaxed">
                           {item.desc}
                         </p>
                       </div>
@@ -327,7 +331,7 @@ export const BookCallPage: React.FC = () => {
                 </div>
 
                 {/* Direct email and WhatsApp note */}
-                <div className="p-5 rounded-2xl bg-navy-950 text-white border border-navy-800 shadow-card-dark space-y-3">
+                <div className="p-5 rounded-2xl bg-[#080808] text-white border border-white/10 shadow-card-dark space-y-3">
                   <div>
                     <h4 className="font-heading font-bold text-sm text-white mb-1">
                       Need Immediate Scoping?
@@ -338,17 +342,17 @@ export const BookCallPage: React.FC = () => {
                   </div>
                   <div className="flex flex-col gap-2 pt-1">
                     <a
-                      href="https://wa.me/919341436937"
+                      href="https://wa.me/917654928455"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
                     >
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span>WhatsApp: +91 93414 36937</span>
+                      <span>WhatsApp: +91 76549 28455</span>
                     </a>
                     <a
                       href={`mailto:${businessConfig.emails.business}`}
-                      className="text-xs font-semibold text-purple-400 hover:text-purple-300 underline transition-colors"
+                      className="text-xs font-semibold text-amber-400 hover:text-amber-300 underline transition-colors"
                     >
                       {businessConfig.emails.business}
                     </a>
@@ -360,37 +364,46 @@ export const BookCallPage: React.FC = () => {
             {/* Right: Booking Intake Form */}
             <div className="lg:col-span-7 order-2">
               <FadeIn delay={150}>
-                <div className="bg-white rounded-2xl lg:rounded-3xl border border-slate-200/80 shadow-xl p-6 sm:p-10">
+                <div className="bg-surface-card rounded-2xl lg:rounded-3xl border border-white/10 shadow-2xl backdrop-blur-md p-4 sm:p-8 lg:p-10">
                   {isSubmitted ? (
                     <div className="text-center py-10 space-y-4">
-                      <div className="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
+                      <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto shadow-inner">
                         <CheckCircle2 className="w-8 h-8" />
                       </div>
-                      <h3 className="font-heading font-bold text-2xl text-slate-900">
+                      <h3 className="font-heading font-bold text-2xl text-white">
                         Session Request Confirmed
                       </h3>
-                      <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+                      <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
                         Thank you, {formData.name}. Our strategy desk has received your details for <strong>{formData.website}</strong>. A calendar invitation and session link will be delivered to <strong>{formData.email}</strong> within 24 business hours.
                       </p>
                       <div className="pt-4">
-                        <Button to="/resources" variant="outline" size="md">
-                          Explore Engineering Guides While You Wait
+                        <Button
+                          to="/"
+                          variant="outline"
+                          size="sm"
+                          className="border-white/10 text-white hover:bg-white/5"
+                        >
+                          Return to Homepage
                         </Button>
                       </div>
                     </div>
                   ) : (
-                    <>
-                      <div className="pb-6 mb-6 border-b border-slate-100">
-                        <h2 className="font-heading font-bold text-xl sm:text-2xl text-slate-950 mb-1">
-                          Book Your Advisory Session
+                    <div>
+                      <div className="mb-6 pb-6 border-b border-white/10">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-slate-300 text-xs font-semibold uppercase tracking-wider mb-2">
+                          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                          <span>Direct Senior Advisory</span>
+                        </div>
+                        <h2 className="font-heading font-bold text-xl sm:text-2xl text-white">
+                          Schedule Your Discovery Call
                         </h2>
-                        <p className="text-xs text-slate-500">
-                          Complete the brief questionnaire below so our strategist can review your site metrics before the call.
+                        <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                          Please provide your technical parameters so we can prepare data before the call.
                         </p>
                       </div>
 
-                      <form onSubmit={handleSubmit} onFocusCapture={handleFieldInteraction} className="space-y-4" noValidate>
-                        {/* Hidden Honeypot Bot Trap */}
+                      <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit} onFocusCapture={handleFieldInteraction} noValidate>
+                        {/* Anti-spam honeypot */}
                         <div
                           style={{
                             opacity: 0,
@@ -400,29 +413,28 @@ export const BookCallPage: React.FC = () => {
                             height: 0,
                             width: 0,
                             zIndex: -1,
+                            overflow: 'hidden',
                           }}
                           aria-hidden="true"
                         >
-                          <label htmlFor="booking_hp">Do not fill this field</label>
+                          <label htmlFor="call_website_hp">Leave empty</label>
                           <input
                             type="text"
-                            id="booking_hp"
-                            name="booking_hp"
+                            id="call_website_hp"
+                            name="call_website_hp"
                             tabIndex={-1}
                             value={formData.honeypot}
-                            onChange={(e) =>
-                              setFormData({ ...formData, honeypot: e.target.value })
-                            }
+                            onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
                             autoComplete="off"
                           />
                         </div>
 
-                        {/* Name & Email */}
+                        {/* Name + Email */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
                             <label
                               htmlFor="call_name"
-                              className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1"
+                              className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1"
                             >
                               Your Name *
                             </label>
@@ -436,12 +448,12 @@ export const BookCallPage: React.FC = () => {
                                 setFormData({ ...formData, name: e.target.value });
                                 if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
                               }}
-                              className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors ${
-                                formErrors.name ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                              className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-white bg-navy-950/70 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-colors ${
+                                formErrors.name ? 'border-rose-400 bg-rose-500/10' : 'border-white/10'
                               }`}
                             />
                             {formErrors.name && (
-                              <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                              <p className="text-xs text-rose-400 mt-1 flex items-center gap-1">
                                 <AlertCircle className="w-3 h-3" />
                                 {formErrors.name}
                               </p>
@@ -451,7 +463,7 @@ export const BookCallPage: React.FC = () => {
                           <div>
                             <label
                               htmlFor="call_email"
-                              className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1"
+                              className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1"
                             >
                               Work Email *
                             </label>
@@ -465,12 +477,12 @@ export const BookCallPage: React.FC = () => {
                                 setFormData({ ...formData, email: e.target.value });
                                 if (formErrors.email) setFormErrors({ ...formErrors, email: undefined });
                               }}
-                              className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors ${
-                                formErrors.email ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                              className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-white bg-navy-950/70 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-colors ${
+                                formErrors.email ? 'border-rose-400 bg-rose-500/10' : 'border-white/10'
                               }`}
                             />
                             {formErrors.email && (
-                              <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                              <p className="text-xs text-rose-400 mt-1 flex items-center gap-1">
                                 <AlertCircle className="w-3 h-3" />
                                 {formErrors.email}
                               </p>
@@ -482,7 +494,7 @@ export const BookCallPage: React.FC = () => {
                         <div>
                           <label
                             htmlFor="call_website"
-                            className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1"
+                            className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1"
                           >
                             Website or Platform URL *
                           </label>
@@ -496,12 +508,12 @@ export const BookCallPage: React.FC = () => {
                               setFormData({ ...formData, website: e.target.value });
                               if (formErrors.website) setFormErrors({ ...formErrors, website: undefined });
                             }}
-                            className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors ${
-                              formErrors.website ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                            className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-white bg-navy-950/70 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-colors ${
+                              formErrors.website ? 'border-rose-400 bg-rose-500/10' : 'border-white/10'
                             }`}
                           />
                           {formErrors.website && (
-                            <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                            <p className="text-xs text-rose-400 mt-1 flex items-center gap-1">
                               <AlertCircle className="w-3 h-3" />
                               {formErrors.website}
                             </p>
@@ -512,7 +524,7 @@ export const BookCallPage: React.FC = () => {
                         <div>
                           <label
                             htmlFor="call_vertical"
-                            className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1"
+                            className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1"
                           >
                             Industry Vertical *
                           </label>
@@ -524,8 +536,8 @@ export const BookCallPage: React.FC = () => {
                               setFormData({ ...formData, vertical: e.target.value });
                               if (formErrors.vertical) setFormErrors({ ...formErrors, vertical: undefined });
                             }}
-                            className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors ${
-                              formErrors.vertical ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                            className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-slate-200 bg-navy-950/90 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-colors ${
+                              formErrors.vertical ? 'border-rose-400 bg-rose-500/10' : 'border-white/10'
                             }`}
                           >
                             <option value="">Select your market vertical</option>
@@ -536,11 +548,11 @@ export const BookCallPage: React.FC = () => {
                             <option value="color-prediction">Color Prediction Game</option>
                             <option value="color-trading">Color Trading Platform</option>
                             <option value="stock-market">Stock Market / Financial Portal</option>
-                            <option value="adult-escort">Adult Industry Directory / Portal</option>
+                            <option value="betting-exchange">Lotus365 / Betting Exchange / Cricket ID</option>
                             <option value="other">Other High-Competition Digital Business</option>
                           </select>
                           {formErrors.vertical && (
-                            <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                            <p className="text-xs text-rose-400 mt-1 flex items-center gap-1">
                               <AlertCircle className="w-3 h-3" />
                               {formErrors.vertical}
                             </p>
@@ -551,7 +563,7 @@ export const BookCallPage: React.FC = () => {
                         <div>
                           <label
                             htmlFor="call_goal"
-                            className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1"
+                            className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1"
                           >
                             Primary Growth Goal or SEO Challenge *
                           </label>
@@ -565,12 +577,12 @@ export const BookCallPage: React.FC = () => {
                               setFormData({ ...formData, growthGoal: e.target.value });
                               if (formErrors.growthGoal) setFormErrors({ ...formErrors, growthGoal: undefined });
                             }}
-                            className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-500/30 transition-colors resize-none ${
-                              formErrors.growthGoal ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                            className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-white bg-navy-950/70 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-colors resize-none ${
+                              formErrors.growthGoal ? 'border-rose-400 bg-rose-500/10' : 'border-white/10'
                             }`}
                           />
                           {formErrors.growthGoal && (
-                            <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+                            <p className="text-xs text-rose-400 mt-1 flex items-center gap-1">
                               <AlertCircle className="w-3 h-3" />
                               {formErrors.growthGoal}
                             </p>
@@ -582,8 +594,8 @@ export const BookCallPage: React.FC = () => {
                             role="alert"
                             className={`p-4 rounded-xl text-xs leading-relaxed border ${
                               submissionFeedback.status === 'configuration_pending'
-                                ? 'bg-amber-50 text-amber-900 border-amber-200'
-                                : 'bg-rose-50 text-rose-900 border-rose-200'
+                                ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
+                                : 'bg-rose-500/10 text-rose-300 border-rose-500/30'
                             }`}
                           >
                             <p className="font-semibold mb-1">
@@ -591,12 +603,12 @@ export const BookCallPage: React.FC = () => {
                                 ? 'Online Booking Endpoint Pending Deployment'
                                 : 'Booking Notice'}
                             </p>
-                            <p className="mb-2">{submissionFeedback.message}</p>
+                            <p className="mb-2 text-slate-300">{submissionFeedback.message}</p>
                             <p>
                               Direct Work Email:{' '}
                               <a
                                 href="mailto:hello@igameing.growthservice.in?subject=Advisory%20Session%20Booking"
-                                className="underline font-bold text-purple-700 hover:text-purple-900"
+                                className="underline font-bold text-purple-400 hover:text-purple-300"
                               >
                                 hello@igameing.growthservice.in
                               </a>
@@ -609,7 +621,7 @@ export const BookCallPage: React.FC = () => {
                           <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-gradient-to-r from-purple-700 via-purple-600 to-indigo-600 hover:from-purple-600 hover:to-indigo-500 text-white font-heading font-bold text-sm shadow-md hover:shadow-glow-purple-sm transition-all hover:-translate-y-0.5 active:scale-[0.98] disabled:opacity-50 cursor-pointer"
+                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-slate-950 font-heading font-extrabold text-sm shadow-lg shadow-amber-400/20 transition-all hover:-translate-y-0.5 active:scale-[0.98] disabled:opacity-50 cursor-pointer"
                           >
                             {isSubmitting ? (
                               <span>Confirming Session Slot...</span>
@@ -622,7 +634,7 @@ export const BookCallPage: React.FC = () => {
                           </button>
                         </div>
                       </form>
-                    </>
+                    </div>
                   )}
                 </div>
               </FadeIn>
@@ -638,24 +650,24 @@ export const BookCallPage: React.FC = () => {
             <Badge variant="purple" size="sm" className="mb-3">
               Session Maximization
             </Badge>
-            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-4">
+            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-white mb-4">
               How to Prepare for Your 30-Minute Advisory Call
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
               We respect your time. Preparing these 3 items beforehand ensures we dive straight into high-leverage architectural and strategic analysis.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {PREPARATION_STEPS.map((step) => (
-              <div key={step.title} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
-                <div className="w-8 h-8 rounded-xl bg-purple-50 border border-purple-100 text-purple-700 font-bold text-xs flex items-center justify-center">
+              <div key={step.title} className="bg-navy-900/80 rounded-2xl p-6 border border-white/10 shadow-lg space-y-3">
+                <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 font-bold text-xs flex items-center justify-center">
                   <FileCheck className="w-4 h-4" />
                 </div>
-                <h3 className="font-heading font-bold text-base text-slate-900">
+                <h3 className="font-heading font-bold text-base text-white">
                   {step.title}
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-400 leading-relaxed">
                   {step.desc}
                 </p>
               </div>
@@ -671,10 +683,10 @@ export const BookCallPage: React.FC = () => {
             <Badge variant="amber" size="sm" className="mb-3">
               Mutual Fit Criteria
             </Badge>
-            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-4">
+            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-white mb-4">
               Is This Advisory Session Right for You?
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
               We maintain high advisory standards and focus our engineering resources exclusively where we can deliver compounding commercial impact.
             </p>
           </div>
@@ -685,26 +697,26 @@ export const BookCallPage: React.FC = () => {
                 key={crit.title}
                 className={`rounded-3xl p-6 sm:p-8 border shadow-card transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1 ${
                   crit.type === 'ideal'
-                    ? 'bg-emerald-50/50 border-emerald-200/90'
-                    : 'bg-rose-50/50 border-rose-200/90'
+                    ? 'bg-emerald-500/10 border-emerald-500/30'
+                    : 'bg-rose-500/10 border-rose-500/30'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-4">
                   {crit.type === 'ideal' ? (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
                   ) : (
-                    <XCircle className="w-5 h-5 text-rose-600 flex-shrink-0" />
+                    <XCircle className="w-5 h-5 text-rose-400 flex-shrink-0" />
                   )}
-                  <h3 className="font-heading font-bold text-base text-slate-900">
+                  <h3 className="font-heading font-bold text-base text-white">
                     {crit.title}
                   </h3>
                 </div>
                 <ul className="space-y-3">
                   {crit.points.map((pt) => (
-                    <li key={pt} className="flex items-start gap-2.5 text-xs text-slate-700 leading-relaxed">
+                    <li key={pt} className="flex items-start gap-2.5 text-xs text-slate-300 leading-relaxed">
                       <span
                         className={`w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 ${
-                          crit.type === 'ideal' ? 'bg-emerald-600' : 'bg-rose-500'
+                          crit.type === 'ideal' ? 'bg-emerald-400' : 'bg-rose-400'
                         }`}
                       />
                       <span>{pt}</span>
@@ -724,20 +736,54 @@ export const BookCallPage: React.FC = () => {
             <Badge variant="purple" size="sm" className="mb-3">
               Booking Questions
             </Badge>
-            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-3">
+            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-white mb-3">
               Frequently Asked Questions: Strategy Calls
             </h2>
-            <p className="text-slate-600 text-sm">
+            <p className="text-slate-400 text-sm">
               Answers to common scheduling, format, and confidentiality questions.
             </p>
           </div>
 
           <div className="max-w-3xl mx-auto">
             <FAQAccordion items={CALL_FAQS.map(f => ({ question: f.q, answer: f.a }))} />
+
+            {/* Contextual Internal Links */}
+            <div className="mt-12 pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+              <Link
+                to="/services/website-development"
+                className="p-4 rounded-xl bg-model3-surface/80 border border-white/10 hover:border-cyan-400/40 transition-colors group"
+              >
+                <div className="text-[10px] font-mono text-cyan-400 uppercase mb-1">Architecture</div>
+                <div className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors flex items-center justify-between">
+                  <span>Web Build (₹15K)</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </Link>
+              <Link
+                to="/services/seo"
+                className="p-4 rounded-xl bg-model3-surface/80 border border-white/10 hover:border-amber-400/40 transition-colors group"
+              >
+                <div className="text-[10px] font-mono text-amber-400 uppercase mb-1">Search Growth</div>
+                <div className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors flex items-center justify-between">
+                  <span>SEO Dominance (₹35K)</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </Link>
+              <Link
+                to="/free-seo-audit"
+                className="p-4 rounded-xl bg-model3-surface/80 border border-white/10 hover:border-emerald-400/40 transition-colors group"
+              >
+                <div className="text-[10px] font-mono text-emerald-400 uppercase mb-1">Diagnostic</div>
+                <div className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors flex items-center justify-between">
+                  <span>Claim Free Audit</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </Link>
+            </div>
           </div>
         </Container>
       </Section>
-    </>
+    </div>
   );
 };
 

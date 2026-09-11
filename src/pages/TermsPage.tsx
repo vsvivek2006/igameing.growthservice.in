@@ -8,7 +8,7 @@ export const TermsPage: React.FC = () => {
   const breadcrumbs = [{ label: 'Terms of Use', path: '/terms', current: true }];
 
   return (
-    <>
+    <div className="bg-model3-base text-white selection:bg-amber-400 selection:text-black font-sans antialiased overflow-x-hidden">
       <SEOHead
         title="Terms of Use | iGaming Growth"
         description="Terms and conditions governing access to and use of iGaming Growth's website, architectural content, and B2B digital growth advisory services."
@@ -16,7 +16,7 @@ export const TermsPage: React.FC = () => {
         jsonLd={buildBreadcrumbSchema(breadcrumbs)}
       />
 
-      <div className="relative bg-navy-950 bg-hero-atmosphere text-white py-16 sm:py-20 overflow-hidden border-b border-navy-800/80">
+      <div className="relative bg-model3-base bg-hero-atmosphere text-white py-16 sm:py-20 overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
         <div className="absolute top-1/4 left-1/4 w-[450px] h-[350px] rounded-full bg-purple-600/10 blur-[120px] pointer-events-none" />
         <Container className="relative z-10">
@@ -30,9 +30,9 @@ export const TermsPage: React.FC = () => {
 
       <Section variant="white" spacing="lg">
         <Container size="md">
-          <div className="space-y-6 text-slate-700 leading-relaxed text-sm">
+          <div className="space-y-6 text-slate-300 leading-relaxed text-sm">
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 1. Nature of the Website &amp; Business Model
               </h2>
               <p>
@@ -44,13 +44,13 @@ export const TermsPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 2. Permitted Commercial Use &amp; Access Restrictions
               </h2>
               <p>
                 Access to this website is granted for the evaluation of our professional capabilities, consumption of published architectural guides, and submission of bona fide business inquiries. You agree not to:
               </p>
-              <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
+              <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
                 <li>Systematically scrape, data-mine, or harvest architectural code snippets, matrices, or pricing data via automated bots, headless crawlers, or scrapers without prior written authorization.</li>
                 <li>Submit fabricated, abusive, or spam communications through our diagnostic intake forms or strategy booking endpoints.</li>
                 <li>Attempt to reverse-engineer, decompile, or probe the infrastructure, servers, or hosting configurations of this web application.</li>
@@ -59,7 +59,7 @@ export const TermsPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 3. Scope of Professional Agency Services
               </h2>
               <p>
@@ -71,7 +71,7 @@ export const TermsPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 4. Explicit Absence of Ranking or Traffic Guarantees
               </h2>
               <p>
@@ -83,7 +83,7 @@ export const TermsPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 5. Intellectual Property Rights &amp; Deliverables Ownership
               </h2>
               <p>
@@ -95,7 +95,7 @@ export const TermsPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 6. Client Warranties &amp; Jurisdictional Compliance
               </h2>
               <p>
@@ -107,7 +107,7 @@ export const TermsPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 7. Limitation of Liability &amp; Disclaimers
               </h2>
               <p>
@@ -119,7 +119,7 @@ export const TermsPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 8. Third-Party Search Engines, Algorithms &amp; Platform Policy Shifts
               </h2>
               <p>
@@ -131,7 +131,7 @@ export const TermsPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 9. Retainer Terms, Billing &amp; Cancellation Policies
               </h2>
               <p>
@@ -143,11 +143,11 @@ export const TermsPage: React.FC = () => {
             </Card>
 
             <Card variant="base" className="space-y-3">
-              <h2 className="font-heading font-bold text-lg text-slate-900">
+              <h2 className="font-heading font-bold text-lg text-white">
                 10. Governing Law, Dispute Resolution &amp; Severability
               </h2>
               <p>
-                These Terms of Use shall be governed by and construed in accordance with the substantive laws of India, without regard to its conflict of law principles. Any dispute, claim, or controversy arising out of or relating to these terms shall be subject to the exclusive jurisdiction of the competent courts in India.
+                These Terms of Use shall be governed by and construed in accordance with the substantive laws of Nepal, without regard to its conflict of law principles. Any dispute, claim, or controversy arising out of or relating to these terms shall be subject to the exclusive jurisdiction of the competent courts in Kathmandu, Nepal.
               </p>
               <p>
                 If any provision of these Terms is found to be invalid, unlawful, or unenforceable by an authorized court of law, such provision shall be severed from the remaining terms, which shall continue in full force and effect.
@@ -155,15 +155,17 @@ export const TermsPage: React.FC = () => {
               <p className="pt-2">
                 For legal notices, contract inquiries, or corporate documentation, contact:
                 <br />
-                <strong>Legal Desk:</strong> hello@igameing.growthservice.in
+                <strong>Agency Headquarters:</strong> Kathmandu, Nepal
                 <br />
-                <strong>Direct Line:</strong> +91 93414 36937
+                <strong>Parent Group:</strong> <a href="https://growthservice.in" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:underline">GrowthService (https://growthservice.in)</a>
+                <br />
+                <strong>Legal Desk:</strong> hello@igameing.growthservice.in
               </p>
             </Card>
           </div>
         </Container>
       </Section>
-    </>
+    </div>
   );
 };
 

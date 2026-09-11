@@ -34,7 +34,7 @@ import { resolveServiceIndustryPage } from '../selectors/uniquenessEngine';
 import { getRelatedMatrixCrossLinks } from '../selectors/linkGraph';
 import { getServiceIndustrySEO } from '../seo/metadataFactory';
 import { trackEvent } from '../analytics/tracking';
-import { PRICING_CATEGORIES, PRICING_DISCLAIMER } from '../data/pricingData';
+import { MAIN_PACKAGES, PAID_ACQUISITION_PACKAGE, PRICING_DISCLAIMER } from '../data/pricingData';
 import NotFound from './NotFound';
 
 export const ServiceIndustryDetailPage: React.FC = () => {
@@ -59,13 +59,11 @@ export const ServiceIndustryDetailPage: React.FC = () => {
   const seo = getServiceIndustrySEO(industry, service, matrix);
   const crossLinks = getRelatedMatrixCrossLinks(industrySlug, serviceSlug);
 
-  // Resolve matching pricing category
-  const pricingCat = PRICING_CATEGORIES.find((c) => {
-    if (service.slug === 'website-development') return c.id === 'web-dev';
-    if (service.slug === 'conversion-optimization' || service.slug === 'analytics') return c.id === 'cro-analytics';
-    if (service.slug === 'google-ads' || service.slug === 'meta-ads') return c.id === 'paid-media';
-    return c.id === 'seo';
-  }) || PRICING_CATEGORIES[0];
+  // Resolve matching pricing tiers
+  const pricingTiers =
+    service.category === 'paid-acquisition'
+      ? [PAID_ACQUISITION_PACKAGE]
+      : MAIN_PACKAGES;
 
   const breadcrumbItems = [
     { label: 'Industries', path: '/industries' },
@@ -91,7 +89,7 @@ export const ServiceIndustryDetailPage: React.FC = () => {
   ];
 
   return (
-    <>
+    <div className="bg-model3-base text-white selection:bg-amber-400 selection:text-black font-sans antialiased overflow-x-hidden">
       <SEOHead
         title={seo.title}
         description={seo.description}
@@ -109,18 +107,18 @@ export const ServiceIndustryDetailPage: React.FC = () => {
       />
 
       {/* ── 1. Hero Section ───────────────────────────────────────── */}
-      <section className="relative bg-navy-950 bg-hero-atmosphere text-white overflow-hidden py-16 sm:py-20 lg:py-28 border-b border-navy-800/80">
+      <section className="relative bg-model3-base bg-hero-atmosphere text-white overflow-hidden py-16 sm:py-20 lg:py-28 border-b border-white/10">
         <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
         <div className="absolute top-0 right-1/4 w-[320px] sm:w-[500px] h-[300px] sm:h-[400px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none" />
         <div className="absolute bottom-0 left-1/3 w-[260px] sm:w-[400px] h-[200px] sm:h-[300px] rounded-full bg-amber-500/10 blur-[80px] pointer-events-none" />
 
         <Container className="relative z-10">
-          <div className="mb-6 overflow-x-auto py-1">
+          <div className="w-full text-left mb-6 sm:mb-8 overflow-x-auto py-1">
             <Breadcrumb items={breadcrumbItems} variant="light" />
           </div>
 
-          <div className="max-w-3xl">
-            <div className="flex flex-wrap items-center gap-2 mb-4">
+          <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
               <Badge variant="purple" size="sm">
                 {industry.shortName} Vertical
               </Badge>
@@ -133,18 +131,18 @@ export const ServiceIndustryDetailPage: React.FC = () => {
               </div>
             </div>
 
-            <h1 className="type-h1 text-white mb-5">
+            <h1 className="type-h1 text-white mb-5 leading-tight">
               {service.name} for{' '}
               <span className="bg-gradient-to-r from-purple-400 via-amber-300 to-amber-400 bg-clip-text text-transparent">
                 {industry.name}
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 mb-8 leading-relaxed max-w-2xl">
+            <p className="text-base sm:text-lg text-slate-300 mb-8 leading-relaxed max-w-2xl mx-auto">
               {matrix.uniqueValue}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 w-full sm:w-auto">
               <Button
                 variant="gold"
                 size="lg"
@@ -167,7 +165,7 @@ export const ServiceIndustryDetailPage: React.FC = () => {
                 variant="outline"
                 size="lg"
                 href="/book-call"
-                className="w-full sm:w-auto text-center justify-center border-navy-700 text-white hover:bg-navy-800/60"
+                className="w-full sm:w-auto text-center justify-center border-white/15 text-white hover:bg-white/10 hover:border-amber-400/50"
                 onClick={() =>
                   trackEvent('cta_click', {
                     cta_name: 'book_strategy_call',
@@ -182,7 +180,7 @@ export const ServiceIndustryDetailPage: React.FC = () => {
             </div>
 
             {/* Capability Assurance Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-6 border-t border-navy-800/80">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-6 border-t border-white/10">
               <div className="p-3 rounded-xl bg-white/5 border border-white/10">
                 <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Target LCP</div>
                 <div className="text-sm sm:text-base font-extrabold text-emerald-400">&le; 2.2s Mobile</div>
@@ -205,7 +203,7 @@ export const ServiceIndustryDetailPage: React.FC = () => {
       </section>
 
       {/* ── 2. Conversion Focus Bar ───────────────────────────────── */}
-      <div className="bg-navy-900 border-y border-navy-800 text-slate-300 py-3.5">
+      <div className="bg-[#0B0B12] border-y border-white/10 text-slate-300 py-3.5">
         <Container>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-sm">
             <div className="flex items-center gap-2">
@@ -228,10 +226,10 @@ export const ServiceIndustryDetailPage: React.FC = () => {
             <Badge variant="rose" size="sm" className="mb-3">
               Technical Friction
             </Badge>
-            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-3">
+            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-white mb-3">
               Why Generic {service.shortName} Fails in {industry.name}
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
               Standard digital agencies treat {industry.name.toLowerCase()} like general e-commerce or SaaS. In contested verticals, high query volatility, strict crawler filtering, and intense domain competition render standard agency playbooks ineffective.
             </p>
           </div>
@@ -240,13 +238,13 @@ export const ServiceIndustryDetailPage: React.FC = () => {
             {matrix.specificChallenges.map((challenge, idx) => (
               <MotionCard key={challenge.title} delay={idx * 100} variant="default">
                 <div className="p-6">
-                  <div className="w-10 h-10 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-center mb-4 text-rose-600">
+                  <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center mb-4 text-rose-400">
                     <AlertTriangle className="w-5 h-5" />
                   </div>
-                  <h3 className="font-heading font-bold text-base text-slate-900 mb-2">
+                  <h3 className="font-heading font-bold text-base text-white mb-2">
                     {challenge.title}
                   </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
+                  <p className="text-sm text-slate-400 leading-relaxed">
                     {challenge.description}
                   </p>
                 </div>
@@ -263,71 +261,71 @@ export const ServiceIndustryDetailPage: React.FC = () => {
             <Badge variant="purple" size="sm" className="mb-3">
               4-Phase Implementation Framework
             </Badge>
-            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-4">
+            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-white mb-4">
               Our {industry.shortName} {service.shortName} Execution Sprint
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
               We execute in disciplined, milestone-driven sprints designed to systematically de-risk your digital architecture, establish crawl dominance, and expand search authority.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative">
-              <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 font-bold text-xs flex items-center justify-center mb-4">
+            <div className="bg-[#0D0D18]/90 rounded-2xl p-6 border border-white/10 shadow-lg backdrop-blur-sm relative">
+              <div className="w-8 h-8 rounded-xl bg-purple-900/40 text-purple-300 border border-purple-500/20 font-bold text-xs flex items-center justify-center mb-4">
                 01
               </div>
-              <h3 className="font-heading font-bold text-base text-slate-900 mb-2">
+              <h3 className="font-heading font-bold text-base text-white mb-2">
                 Diagnostic &amp; Entity Audit
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-400 leading-relaxed">
                 Full-scale crawl log analysis, headless browser JS rendering tests, indexation status audit, and competitive authority gap mapping against incumbent operators.
               </p>
-              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-purple-700">
+              <div className="mt-4 pt-3 border-t border-white/10 text-[11px] font-semibold text-purple-400">
                 Weeks 1–3 Deliverable
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative">
-              <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 font-bold text-xs flex items-center justify-center mb-4">
+            <div className="bg-[#0D0D18]/90 rounded-2xl p-6 border border-white/10 shadow-lg backdrop-blur-sm relative">
+              <div className="w-8 h-8 rounded-xl bg-purple-900/40 text-purple-300 border border-purple-500/20 font-bold text-xs flex items-center justify-center mb-4">
                 02
               </div>
-              <h3 className="font-heading font-bold text-base text-slate-900 mb-2">
+              <h3 className="font-heading font-bold text-base text-white mb-2">
                 Crawl &amp; Schema Architecture
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-400 leading-relaxed">
                 Implementation of faceted navigation canonical rules, robots.txt crawl budget isolation, and custom JSON-LD schema linking entities to authoritative knowledge graphs.
               </p>
-              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-purple-700">
+              <div className="mt-4 pt-3 border-t border-white/10 text-[11px] font-semibold text-purple-400">
                 Weeks 4–7 Deliverable
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative">
-              <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 font-bold text-xs flex items-center justify-center mb-4">
+            <div className="bg-[#0D0D18]/90 rounded-2xl p-6 border border-white/10 shadow-lg backdrop-blur-sm relative">
+              <div className="w-8 h-8 rounded-xl bg-purple-900/40 text-purple-300 border border-purple-500/20 font-bold text-xs flex items-center justify-center mb-4">
                 03
               </div>
-              <h3 className="font-heading font-bold text-base text-slate-900 mb-2">
+              <h3 className="font-heading font-bold text-base text-white mb-2">
                 Topical Moat &amp; Digital PR
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-400 leading-relaxed">
                 Deployment of comprehensive technical content hubs, player guides, and compliant editorial PR outreach to establish unassailable domain trust and contextual relevance.
               </p>
-              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-purple-700">
+              <div className="mt-4 pt-3 border-t border-white/10 text-[11px] font-semibold text-purple-400">
                 Weeks 8–12 Deliverable
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative">
-              <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 font-bold text-xs flex items-center justify-center mb-4">
+            <div className="bg-[#0D0D18]/90 rounded-2xl p-6 border border-white/10 shadow-lg backdrop-blur-sm relative">
+              <div className="w-8 h-8 rounded-xl bg-purple-900/40 text-purple-300 border border-purple-500/20 font-bold text-xs flex items-center justify-center mb-4">
                 04
               </div>
-              <h3 className="font-heading font-bold text-base text-slate-900 mb-2">
+              <h3 className="font-heading font-bold text-base text-white mb-2">
                 Continuous Algorithmic Defense
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-400 leading-relaxed">
                 Real-time SERP volatility tracking, Core Web Vitals telemetry monitoring, automated log analysis for bot anomalies, and proactive updates ahead of Google Core updates.
               </p>
-              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-purple-700">
+              <div className="mt-4 pt-3 border-t border-white/10 text-[11px] font-semibold text-purple-400">
                 Ongoing Engineering Retainer
               </div>
             </div>
@@ -343,44 +341,44 @@ export const ServiceIndustryDetailPage: React.FC = () => {
               <Badge variant="purple" size="sm" className="mb-3">
                 Tailored Methodology
               </Badge>
-              <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-5 leading-tight">
+              <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-white mb-5 leading-tight">
                 Our Architectural Strategy for {industry.name} {service.shortName}
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-6 text-sm sm:text-base">
+              <p className="text-slate-400 leading-relaxed mb-6 text-sm sm:text-base">
                 {matrix.specificApproach}
               </p>
               <div className="space-y-3">
-                <div className="flex items-start gap-3 text-sm text-slate-700">
-                  <TrendingUp className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 text-sm text-slate-300">
+                  <TrendingUp className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
                   <span>
-                    <strong>Topical Clustering &amp; Intent Mapping:</strong> Deep entity-driven hubs satisfying both search engine spiders and discerning players, capturing high-intent commercial terms.
+                    <strong className="text-white">Topical Clustering &amp; Intent Mapping:</strong> Deep entity-driven hubs satisfying both search engine spiders and discerning players, capturing high-intent commercial terms.
                   </span>
                 </div>
-                <div className="flex items-start gap-3 text-sm text-slate-700">
-                  <Zap className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 text-sm text-slate-300">
+                  <Zap className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <span>
-                    <strong>Execution Velocity &amp; Engineering PRs:</strong> Direct code changes submitted to your repository to eliminate bottleneck lag and maintain continuous deployment speed.
+                    <strong className="text-white">Execution Velocity &amp; Engineering PRs:</strong> Direct code changes submitted to your repository to eliminate bottleneck lag and maintain continuous deployment speed.
                   </span>
                 </div>
-                <div className="flex items-start gap-3 text-sm text-slate-700">
-                  <Layers className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 text-sm text-slate-300">
+                  <Layers className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <span>
-                    <strong>Jurisdictional &amp; Geo-Targeting:</strong> Strict hreflang and localized canonical architecture ensuring legal alignment across diverse regional markets.
+                    <strong className="text-white">Jurisdictional &amp; Geo-Targeting:</strong> Strict hreflang and localized canonical architecture ensuring legal alignment across diverse regional markets.
                   </span>
                 </div>
               </div>
             </div>
 
             {/* Deliverables Box */}
-            <div className="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
-              <h3 className="font-heading font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500 flex-shrink-0" />
+            <div className="bg-[#0D0D18]/90 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-lg backdrop-blur-sm">
+              <h3 className="font-heading font-bold text-lg text-white mb-4 flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
                 <span>Verified Deliverables for {industry.shortName}</span>
               </h3>
               <ul className="space-y-3.5">
                 {matrix.specificDeliverables.map((del) => (
-                  <li key={del} className="flex items-start gap-3 text-sm text-slate-700">
-                    <span className="w-1.5 h-1.5 rounded-full bg-purple-600 flex-shrink-0 mt-2" />
+                  <li key={del} className="flex items-start gap-3 text-sm text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0 mt-2" />
                     <span className="leading-relaxed">{del}</span>
                   </li>
                 ))}
@@ -397,22 +395,22 @@ export const ServiceIndustryDetailPage: React.FC = () => {
             <Badge variant="amber" size="sm" className="mb-3">
               Transparent Commercial Pricing
             </Badge>
-            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-4">
+            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-white mb-4">
               Engagement Tiers for {service.shortName}
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed mb-6">
               Clear, transparent monthly retainers with no hidden lock-in contracts. Scope is confirmed following your technical diagnostic session.
             </p>
 
             {/* Currency Toggle */}
-            <div className="inline-flex items-center p-1 rounded-xl bg-white border border-slate-200 shadow-xs">
+            <div className="inline-flex items-center p-1 rounded-xl bg-[#050505] border border-white/10 shadow-xs">
               <button
                 type="button"
                 onClick={() => setCurrency('INR')}
                 className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   currency === 'INR'
-                    ? 'bg-purple-600 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-amber-400 text-slate-950 shadow-xs'
+                    : 'text-slate-400 hover:text-white'
                 }`}
               >
                 INR (₹)
@@ -422,8 +420,8 @@ export const ServiceIndustryDetailPage: React.FC = () => {
                 onClick={() => setCurrency('USD')}
                 className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   currency === 'USD'
-                    ? 'bg-purple-600 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-amber-400 text-slate-950 shadow-xs'
+                    : 'text-slate-400 hover:text-white'
                 }`}
               >
                 USD ($)
@@ -431,39 +429,39 @@ export const ServiceIndustryDetailPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {pricingCat.tiers.map((tier) => (
+          <div className={`grid grid-cols-1 ${pricingTiers.length === 1 ? 'max-w-md' : 'md:grid-cols-3 max-w-5xl'} gap-6 mx-auto`}>
+            {pricingTiers.map((tier) => (
               <div
                 key={tier.id}
-                className={`rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all bg-white border ${
+                className={`rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all bg-[#0D0D18]/90 border ${
                   tier.featured
-                    ? 'border-purple-600 ring-2 ring-purple-600/20 shadow-md relative'
-                    : 'border-slate-200 shadow-sm'
+                    ? 'border-amber-400 ring-2 ring-amber-400/20 shadow-xl relative'
+                    : 'border-white/10 shadow-sm hover:border-amber-400/30'
                 }`}
               >
                 <div>
                   {tier.featured && (
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-[11px] font-bold mb-4">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/30 text-[11px] font-bold mb-4">
                       <Sparkles className="w-3.5 h-3.5" />
                       <span>Most Popular</span>
                     </div>
                   )}
-                  <h3 className="font-heading font-bold text-lg text-slate-900 mb-1">
+                  <h3 className="font-heading font-bold text-lg text-white mb-1">
                     {tier.name}
                   </h3>
-                  <p className="text-xs text-slate-500 mb-4 min-h-[32px] leading-relaxed">
+                  <p className="text-xs text-slate-400 mb-4 min-h-[32px] leading-relaxed">
                     {tier.tagline}
                   </p>
-                  <div className="mb-4 pb-4 border-b border-slate-100">
-                    <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                  <div className="mb-4 pb-4 border-b border-white/10">
+                    <div className="text-2xl sm:text-3xl font-extrabold text-white">
                       {currency === 'INR' ? tier.priceINR : tier.priceUSD}
                     </div>
-                    <div className="text-[11px] text-slate-500 mt-0.5">{tier.billingNote}</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5">{tier.billingNote}</div>
                   </div>
                   <ul className="space-y-2.5 mb-6">
                     {tier.features.slice(0, 5).map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-xs text-slate-700">
-                        <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <li key={f} className="flex items-start gap-2 text-xs text-slate-300">
+                        <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                         <span className="leading-relaxed">{f}</span>
                       </li>
                     ))}
@@ -471,7 +469,7 @@ export const ServiceIndustryDetailPage: React.FC = () => {
                 </div>
                 <Button
                   to={tier.ctaPath}
-                  variant={tier.featured ? 'primary' : 'outline'}
+                  variant={tier.featured ? 'gold' : 'outline'}
                   size="md"
                   className="w-full text-center justify-center"
                 >
@@ -481,21 +479,21 @@ export const ServiceIndustryDetailPage: React.FC = () => {
             ))}
           </div>
 
-          <div className="max-w-3xl mx-auto mt-6 p-4 rounded-xl bg-amber-50 border border-amber-200/80 text-center">
-            <p className="text-xs text-amber-950/80 leading-relaxed font-medium">
-              <strong>Transparent Scoping Notice:</strong> {PRICING_DISCLAIMER}
+          <div className="max-w-3xl mx-auto mt-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center">
+            <p className="text-xs text-amber-300 leading-relaxed font-medium">
+              <strong className="text-amber-200">Transparent Scoping Notice:</strong> {PRICING_DISCLAIMER}
             </p>
           </div>
         </Container>
       </Section>
 
       {/* ── 7. Regulatory & Compliance Notice ─────────────────────── */}
-      <div className="bg-amber-50/70 border-y border-amber-200/70 py-6">
+      <div className="bg-amber-500/5 border-y border-amber-500/20 py-6">
         <Container>
           <div className="max-w-4xl mx-auto flex items-start gap-4">
-            <ShieldCheck className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-            <div className="text-xs text-amber-950/80 leading-relaxed">
-              <span className="font-bold text-amber-950">Compliance &amp; Jurisdictional Standard: </span>
+            <ShieldCheck className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+            <div className="text-xs text-amber-300 leading-relaxed">
+              <span className="font-bold text-amber-200">Compliance &amp; Jurisdictional Standard: </span>
               Search architecture and digital growth strategies for {industry.name} {service.name} are provided strictly subject to applicable regional legislation and advertising guidelines. We partner exclusively with legally compliant operators and licensed platforms. We do not support black-hat tactics, cloaking, or regulatory circumvention.
             </div>
           </div>
@@ -509,20 +507,15 @@ export const ServiceIndustryDetailPage: React.FC = () => {
             <Badge variant="purple" size="sm" className="mb-3">
               Technical Q&amp;A
             </Badge>
-            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-slate-900 mb-3">
+            <h2 className="font-heading font-extrabold text-2xl lg:text-3xl text-white mb-3">
               Frequently Asked Questions: {industry.shortName} {service.shortName}
             </h2>
-            <p className="text-slate-600 text-sm">
+            <p className="text-slate-400 text-sm">
               Answers to common technical, indexing, and operational questions for this vertical.
             </p>
           </div>
           <div className="max-w-3xl mx-auto">
-            <FAQAccordion
-              items={allFAQs.map((f) => ({
-                question: f.q,
-                answer: f.a,
-              }))}
-            />
+            <FAQAccordion items={allFAQs} />
           </div>
         </Container>
       </Section>
@@ -530,50 +523,50 @@ export const ServiceIndustryDetailPage: React.FC = () => {
       {/* ── 9. Internal Link Graph / Cross-Links ──────────────────── */}
       <Section variant="slate" spacing="md">
         <Container>
-          <div className="border-t border-slate-200 pt-8">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">
+          <div className="border-t border-white/10 pt-8">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
               Explore Related {industry.shortName} Capabilities &amp; Frameworks
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <Link
                 to={crossLinks.parentIndustryLink.path}
-                className="p-4 rounded-xl bg-white border border-slate-200 hover:border-purple-300 hover:shadow-sm transition-all group flex items-center justify-between"
+                className="p-4 rounded-xl bg-[#0D0D18]/90 border border-white/10 hover:border-amber-400/30 hover:shadow-sm transition-all group flex items-center justify-between"
               >
                 <div>
-                  <div className="text-xs text-purple-600 font-semibold mb-1">Industry Hub</div>
-                  <div className="text-sm font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
+                  <div className="text-xs text-amber-400 font-semibold mb-1">Industry Hub</div>
+                  <div className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
                     {crossLinks.parentIndustryLink.title}
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all" />
+                <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
               </Link>
 
               <Link
                 to={crossLinks.parentServiceLink.path}
-                className="p-4 rounded-xl bg-white border border-slate-200 hover:border-purple-300 hover:shadow-sm transition-all group flex items-center justify-between"
+                className="p-4 rounded-xl bg-[#0D0D18]/90 border border-white/10 hover:border-amber-400/30 hover:shadow-sm transition-all group flex items-center justify-between"
               >
                 <div>
-                  <div className="text-xs text-purple-600 font-semibold mb-1">Core Service</div>
-                  <div className="text-sm font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
+                  <div className="text-xs text-amber-400 font-semibold mb-1">Core Service</div>
+                  <div className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
                     {crossLinks.parentServiceLink.title}
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all" />
+                <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
               </Link>
 
               {crossLinks.siblingServiceLinks.slice(0, 1).map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className="p-4 rounded-xl bg-white border border-slate-200 hover:border-purple-300 hover:shadow-sm transition-all group flex items-center justify-between"
+                  className="p-4 rounded-xl bg-[#0D0D18]/90 border border-white/10 hover:border-amber-400/30 hover:shadow-sm transition-all group flex items-center justify-between"
                 >
                   <div>
-                    <div className="text-xs text-purple-600 font-semibold mb-1">Adjacent Vertical</div>
-                    <div className="text-sm font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
+                    <div className="text-xs text-amber-400 font-semibold mb-1">Adjacent Vertical</div>
+                    <div className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
                       {link.title}
                     </div>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all" />
+                  <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
                 </Link>
               ))}
             </div>
@@ -582,7 +575,7 @@ export const ServiceIndustryDetailPage: React.FC = () => {
       </Section>
 
       {/* ── 10. Contextual Bottom CTA ─────────────────────────────── */}
-      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-16 sm:py-20 overflow-hidden border-t border-navy-800/80">
+      <section className="relative bg-model3-base bg-hero-atmosphere text-white py-16 sm:py-20 overflow-hidden border-t border-white/10">
         <div className="absolute inset-0 bg-dark-mesh opacity-20 pointer-events-none" />
         <Container className="relative z-10">
           <div className="max-w-3xl mx-auto text-center">
@@ -620,7 +613,7 @@ export const ServiceIndustryDetailPage: React.FC = () => {
                   variant="outline"
                   size="lg"
                   href="/book-call"
-                  className="w-full sm:w-auto text-center justify-center border-navy-700 text-white hover:bg-navy-800/60"
+                  className="w-full sm:w-auto text-center justify-center border-white/15 text-white hover:bg-white/10 hover:border-amber-400/50"
                   onClick={() =>
                     trackEvent('cta_click', {
                       cta_name: 'book_strategy_call',
@@ -637,7 +630,7 @@ export const ServiceIndustryDetailPage: React.FC = () => {
           </div>
         </Container>
       </section>
-    </>
+    </div>
   );
 };
 

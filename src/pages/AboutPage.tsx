@@ -11,41 +11,15 @@ import {
   CheckCircle2,
   Sparkles,
   Terminal,
+  Shield,
+  MessageSquare
 } from 'lucide-react';
 import { SEOHead } from '../seo';
 import { buildBreadcrumbSchema } from '../seo/schema';
-import { Container, Section, Button, Breadcrumb, FAQAccordion } from '../components/ui';
+import { Container, Button, Breadcrumb, FAQAccordion } from '../components/ui';
 import { ENGAGEMENT_PROCESS, COMPLIANCE_COMMITMENTS, COMPARISON_ROWS, TOOL_STACK } from '../data/trustData';
-import useInView from '../hooks/useInView';
 import { trackEvent } from '../analytics';
-
-// ─── Reusable Reveal Component ────────────────────────────────────────────────
-const Reveal: React.FC<{
-  children: React.ReactNode;
-  direction?: 'up' | 'left' | 'right' | 'scale';
-  delay?: number;
-  className?: string;
-}> = ({ children, direction = 'up', delay = 0, className = '' }) => {
-  const [ref, isInView] = useInView({ threshold: 0.1, once: true });
-  const animClass =
-    direction === 'left'
-      ? 'reveal-left'
-      : direction === 'right'
-      ? 'reveal-right'
-      : direction === 'scale'
-      ? 'reveal-scale'
-      : 'reveal-up';
-
-  return (
-    <div
-      ref={ref}
-      className={`${animClass} ${isInView ? 'in-view' : ''} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </div>
-  );
-};
+import businessConfig from '../config/business';
 
 const ABOUT_VALUES = [
   {
@@ -84,12 +58,12 @@ const ABOUT_FAQS = [
   {
     question: 'Where is iGaming Growth based, and what markets do you serve?',
     answer:
-      'iGaming Growth operates as a specialist B2B digital growth consultancy with engineering hubs in India and global client engagements across Southeast Asia, the UK, Europe, Latin America, and emerging regulated markets worldwide. We handle multi-jurisdiction setups with specialized hreflang and edge routing configurations.',
+      'iGaming Growth operates as a specialist B2B digital growth consultancy headquartered in Kathmandu, Nepal, as part of the GrowthService group (https://growthservice.in). We serve operators and digital platforms across South Asia, Southeast Asia, the UK, Europe, Latin America, and emerging regulated markets worldwide.',
   },
   {
     question: 'How do you structure client engagements?',
     answer:
-      'We work through dedicated monthly growth retainers or defined project-based engineering scopes (such as technical SEO architecture audits or custom headless platform builds). Every engagement is led directly by senior SEO engineers rather than junior account coordinators.',
+      'We work through dedicated monthly growth retainers or defined project-based engineering scopes (such as technical SEO architecture audits or custom headless platform builds). Every engagement is led directly by senior systems architects rather than junior account coordinators.',
   },
   {
     question: 'Why do you emphasize process proof instead of traditional agency testimonials?',
@@ -110,9 +84,10 @@ const ABOUT_FAQS = [
 
 export const AboutPage: React.FC = () => {
   const breadcrumbItems = [{ label: 'About Us' }];
+  const whatsappPhone = (businessConfig.phone?.whatsapp || businessConfig.contact?.whatsapp || '917654928455').replace(/[^0-9]/g, '');
 
   return (
-    <>
+    <div className="bg-model3-base text-white selection:bg-amber-400 selection:text-black font-sans antialiased overflow-x-hidden">
       <SEOHead
         title="About iGaming Growth — Specialist B2B Digital Growth & Technical SEO Agency"
         description="Learn about iGaming Growth: our engineering-led philosophy, strict white-hat compliance standards, vertical specialization, and process-proven growth methodology for high-competition digital markets."
@@ -121,34 +96,46 @@ export const AboutPage: React.FC = () => {
       />
 
       {/* ── 1. HERO SECTION ──────────────────────────────────────────────── */}
-      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-20 lg:py-28 overflow-hidden border-b border-navy-800/80">
-        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
-        <div className="absolute top-0 right-1/4 w-[600px] h-[400px] rounded-full bg-purple-600/15 blur-[120px] pointer-events-none" />
-        <div className="absolute -bottom-20 -left-20 w-[400px] h-[350px] rounded-full bg-blue-600/10 blur-[100px] pointer-events-none" />
+      <section className="relative min-h-[75vh] pt-28 pb-16 lg:pt-36 lg:pb-24 bg-model3-base overflow-hidden flex items-center border-b border-white/10">
+        <div className="absolute top-0 right-1/4 w-[600px] h-[450px] rounded-full bg-purple-900/15 blur-[140px] pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-[450px] h-[400px] rounded-full bg-blue-900/10 blur-[130px] pointer-events-none" />
+        <div 
+          className="absolute inset-0 opacity-[0.035] pointer-events-none"
+          style={{
+            backgroundImage: `radial-gradient(#ffffff 1px, transparent 1px)`,
+            backgroundSize: '24px 24px',
+          }}
+        />
 
         <Container className="relative z-10">
-          <Breadcrumb items={breadcrumbItems} className="mb-6 text-slate-400" />
+          <div className="w-full text-left mb-6 sm:mb-8">
+            <Breadcrumb items={breadcrumbItems} className="text-slate-400" />
+          </div>
 
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider mb-6">
-              <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-              <span>Agency Manifesto & Technical DNA</span>
+          <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-6 shadow-inner">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Agency Manifesto &amp; Technical DNA</span>
             </div>
 
-            <h1 className="type-h1 text-white mb-6 leading-tight">
-              An Engineering-Led Growth Partner for Contested Digital Markets
+            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-extrabold tracking-tight text-white font-heading leading-[1.08] mb-6">
+              An Engineering-Led Partner for <br className="hidden sm:inline" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500">
+                Contested Digital Markets
+              </span>
             </h1>
 
-            <p className="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto mb-8">
+            <p className="text-lg lg:text-xl text-slate-300 leading-relaxed max-w-3xl mb-8">
               We built iGaming Growth to solve a systemic problem in digital marketing: high-competition, policy-controlled operators were consistently being failed by generalist agencies applying generic playbooks to markets they fundamentally did not understand.
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10 w-full sm:w-auto">
               <Button
                 to="/free-seo-audit"
                 variant="gold"
                 size="lg"
-                icon={<Zap className="w-4 h-4" />}
+                className="w-full sm:w-auto justify-center"
+                icon={<Zap className="w-4 h-4 text-slate-950" />}
                 onClick={() => trackEvent('cta_click', { cta_name: 'audit_hero', cta_location: 'about_hero' })}
               >
                 Request Architectural Audit
@@ -157,305 +144,371 @@ export const AboutPage: React.FC = () => {
                 to="/contact"
                 variant="outline"
                 size="lg"
-                className="border-navy-700 text-white hover:bg-navy-800/60"
+                className="w-full sm:w-auto justify-center border-white/15 text-white hover:bg-white/10"
               >
                 Schedule Diagnostic Call
               </Button>
+            </div>
+
+            {/* Quick stats */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-6 border-t border-white/10">
+              <div className="p-3 sm:p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+                <div className="text-xl sm:text-2xl font-black text-white font-heading">8</div>
+                <div className="text-[11px] sm:text-xs text-slate-400">Specialist Verticals</div>
+              </div>
+              <div className="p-3 sm:p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+                <div className="text-xl sm:text-2xl font-black text-emerald-400 font-heading">100%</div>
+                <div className="text-[11px] sm:text-xs text-slate-400">Code PR Delivery</div>
+              </div>
+              <div className="p-3 sm:p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+                <div className="text-xl sm:text-2xl font-black text-purple-400 font-heading">0 Bans</div>
+                <div className="text-[11px] sm:text-xs text-slate-400">Strict Whitelisting</div>
+              </div>
+              <div className="p-3 sm:p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+                <div className="text-xl sm:text-2xl font-black text-amber-400 font-heading">Mutual NDA</div>
+                <div className="text-[11px] sm:text-xs text-slate-400">Confidentiality Assured</div>
+              </div>
             </div>
           </div>
         </Container>
       </section>
 
       {/* ── 2. THE AGENCY STORY & PURPOSE ───────────────────────────────── */}
-      <Section variant="white" spacing="lg">
+      <section className="py-20 lg:py-28 bg-model3-surface/70 border-b border-white/10">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <Reveal direction="left">
-              <div>
-                <div className="type-eyebrow mb-3">Our Genesis</div>
-                <h2 className="type-h2 text-slate-900 mb-6">
-                  Why Mainstream Agency Frameworks Consistently Fail In Complex Verticals
-                </h2>
-                <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
-                  <p>
-                    When a generalist agency takes on a client in online casino, financial trading, or adult entertainment, they immediately hit walls they have never encountered before. Advertising networks reject their ad accounts. Search engine quality raters flag their content under strict YMYL algorithmic parameters. Competitors dominate the SERPs with sophisticated programmatic architectures, server-side caching layers, and decade-old domain equity.
-                  </p>
-                  <p>
-                    The generalist response is typically to recommend more volume: churn out hundreds of low-quality AI articles, purchase dubious private blog network (PBN) links, or attempt unauthorized cloaking hacks. The inevitable outcome is algorithmic penalties, burned advertising profiles, wasted budgets, and lost quarters of growth.
-                  </p>
-                  <p>
-                    iGaming Growth was founded to represent the disciplined antithesis to that failure mode. We approach competitive growth from an engineering perspective: log file analysis, crawl budget management, structured data modeling, high-standards editorial E-E-A-T authorship, and genuine authority acquisition through contextually aligned editorial relationships.
-                  </p>
-                </div>
-
-                <div className="mt-8 flex items-center gap-4">
-                  <Link
-                    to="/editorial-policy"
-                    className="inline-flex items-center gap-2 text-xs font-bold text-purple-700 hover:text-purple-900 transition-colors"
-                  >
-                    Read Our Editorial Integrity Policy <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div className="lg:col-span-7">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-3">
+                <Shield className="w-3.5 h-3.5 text-amber-400" />
+                <span>Our Genesis</span>
               </div>
-            </Reveal>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading mb-6">
+                Why Mainstream Agency Playbooks Fail In Complex Verticals
+              </h2>
+              <div className="space-y-4 text-slate-300 text-sm leading-relaxed">
+                <p>
+                  When a generalist agency takes on a client in online casino, financial trading, or adult entertainment, they immediately hit walls they have never encountered before. Advertising networks reject their ad accounts. Search engine quality raters flag their content under strict YMYL algorithmic parameters. Competitors dominate the SERPs with sophisticated programmatic architectures, server-side caching layers, and decade-old domain equity.
+                </p>
+                <p>
+                  The generalist response is typically to recommend more volume: churn out hundreds of low-quality AI articles, purchase dubious private blog network (PBN) links, or attempt unauthorized cloaking hacks. The inevitable outcome is algorithmic penalties, burned advertising profiles, wasted budgets, and lost quarters of growth.
+                </p>
+                <p>
+                  iGaming Growth was founded to represent the disciplined antithesis to that failure mode. We approach competitive growth from an engineering perspective: log file analysis, crawl budget management, structured data modeling, high-standards editorial E-E-A-T authorship, and genuine authority acquisition through contextually aligned editorial relationships.
+                </p>
+              </div>
+
+              <div className="mt-8 flex items-center gap-4">
+                <Link
+                  to="/editorial-policy"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-amber-400 hover:text-amber-300 transition-colors"
+                >
+                  <span>Read Our Editorial Integrity Policy</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
 
             {/* Metrics grid */}
-            <Reveal direction="right" delay={150}>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { value: '8', label: 'Specialist Verticals Only', sub: 'Zero generic retail dilution' },
-                  { value: '12', label: 'Growth Disciplines', sub: 'Technical, organic & CRO' },
-                  { value: '100%', label: 'White-Hat Execution', sub: 'Zero algorithmic shortcuts' },
-                  { value: '0', label: 'Fabricated Testimonials', sub: 'Process proof & NDAs' },
-                  { value: '200+', label: 'Audit Inspection Checkpoints', sub: 'Manual senior engineering' },
-                  { value: '24h', label: 'Diagnostic Turnaround', sub: 'Rapid scoping cadence' },
-                ].map((s, idx) => (
-                  <div
-                    key={idx}
-                    className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-card-hover hover:border-purple-300/80 transition-all duration-300 hover:-translate-y-1"
-                  >
-                    <div className="text-3xl font-heading font-black text-purple-700 mb-1">{s.value}</div>
-                    <div className="text-xs font-bold text-slate-800 mb-0.5">{s.label}</div>
-                    <div className="text-[10px] text-slate-500">{s.sub}</div>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
+            <div className="lg:col-span-5 grid grid-cols-2 gap-4">
+              {[
+                { value: '8', label: 'Specialist Verticals Only', sub: 'Zero generic retail dilution' },
+                { value: '12', label: 'Growth Disciplines', sub: 'Technical, organic & CRO' },
+                { value: '100%', label: 'White-Hat Execution', sub: 'Zero algorithmic shortcuts' },
+                { value: '0', label: 'Fabricated Testimonials', sub: 'Process proof & NDAs' },
+                { value: '200+', label: 'Inspection Checkpoints', sub: 'Manual senior engineering' },
+                { value: '24h', label: 'Diagnostic Turnaround', sub: 'Rapid scoping cadence' },
+              ].map((s, idx) => (
+                <div
+                  key={idx}
+                  className="p-5 rounded-2xl bg-model3-base/90 border border-white/10 shadow-xl hover:border-amber-400/40 transition-all"
+                >
+                  <div className="text-3xl font-heading font-black text-amber-400 mb-1">{s.value}</div>
+                  <div className="text-xs font-bold text-white mb-0.5">{s.label}</div>
+                  <div className="text-[10px] text-slate-400">{s.sub}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </Container>
-      </Section>
+      </section>
 
       {/* ── 3. OPERATING DNA / 6 CORE PRINCIPLES ─────────────────────────── */}
-      <Section variant="subtle" spacing="lg">
+      <section className="py-20 lg:py-28 bg-model3-base border-b border-white/10">
         <Container>
-          <Reveal direction="up" className="max-w-2xl mx-auto text-center mb-16">
-            <div className="type-eyebrow mb-2">Our Operating DNA</div>
-            <h2 className="type-h2 text-slate-900 mb-4">
+          <div className="max-w-2xl mx-auto text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Our Operating DNA</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading mb-4">
               The 6 Principles That Guide Every Engagement
             </h2>
-            <p className="text-slate-600 text-sm leading-relaxed">
+            <p className="text-slate-300 text-sm leading-relaxed">
               These are not aspirational slogans on an office wall. They are concrete operational boundaries enforced across every sprint, pull request, and editorial brief we produce.
             </p>
-          </Reveal>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {ABOUT_VALUES.map((v, idx) => {
+            {ABOUT_VALUES.map((v) => {
               const Icon = v.icon;
               return (
-                <Reveal key={v.title} direction="up" delay={idx * 80}>
-                  <div className="h-full flex flex-col p-8 rounded-3xl border border-slate-200 bg-white hover:border-purple-300 hover:shadow-card-hover gradient-border-card transition-all duration-300 hover:-translate-y-1.5">
-                    <div className="w-12 h-12 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center mb-5">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <h3 className="font-heading font-bold text-slate-900 text-lg mb-3">
-                      {v.title}
-                    </h3>
-                    <p className="text-xs text-slate-600 leading-relaxed flex-1">
-                      {v.desc}
-                    </p>
+                <div
+                  key={v.title}
+                  className="h-full flex flex-col p-8 rounded-3xl border border-white/10 bg-model3-surface/80 backdrop-blur-md hover:border-amber-400/40 hover:shadow-xl hover:shadow-amber-950/20 transition-all duration-300 hover:-translate-y-1.5"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/30 text-amber-400 flex items-center justify-center mb-5">
+                    <Icon className="w-6 h-6" />
                   </div>
-                </Reveal>
+                  <h3 className="font-heading font-bold text-white text-lg mb-3">
+                    {v.title}
+                  </h3>
+                  <p className="text-xs text-slate-400 leading-relaxed flex-1">
+                    {v.desc}
+                  </p>
+                </div>
               );
             })}
           </div>
         </Container>
-      </Section>
+      </section>
 
       {/* ── 4. GENERALIST VS SPECIALIST COMPARISON TABLE ─────────────────── */}
-      <Section variant="white" spacing="lg">
+      <section className="py-20 lg:py-28 bg-model3-panel border-b border-white/10">
         <Container>
-          <Reveal direction="up" className="max-w-3xl mx-auto text-center mb-14">
-            <div className="type-eyebrow mb-2">Clear Differentiation</div>
-            <h2 className="type-h2 text-slate-900 mb-4">
+          <div className="max-w-3xl mx-auto text-center mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-3">
+              <Shield className="w-3.5 h-3.5 text-amber-400" />
+              <span>Clear Differentiation</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading mb-4">
               Generalist Agency vs iGaming Growth Specialist
             </h2>
-            <p className="text-slate-600 text-sm leading-relaxed">
-              See the direct operational differences between standard commercial agency practices and our engineering-first, vertical-calibrated delivery model.
+            <p className="text-slate-300 text-sm leading-relaxed">
+              See the direct operational differences between standard commercial agency practices and our engineering-first delivery model.
             </p>
-          </Reveal>
+          </div>
 
-          <Reveal direction="up" delay={100}>
-            <div className="overflow-x-auto rounded-3xl border border-slate-200 shadow-sm bg-white">
-              <table className="w-full text-left text-sm border-collapse">
-                <thead>
-                  <tr className="border-b border-slate-200 bg-slate-50">
-                    <th className="p-5 font-bold text-slate-900 text-xs uppercase tracking-wider w-1/4">
-                      Strategic Dimension
-                    </th>
-                    <th className="p-5 font-bold text-slate-500 text-xs uppercase tracking-wider w-3/8">
-                      Standard Digital Agency
-                    </th>
-                    <th className="p-5 font-bold text-purple-700 text-xs uppercase tracking-wider w-3/8 bg-purple-50/50">
-                      iGaming Growth Engineering
-                    </th>
+          <div className="overflow-x-auto rounded-3xl border border-white/15 shadow-2xl bg-model3-deep/90 backdrop-blur-md">
+            <table className="w-full text-left text-sm border-collapse min-w-[600px]">
+              <thead>
+                <tr className="border-b border-white/10 bg-model3-base">
+                  <th className="p-5 font-bold text-slate-300 text-xs uppercase tracking-wider w-1/4 font-mono">
+                    Strategic Dimension
+                  </th>
+                  <th className="p-5 font-bold text-slate-400 text-xs uppercase tracking-wider w-3/8 font-mono">
+                    Standard Digital Agency
+                  </th>
+                  <th className="p-5 font-bold text-amber-400 text-xs uppercase tracking-wider w-3/8 bg-amber-400/5 font-mono">
+                    iGaming Growth Squad
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {COMPARISON_ROWS.map((row, rIdx) => (
+                  <tr key={rIdx} className="hover:bg-white/[0.02] transition-colors">
+                    <td className="p-5 font-bold text-white text-xs">
+                      {row.aspect}
+                    </td>
+                    <td className="p-5 text-slate-400 text-xs leading-relaxed">
+                      {row.generalist}
+                    </td>
+                    <td className="p-5 text-amber-300 font-medium text-xs leading-relaxed bg-amber-400/5">
+                      {row.specialist}
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {COMPARISON_ROWS.map((row, rIdx) => (
-                    <tr key={rIdx} className="hover:bg-slate-50/60 transition-colors">
-                      <td className="p-5 font-bold text-slate-800 text-xs">
-                        {row.aspect}
-                      </td>
-                      <td className="p-5 text-slate-500 text-xs leading-relaxed">
-                        {row.generalist}
-                      </td>
-                      <td className="p-5 text-purple-950 font-medium text-xs leading-relaxed bg-purple-50/30">
-                        {row.specialist}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </Reveal>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </Container>
-      </Section>
+      </section>
 
       {/* ── 5. 5-STEP CLIENT ENGAGEMENT METHODOLOGY ──────────────────────── */}
-      <section className="bg-navy-950 text-white py-20 lg:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-dark-mesh opacity-20 pointer-events-none" />
+      <section className="py-20 lg:py-28 bg-model3-base text-white relative overflow-hidden border-b border-white/10">
         <Container className="relative z-10">
-          <Reveal direction="up" className="max-w-2xl mx-auto text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider mb-4">
+          <div className="max-w-2xl mx-auto text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-4">
+              <Terminal className="w-3.5 h-3.5 text-amber-400" />
               <span>Delivery Architecture</span>
             </div>
-            <h2 className="type-h2 text-white mb-4">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading mb-4">
               The 5-Stage Engagement Framework
             </h2>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Every partnership follows a rigorous, predictable delivery lifecycle designed to eliminate black-box execution and maintain absolute alignment.
+              Every partnership follows a predictable delivery lifecycle designed to eliminate black-box execution and maintain absolute transparency.
             </p>
-          </Reveal>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            {ENGAGEMENT_PROCESS.map((step, sIdx) => (
-              <Reveal key={step.step} direction="up" delay={sIdx * 100}>
-                <div className="p-6 rounded-3xl bg-navy-900/60 border border-slate-800 h-full flex flex-col">
-                  <div className="text-3xl font-black text-purple-400/30 mb-2">0{step.step}</div>
-                  <div className="text-[11px] font-bold text-amber-400 uppercase tracking-wider mb-1">
-                    {step.duration}
-                  </div>
-                  <h4 className="font-heading font-bold text-white text-base mb-2">{step.title}</h4>
-                  <p className="text-xs text-slate-400 leading-relaxed mb-4 flex-1">{step.description}</p>
-                  <div className="pt-3 border-t border-slate-800/80">
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                      Key Output
-                    </div>
-                    <p className="text-xs text-purple-300 font-medium">{step.deliverable}</p>
-                  </div>
+            {ENGAGEMENT_PROCESS.map((step) => (
+              <div key={step.step} className="p-6 rounded-3xl bg-model3-surface/80 border border-white/10 h-full flex flex-col">
+                <div className="text-3xl font-black text-white/20 mb-2 font-mono">0{step.step}</div>
+                <div className="text-[11px] font-bold text-amber-400 uppercase tracking-wider mb-1">
+                  {step.duration}
                 </div>
-              </Reveal>
+                <h4 className="font-heading font-bold text-white text-base mb-2">{step.title}</h4>
+                <p className="text-xs text-slate-400 leading-relaxed mb-4 flex-1">{step.description}</p>
+                <div className="pt-3 border-t border-white/10">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                    Key Output
+                  </div>
+                  <p className="text-xs text-purple-300 font-medium">{step.deliverable}</p>
+                </div>
+              </div>
             ))}
           </div>
         </Container>
       </section>
 
       {/* ── 6. TOOLING STACK & TECHNICAL CAPABILITIES ────────────────────── */}
-      <Section variant="subtle" spacing="lg">
+      <section className="py-20 lg:py-28 bg-model3-surface/70 border-b border-white/10">
         <Container>
-          <Reveal direction="up" className="max-w-3xl mx-auto text-center mb-14">
-            <div className="type-eyebrow mb-2">Tooling Infrastructure</div>
-            <h2 className="type-h2 text-slate-900 mb-4">
-              Enterprise Instrumentation & Tool Stack
+          <div className="max-w-3xl mx-auto text-center mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-3">
+              <Terminal className="w-3.5 h-3.5 text-amber-400" />
+              <span>Tooling Infrastructure</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading mb-4">
+              Enterprise Instrumentation &amp; Tool Stack
             </h2>
-            <p className="text-slate-600 text-sm leading-relaxed">
+            <p className="text-slate-300 text-sm leading-relaxed">
               We do not rely on basic web crawler extensions. We deploy enterprise-grade diagnostics, custom server log streaming pipelines, and automated schema validation systems.
             </p>
-          </Reveal>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {TOOL_STACK.map((group, gIdx) => (
-              <Reveal key={group.category} direction="up" delay={gIdx * 70}>
-                <div className="p-7 rounded-3xl border border-slate-200 bg-white shadow-sm h-full flex flex-col">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Terminal className="w-5 h-5 text-purple-600" />
-                    <h3 className="font-heading font-bold text-slate-900 text-base">
-                      {group.category}
-                    </h3>
-                  </div>
-                  <ul className="space-y-2 flex-1">
-                    {group.tools.map((t, tIdx) => (
-                      <li key={tIdx} className="flex items-center gap-2 text-xs text-slate-600">
-                        <span className="w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0" />
-                        <span>{t}</span>
-                      </li>
-                    ))}
-                  </ul>
+            {TOOL_STACK.map((group) => (
+              <div key={group.category} className="p-7 rounded-3xl border border-white/10 bg-model3-base/80 shadow-xl h-full flex flex-col hover:border-amber-400/40 transition-colors">
+                <div className="flex items-center gap-2 mb-4">
+                  <Terminal className="w-5 h-5 text-amber-400" />
+                  <h3 className="font-heading font-bold text-white text-base">
+                    {group.category}
+                  </h3>
                 </div>
-              </Reveal>
+                <ul className="space-y-2 flex-1">
+                  {group.tools.map((t, tIdx) => (
+                    <li key={tIdx} className="flex items-center gap-2 text-xs text-slate-300 font-mono">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
+                      <span>{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </Container>
-      </Section>
+      </section>
 
       {/* ── 7. COMPLIANCE COMMITMENTS ────────────────────────────────────── */}
-      <Section variant="white" spacing="lg">
+      <section className="py-20 lg:py-28 bg-model3-base border-b border-white/10">
         <Container>
-          <Reveal direction="up" className="max-w-3xl mx-auto text-center mb-14">
-            <div className="type-eyebrow mb-2">Ethical Standards</div>
-            <h2 className="type-h2 text-slate-900 mb-4">
+          <div className="max-w-3xl mx-auto text-center mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-3">
+              <Shield className="w-3.5 h-3.5 text-amber-400" />
+              <span>Ethical Standards</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading mb-4">
               Our Non-Negotiable Compliance Commitments
             </h2>
-            <p className="text-slate-600 text-sm leading-relaxed">
+            <p className="text-slate-300 text-sm leading-relaxed">
               Transparency and long-term asset preservation take precedence over quick vanity spikes. These four commitments govern all client work.
             </p>
-          </Reveal>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {COMPLIANCE_COMMITMENTS.map((comm, cIdx) => (
-              <Reveal key={comm.title} direction="up" delay={cIdx * 90}>
-                <div className="p-7 rounded-3xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-purple-200 hover:shadow-card transition-all h-full">
-                  <div className="flex items-start gap-3.5">
-                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-heading font-bold text-slate-900 text-base mb-2">
-                        {comm.title}
-                      </h3>
-                      <p className="text-xs text-slate-600 leading-relaxed">
-                        {comm.description}
-                      </p>
-                    </div>
+            {COMPLIANCE_COMMITMENTS.map((comm) => (
+              <div key={comm.title} className="p-7 rounded-3xl border border-white/10 bg-model3-surface/80 hover:border-amber-400/40 transition-all h-full">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-8 h-8 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-heading font-bold text-white text-base mb-2">
+                      {comm.title}
+                    </h3>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      {comm.description}
+                    </p>
                   </div>
                 </div>
-              </Reveal>
+              </div>
             ))}
           </div>
-        </Container>
-      </Section>
 
-      {/* ── 8. FAQS ──────────────────────────────────────────────────────── */}
-      <Section variant="subtle" spacing="lg">
-        <Container>
-          <div className="max-w-3xl mx-auto">
-            <Reveal direction="up" className="text-center mb-12">
-              <div className="type-eyebrow mb-2">Transparency</div>
-              <h2 className="type-h2 text-slate-900 mb-4">
-                Frequently Asked Questions About Partnering With Us
-              </h2>
-              <p className="text-slate-600 text-sm">
-                Direct answers regarding contracts, non-disclosure protocols, and working cadence.
-              </p>
-            </Reveal>
+          {/* Contextual Internal Links Mesh */}
+          <div className="mt-12 pt-10 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            <Link
+              to="/services/website-development"
+              className="p-4 rounded-2xl bg-model3-surface/90 border border-white/10 hover:border-cyan-400/50 transition-all hover:-translate-y-1 group"
+            >
+              <div className="text-[10px] font-mono uppercase text-cyan-400 mb-1">Architecture</div>
+              <div className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors">Web Development (₹15K)</div>
+              <p className="text-xs text-slate-400 mt-1">Headless React &amp; PWA platforms</p>
+            </Link>
 
-            <Reveal direction="up" delay={100}>
-              <FAQAccordion items={ABOUT_FAQS} />
-            </Reveal>
+            <Link
+              to="/services/seo"
+              className="p-4 rounded-2xl bg-model3-surface/90 border border-white/10 hover:border-amber-400/50 transition-all hover:-translate-y-1 group"
+            >
+              <div className="text-[10px] font-mono uppercase text-amber-400 mb-1">Search Growth</div>
+              <div className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors">Rank-1 SEO (₹35K)</div>
+              <p className="text-xs text-slate-400 mt-1">Technical crawling &amp; keyword clusters</p>
+            </Link>
+
+            <Link
+              to="/industries"
+              className="p-4 rounded-2xl bg-model3-surface/90 border border-white/10 hover:border-purple-400/50 transition-all hover:-translate-y-1 group"
+            >
+              <div className="text-[10px] font-mono uppercase text-purple-400 mb-1">Vertical Focus</div>
+              <div className="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">8 Regulated Sectors</div>
+              <p className="text-xs text-slate-400 mt-1">Casino, Cricket ID, Skill Games</p>
+            </Link>
+
+            <Link
+              to="/free-seo-audit"
+              className="p-4 rounded-2xl bg-model3-surface/90 border border-white/10 hover:border-emerald-400/50 transition-all hover:-translate-y-1 group"
+            >
+              <div className="text-[10px] font-mono uppercase text-emerald-400 mb-1">Diagnostic</div>
+              <div className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">Free Code Audit</div>
+              <p className="text-xs text-slate-400 mt-1">24h turnaround, zero sales fluff</p>
+            </Link>
           </div>
         </Container>
-      </Section>
+      </section>
+
+      {/* ── 8. FAQS ──────────────────────────────────────────────────────── */}
+      <section className="py-20 lg:py-28 bg-model3-panel border-b border-white/10">
+        <Container>
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-3">
+                <MessageSquare className="w-3.5 h-3.5 text-amber-400" />
+                <span>Transparency</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading mb-4">
+                Frequently Asked Questions About Partnering With Us
+              </h2>
+              <p className="text-slate-300 text-sm">
+                Direct answers regarding contracts, non-disclosure protocols, and working cadence.
+              </p>
+            </div>
+
+            <FAQAccordion items={ABOUT_FAQS} />
+          </div>
+        </Container>
+      </section>
 
       {/* ── 9. FINAL CALL TO ACTION ──────────────────────────────────────── */}
-      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-20 lg:py-24 overflow-hidden border-t border-navy-800/80">
-        <div className="absolute inset-0 bg-dark-mesh opacity-20 pointer-events-none" />
+      <section className="relative bg-model3-base text-white py-20 lg:py-24 overflow-hidden border-t border-white/10">
+        <div className="absolute inset-0 bg-hero-atmosphere opacity-20 pointer-events-none" />
         <Container className="relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               <span>Initiate Diagnostic Engagement</span>
             </div>
-            <h2 className="type-h2 text-white">
-              Ready to Work With a Dedicated Vertical Engineering Partner?
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading">
+              Ready to Work With a Dedicated Engineering Partner?
             </h2>
             <p className="text-slate-300 text-sm leading-relaxed max-w-xl mx-auto">
               Schedule a 30-minute technical diagnostic with a senior SEO engineer. We will review your crawl architecture, Core Web Vitals, and competitor gaps without sales fluff.
@@ -465,24 +518,24 @@ export const AboutPage: React.FC = () => {
                 to="/free-seo-audit"
                 variant="gold"
                 size="lg"
-                icon={<Zap className="w-4 h-4" />}
+                icon={<Zap className="w-4 h-4 text-slate-950" />}
                 onClick={() => trackEvent('cta_click', { cta_name: 'about_bottom_audit', cta_location: 'about_bottom' })}
               >
                 Claim Free Technical Audit
               </Button>
               <Button
-                to="/book-call"
+                to="/contact"
                 variant="outline"
                 size="lg"
-                className="border-navy-700 text-white hover:bg-navy-800/60"
+                className="border-white/15 text-white hover:bg-white/10"
               >
                 Book Strategy Call
               </Button>
               <a
-                href="https://wa.me/919341436937"
+                href={`https://wa.me/${whatsappPhone}?text=Hello%20iGaming%20Growth%20Team%2C%20I%20want%20to%20consult%20about%20our%20platform.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-md shadow-emerald-950/20 transition-all duration-200 hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all duration-200 hover:-translate-y-0.5"
               >
                 <span>Direct WhatsApp Consultation</span>
               </a>
@@ -490,7 +543,7 @@ export const AboutPage: React.FC = () => {
           </div>
         </Container>
       </section>
-    </>
+    </div>
   );
 };
 

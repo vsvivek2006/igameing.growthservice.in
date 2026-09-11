@@ -58,7 +58,7 @@ export const navigationConfig = {
         { label: 'Color Prediction', path: '/industries/color-prediction', description: 'Color gaming platforms' },
         { label: 'Color Trading', path: '/industries/color-trading', description: 'Trading platform SEO' },
         { label: 'Stock Market', path: '/industries/stock-market', description: 'Financial & trading platforms' },
-        { label: 'Adult Industry', path: '/industries/adult-escort', description: 'Adult platforms & directories' },
+        { label: 'Betting Exchange', path: '/industries/betting-exchange', description: 'Lotus365 & cricket ID platforms' },
       ],
     },
     {
@@ -75,11 +75,6 @@ export const navigationConfig = {
     {
       label: 'About',
       path: '/about',
-    },
-    {
-      label: 'Free SEO Audit',
-      path: '/free-seo-audit',
-      badge: '→',
     },
   ] as readonly NavItem[],
 
@@ -116,7 +111,7 @@ export const navigationConfig = {
         { label: 'Color Prediction', path: '/industries/color-prediction' },
         { label: 'Color Trading', path: '/industries/color-trading' },
         { label: 'Stock Market', path: '/industries/stock-market' },
-        { label: 'Adult Industry', path: '/industries/adult-escort' },
+        { label: 'Betting Exchange', path: '/industries/betting-exchange' },
       ],
     },
     {

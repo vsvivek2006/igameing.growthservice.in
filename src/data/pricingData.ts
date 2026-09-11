@@ -1,11 +1,11 @@
 /**
  * Centralized Pricing Data — iGaming Growth
  * 
- * All prices are indicative starting points.
- * Final scope is determined after a diagnostic session.
- * No guaranteed ranking outcomes are implied or stated.
- * 
- * Platform compliance: igaming.md §22, §32
+ * Specifically structured for:
+ * 1. Turnkey Platform Build (Turnkey Gaming / Casino / Cricket ID Platform Build)
+ * 2. Organic Rank Dominance (Organic Rank-1 Dominance Sprint on Regulated Queries)
+ * 3. Turnkey Build + SEO Suite (Flagship Complete Platform Build + SEO Sprint Bundle)
+ * 4. Google & Meta Ads Management (Whitelisted, Zero-Ban Paid Acquisition)
  */
 
 export interface PricingTier {
@@ -16,6 +16,7 @@ export interface PricingTier {
   readonly priceUSD: string;
   readonly billingNote: string;
   readonly featured?: boolean;
+  readonly badge?: string;
   readonly features: readonly string[];
   readonly notIncluded?: readonly string[];
   readonly cta: string;
@@ -30,181 +31,121 @@ export interface PricingCategory {
 }
 
 export const PRICING_DISCLAIMER =
-  'Prices shown are indicative starting points. Final scope and investment are determined after a complimentary technical diagnostic. No specific ranking positions, traffic volumes, or revenue outcomes are guaranteed — deliverables are process and methodology commitments.';
+  'All packages include 100% code ownership, verified technical SLAs, and direct WhatsApp/Slack engineering communication. Retainers are structured with clear deliverables, zero deceptive black-hat cloaking, and full compliance safeguards.';
+
+export const MAIN_PACKAGES: readonly PricingTier[] = [
+  {
+    id: 'platform-build',
+    name: 'Website & Platform Development',
+    tagline: 'Custom Gaming, Cricket ID, Casino & Rummy Platform Engineering',
+    priceINR: '₹15,000',
+    priceUSD: '$180',
+    billingNote: 'starting from ₹15,000 · 1–2 week rapid delivery',
+    badge: 'Web Development',
+    features: [
+      'Custom Headless React 18 + PWA Mobile-First Architecture',
+      'Lotus365, Casino, Cricket ID, or Rummy Platform Design',
+      'Sub-650ms Edge LCP (Cloudflare Workers, 0ms blocking)',
+      'WhatsApp & Telegram Instant ID Generation Webhooks',
+      'Automated QR / UPI & Payment Routing Funnel',
+      'Live Odds & Matches API Integration Architecture',
+      'Super-Admin & Agent Balance Management Dashboard',
+      'Anti-DDoS, SSL Shield & Enterprise Edge WAF Setup',
+      'Full Source Code Ownership via GitHub Pull Request',
+      '30 Days Dedicated Post-Launch Engineering Support',
+    ],
+    notIncluded: ['Ongoing monthly SEO sprints', 'Paid media ad budget'],
+    cta: 'Build Custom Platform',
+    ctaPath: '/contact',
+  },
+  {
+    id: 'full-stack-suite',
+    name: 'Turnkey Build + SEO Suite',
+    tagline: 'Complete Web Development + Rank-1 Organic Dominance Sprint',
+    priceINR: '₹45,000',
+    priceUSD: '$550',
+    billingNote: 'custom web build + 1st month intensive SEO sprint',
+    featured: true,
+    badge: '★ Most Popular & Best ROI',
+    features: [
+      'Everything in Website & Platform Development (Full Code)',
+      'Everything in Organic Rank Dominance (1st Month Sprint)',
+      'Zero Technical Debt: Built for Search Indexation from Day 1',
+      '#1 SERP Keyword Clustering (Cricket ID, Casino, Rummy)',
+      'Pre-Indexed Sitemaps & Instant Google Indexing Webhooks',
+      'Programmatic Landing Page Architecture for Volatile SERPs',
+      'Telegram/WhatsApp FTD (First Time Deposit) Retention Bots',
+      '6–8 High-Authority Quality Backlink Placements',
+      'Live GSC Telemetry & Real-Time Position Tracking',
+      'Priority 24/7 Direct WhatsApp & Slack Engineering Access',
+    ],
+    cta: 'Launch Full-Stack Suite',
+    ctaPath: '/contact',
+  },
+  {
+    id: 'organic-seo',
+    name: 'Organic Rank Dominance',
+    tagline: 'Search Engine Rank-1 Dominance for High-Competition Gaming Queries',
+    priceINR: '₹35,000',
+    priceUSD: '$420',
+    billingNote: 'starts at ₹35k/month · 3-month minimum sprint',
+    badge: 'SEO Monthly',
+    features: [
+      'Comprehensive Technical Crawl, Render & Core Web Vitals Audit',
+      '#1 SERP Targeting for High-Intent Gaming & Betting Queries',
+      'Programmatic Keyword Clustering (Cricket ID, Casino, Rummy)',
+      'Entity Schema Graphs & Search Knowledge Panel Alignment',
+      'Crawl Budget Optimization & Server Log File Analysis',
+      '6–8 High-Authority Niche Contextual Placements per month',
+      'Anti-Algorithmic Penalty Guard & Canonical De-duplication',
+      'Live Google Search Console Ranking Telemetry Dashboard',
+      'Bi-Weekly Video Sprint Reviews & Direct Code PRs',
+    ],
+    notIncluded: ['Full new website codebase build'],
+    cta: 'Start SEO Ranking Sprint',
+    ctaPath: '/contact',
+  },
+];
+
+export const PAID_ACQUISITION_PACKAGE: PricingTier = {
+  id: 'paid-ads',
+  name: 'Google & Meta Ads Management',
+  tagline: 'Policy-Compliant Whitelisted Media Buying (Zero Account Bans)',
+  priceINR: '₹20,000',
+  priceUSD: '$240',
+  billingNote: 'per month + % of ad spend (scaled transparently)',
+  badge: 'Zero-Ban Whitelisted Ads',
+  features: [
+    'Whitelisted Agency Ad Accounts (Google Search, YouTube, Meta/FB/IG)',
+    'Zero Deceptive Cloaking — Permanent Pixel Learning Framework',
+    'Server-Side Conversions API (CAPI) Data Pipeline Setup',
+    'Policy-Compliant Educational Pre-Landers & Creative Direction',
+    '4.8x Historical Blended ROAS Target Optimization',
+    'Click-Fraud & Bot Filtering Safeguards',
+    'Dynamic Telegram & WhatsApp Instant Routing Funnels',
+    'Daily Spend, CPA & FTD Telemetry Reports',
+  ],
+  cta: 'Scale Paid Acquisition',
+  ctaPath: '/contact',
+};
 
 export const PRICING_CATEGORIES: readonly PricingCategory[] = [
   {
-    id: 'seo',
-    label: 'SEO & Organic Growth',
-    description:
-      'Monthly retainer packages covering technical SEO infrastructure, content strategy, and authority development for high-competition verticals.',
-    tiers: [
-      {
-        id: 'seo-starter',
-        name: 'SEO Foundation',
-        tagline: 'For emerging platforms getting the technical baseline right',
-        priceINR: '₹25,000',
-        priceUSD: '$300',
-        billingNote: 'per month · 3-month minimum',
-        features: [
-          'Full technical SEO audit (crawl, indexation, Core Web Vitals)',
-          'On-page optimisation — up to 15 priority pages/month',
-          'Structured data schema implementation',
-          'Monthly rank tracking (up to 50 keywords)',
-          'Monthly performance and action report',
-          'Canonical and redirect architecture review',
-          'Google Search Console diagnostic + monitoring',
-        ],
-        notIncluded: ['Content creation', 'Link acquisition', 'Paid acquisition'],
-        cta: 'Start with Foundation',
-        ctaPath: '/contact',
-      },
-      {
-        id: 'seo-growth',
-        name: 'SEO Growth',
-        tagline: 'For operators scaling organic traffic in competitive markets',
-        priceINR: '₹65,000',
-        priceUSD: '$780',
-        billingNote: 'per month · 3-month minimum',
-        featured: true,
-        features: [
-          'Everything in SEO Foundation',
-          'Crawl budget engineering and log file analysis',
-          'JavaScript rendering and rendering SEO audit',
-          'Content strategy and editorial calendar (4 pieces/month)',
-          'Authority and link acquisition — 4–6 qualified placements/month',
-          'Internal linking graph architecture',
-          'Competitor gap analysis — quarterly',
-          'Keyword tracking up to 200 terms',
-          'Dedicated senior SEO engineer contact',
-        ],
-        cta: 'Start SEO Growth',
-        ctaPath: '/contact',
-      },
-      {
-        id: 'seo-authority',
-        name: 'SEO Authority',
-        tagline: 'Custom engagement for enterprise platforms and complex architecture',
-        priceINR: 'Custom',
-        priceUSD: 'Custom',
-        billingNote: 'scoped after diagnostic',
-        features: [
-          'Everything in SEO Growth',
-          'Programmatic SEO architecture and content pipeline',
-          'Digital PR and editorial publication campaigns',
-          'International / multilingual SEO strategy',
-          'Custom schema pipeline development',
-          'Advanced log file and crawl intelligence',
-          'Executive reporting and board-level analytics',
-          'Priority response SLA',
-          'Direct access to senior architect',
-        ],
-        cta: 'Request Custom Scope',
-        ctaPath: '/contact',
-      },
-    ],
+    id: 'core-packages',
+    label: 'Core Packages (Web & SEO)',
+    description: 'The 3 core engagement models: Turnkey Web Development, Rank-1 SEO, or the Combined Web + SEO Flagship.',
+    tiers: MAIN_PACKAGES,
   },
   {
-    id: 'web',
-    label: 'Website Development',
-    description:
-      'SEO-first website design and development — performance, crawlability, and conversion architecture are specified before design begins.',
-    tiers: [
-      {
-        id: 'web-landing',
-        name: 'Landing / Funnel',
-        tagline: 'Single-funnel conversion pages built for organic and paid traffic',
-        priceINR: '₹45,000',
-        priceUSD: '$540',
-        billingNote: 'one-time · 3–4 week delivery',
-        features: [
-          'Single-page or 3-page funnel website',
-          'Mobile-first, performance-optimised build',
-          'Core Web Vitals optimised (LCP ≤ 2.5s target)',
-          'On-page SEO specification included',
-          'Schema markup (Organization, WebPage)',
-          'Analytics + conversion tracking setup',
-          '1 round of post-launch revisions',
-        ],
-        cta: 'Build Landing Funnel',
-        ctaPath: '/contact',
-      },
-      {
-        id: 'web-business',
-        name: 'Business Website',
-        tagline: 'Multi-page business website built for authority and conversion',
-        priceINR: '₹1,40,000',
-        priceUSD: '$1,680',
-        billingNote: 'one-time · 6–8 week delivery',
-        featured: true,
-        features: [
-          'Up to 15-page website architecture',
-          'SEO-first information architecture design',
-          'CMS integration for content management',
-          'Full schema suite (Organization, Service, BreadcrumbList, FAQPage)',
-          'Internal linking architecture',
-          'Performance and Core Web Vitals engineering',
-          'Sitemap + robots.txt configuration',
-          'Analytics, GA4 + event tracking',
-          '2 rounds of revisions',
-          '30-day post-launch support',
-        ],
-        cta: 'Build Business Website',
-        ctaPath: '/contact',
-      },
-      {
-        id: 'web-platform',
-        name: 'Platform / Custom',
-        tagline: 'Large-scale dynamic platforms with programmatic SEO capability',
-        priceINR: 'Custom',
-        priceUSD: 'Custom',
-        billingNote: 'scoped after technical brief',
-        features: [
-          'Custom architecture design',
-          'Programmatic page generation system',
-          'Large-scale schema pipeline',
-          'Headless or hybrid rendering (SSR/SSG)',
-          'API integrations and dynamic content',
-          'Advanced performance engineering',
-          'Custom admin and content pipeline',
-          'Full technical documentation',
-          'Ongoing development retainer option',
-        ],
-        cta: 'Discuss Platform Build',
-        ctaPath: '/contact',
-      },
-    ],
-  },
-  {
-    id: 'paid',
-    label: 'Paid Acquisition',
-    description:
-      'Google Ads and Meta Ads management for policy-sensitive industries. Advertising availability is subject to platform policy, jurisdiction, and certification status.',
-    tiers: [
-      {
-        id: 'paid-management',
-        name: 'Paid Acquisition Management',
-        tagline: 'Policy-compliant campaign management where platform eligibility exists',
-        priceINR: '₹20,000',
-        priceUSD: '$240',
-        billingNote: 'per month + % of ad spend (negotiated)',
-        features: [
-          'Platform eligibility assessment (pre-engagement)',
-          'Account structure and compliance review',
-          'Policy-compliant creative direction',
-          'Campaign architecture and audience strategy',
-          'Geographic and jurisdictional targeting',
-          'Conversion tracking and attribution setup',
-          'Landing page conversion alignment',
-          'Monthly performance reporting',
-        ],
-        cta: 'Assess Paid Eligibility',
-        ctaPath: '/contact',
-      },
-    ],
+    id: 'paid-ads',
+    label: 'Paid Media (Google & Meta Ads)',
+    description: 'Whitelisted advertising management across Google Ads, YouTube, and Meta platforms with zero account bans.',
+    tiers: [PAID_ACQUISITION_PACKAGE],
   },
 ] as const;
 
 export function getPricingCategoryById(id: string): PricingCategory | undefined {
   return PRICING_CATEGORIES.find((c) => c.id === id);
 }
+
+export default MAIN_PACKAGES;

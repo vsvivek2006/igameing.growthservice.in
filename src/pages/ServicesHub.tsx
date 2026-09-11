@@ -10,45 +10,18 @@ import {
   Code2,
   BarChart3,
   Sparkles,
+  Clock,
+  MessageSquare
 } from 'lucide-react';
 import { SEOHead } from '../seo';
 import { buildBreadcrumbSchema } from '../seo/schema';
-import { Container, Section, Button, Breadcrumb, ServiceIcon, FAQAccordion } from '../components/ui';
+import { Container, Button, Breadcrumb, ServiceIcon, FAQAccordion } from '../components/ui';
 import { SERVICE_CATEGORY_LABELS, getAllServices } from '../data/servicesData';
 import type { ServiceCategory } from '../data/servicesData';
 import { PRICING_CATEGORIES, PRICING_DISCLAIMER } from '../data/pricingData';
-import useInView from '../hooks/useInView';
 import { trackEvent } from '../analytics';
 
 const CATEGORIES: ServiceCategory[] = ['seo', 'web-development', 'paid-acquisition', 'conversion-analytics'];
-
-// ─── Reusable Reveal Component ────────────────────────────────────────────────
-const Reveal: React.FC<{
-  children: React.ReactNode;
-  direction?: 'up' | 'left' | 'right' | 'scale';
-  delay?: number;
-  className?: string;
-}> = ({ children, direction = 'up', delay = 0, className = '' }) => {
-  const [ref, isInView] = useInView({ threshold: 0.1, once: true });
-  const animClass =
-    direction === 'left'
-      ? 'reveal-left'
-      : direction === 'right'
-      ? 'reveal-right'
-      : direction === 'scale'
-      ? 'reveal-scale'
-      : 'reveal-up';
-
-  return (
-    <div
-      ref={ref}
-      className={`${animClass} ${isInView ? 'in-view' : ''} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </div>
-  );
-};
 
 const SERVICES_FAQS = [
   {
@@ -95,7 +68,7 @@ export const ServicesHub: React.FC = () => {
       : allServices.filter((s) => s.category === activeCategory);
 
   return (
-    <>
+    <div className="bg-model3-base text-white selection:bg-amber-400 selection:text-black font-sans antialiased overflow-x-hidden">
       <SEOHead
         title="SEO & Digital Growth Services for High-Competition Industries — iGaming Growth"
         description="Specialist technical SEO, website development, paid acquisition, and conversion optimisation services for iGaming, casino, financial trading, and adult industry operators. Engineering-first growth systems."
@@ -104,93 +77,110 @@ export const ServicesHub: React.FC = () => {
       />
 
       {/* ── 1. HERO SECTION ──────────────────────────────────────────────── */}
-      <section className="relative bg-navy-950 bg-hero-atmosphere text-white overflow-hidden border-b border-navy-800/80">
-        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
-        <div className="absolute top-0 right-1/4 w-[600px] h-[400px] rounded-full bg-purple-600/15 blur-[120px] pointer-events-none" />
-        <div className="absolute -bottom-20 -left-20 w-[400px] h-[350px] rounded-full bg-blue-600/10 blur-[100px] pointer-events-none" />
+      <section className="relative min-h-[75vh] pt-28 pb-16 lg:pt-36 lg:pb-24 bg-model3-base overflow-hidden flex items-center border-b border-white/10">
+        <div className="absolute top-0 right-1/4 w-[600px] h-[450px] rounded-full bg-purple-900/15 blur-[140px] pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-[450px] h-[400px] rounded-full bg-blue-900/10 blur-[130px] pointer-events-none" />
+        <div 
+          className="absolute inset-0 opacity-[0.035] pointer-events-none"
+          style={{
+            backgroundImage: `radial-gradient(#ffffff 1px, transparent 1px)`,
+            backgroundSize: '24px 24px',
+          }}
+        />
 
-        <Container className="relative z-10 py-20 lg:py-28">
-          <Breadcrumb items={breadcrumbItems} className="mb-6 text-slate-400" />
+        <Container className="relative z-10">
+          <div className="w-full text-left mb-6 sm:mb-8">
+            <Breadcrumb items={breadcrumbItems} className="text-slate-400" />
+          </div>
           
-          <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider mb-6">
-              <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-              <span>Full-Stack Engineering & Growth Capabilities</span>
+          <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-6 shadow-inner">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Full-Stack Engineering &amp; Growth Capabilities</span>
             </div>
 
-            <h1 className="type-h1 text-white mb-6 leading-tight">
-              Specialist Growth Disciplines for Verticals Where Standard Playbooks Fail
+            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-extrabold tracking-tight text-white font-heading leading-[1.08] mb-6">
+              Specialist Growth Disciplines for <br className="hidden sm:inline" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500">
+                High-Competition Markets
+              </span>
             </h1>
 
             <p className="text-lg lg:text-xl text-slate-300 leading-relaxed mb-8 max-w-3xl">
-              Operating in high-competition verticals requires more than superficial blog posts or generic keyword audits. We combine technical SEO engineering, custom web development, policy-compliant acquisition, and data analytics into cohesive, defensible growth engines designed for long-term compounding.
+              Operating in regulated verticals requires more than superficial blog posts or generic keyword audits. We combine technical SEO engineering, custom web development, policy-compliant acquisition, and data analytics into cohesive, defensible growth engines designed for long-term compounding.
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-12">
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10 w-full sm:w-auto">
               <Button
                 to="/free-seo-audit"
                 variant="gold"
                 size="lg"
-                icon={<Zap className="w-4 h-4" />}
+                className="w-full sm:w-auto justify-center"
+                icon={<Zap className="w-4 h-4 text-slate-950" />}
                 onClick={() => trackEvent('cta_click', { cta_name: 'free_audit', cta_location: 'services_hero' })}
               >
                 Request Technical Audit
               </Button>
               <Button
-                to="/book-call"
+                to="/contact"
                 variant="outline"
                 size="lg"
-                className="border-navy-700 text-white hover:bg-navy-800/60"
+                className="w-full sm:w-auto justify-center border-white/15 text-white hover:bg-white/10"
                 onClick={() => trackEvent('cta_click', { cta_name: 'book_call', cta_location: 'services_hero' })}
               >
-                Book Diagnostic Session
+                Schedule Technical Discovery
               </Button>
             </div>
 
             {/* Quick capability stat pills */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-navy-800/60">
-              <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10">
-                <div className="text-xl font-extrabold text-white">12</div>
-                <div className="text-xs text-slate-400">Specialist Disciplines</div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-6 border-t border-white/10 w-full max-w-3xl">
+              <div className="p-3 sm:p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+                <div className="text-xl sm:text-2xl font-black text-white font-heading">12</div>
+                <div className="text-[11px] sm:text-xs text-slate-400">Specialist Disciplines</div>
               </div>
-              <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10">
-                <div className="text-xl font-extrabold text-emerald-400">100%</div>
-                <div className="text-xs text-slate-400">White-Hat Compliant</div>
+              <div className="p-3 sm:p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+                <div className="text-xl sm:text-2xl font-black text-emerald-400 font-heading">100%</div>
+                <div className="text-[11px] sm:text-xs text-slate-400">White-Hat Compliant</div>
               </div>
-              <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10">
-                <div className="text-xl font-extrabold text-purple-400">&lt; 2.5s</div>
-                <div className="text-xs text-slate-400">Core Web Vitals Target</div>
+              <div className="p-3 sm:p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+                <div className="text-xl sm:text-2xl font-black text-purple-400 font-heading">&lt;650ms</div>
+                <div className="text-[11px] sm:text-xs text-slate-400">Edge Speed Benchmark</div>
               </div>
-              <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10">
-                <div className="text-xl font-extrabold text-amber-400">Zero</div>
-                <div className="text-xs text-slate-400">Spam or PBN Shortcuts</div>
+              <div className="p-3 sm:p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+                <div className="text-xl sm:text-2xl font-black text-amber-400 font-heading">0 Bans</div>
+                <div className="text-[11px] sm:text-xs text-slate-400">Whitelisted Ad Safety</div>
               </div>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* ── 2. CAPABILITY TAXONOMY TABS ───────────────────────────────────── */}
-      <Section variant="subtle" spacing="md">
+      {/* ── 2. CAPABILITY TAXONOMY TABS & DIRECTORY ────────────────────────── */}
+      <section className="py-16 sm:py-20 lg:py-28 bg-model3-surface/70 border-b border-white/10">
         <Container>
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-6">
             <div>
-              <div className="type-eyebrow mb-2">Service Catalog</div>
-              <h2 className="type-h2 text-slate-900">Explore Our Disciplines</h2>
-              <p className="text-slate-600 text-sm max-w-xl mt-2">
-                Filter by focus area to see how our engineering, organic, development, and analytics systems address specific growth bottlenecks.
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-3">
+                <Layers className="w-3.5 h-3.5 text-amber-400" />
+                <span>Service Catalog</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-heading">
+                Explore All 12 Specialist Disciplines
+              </h2>
+              <p className="text-slate-300 text-xs sm:text-sm max-w-xl mt-2">
+                Filter by focus area to see how our engineering, organic search, custom development, and analytics systems eliminate growth bottlenecks.
               </p>
             </div>
 
             {/* Category selector */}
-            <div className="flex flex-wrap gap-2 p-1.5 bg-slate-200/70 rounded-2xl self-start">
+            <div className="flex items-center gap-2 p-1.5 bg-model3-base/90 border border-white/10 rounded-2xl overflow-x-auto no-scrollbar sm:flex-wrap self-start max-w-full">
               <button
                 type="button"
                 onClick={() => setActiveCategory('all')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                className={`shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                   activeCategory === 'all'
-                    ? 'bg-white text-purple-900 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-950/40'
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
                 }`}
               >
                 All (12)
@@ -200,10 +190,10 @@ export const ServicesHub: React.FC = () => {
                   key={cat}
                   type="button"
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  className={`shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                     activeCategory === cat
-                      ? 'bg-white text-purple-900 shadow-sm'
-                      : 'text-slate-600 hover:text-slate-900'
+                      ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-950/40'
+                      : 'text-slate-400 hover:text-white hover:bg-white/5'
                   }`}
                 >
                   {SERVICE_CATEGORY_LABELS[cat]}
@@ -214,74 +204,78 @@ export const ServicesHub: React.FC = () => {
 
           {/* Service grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredServices.map((svc, idx) => (
-              <Reveal key={svc.slug} direction="up" delay={(idx % 3) * 100}>
-                <div className="group flex flex-col h-full p-7 rounded-3xl border border-slate-200 bg-white hover:border-purple-300 hover:shadow-card-hover gradient-border-card transition-all duration-300 hover:-translate-y-1.5">
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center group-hover:scale-105 transition-transform shadow-xs">
-                      <ServiceIcon name={svc.icon} className="w-6 h-6 text-purple-600" />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {svc.featured && (
-                        <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
-                          Core Pillar
-                        </span>
-                      )}
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200/80">
-                        {SERVICE_CATEGORY_LABELS[svc.category]}
+            {filteredServices.map((svc) => (
+              <div
+                key={svc.slug}
+                className="group flex flex-col h-full p-7 rounded-3xl border border-white/10 bg-model3-base/80 backdrop-blur-md hover:border-amber-400/40 hover:shadow-xl hover:shadow-amber-950/20 transition-all duration-300 hover:-translate-y-1.5"
+              >
+                <div className="flex items-center justify-between mb-5">
+                  <div className="w-12 h-12 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <ServiceIcon name={svc.icon} className="w-6 h-6 text-amber-400" />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {svc.featured && (
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/30">
+                        Core Pillar
                       </span>
-                    </div>
+                    )}
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300 border border-white/10">
+                      {SERVICE_CATEGORY_LABELS[svc.category]}
+                    </span>
                   </div>
-
-                  <h3 className="font-heading font-extrabold text-slate-900 text-lg mb-2 group-hover:text-purple-700 transition-colors">
-                    {svc.name}
-                  </h3>
-
-                  <p className="text-sm text-slate-600 leading-relaxed mb-6 flex-1">
-                    {svc.shortDescription}
-                  </p>
-
-                  {/* Highlights preview */}
-                  <div className="pt-4 border-t border-slate-100 mb-6">
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2.5">
-                      Key Deliverables
-                    </div>
-                    <ul className="space-y-1.5">
-                      {svc.deliverables.slice(0, 3).map((deliv, dIdx) => (
-                        <li key={dIdx} className="flex items-center gap-2 text-xs text-slate-600">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
-                          <span className="truncate">{deliv}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <Link
-                    to={`/services/${svc.slug}`}
-                    className="inline-flex items-center justify-between w-full px-5 py-3 rounded-2xl bg-slate-900 hover:bg-purple-900 text-white text-xs font-bold transition-all shadow-sm group-hover:shadow-md"
-                  >
-                    <span>View Full Service Scope</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
                 </div>
-              </Reveal>
+
+                <h3 className="font-heading font-extrabold text-white text-lg mb-2 group-hover:text-amber-300 transition-colors">
+                  {svc.name}
+                </h3>
+
+                <p className="text-xs text-slate-400 leading-relaxed mb-6 flex-1">
+                  {svc.shortDescription}
+                </p>
+
+                {/* Highlights preview */}
+                <div className="pt-4 border-t border-white/10 mb-6">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2.5">
+                    Key Deliverables
+                  </div>
+                  <ul className="space-y-1.5">
+                    {svc.deliverables.slice(0, 3).map((deliv, dIdx) => (
+                      <li key={dIdx} className="flex items-center gap-2 text-xs text-slate-300">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                        <span className="truncate">{deliv}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <Link
+                  to={`/services/${svc.slug}`}
+                  className="inline-flex items-center justify-between w-full px-5 py-3 rounded-2xl bg-white/[0.04] hover:bg-amber-400 hover:text-slate-950 border border-white/10 text-white text-xs font-bold transition-all group-hover:border-amber-400"
+                >
+                  <span>View Full Service Scope</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
             ))}
           </div>
         </Container>
-      </Section>
+      </section>
 
       {/* ── 3. WHAT WE BUILD INTO EVERY ENGAGEMENT (PROCESS PROOF) ─────── */}
-      <Section variant="white" spacing="lg">
+      <section className="py-20 lg:py-28 bg-model3-base border-b border-white/10">
         <Container>
-          <Reveal direction="up" className="max-w-3xl mx-auto text-center mb-14">
-            <div className="type-eyebrow mb-3">Enterprise Standards</div>
-            <h2 className="type-h2 text-slate-900 mb-4">
-              What Is Included In Every Single Engagement
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-3">
+              <Shield className="w-3.5 h-3.5 text-amber-400" />
+              <span>Enterprise Standards</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading mb-4">
+              What Is Engineered Into Every Engagement
             </h2>
-            <p className="text-slate-600 leading-relaxed text-sm">
-              We do not cut corners or reserve essential technical baseline hygiene for higher-tier clients. Whether engaging us for a focused technical audit or an end-to-end growth retainer, these standard operating protocols apply automatically.
+            <p className="text-slate-300 leading-relaxed text-sm">
+              We never reserve essential baseline hygiene for higher tiers. Whether you engage us for a standalone audit or a full-stack growth retainer, these operating standards apply automatically.
             </p>
-          </Reveal>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
@@ -315,43 +309,42 @@ export const ServicesHub: React.FC = () => {
                 title: 'Internal Link Graph Modelling',
                 desc: 'Algorithmic internal linking structures that distribute PageRank and topic authority intentionally across pillar clusters rather than relying on haphazard manual linking.',
               },
-            ].map((item, i) => {
+            ].map((item) => {
               const Icon = item.icon;
               return (
-                <Reveal key={item.title} direction="up" delay={i * 80}>
-                  <div className="p-7 rounded-3xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-purple-200 hover:shadow-card transition-all">
-                    <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-4">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <h3 className="font-heading font-bold text-slate-900 text-base mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      {item.desc}
-                    </p>
+                <div key={item.title} className="p-7 rounded-3xl border border-white/10 bg-model3-surface/80 hover:border-amber-400/40 hover:shadow-xl hover:shadow-amber-950/20 transition-all">
+                  <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/30 text-amber-400 flex items-center justify-center mb-4">
+                    <Icon className="w-5 h-5" />
                   </div>
-                </Reveal>
+                  <h3 className="font-heading font-bold text-white text-base mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
               );
             })}
           </div>
         </Container>
-      </Section>
+      </section>
 
       {/* ── 4. 5-STEP DELIVERY BLUEPRINT ─────────────────────────────────── */}
-      <section className="bg-navy-950 text-white py-20 lg:py-28 relative overflow-hidden">
+      <section className="py-20 lg:py-28 bg-model3-panel relative overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 bg-dark-mesh opacity-20 pointer-events-none" />
         <Container className="relative z-10">
-          <Reveal direction="up" className="max-w-2xl mx-auto text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider mb-4">
-              <span>Execution Discipline</span>
+          <div className="max-w-2xl mx-auto text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-4">
+              <Clock className="w-3.5 h-3.5 text-amber-400" />
+              <span>Execution Cadence</span>
             </div>
-            <h2 className="type-h2 text-white mb-4">
-              How Engagements Progress From Discovery to Compounding
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading mb-4">
+              How Engagements Progress From Discovery to Scale
             </h2>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Predictable, phase-driven delivery. No guesswork, no ambiguity, and full access to sprint trackers and staging environments.
+              Predictable, phase-driven delivery. No guesswork, no ambiguity, and full visibility into Jira/Linear sprint trackers and staging environments.
             </p>
-          </Reveal>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
             {[
@@ -365,7 +358,7 @@ export const ServicesHub: React.FC = () => {
                 step: '02',
                 title: 'Architecture Blueprint',
                 subtitle: 'Days 11–20',
-                desc: 'URL taxonomy, canonical trees, schema schemas, and technical remediation specifications created.',
+                desc: 'URL taxonomy, canonical trees, schema entity graphs, and technical remediation specifications created.',
               },
               {
                 step: '03',
@@ -385,41 +378,42 @@ export const ServicesHub: React.FC = () => {
                 subtitle: 'Ongoing',
                 desc: 'Continuous conversion rate optimization, search bot log monitoring, and weekly performance cadence.',
               },
-            ].map((st, sIdx) => (
-              <Reveal key={st.step} direction="up" delay={sIdx * 100}>
-                <div className="relative p-6 rounded-3xl bg-navy-900/60 border border-slate-800 h-full flex flex-col">
-                  <div className="text-3xl font-black text-purple-400/30 mb-2">{st.step}</div>
-                  <div className="text-[11px] font-bold text-amber-400 uppercase tracking-wider mb-1">
-                    {st.subtitle}
-                  </div>
-                  <h4 className="font-heading font-bold text-white text-base mb-3">{st.title}</h4>
-                  <p className="text-xs text-slate-400 leading-relaxed flex-1">{st.desc}</p>
+            ].map((st) => (
+              <div key={st.step} className="relative p-6 rounded-3xl bg-model3-surface/80 border border-white/10 h-full flex flex-col">
+                <div className="text-3xl font-black text-white/20 mb-2 font-mono">{st.step}</div>
+                <div className="text-[11px] font-bold text-amber-400 uppercase tracking-wider mb-1">
+                  {st.subtitle}
                 </div>
-              </Reveal>
+                <h4 className="font-heading font-bold text-white text-base mb-3">{st.title}</h4>
+                <p className="text-xs text-slate-400 leading-relaxed flex-1">{st.desc}</p>
+              </div>
             ))}
           </div>
         </Container>
       </section>
 
       {/* ── 5. TRANSPARENT PRICING STARTING POINTS ──────────────────────── */}
-      <Section variant="subtle" spacing="lg" id="pricing">
+      <section id="pricing" className="py-20 lg:py-28 bg-model3-base border-b border-white/10">
         <Container>
-          <Reveal direction="up" className="max-w-3xl mx-auto text-center mb-12">
-            <div className="type-eyebrow mb-2">Investment Framework</div>
-            <h2 className="type-h2 text-slate-900 mb-4">
-              Transparent, Indicative Pricing Tiers
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Investment Framework</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading mb-4">
+              Transparent Retainer Investment Ranges
             </h2>
-            <p className="text-slate-600 text-sm max-w-2xl mx-auto mb-6">
+            <p className="text-slate-300 text-sm max-w-2xl mx-auto mb-6">
               Clear starting points for engineering retainers and build projects. We do not use hidden fees or arbitrary pricing tiers.
             </p>
 
             {/* Currency toggle */}
-            <div className="inline-flex items-center gap-1 p-1 bg-slate-200/80 rounded-xl">
+            <div className="inline-flex items-center gap-1 p-1 bg-model3-surface border border-white/10 rounded-xl">
               <button
                 type="button"
                 onClick={() => setCurrency('INR')}
                 className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  currency === 'INR' ? 'bg-white text-purple-900 shadow-sm' : 'text-slate-600'
+                  currency === 'INR' ? 'bg-amber-400 text-slate-950 shadow-sm' : 'text-slate-400 hover:text-white'
                 }`}
               >
                 INR (₹)
@@ -428,157 +422,132 @@ export const ServicesHub: React.FC = () => {
                 type="button"
                 onClick={() => setCurrency('USD')}
                 className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  currency === 'USD' ? 'bg-white text-purple-900 shadow-sm' : 'text-slate-600'
+                  currency === 'USD' ? 'bg-amber-400 text-slate-950 shadow-sm' : 'text-slate-400 hover:text-white'
                 }`}
               >
                 USD ($)
               </button>
             </div>
-          </Reveal>
+          </div>
 
-          {/* Pricing cards preview from PRICING_CATEGORIES */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            {PRICING_CATEGORIES[0].tiers.map((tier, tIdx) => (
-              <Reveal key={tier.id} direction="up" delay={tIdx * 100}>
-                <div
-                  className={`flex flex-col h-full rounded-3xl p-8 transition-all duration-300 ${
+            {PRICING_CATEGORIES[0].tiers.map((tier) => (
+              <div
+                key={tier.id}
+                className={`flex flex-col rounded-3xl p-7 h-full border ${
+                  tier.featured
+                    ? 'bg-gradient-to-b from-purple-950/60 to-model3-surface border-amber-400/60 shadow-2xl shadow-amber-950/20'
+                    : 'bg-model3-surface/80 border-white/10'
+                }`}
+              >
+                <div className="mb-4">
+                  <div className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">
+                    {tier.name}
+                  </div>
+                  <p className="text-xs text-slate-400">{tier.tagline}</p>
+                </div>
+
+                <div className="mb-6">
+                  <div className="text-3xl font-black text-white font-heading">
+                    {currency === 'INR' ? tier.priceINR : tier.priceUSD}
+                  </div>
+                  <div className="text-xs text-slate-500 mt-1">{tier.billingNote}</div>
+                </div>
+
+                <ul className="space-y-2.5 mb-8 flex-1">
+                  {tier.features.map((f, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  to={tier.ctaPath}
+                  className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
                     tier.featured
-                      ? 'bg-navy-950 text-white border-2 border-purple-500 shadow-xl relative'
-                      : 'bg-white text-slate-900 border border-slate-200 shadow-sm'
+                      ? 'bg-amber-400 text-slate-950 hover:bg-amber-300'
+                      : 'bg-white/10 hover:bg-white/20 text-white'
                   }`}
                 >
-                  {tier.featured && (
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-[10px] font-black uppercase tracking-widest text-white shadow-md">
-                      Most Selected Retainer
-                    </div>
-                  )}
-
-                  <div className="mb-6">
-                    <h3 className="font-heading font-extrabold text-xl mb-1">{tier.name}</h3>
-                    <p className={`text-xs ${tier.featured ? 'text-slate-300' : 'text-slate-500'}`}>
-                      {tier.tagline}
-                    </p>
-                  </div>
-
-                  <div className="mb-6 pb-6 border-b border-slate-200/20">
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="text-3xl font-black">
-                        {currency === 'INR' ? tier.priceINR : tier.priceUSD}
-                      </span>
-                      <span className={`text-xs ${tier.featured ? 'text-slate-400' : 'text-slate-500'}`}>
-                        {tier.billingNote}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex-1 mb-8">
-                    <div className="text-[11px] font-bold uppercase tracking-wider mb-3 opacity-60">
-                      Scope Coverage
-                    </div>
-                    <ul className="space-y-2.5">
-                      {tier.features.map((feat, fIdx) => (
-                        <li key={fIdx} className="flex items-start gap-2.5 text-xs">
-                          <CheckCircle2
-                            className={`w-4 h-4 flex-shrink-0 mt-0.5 ${
-                              tier.featured ? 'text-purple-400' : 'text-purple-600'
-                            }`}
-                          />
-                          <span className={tier.featured ? 'text-slate-200' : 'text-slate-700'}>
-                            {feat}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <Button
-                    to={tier.ctaPath}
-                    variant={tier.featured ? 'gold' : 'purple'}
-                    size="md"
-                    className="w-full justify-center"
-                    onClick={() => trackEvent('cta_click', { cta_name: tier.id, cta_location: 'services_pricing' })}
-                  >
-                    {tier.cta}
-                  </Button>
-                </div>
-              </Reveal>
+                  <span>{tier.cta}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             ))}
           </div>
 
-          <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200/80 text-center max-w-3xl mx-auto">
-            <p className="text-xs text-amber-900 leading-relaxed font-medium">
-              <strong>Compliance Notice:</strong> {PRICING_DISCLAIMER}
-            </p>
+          <div className="p-4 rounded-xl bg-amber-400/5 border border-amber-400/20 text-center text-xs text-amber-300">
+            {PRICING_DISCLAIMER}
           </div>
         </Container>
-      </Section>
+      </section>
 
-      {/* ── 6. FREQUENTLY ASKED QUESTIONS ────────────────────────────────── */}
-      <Section variant="white" spacing="lg">
+      {/* ── 6. MULTI-SERVICE FAQ ACCORDION ───────────────────────────────── */}
+      <section className="py-20 lg:py-28 bg-model3-surface/70 border-b border-white/10">
         <Container>
-          <div className="max-w-3xl mx-auto">
-            <Reveal direction="up" className="text-center mb-12">
-              <div className="type-eyebrow mb-2">Clear Answers</div>
-              <h2 className="type-h2 text-slate-900 mb-4">
-                Frequently Asked Questions About Our Services
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+            <div className="lg:col-span-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-4">
+                <MessageSquare className="w-3.5 h-3.5 text-amber-400" />
+                <span>Service Governance</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading mb-5">
+                Frequently Asked Questions
               </h2>
-              <p className="text-slate-600 text-sm">
-                Common questions on technical scoping, contracting, timelines, and platform guarantees.
+              <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                Direct answers regarding our technical workflows, compliance policies, code ownership, and sprint cadences.
               </p>
-            </Reveal>
-
-            <Reveal direction="up" delay={100}>
-              <FAQAccordion items={SERVICES_FAQS} />
-            </Reveal>
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── 7. FINAL ACTION CTA ─────────────────────────────────────────── */}
-      <section className="relative bg-navy-950 bg-hero-atmosphere text-white py-20 lg:py-24 overflow-hidden border-t border-navy-800/80">
-        <div className="absolute inset-0 bg-dark-mesh opacity-20 pointer-events-none" />
-        <Container className="relative z-10">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider">
-              <span>Ready for Measurable Growth?</span>
-            </div>
-            <h2 className="type-h2 text-white">
-              Get an Engineering Assessment of Your Digital Architecture
-            </h2>
-            <p className="text-slate-300 text-sm leading-relaxed max-w-xl mx-auto">
-              Send us your domain and primary growth targets. We will run a 200-point diagnostic on indexation health, Core Web Vitals, and keyword gaps at zero cost.
-            </p>
-            <div className="flex flex-wrap items-center gap-4 justify-center pt-3">
-              <Button
-                to="/free-seo-audit"
-                variant="gold"
-                size="lg"
-                icon={<Zap className="w-4 h-4" />}
-                onClick={() => trackEvent('cta_click', { cta_name: 'free_audit', cta_location: 'services_bottom' })}
-              >
-                Claim Free Technical Audit
-              </Button>
-              <Button
+              <Link
                 to="/contact"
-                variant="outline"
-                size="lg"
-                className="border-navy-700 text-white hover:bg-navy-800/60"
+                className="inline-flex items-center gap-2 text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider"
               >
-                Submit Project RFP
-              </Button>
-              <a
-                href="https://wa.me/919341436937"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-md shadow-emerald-950/20 transition-all duration-200 hover:-translate-y-0.5"
-              >
-                <span>Direct WhatsApp Consultation</span>
-              </a>
+                <span>Consult Our Systems Architect</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            <div className="lg:col-span-3">
+              <FAQAccordion items={SERVICES_FAQS} />
             </div>
           </div>
         </Container>
       </section>
-    </>
+
+      {/* ── 7. FINAL CONSULTATION CTA ─────────────────────────────────────── */}
+      <section className="py-20 lg:py-28 bg-model3-base relative overflow-hidden">
+        <div className="absolute inset-0 bg-hero-atmosphere" />
+        <Container className="relative z-10 text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading mb-4">
+            Ready to Build a Defensible Platform?
+          </h2>
+          <p className="text-slate-300 text-base mb-8">
+            Tell us about your platform and current architecture. We will prepare an initial diagnostic assessment within 48 business hours.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Button
+              to="/free-seo-audit"
+              variant="gold"
+              size="lg"
+              icon={<Zap className="w-4 h-4 text-slate-950" />}
+            >
+              Request Platform Diagnostic
+            </Button>
+            <a
+              href="https://wa.me/917654928455"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs uppercase tracking-wider transition-all"
+            >
+              Direct WhatsApp Chat
+            </a>
+          </div>
+        </Container>
+      </section>
+
+    </div>
   );
 };
 

@@ -1,29 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ArrowRight, Sparkles } from 'lucide-react';
 import { navigationConfig, NavItem } from '../../config/navigation';
 
-export const DesktopNav: React.FC = () => {
+export interface DesktopNavProps {
+  isDark?: boolean;
+}
+
+export const DesktopNav: React.FC<DesktopNavProps> = ({ isDark = true }) => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = (label: string) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setOpenDropdown(label);
+  };
+
+  const handleMouseLeave = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 120);
+  };
 
   return (
     <nav aria-label="Main Desktop Navigation" className="hidden lg:flex items-center gap-1 xl:gap-2">
-      {navigationConfig.primary.map((item: NavItem) => {
+      {navigationConfig.primary.map((item: NavItem, idx: number) => {
         const hasChildren = item.children && item.children.length > 0;
 
         if (!hasChildren) {
-          // Special CTA button for "Get a Proposal"
-          if (item.badge === '→') {
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className="ml-2 px-4 py-2 text-sm font-bold rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 hover:from-amber-400 hover:to-orange-400 transition-all duration-200 shadow-sm shadow-amber-500/20 hover:-translate-y-0.5 flex items-center gap-1"
-              >
-                {item.label}
-              </Link>
-            );
-          }
           return (
             <NavLink
               key={item.path}
@@ -31,14 +36,18 @@ export const DesktopNav: React.FC = () => {
               className={({ isActive }) =>
                 `px-3 py-2 text-sm font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
                   isActive
-                    ? 'text-purple-600 bg-purple-50'
+                    ? isDark
+                      ? 'text-amber-300 bg-amber-400/10 border border-amber-400/30 shadow-sm'
+                      : 'text-purple-600 bg-purple-50'
+                    : isDark
+                    ? 'text-slate-300 hover:text-amber-400 hover:bg-white/5'
                     : 'text-slate-700 hover:text-purple-600 hover:bg-slate-100/60'
                 }`
               }
             >
               {item.label}
               {item.badge && (
-                <span className="bg-purple-100 text-purple-700 text-[10px] font-bold px-1.5 py-0.5 rounded">
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">
                   {item.badge}
                 </span>
               )}
@@ -47,57 +56,101 @@ export const DesktopNav: React.FC = () => {
         }
 
         const isOpen = openDropdown === item.label;
+        const isMultiCol = (item.children?.length ?? 0) > 4;
+        const dropdownWidth = isMultiCol ? 'w-[520px] max-w-[calc(100vw-3rem)]' : 'w-[320px]';
+        const alignClass = idx >= 2 ? 'right-0' : 'left-0';
 
         return (
           <div
-            key={item.path}
+            key={item.label}
             className="relative"
-            onMouseEnter={() => setOpenDropdown(item.label)}
-            onMouseLeave={() => setOpenDropdown(null)}
+            onMouseEnter={() => handleMouseEnter(item.label)}
+            onMouseLeave={handleMouseLeave}
           >
             <NavLink
               to={item.path}
               className={({ isActive }) =>
                 `px-3 py-2 text-sm font-semibold rounded-lg transition-colors flex items-center gap-1 ${
                   isActive || isOpen
-                    ? 'text-purple-600 bg-purple-50'
+                    ? isDark
+                      ? 'text-amber-300 bg-amber-400/10 border border-amber-400/30 shadow-sm'
+                      : 'text-purple-600 bg-purple-50'
+                    : isDark
+                    ? 'text-slate-300 hover:text-amber-400 hover:bg-white/5'
                     : 'text-slate-700 hover:text-purple-600 hover:bg-slate-100/60'
                 }`
               }
+              aria-expanded={isOpen}
+              aria-haspopup="true"
             >
               <span>{item.label}</span>
               <ChevronDown
-                className={`w-4 h-4 transition-transform duration-200 ${
-                  isOpen ? 'rotate-180 text-purple-600' : 'text-slate-400'
+                className={`w-3.5 h-3.5 transition-transform duration-150 ${
+                  isOpen ? 'rotate-180 text-amber-400' : 'text-slate-400'
                 }`}
               />
             </NavLink>
 
-            {/* Dropdown Menu */}
+            {/* Seamless Mega-Dropdown */}
             {isOpen && (
-              <div className="absolute top-full left-0 w-72 pt-2 z-50 animate-fade-in">
-                <div className="bg-white rounded-2xl shadow-card-hover border border-slate-200/80 p-2.5 overflow-hidden">
+              <div 
+                className={`absolute top-full ${alignClass} ${dropdownWidth} pt-2 z-50 transition-opacity duration-150 ease-out`}
+                onMouseEnter={() => handleMouseEnter(item.label)}
+                onMouseLeave={handleMouseLeave}
+              >
+                <div className={`rounded-2xl border p-3 shadow-2xl backdrop-blur-xl ${
+                  isDark
+                    ? 'bg-[#0B0B14]/95 border-white/10 text-white shadow-black/80 ring-1 ring-white/10'
+                    : 'bg-white shadow-xl border-slate-200 text-slate-900'
+                }`}>
+                  {/* Category Brief Header */}
                   {item.description && (
-                    <div className="px-3 py-2 border-b border-slate-100 mb-1 text-[11px] text-slate-500 font-medium">
-                      {item.description}
+                    <div className="flex items-center justify-between px-3 py-1.5 mb-2 border-b border-white/10 text-[11px] text-slate-400 font-medium">
+                      <div className="flex items-center gap-1.5 text-amber-400 font-bold">
+                        <Sparkles className="w-3 h-3" />
+                        <span>{item.label} Directory</span>
+                      </div>
+                      <span className="text-[10px] font-mono text-slate-500">
+                        {item.children?.length} Available
+                      </span>
                     </div>
                   )}
-                  <div className="space-y-0.5">
+
+                  {/* Multi-Column Grid */}
+                  <div className={`grid ${isMultiCol ? 'grid-cols-2 gap-1.5' : 'grid-cols-1 gap-1'}`}>
                     {item.children?.map((subItem) => (
                       <Link
                         key={subItem.path}
                         to={subItem.path}
                         onClick={() => setOpenDropdown(null)}
-                        className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-purple-50 hover:text-purple-700 transition-colors"
+                        className="group/sub flex flex-col p-2.5 rounded-xl hover:bg-white/[0.06] hover:border-amber-400/30 border border-transparent transition-all duration-150"
                       >
-                        <div>{subItem.label}</div>
+                        <div className="flex items-center justify-between gap-1">
+                          <span className="text-xs font-bold text-slate-200 group-hover/sub:text-amber-300 transition-colors">
+                            {subItem.label}
+                          </span>
+                          <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover/sub:opacity-100 group-hover/sub:translate-x-0 text-amber-400 transition-all duration-150" />
+                        </div>
                         {subItem.description && (
-                          <div className="text-[10px] text-slate-400 font-normal mt-0.5">
+                          <span className="text-[10px] line-clamp-1 mt-0.5 text-slate-400 group-hover/sub:text-slate-300 font-normal">
                             {subItem.description}
-                          </div>
+                          </span>
                         )}
                       </Link>
                     ))}
+                  </div>
+
+                  {/* Bottom Directory Link */}
+                  <div className="mt-2 pt-2 border-t border-white/10 flex items-center justify-between px-3 text-[11px]">
+                    <span className="text-slate-400 truncate max-w-[320px]">{item.description}</span>
+                    <Link
+                      to={item.path}
+                      onClick={() => setOpenDropdown(null)}
+                      className="text-amber-400 hover:text-amber-300 font-bold inline-flex items-center gap-1 shrink-0 ml-2"
+                    >
+                      <span>Explore all</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -105,20 +158,6 @@ export const DesktopNav: React.FC = () => {
           </div>
         );
       })}
-
-      <NavLink
-        to="/model-3"
-        className={({ isActive }) =>
-          `ml-1 px-3 py-1.5 text-xs font-bold rounded-full transition-all flex items-center gap-1.5 ${
-            isActive
-              ? 'text-slate-950 bg-gradient-to-r from-amber-400 to-yellow-400 shadow-md shadow-amber-400/25'
-              : 'text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-300 shadow-xs'
-          }`
-        }
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-        <span>Model 3</span>
-      </NavLink>
     </nav>
   );
 };

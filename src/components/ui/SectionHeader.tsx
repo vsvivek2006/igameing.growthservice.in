@@ -14,7 +14,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   title,
   subtitle,
   align = 'center',
-  dark = false,
+  dark = true,
   className = '',
 }) => {
   const alignClass = {
@@ -26,23 +26,15 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   return (
     <div className={`max-w-3xl mb-12 sm:mb-16 ${alignClass} ${className}`}>
       {eyebrow && (
-        <p className={`type-eyebrow mb-2.5 ${dark ? 'text-yellow-400' : 'text-purple-600'}`}>
+        <p className="type-eyebrow mb-2.5 text-amber-400">
           {eyebrow}
         </p>
       )}
-      <h2
-        className={`type-h2 mb-4 ${
-          dark ? 'text-white' : 'text-slate-900'
-        }`}
-      >
+      <h2 className="type-h2 mb-4 text-white">
         {title}
       </h2>
       {subtitle && (
-        <p
-          className={`type-body-lg ${
-            dark ? 'text-slate-300' : 'text-slate-600'
-          }`}
-        >
+        <p className="type-body-lg text-slate-300">
           {subtitle}
         </p>
       )}

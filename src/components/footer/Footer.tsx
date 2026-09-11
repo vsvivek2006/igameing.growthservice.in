@@ -25,6 +25,8 @@ export const Footer: React.FC = () => {
                     alt="iGaming Growth Logo Icon"
                     width={36}
                     height={36}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>

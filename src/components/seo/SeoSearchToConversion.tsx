@@ -10,8 +10,7 @@ import {
   MessageSquare, 
   ArrowRight, 
   Sparkles, 
-  CheckCircle2,
-  Zap
+  CheckCircle2
 } from 'lucide-react';
 
 export const SeoSearchToConversion: React.FC = () => {
@@ -126,6 +125,7 @@ export const SeoSearchToConversion: React.FC = () => {
                   playsInline
                   loop
                   muted={isMuted}
+                  preload="none"
                   onTimeUpdate={handleTimeUpdate}
                   className="w-full h-full object-cover"
                 />

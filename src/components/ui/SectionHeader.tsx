@@ -14,7 +14,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   title,
   subtitle,
   align = 'center',
-  dark = true,
+  dark: _dark = true,
   className = '',
 }) => {
   const alignClass = {

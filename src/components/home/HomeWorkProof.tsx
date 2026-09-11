@@ -1,21 +1,33 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { 
   TrendingUp, 
   Search, 
   Zap, 
-  ShieldCheck, 
   ArrowRight,
-  ExternalLink,
-  CheckCircle2,
   Sparkles,
-  Layers,
-  Award
+  Award,
+  Lock,
+  Maximize2,
+  X,
+  ExternalLink
 } from 'lucide-react';
 import { trackEvent } from '../../analytics';
 
+interface LightboxState {
+  src: string;
+  title: string;
+  subtitle: string;
+  domain: string;
+}
+
 export const HomeWorkProof: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'yono' | 'ix7win' | 'iv7' | 'live'>('yono');
+  const [activeTab, setActiveTab] = useState<'yono' | 'daily' | 'iv7' | 'is7gam'>('yono');
+  const [lightbox, setLightbox] = useState<LightboxState | null>(null);
+
+  const openLightbox = (src: string, title: string, subtitle: string, domain: string) => {
+    setLightbox({ src, title, subtitle, domain });
+    trackEvent('proof_zoom_modal_open', { domain });
+  };
 
   return (
     <section className="relative py-20 lg:py-28 bg-model3-surface/70 overflow-hidden border-b border-white/10">
@@ -29,7 +41,7 @@ export const HomeWorkProof: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/15 text-xs font-bold uppercase tracking-widest text-slate-300 mb-4 shadow-inner">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>Verified Results &amp; Real Traffic</span>
+            <span>Verified Results &amp; Real Search Traffic</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white font-heading tracking-tight mb-4">
@@ -40,11 +52,10 @@ export const HomeWorkProof: React.FC = () => {
           </h2>
 
           <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
-            See actual Google Search Console performance from gaming, casino, cricket ID, and betting exchange platforms built and ranked by our team.
+            Direct, unedited Google Search Console analytics from gaming, casino, cricket ID, and betting exchange platforms engineered by our team.
           </p>
         </div>
 
-        {/* Proof Category Switcher */}
         {/* Proof Category Switcher - Mobile-friendly smooth swipe bar */}
         <div className="flex items-center gap-2 sm:gap-2.5 mb-8 sm:mb-10 overflow-x-auto no-scrollbar sm:flex-wrap sm:justify-center px-1 pb-2">
           <button
@@ -66,17 +77,17 @@ export const HomeWorkProof: React.FC = () => {
           <button
             type="button"
             onClick={() => {
-              setActiveTab('ix7win');
-              trackEvent('proof_tab_switch', { tab: 'ix7win' });
+              setActiveTab('daily');
+              trackEvent('proof_tab_switch', { tab: 'daily' });
             }}
             className={`shrink-0 flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
-              activeTab === 'ix7win'
+              activeTab === 'daily'
                 ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-900/50 scale-[1.02]'
                 : 'bg-white/[0.04] text-slate-400 border border-white/10 hover:bg-white/[0.08] hover:text-white'
             }`}
           >
-            <Award className="w-3.5 h-3.5" />
-            <span>Rank 1.2 on Google (ix7win Casino)</span>
+            <TrendingUp className="w-3.5 h-3.5" />
+            <span>90.4K Clicks / 24h (Live Inflow)</span>
           </button>
 
           <button
@@ -92,23 +103,23 @@ export const HomeWorkProof: React.FC = () => {
             }`}
           >
             <Zap className="w-3.5 h-3.5" />
-            <span>19.6K Clicks (IV-7 Exchange)</span>
+            <span>22K Clicks (IV-7 Exchange)</span>
           </button>
 
           <button
             type="button"
             onClick={() => {
-              setActiveTab('live');
-              trackEvent('proof_tab_switch', { tab: 'live' });
+              setActiveTab('is7gam');
+              trackEvent('proof_tab_switch', { tab: 'is7gam' });
             }}
             className={`shrink-0 flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
-              activeTab === 'live'
+              activeTab === 'is7gam'
                 ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50 scale-[1.02]'
                 : 'bg-white/[0.04] text-slate-400 border border-white/10 hover:bg-white/[0.08] hover:text-white'
             }`}
           >
-            <TrendingUp className="w-3.5 h-3.5" />
-            <span>1,220+ Daily Clicks (Live Traffic)</span>
+            <Award className="w-3.5 h-3.5" />
+            <span>Rank 2.9 &amp; 52.6% CTR (is7gam)</span>
           </button>
         </div>
 
@@ -119,21 +130,48 @@ export const HomeWorkProof: React.FC = () => {
           {activeTab === 'yono' && (
             <div className="space-y-8 animate-fadeIn">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                {/* Left: Real GSC Screenshot */}
+                {/* Left: Pristine GSC Browser Mockup */}
                 <div className="lg:col-span-7">
-                  <div className="relative rounded-2xl overflow-hidden border border-purple-500/30 shadow-2xl shadow-purple-950/40 group">
-                    <img
-                      src="/images/proof/yono-games-15m-seo-proof.webp"
-                      alt="Google Search Console 15.9M Clicks Proof - yononewgamess.com"
-                      width={1920}
-                      height={1080}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-auto object-cover transform group-hover:scale-[1.02] transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-black/85 backdrop-blur-md border border-purple-500/40 text-[10px] font-mono text-purple-300 font-bold flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span>Live GSC: yononewgamess.com</span>
+                  <div className="relative rounded-2xl overflow-hidden border border-purple-500/30 bg-slate-950 shadow-2xl shadow-purple-950/40 group">
+                    {/* Simulated Browser Bar */}
+                    <div className="flex items-center justify-between px-3.5 py-2.5 bg-slate-900/90 border-b border-white/10">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                        <div className="ml-2 hidden sm:flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-black/60 border border-white/10 text-[10px] font-mono text-slate-300">
+                          <Lock className="w-2.5 h-2.5 text-emerald-400" />
+                          <span>search.google.com/search-console/yononewgamess.com</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/10 border border-purple-500/30 text-purple-300 flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          3 Months Report
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Cleaned Crystal Clear GSC Report */}
+                    <div 
+                      onClick={() => openLightbox('/images/proof/yono-15m-gsc-clean.webp', '15.9 Million Clicks on Google Search', 'yononewgamess.com · 3 Months Verified Performance', 'yononewgamess.com')}
+                      className="relative cursor-pointer overflow-hidden bg-white"
+                    >
+                      <img
+                        src="/images/proof/yono-15m-gsc-clean.webp"
+                        alt="Google Search Console 15.9M Clicks Proof for yononewgamess.com"
+                        width={1600}
+                        height={824}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-auto object-cover group-hover:scale-[1.01] transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/30 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <span className="px-3.5 py-2 rounded-xl bg-slate-950/90 border border-purple-400 text-purple-300 text-xs font-bold shadow-xl flex items-center gap-2">
+                          <Maximize2 className="w-3.5 h-3.5" />
+                          Click to Inspect Full GSC Data
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -148,7 +186,7 @@ export const HomeWorkProof: React.FC = () => {
                       15.9 Million Players From Google Search
                     </h3>
                     <p className="text-slate-300 text-sm leading-relaxed mt-2">
-                      Real Google Search Console data from <strong className="text-white">yononewgamess.com</strong>. We took this skill gaming platform to the top of Google across high-intent keywords, driving over 15.9 million direct player clicks with zero ad spend.
+                      Direct Google Search Console export from <strong className="text-white">yononewgamess.com</strong>. We engineered a programmatic SEO infrastructure that pushed high-intent gaming terms to position #2.1, generating 15.9M organic player clicks.
                     </p>
                   </div>
 
@@ -174,7 +212,7 @@ export const HomeWorkProof: React.FC = () => {
                       <div className="text-[11px] text-slate-400">Click-Through Rate</div>
                       <div className="text-2xl font-extrabold text-amber-400 font-heading">52.2%</div>
                       <span className="text-[10px] text-amber-300 font-bold mt-0.5 block">
-                        More Than 1 In 2 Click
+                        1 In Every 2 Clicks
                       </span>
                     </div>
 
@@ -199,25 +237,50 @@ export const HomeWorkProof: React.FC = () => {
             </div>
           )}
 
-          {/* TAB 2: ix7win Rank 1.2 on Google */}
-          {activeTab === 'ix7win' && (
+          {/* TAB 2: Yono 90.4K Daily Clicks In 24 Hours */}
+          {activeTab === 'daily' && (
             <div className="space-y-8 animate-fadeIn">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 {/* Left: Real GSC Screenshot */}
                 <div className="lg:col-span-7">
-                  <div className="relative rounded-2xl overflow-hidden border border-amber-500/30 shadow-2xl shadow-amber-950/40 group">
-                    <img
-                      src="/images/proof/ix7win-cricket-casino-seo-proof.webp"
-                      alt="Google Search Console 51.4K Clicks Rank 1.2 Proof - ix7win.com"
-                      width={1920}
-                      height={1080}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-auto object-cover transform group-hover:scale-[1.02] transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-black/85 backdrop-blur-md border border-amber-500/40 text-[10px] font-mono text-amber-300 font-bold flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span>Live GSC: ix7win.com</span>
+                  <div className="relative rounded-2xl overflow-hidden border border-amber-500/30 bg-slate-950 shadow-2xl shadow-amber-950/40 group">
+                    <div className="flex items-center justify-between px-3.5 py-2.5 bg-slate-900/90 border-b border-white/10">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                        <div className="ml-2 hidden sm:flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-black/60 border border-white/10 text-[10px] font-mono text-slate-300">
+                          <Lock className="w-2.5 h-2.5 text-emerald-400" />
+                          <span>search.google.com/search-console/yononewgamess.com</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/10 border border-amber-500/30 text-amber-300 flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          24-Hour Live View
+                        </span>
+                      </div>
+                    </div>
+
+                    <div 
+                      onClick={() => openLightbox('/images/proof/yono-daily-gsc-clean.webp', '90.4K Clicks in a Single 24-Hour Window', 'yononewgamess.com · Real Live Traffic Inflow', 'yononewgamess.com')}
+                      className="relative cursor-pointer overflow-hidden bg-white"
+                    >
+                      <img
+                        src="/images/proof/yono-daily-gsc-clean.webp"
+                        alt="Google Search Console 90.4K Daily Clicks Proof - yononewgamess.com"
+                        width={1600}
+                        height={824}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-auto object-cover group-hover:scale-[1.01] transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/30 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <span className="px-3.5 py-2 rounded-xl bg-slate-950/90 border border-amber-400 text-amber-300 text-xs font-bold shadow-xl flex items-center gap-2">
+                          <Maximize2 className="w-3.5 h-3.5" />
+                          Click to Inspect Full GSC Data
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -226,47 +289,47 @@ export const HomeWorkProof: React.FC = () => {
                 <div className="lg:col-span-5 space-y-6">
                   <div>
                     <div className="inline-flex items-center gap-2 text-xs font-mono font-bold text-amber-400 mb-2 uppercase tracking-wider">
-                      <span>Casino &amp; Cricket ID SEO</span>
+                      <span>High-Velocity Organic Inflow</span>
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-heading">
-                      Rank #1.2 on Google — 62.8% of Players Click In
+                      90,400 Players in 24 Hours — Rank #1.9
                     </h3>
                     <p className="text-slate-300 text-sm leading-relaxed mt-2">
-                      Real GSC performance from <strong className="text-white">ix7win.com</strong>. In just 28 days, this platform gathered 51.4K organic clicks with an average ranking of 1.2 on Google. More than 1,220 players land on this site every 24 hours.
+                      Real 24-hour telemetry from Google Search Console. In a single day, this platform captured 90.4K organic player clicks with an average ranking of 1.9 across high-intent real-money keywords.
                     </p>
                   </div>
 
                   {/* 4 Clear Stats */}
                   <div className="grid grid-cols-2 gap-3 font-mono">
                     <div className="p-3.5 rounded-xl bg-white/[0.03] border border-amber-500/30">
-                      <div className="text-[11px] text-slate-400">28-Day Clicks</div>
-                      <div className="text-2xl font-extrabold text-amber-400 font-heading">51.4K</div>
+                      <div className="text-[11px] text-slate-400">24-Hour Clicks</div>
+                      <div className="text-2xl font-extrabold text-amber-400 font-heading">90.4K</div>
                       <span className="text-[10px] text-emerald-400 font-bold mt-0.5 block">
-                        Direct Player Visits
+                        Direct Inflow Today
                       </span>
                     </div>
 
                     <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
-                      <div className="text-[11px] text-slate-400">Google Position</div>
-                      <div className="text-2xl font-extrabold text-white font-heading">#1.2</div>
-                      <span className="text-[10px] text-amber-300 font-bold mt-0.5 block">
-                        Rank #1 For Main Terms
+                      <div className="text-[11px] text-slate-400">24-Hour Impressions</div>
+                      <div className="text-2xl font-extrabold text-white font-heading">195K</div>
+                      <span className="text-[10px] text-purple-300 font-bold mt-0.5 block">
+                        Google Search Exposure
                       </span>
                     </div>
 
                     <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
                       <div className="text-[11px] text-slate-400">Click Rate (CTR)</div>
-                      <div className="text-2xl font-extrabold text-emerald-400 font-heading">62.8%</div>
+                      <div className="text-2xl font-extrabold text-emerald-400 font-heading">46.4%</div>
                       <span className="text-[10px] text-emerald-300 font-bold mt-0.5 block">
-                        High-Converting Snippets
+                        Aggressive Search Snippets
                       </span>
                     </div>
 
                     <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
-                      <div className="text-[11px] text-slate-400">Daily Live Traffic</div>
-                      <div className="text-2xl font-extrabold text-cyan-400 font-heading">1,220+</div>
+                      <div className="text-[11px] text-slate-400">Average Position</div>
+                      <div className="text-2xl font-extrabold text-cyan-400 font-heading">1.9</div>
                       <span className="text-[10px] text-cyan-300 font-bold mt-0.5 block">
-                        Every 24 Hours
+                        #1 Rank For Target Terms
                       </span>
                     </div>
                   </div>
@@ -275,7 +338,7 @@ export const HomeWorkProof: React.FC = () => {
                     href="#pricing"
                     className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 shadow-md shadow-amber-400/20 transition-all"
                   >
-                    <span>Rank Your Gaming Site #1</span>
+                    <span>Scale Your Organic Player Base</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </a>
                 </div>
@@ -283,25 +346,50 @@ export const HomeWorkProof: React.FC = () => {
             </div>
           )}
 
-          {/* TAB 3: IV-7 Betting Exchange 19.6K Clicks */}
+          {/* TAB 3: IV-7 Betting Exchange 22K Clicks */}
           {activeTab === 'iv7' && (
             <div className="space-y-8 animate-fadeIn">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 {/* Left: Real GSC Screenshot */}
                 <div className="lg:col-span-7">
-                  <div className="relative rounded-2xl overflow-hidden border border-cyan-500/30 shadow-2xl shadow-cyan-950/40 group">
-                    <img
-                      src="/images/proof/iv7-exchange-ranking-proof.webp"
-                      alt="Google Search Console 19.6K Clicks Proof - iv-7.com"
-                      width={1920}
-                      height={1080}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-auto object-cover transform group-hover:scale-[1.02] transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-black/85 backdrop-blur-md border border-cyan-500/40 text-[10px] font-mono text-cyan-300 font-bold flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span>Live GSC: iv-7.com</span>
+                  <div className="relative rounded-2xl overflow-hidden border border-cyan-500/30 bg-slate-950 shadow-2xl shadow-cyan-950/40 group">
+                    <div className="flex items-center justify-between px-3.5 py-2.5 bg-slate-900/90 border-b border-white/10">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                        <div className="ml-2 hidden sm:flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-black/60 border border-white/10 text-[10px] font-mono text-slate-300">
+                          <Lock className="w-2.5 h-2.5 text-emerald-400" />
+                          <span>search.google.com/search-console/iv-7.com</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          28-Day Report
+                        </span>
+                      </div>
+                    </div>
+
+                    <div 
+                      onClick={() => openLightbox('/images/proof/iv7-22k-gsc-clean.webp', '22,000 Organic Clicks for Live Betting Exchange', 'iv-7.com · 28 Days Verified GSC Report', 'iv-7.com')}
+                      className="relative cursor-pointer overflow-hidden bg-white"
+                    >
+                      <img
+                        src="/images/proof/iv7-22k-gsc-clean.webp"
+                        alt="Google Search Console 22K Clicks Proof - iv-7.com"
+                        width={1600}
+                        height={748}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-auto object-cover group-hover:scale-[1.01] transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/30 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <span className="px-3.5 py-2 rounded-xl bg-slate-950/90 border border-cyan-400 text-cyan-300 text-xs font-bold shadow-xl flex items-center gap-2">
+                          <Maximize2 className="w-3.5 h-3.5" />
+                          Click to Inspect Full GSC Data
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -310,47 +398,47 @@ export const HomeWorkProof: React.FC = () => {
                 <div className="lg:col-span-5 space-y-6">
                   <div>
                     <div className="inline-flex items-center gap-2 text-xs font-mono font-bold text-cyan-400 mb-2 uppercase tracking-wider">
-                      <span>Betting Exchange Growth</span>
+                      <span>Betting Exchange Domination</span>
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-heading">
-                      19.6K Organic Players for Live Exchange
+                      22K Organic Players for Live Exchange
                     </h3>
                     <p className="text-slate-300 text-sm leading-relaxed mt-2">
-                      Real GSC data from <strong className="text-white">iv-7.com</strong>. We established top-3 rankings on competitive sports betting and exchange queries. 48.6% of players who see the listing click straight to the exchange.
+                      Real GSC data from <strong className="text-white">iv-7.com</strong>. We built clean domain authority on competitive sports betting exchange queries, driving 22K high-intent clicks with 39.2% CTR and zero domain penalties.
                     </p>
                   </div>
 
                   {/* 4 Clear Stats */}
                   <div className="grid grid-cols-2 gap-3 font-mono">
                     <div className="p-3.5 rounded-xl bg-white/[0.03] border border-cyan-500/30">
-                      <div className="text-[11px] text-slate-400">Total Organic Clicks</div>
-                      <div className="text-2xl font-extrabold text-white font-heading">19.6K</div>
-                      <span className="text-[10px] text-cyan-300 font-bold mt-0.5 block">
-                        28-Day Period
+                      <div className="text-[11px] text-slate-400">Total 28d Clicks</div>
+                      <div className="text-2xl font-extrabold text-cyan-400 font-heading">22.0K</div>
+                      <span className="text-[10px] text-emerald-400 font-bold mt-0.5 block">
+                        Depositor Inquiries
                       </span>
                     </div>
 
                     <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
                       <div className="text-[11px] text-slate-400">Total Impressions</div>
-                      <div className="text-2xl font-extrabold text-white font-heading">40.3K</div>
-                      <span className="text-[10px] text-slate-400 mt-0.5 block">
-                        Search Appearances
+                      <div className="text-2xl font-extrabold text-white font-heading">56.1K</div>
+                      <span className="text-[10px] text-cyan-300 font-bold mt-0.5 block">
+                        Sports Keyword Reach
                       </span>
                     </div>
 
                     <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
-                      <div className="text-[11px] text-slate-400">Average CTR</div>
-                      <div className="text-2xl font-extrabold text-amber-400 font-heading">48.6%</div>
+                      <div className="text-[11px] text-slate-400">Search CTR</div>
+                      <div className="text-2xl font-extrabold text-amber-400 font-heading">39.2%</div>
                       <span className="text-[10px] text-amber-300 font-bold mt-0.5 block">
-                        Nearly 50% Click Rate
+                        Above Industry Standard
                       </span>
                     </div>
 
                     <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
                       <div className="text-[11px] text-slate-400">Average Position</div>
-                      <div className="text-2xl font-extrabold text-emerald-400 font-heading">3.4</div>
+                      <div className="text-2xl font-extrabold text-emerald-400 font-heading">4.7</div>
                       <span className="text-[10px] text-emerald-300 font-bold mt-0.5 block">
-                        First Page Dominance
+                        Front Page of Google
                       </span>
                     </div>
                   </div>
@@ -367,25 +455,50 @@ export const HomeWorkProof: React.FC = () => {
             </div>
           )}
 
-          {/* TAB 4: Daily Live Traffic 1,220+ Clicks */}
-          {activeTab === 'live' && (
+          {/* TAB 4: is7gam Rank 2.9 & 52.6% CTR */}
+          {activeTab === 'is7gam' && (
             <div className="space-y-8 animate-fadeIn">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                {/* Left: Live GSC Telemetry Proof Image */}
+                {/* Left: Real GSC Screenshot */}
                 <div className="lg:col-span-7">
-                  <div className="relative rounded-2xl overflow-hidden border border-emerald-500/30 shadow-2xl shadow-emerald-950/40 group">
-                    <img
-                      src="/images/proof/ix7win-live-daily-clicks-proof.webp"
-                      alt="Google Search Console 1,220+ Daily Live Traffic Graph - ix7win.com"
-                      width={1920}
-                      height={1080}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-auto object-cover transform group-hover:scale-[1.02] transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-black/85 backdrop-blur-md border border-emerald-500/40 text-[10px] font-mono text-emerald-300 font-bold flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span>24-Hour Continuous Traffic Graph</span>
+                  <div className="relative rounded-2xl overflow-hidden border border-emerald-500/30 bg-slate-950 shadow-2xl shadow-emerald-950/40 group">
+                    <div className="flex items-center justify-between px-3.5 py-2.5 bg-slate-900/90 border-b border-white/10">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                        <div className="ml-2 hidden sm:flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-black/60 border border-white/10 text-[10px] font-mono text-slate-300">
+                          <Lock className="w-2.5 h-2.5 text-emerald-400" />
+                          <span>search.google.com/search-console/is7gam.com</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          Rank 2.9 Verified
+                        </span>
+                      </div>
+                    </div>
+
+                    <div 
+                      onClick={() => openLightbox('/images/proof/is7gam-rank-gsc-clean.webp', 'Rank 2.9 & 52.6% Click Rate on Google', 'is7gam.com · Turnkey Gaming Search Domination', 'is7gam.com')}
+                      className="relative cursor-pointer overflow-hidden bg-white"
+                    >
+                      <img
+                        src="/images/proof/is7gam-rank-gsc-clean.webp"
+                        alt="Google Search Console 52.6% CTR Proof - is7gam.com"
+                        width={1600}
+                        height={706}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-auto object-cover group-hover:scale-[1.01] transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/30 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <span className="px-3.5 py-2 rounded-xl bg-slate-950/90 border border-emerald-400 text-emerald-300 text-xs font-bold shadow-xl flex items-center gap-2">
+                          <Maximize2 className="w-3.5 h-3.5" />
+                          Click to Inspect Full GSC Data
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -394,47 +507,47 @@ export const HomeWorkProof: React.FC = () => {
                 <div className="lg:col-span-5 space-y-6">
                   <div>
                     <div className="inline-flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 mb-2 uppercase tracking-wider">
-                      <span>Daily Player Acquisition</span>
+                      <span>Casino &amp; Cricket Platform SEO</span>
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-heading">
-                      1,220+ Players Depositing Every Single Day
+                      52.6% of Google Searchers Click In
                     </h3>
                     <p className="text-slate-300 text-sm leading-relaxed mt-2">
-                      Steady, compounding organic search traffic means uninterrupted revenue. This live telemetry shows over 1,220 real players clicking daily from Google without paying a single rupee in ads or worrying about account bans.
+                      Verified search performance from <strong className="text-white">is7gam.com</strong>. Over half of all users searching for platform terms clicked directly through to registration, achieving an average position of 2.9 on Google.
                     </p>
                   </div>
 
                   {/* 4 Clear Stats */}
                   <div className="grid grid-cols-2 gap-3 font-mono">
                     <div className="p-3.5 rounded-xl bg-white/[0.03] border border-emerald-500/30">
-                      <div className="text-[11px] text-slate-400">Daily Organic Traffic</div>
-                      <div className="text-2xl font-extrabold text-emerald-400 font-heading">1,220+</div>
+                      <div className="text-[11px] text-slate-400">24-Hour Clicks</div>
+                      <div className="text-2xl font-extrabold text-emerald-400 font-heading">565</div>
                       <span className="text-[10px] text-emerald-300 font-bold mt-0.5 block">
-                        Clicks Every 24 Hours
+                        Real Players Inflow
                       </span>
                     </div>
 
                     <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
-                      <div className="text-[11px] text-slate-400">Search CTR</div>
-                      <div className="text-2xl font-extrabold text-amber-400 font-heading">62.8%</div>
+                      <div className="text-[11px] text-slate-400">Click-Through Rate</div>
+                      <div className="text-2xl font-extrabold text-amber-400 font-heading">52.6%</div>
                       <span className="text-[10px] text-amber-300 font-bold mt-0.5 block">
-                        Direct Player Intent
+                        High Intent SERP Snippet
                       </span>
                     </div>
 
                     <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
-                      <div className="text-[11px] text-slate-400">Cost Per Acquisition</div>
-                      <div className="text-2xl font-extrabold text-cyan-400 font-heading">₹0 / click</div>
+                      <div className="text-[11px] text-slate-400">Average Position</div>
+                      <div className="text-2xl font-extrabold text-cyan-400 font-heading">2.9</div>
                       <span className="text-[10px] text-cyan-300 font-bold mt-0.5 block">
-                        100% Pure Organic SEO
+                        Top 3 On Google
                       </span>
                     </div>
 
                     <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
-                      <div className="text-[11px] text-slate-400">WhatsApp Onboarding</div>
-                      <div className="text-2xl font-extrabold text-white font-heading">&lt;60s</div>
+                      <div className="text-[11px] text-slate-400">Ad Spend Required</div>
+                      <div className="text-2xl font-extrabold text-white font-heading">₹0</div>
                       <span className="text-[10px] text-slate-400 mt-0.5 block">
-                        Instant ID Creation
+                        Zero Ad Suspensions
                       </span>
                     </div>
                   </div>
@@ -451,25 +564,25 @@ export const HomeWorkProof: React.FC = () => {
             </div>
           )}
 
-        </div>
-
-        {/* ── Verified Real Proof Inspection Grid (Replaces moving marquee) ── */}
-        <div className="mt-12 pt-10 border-t border-white/10">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-400 font-mono">
-                Verified Platform Evidence
-              </span>
-              <h3 className="text-xl sm:text-2xl font-extrabold text-white font-heading mt-1">
-                Select Any Real Platform Report to Inspect
-              </h3>
+          {/* Section Divider */}
+          <div className="pt-8 border-t border-white/10 mt-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div>
+                <h4 className="text-base sm:text-lg font-bold text-white font-heading">
+                  Explore More Verified Case Study Records
+                </h4>
+                <p className="text-xs text-slate-400">
+                  Select any platform below to inspect live Google Search Console metrics and growth trends.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>All Exports 100% Real &amp; Unaltered</span>
+              </div>
             </div>
-            <span className="text-xs text-slate-400 font-mono">
-              Direct Google Search Console Telemetry
-            </span>
           </div>
 
-          {/* Clean 4-Card Responsive Grid */}
+          {/* Clean 4-Card Responsive Grid with Crisp 10KB Thumbnails */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {[
               {
@@ -477,36 +590,36 @@ export const HomeWorkProof: React.FC = () => {
                 title: 'yononewgamess.com',
                 badge: '15.9M Clicks',
                 badgeColor: 'text-amber-300 bg-amber-500/20 border-amber-500/40',
-                src: '/images/proof/yono-games-15m-seo-proof.webp',
+                src: '/images/proof/yono-15m-gsc-thumb.webp',
                 category: 'Skill Gaming & Rummy SEO',
                 stat: 'Rank 2.1 • 30.5M Impressions',
               },
               {
-                id: 'ix7win',
-                title: 'ix7win.com',
-                badge: '51.4K Clicks',
+                id: 'daily',
+                title: 'yononewgamess.com (24h)',
+                badge: '90.4K Daily',
                 badgeColor: 'text-purple-300 bg-purple-500/20 border-purple-500/40',
-                src: '/images/proof/ix7win-cricket-casino-seo-proof.webp',
-                category: 'Cricket ID & Casino',
-                stat: 'Rank 1.2 • 62.8% CTR',
+                src: '/images/proof/yono-daily-gsc-thumb.webp',
+                category: '24-Hour Live Traffic Peak',
+                stat: 'Rank 1.9 • 195K Impressions',
               },
               {
                 id: 'iv7',
                 title: 'iv-7.com',
-                badge: '19.6K Clicks',
+                badge: '22K Clicks',
                 badgeColor: 'text-cyan-300 bg-cyan-500/20 border-cyan-500/40',
-                src: '/images/proof/iv7-exchange-ranking-proof.webp',
+                src: '/images/proof/iv7-22k-gsc-thumb.webp',
                 category: 'Betting Exchange Portal',
-                stat: 'Rank 3.4 • 100% Organic',
+                stat: 'Rank 4.7 • 39.2% CTR',
               },
               {
-                id: 'live',
-                title: 'Daily Live Traffic',
-                badge: '1,220+ Daily',
+                id: 'is7gam',
+                title: 'is7gam.com',
+                badge: '52.6% CTR',
                 badgeColor: 'text-emerald-300 bg-emerald-500/20 border-emerald-500/40',
-                src: '/images/proof/ix7win-live-daily-clicks-proof.webp',
-                category: '24x7 Depositor Inflow',
-                stat: '1,220+ Real Players / Day',
+                src: '/images/proof/is7gam-rank-gsc-thumb.webp',
+                category: 'Casino & Cricket ID',
+                stat: 'Rank 2.9 • 565 Clicks/24h',
               },
             ].map((item) => {
               const isSelected = activeTab === item.id;
@@ -515,7 +628,7 @@ export const HomeWorkProof: React.FC = () => {
                   key={item.id}
                   type="button"
                   onClick={() => {
-                    setActiveTab(item.id as any);
+                    setActiveTab(item.id as 'yono' | 'daily' | 'iv7' | 'is7gam');
                     trackEvent('proof_grid_card_click', { client: item.title });
                   }}
                   className={`flex flex-col rounded-2xl overflow-hidden border p-3 text-left transition-all duration-300 group cursor-pointer ${
@@ -524,12 +637,12 @@ export const HomeWorkProof: React.FC = () => {
                       : 'border-white/10 bg-model3-deep/80 hover:border-white/25 hover:bg-white/[0.04]'
                   }`}
                 >
-                  <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-black/60 mb-3">
+                  <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-black/60 mb-3 border border-white/10">
                     <img
                       src={item.src}
                       alt={item.title}
-                      width={400}
-                      height={250}
+                      width={480}
+                      height={240}
                       loading="lazy"
                       decoding="async"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -571,6 +684,66 @@ export const HomeWorkProof: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Interactive Lightbox / Full-Screen Inspection Modal */}
+      {lightbox && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-md animate-fadeIn"
+          onClick={() => setLightbox(null)}
+        >
+          <div 
+            className="relative max-w-5xl w-full bg-slate-950 border border-white/20 rounded-2xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Top Bar */}
+            <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-slate-900 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-red-500" />
+                <span className="w-3 h-3 rounded-full bg-yellow-500" />
+                <span className="w-3 h-3 rounded-full bg-green-500" />
+                <span className="ml-2 font-mono text-xs text-slate-300 font-bold hidden sm:inline">
+                  Google Search Console Performance Report — {lightbox.domain}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setLightbox(null)}
+                className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Modal Image Body */}
+            <div className="p-3 sm:p-4 bg-slate-900/60 max-h-[80vh] overflow-auto">
+              <img
+                src={lightbox.src}
+                alt={lightbox.title}
+                width={1600}
+                height={824}
+                className="w-full h-auto rounded-xl shadow-2xl border border-white/10 object-contain"
+              />
+            </div>
+
+            {/* Modal Footer */}
+            <div className="px-4 sm:px-6 py-3 bg-slate-900 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <div>
+                <span className="font-bold text-white">{lightbox.title}</span>
+                <span className="text-slate-400 block sm:inline sm:ml-2">— {lightbox.subtitle}</span>
+              </div>
+              <a
+                href="#pricing"
+                onClick={() => setLightbox(null)}
+                className="inline-flex items-center gap-1.5 text-amber-400 hover:text-amber-300 font-bold"
+              >
+                <span>Get This Ranking For Your Brand</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

@@ -9,8 +9,7 @@ import {
   ArrowRight, 
   Layers, 
   ExternalLink,
-  ShieldCheck,
-  Award
+  ShieldCheck
 } from 'lucide-react';
 import { trackEvent } from '../../analytics';
 
@@ -64,8 +63,8 @@ const CAPABILITIES: CapabilityPillar[] = [
     proofPreview: {
       title: 'Real Google Search Console Proof',
       subtitle: 'yononewgamess.com · 15.9 Million Clicks on Google',
-      image: '/images/proof/yono-games-15m-seo-proof.webp',
-      imageAlt: 'Google Search Console 15.9M Clicks Proof - yononewgamess.com',
+      image: '/images/proof/yono-15m-gsc-clean.webp',
+      imageAlt: 'Google Search Console 15.9M Clicks Verified Proof - yononewgamess.com',
       verifiedBadge: '15.9M Clicks Verified',
       stats: [
         { label: 'Player Clicks', value: '15.9M', color: 'text-purple-400' },
@@ -98,15 +97,15 @@ const CAPABILITIES: CapabilityPillar[] = [
       '100% full source code ownership & super-admin control panel',
     ],
     proofPreview: {
-      title: 'Real Cricket & Casino Platform Proof',
-      subtitle: 'ix7win.com · Rank 1.2 on Google & 51.4K Organic Clicks',
-      image: '/images/proof/ix7win-cricket-casino-seo-proof.webp',
-      imageAlt: 'Real GSC performance proof for ix7win.com casino and cricket platform',
-      verifiedBadge: '51.4K Clicks · Rank 1.2',
+      title: 'Betting Exchange Search Domination',
+      subtitle: 'iv-7.com · 22.0K Organic Clicks & Rank 4.7',
+      image: '/images/proof/iv7-22k-gsc-clean.webp',
+      imageAlt: 'Real GSC performance proof for iv-7 betting exchange and casino',
+      verifiedBadge: '22K Clicks Verified',
       stats: [
-        { label: 'Organic Clicks', value: '51.4K', color: 'text-cyan-400' },
-        { label: 'Click Rate', value: '62.8%', color: 'text-emerald-400' },
-        { label: 'Avg Rank', value: '#1.2', color: 'text-amber-400' },
+        { label: 'Organic Clicks', value: '22.0K', color: 'text-cyan-400' },
+        { label: 'Impressions', value: '56.1K', color: 'text-emerald-400' },
+        { label: 'Avg Rank', value: '#4.7', color: 'text-amber-400' },
       ],
     },
   },
@@ -134,15 +133,15 @@ const CAPABILITIES: CapabilityPillar[] = [
       '4.8x average return on ad spend (ROAS) with full spend transparency',
     ],
     proofPreview: {
-      title: 'Betting Exchange Search Domination',
-      subtitle: 'iv-7.com · 19.6K Clicks & Top Tier Organic Search Traffic',
-      image: '/images/proof/iv7-exchange-ranking-proof.webp',
-      imageAlt: 'Real GSC performance proof for iv-7 betting exchange',
-      verifiedBadge: '19.6K Clicks Verified',
+      title: 'High-Volume 24-Hour Player Inflow',
+      subtitle: 'yononewgamess.com · 90.4K Clicks in Single 24-Hour Period',
+      image: '/images/proof/yono-daily-gsc-clean.webp',
+      imageAlt: 'Real GSC 24h performance telemetry proof showing 90.4K clicks',
+      verifiedBadge: '90.4K Daily Clicks',
       stats: [
-        { label: 'Total Clicks', value: '19.6K', color: 'text-amber-400' },
-        { label: 'Organic Share', value: '100%', color: 'text-emerald-400' },
-        { label: 'Avg Rank', value: '#3.4', color: 'text-cyan-400' },
+        { label: '24h Clicks', value: '90.4K', color: 'text-amber-400' },
+        { label: 'Impressions', value: '195K', color: 'text-emerald-400' },
+        { label: 'Avg Rank', value: '#1.9', color: 'text-cyan-400' },
       ],
     },
   },
@@ -170,14 +169,14 @@ const CAPABILITIES: CapabilityPillar[] = [
       'Automated match reminders & reload bonuses to re-engage past players',
     ],
     proofPreview: {
-      title: 'Daily Active Player Traffic',
-      subtitle: 'ix7win.com · 1,220+ Daily Clicks & Active WhatsApp Funnels',
-      image: '/images/proof/ix7win-live-daily-clicks-proof.webp',
-      imageAlt: 'Daily Live Player Clicks Proof - ix7win.com',
-      verifiedBadge: '1,220+ Daily Clicks',
+      title: 'Real Cricket & Casino Platform Proof',
+      subtitle: 'is7gam.com · 52.6% CTR & Rank 2.9 on Google',
+      image: '/images/proof/is7gam-rank-gsc-clean.webp',
+      imageAlt: 'Daily Live Player Clicks Proof - is7gam.com',
+      verifiedBadge: '52.6% CTR Verified',
       stats: [
-        { label: 'Daily Clicks', value: '1,220+', color: 'text-cyan-400' },
-        { label: 'FTD Uplift', value: '+38.4%', color: 'text-emerald-400' },
+        { label: 'Click Rate', value: '52.6%', color: 'text-cyan-400' },
+        { label: 'Avg Position', value: '#2.9', color: 'text-emerald-400' },
         { label: 'ID Creation', value: '<60s', color: 'text-amber-400' },
       ],
     },
@@ -330,15 +329,18 @@ export const HomeCapabilityEcosystem: React.FC = () => {
             {/* Right: Real Verified Proof Screenshot & Live Operator Stats */}
             <div className="lg:col-span-5">
               <div className="rounded-2xl bg-model3-base/95 border border-white/15 overflow-hidden shadow-2xl">
-                {/* Proof Card Header */}
-                <div className="flex items-center justify-between px-4 py-3 bg-white/[0.04] border-b border-white/10">
+                {/* Proof Card Header: Simulated Browser Chrome */}
+                <div className="flex items-center justify-between px-4 py-2.5 bg-slate-900/90 border-b border-white/10">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">
-                      {activeCapability.proofPreview.title}
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                    <span className="ml-1 text-[11px] font-mono text-slate-300 font-bold hidden sm:inline">
+                      Google Search Console
                     </span>
                   </div>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-400/10 border border-amber-400/30 text-amber-300">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-400/10 border border-amber-400/30 text-amber-300 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     {activeCapability.proofPreview.verifiedBadge}
                   </span>
                 </div>

@@ -1,11 +1,9 @@
 import React from 'react';
 import { 
   Star, 
-  Quote, 
   ShieldCheck, 
   TrendingUp, 
   CheckCircle2, 
-  Sparkles,
   Building2
 } from 'lucide-react';
 
@@ -29,6 +27,7 @@ const TESTIMONIALS: TestimonialItem[] = [
     company: 'ApexBet International',
     vertical: 'Curaçao Licensed Sportsbook & Casino',
     initials: 'VM',
+    avatar: '/images/testimonials/vikram-malhotra-apex-bet-128.webp',
     avatarColor: 'from-amber-400 via-yellow-500 to-amber-600',
     metric: '+318% Organic FTDs in 120 Days',
     verifiedResult: 'Ranked #1 for 14 Tier-1 High-Intent Betting Terms',
@@ -41,6 +40,7 @@ const TESTIMONIALS: TestimonialItem[] = [
     company: 'Fortuna Entertainment Group',
     vertical: 'Multi-Brand Casino & Skill Gaming Operator',
     initials: 'ER',
+    avatar: '/images/testimonials/elena-rostova-fortuna-gaming-128.webp',
     avatarColor: 'from-purple-500 via-indigo-500 to-cyan-500',
     metric: 'Zero Ad Bans in 14 Months',
     verifiedResult: '4.8x Blended ROAS on Meta & Google Ads',
@@ -53,6 +53,7 @@ const TESTIMONIALS: TestimonialItem[] = [
     company: 'Velocity Gaming UK & Asia',
     vertical: 'Sports Prediction & Exchange Platform',
     initials: 'MV',
+    avatar: '/images/testimonials/marcus-vance-velocity-128.webp',
     avatarColor: 'from-purple-500 to-indigo-600',
     metric: 'Sub-450ms Edge LCP Worldwide',
     verifiedResult: '100% Mobile Lighthouse & Zero Google Speed Penalties',
@@ -65,6 +66,7 @@ const TESTIMONIALS: TestimonialItem[] = [
     company: 'RealSkill Sports India',
     vertical: 'Real-Money Skill Gaming (Yono/Rummy)',
     initials: 'RS',
+    avatar: '/images/testimonials/rohan-singhania-realskill-128.webp',
     avatarColor: 'from-amber-500 to-orange-600',
     metric: '+41.8% Reg-to-FTD Rate',
     verifiedResult: 'Telegram & WhatsApp Retention Engine Automated',

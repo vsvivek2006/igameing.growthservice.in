@@ -13,11 +13,7 @@ export interface BreadcrumbProps {
 export const Breadcrumb: React.FC<BreadcrumbProps> = ({
   items,
   className = '',
-  dark = true,
-  variant,
 }) => {
-  const isDark = variant === 'light' ? false : (dark || variant === 'dark');
-
   return (
     <nav aria-label="Breadcrumb" className={`flex items-center text-xs sm:text-sm ${className}`}>
       <ol className="flex items-center flex-wrap gap-1 sm:gap-2">

@@ -609,7 +609,7 @@ export const BookCallPage: React.FC = () => {
                           <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-heading font-bold text-sm shadow-md hover:shadow-lg transition-all disabled:opacity-50 cursor-pointer"
+                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-gradient-to-r from-purple-700 via-purple-600 to-indigo-600 hover:from-purple-600 hover:to-indigo-500 text-white font-heading font-bold text-sm shadow-md hover:shadow-glow-purple-sm transition-all hover:-translate-y-0.5 active:scale-[0.98] disabled:opacity-50 cursor-pointer"
                           >
                             {isSubmitting ? (
                               <span>Confirming Session Slot...</span>
@@ -683,10 +683,10 @@ export const BookCallPage: React.FC = () => {
             {QUALIFICATION_CRITERIA.map((crit) => (
               <div
                 key={crit.title}
-                className={`rounded-2xl p-6 sm:p-8 border ${
+                className={`rounded-3xl p-6 sm:p-8 border shadow-card transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1 ${
                   crit.type === 'ideal'
-                    ? 'bg-emerald-50/40 border-emerald-200/80'
-                    : 'bg-rose-50/40 border-rose-200/80'
+                    ? 'bg-emerald-50/50 border-emerald-200/90'
+                    : 'bg-rose-50/50 border-rose-200/90'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-4">

@@ -211,7 +211,7 @@ export const ResourcesHub: React.FC = () => {
 
                   <Link
                     to={`/resources/seo-guides/${featuredGuide.slug}`}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs transition-colors"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-purple-700 via-purple-600 to-indigo-600 hover:from-purple-600 hover:to-indigo-500 text-white font-bold text-xs shadow-md hover:shadow-glow-purple-sm transition-all hover:-translate-y-0.5"
                   >
                     <span>Read Full Blueprint</span>
                     <ArrowRight className="w-4 h-4" />
@@ -278,9 +278,9 @@ export const ResourcesHub: React.FC = () => {
 
               return (
                 <Reveal key={guide.slug} direction="up" delay={(idx % 3) * 80}>
-                  <div className="group flex flex-col h-full p-7 rounded-3xl border border-slate-200 bg-white hover:border-purple-300 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1">
+                  <div className="group flex flex-col h-full p-7 rounded-3xl border border-slate-200 bg-white hover:border-purple-300 hover:shadow-card-hover gradient-border-card transition-all duration-300 hover:-translate-y-1.5">
                     <div className="flex items-center justify-between gap-2 mb-4">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-purple-100 text-purple-800">
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-purple-100 text-purple-800 border border-purple-200/80">
                         {guide.categoryLabel}
                       </span>
                       <div className="flex items-center gap-1.5 text-xs text-slate-400">
@@ -305,7 +305,7 @@ export const ResourcesHub: React.FC = () => {
 
                     <Link
                       to={guidePath}
-                      className="mt-auto inline-flex items-center justify-between w-full px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-purple-50 text-slate-700 hover:text-purple-700 text-xs font-bold transition-all"
+                      className="mt-auto inline-flex items-center justify-between w-full px-5 py-3 rounded-2xl bg-slate-900 hover:bg-purple-900 text-white text-xs font-bold transition-all shadow-sm group-hover:shadow-md"
                       onClick={() =>
                         trackEvent('guide_click', {
                           location: 'resources_grid',
@@ -315,7 +315,7 @@ export const ResourcesHub: React.FC = () => {
                       }
                     >
                       <span>Read Full Document</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </Reveal>

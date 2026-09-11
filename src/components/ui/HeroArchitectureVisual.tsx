@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Layers,
   Search,
@@ -220,13 +221,13 @@ export const HeroArchitectureVisual: React.FC = () => {
             <span className="text-slate-500 font-mono">ENG_PIPELINE</span>
             <span className="text-slate-300 font-medium">Active Production Architecture</span>
           </div>
-          <a
-            href="/free-seo-audit"
+          <Link
+            to="/free-seo-audit"
             className="inline-flex items-center gap-1 font-semibold text-purple-400 hover:text-purple-300 transition-colors"
           >
             <span>Run Platform Diagnostic</span>
             <ArrowRight className="w-3 h-3" />
-          </a>
+          </Link>
         </div>
       </div>
     </div>

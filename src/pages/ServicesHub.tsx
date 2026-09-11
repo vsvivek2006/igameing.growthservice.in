@@ -216,18 +216,18 @@ export const ServicesHub: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredServices.map((svc, idx) => (
               <Reveal key={svc.slug} direction="up" delay={(idx % 3) * 100}>
-                <div className="group flex flex-col h-full p-7 rounded-3xl border border-slate-200 bg-white hover:border-purple-300 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1">
+                <div className="group flex flex-col h-full p-7 rounded-3xl border border-slate-200 bg-white hover:border-purple-300 hover:shadow-card-hover gradient-border-card transition-all duration-300 hover:-translate-y-1.5">
                   <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <div className="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center group-hover:scale-105 transition-transform shadow-xs">
                       <ServiceIcon name={svc.icon} className="w-6 h-6 text-purple-600" />
                     </div>
                     <div className="flex items-center gap-2">
                       {svc.featured && (
-                        <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">
+                        <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
                           Core Pillar
                         </span>
                       )}
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200/80">
                         {SERVICE_CATEGORY_LABELS[svc.category]}
                       </span>
                     </div>
@@ -258,10 +258,10 @@ export const ServicesHub: React.FC = () => {
 
                   <Link
                     to={`/services/${svc.slug}`}
-                    className="inline-flex items-center justify-between w-full px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-purple-50 text-slate-700 hover:text-purple-700 text-xs font-bold transition-all"
+                    className="inline-flex items-center justify-between w-full px-5 py-3 rounded-2xl bg-slate-900 hover:bg-purple-900 text-white text-xs font-bold transition-all shadow-sm group-hover:shadow-md"
                   >
                     <span>View Full Service Scope</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>
               </Reveal>

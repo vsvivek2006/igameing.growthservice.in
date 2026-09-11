@@ -82,6 +82,8 @@ export default {
         'card-hover': '0 20px 35px -4px rgba(106, 13, 173, 0.12), 0 8px 16px -2px rgba(15, 23, 42, 0.04)',
         'card-dark': '0 4px 24px -2px rgba(0, 0, 0, 0.4), 0 2px 8px -2px rgba(0, 0, 0, 0.3)',
         'card-dark-hover': '0 16px 40px -4px rgba(106, 13, 173, 0.25), 0 4px 16px -2px rgba(0, 0, 0, 0.4)',
+        'card-3d': '0 20px 50px -10px rgba(0, 0, 0, 0.5), 0 10px 20px -5px rgba(106, 13, 173, 0.15)',
+        'card-3d-hover': '0 30px 60px -12px rgba(106, 13, 173, 0.3), 0 16px 28px -6px rgba(0, 0, 0, 0.6)',
         'inner-soft': 'inset 0 1px 2px 0 rgba(255, 255, 255, 0.15)',
       },
     },

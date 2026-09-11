@@ -68,13 +68,13 @@ export const NotFound: React.FC = () => {
                   <Link
                     key={item.path}
                     to={item.path}
-                    className="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/40 hover:bg-purple-950/20 transition-all group block"
+                    className="p-4 rounded-2xl bg-slate-900/70 border border-slate-800/90 shadow-sm hover:border-purple-500/50 hover:bg-purple-950/30 hover:shadow-card-dark-hover transition-all duration-200 group block hover:-translate-y-1"
                   >
                     <div className="flex items-center justify-between mb-1">
                       <span className="font-heading font-bold text-sm text-white group-hover:text-purple-300 transition-colors">
                         {item.label}
                       </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-purple-400 group-hover:translate-x-0.5 transition-all" />
+                      <ArrowRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-purple-400 group-hover:translate-x-1 transition-transform" />
                     </div>
                     <p className="text-xs text-slate-400 leading-snug">
                       {item.desc}

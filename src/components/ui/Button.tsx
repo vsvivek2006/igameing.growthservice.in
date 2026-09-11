@@ -38,12 +38,12 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const sizeMap = {
-    sm: 'text-xs px-3.5 py-1.5 rounded-lg gap-1.5',
-    md: 'text-sm px-5 py-2.5 rounded-xl gap-2',
-    lg: 'text-base px-6 py-3.5 rounded-xl gap-2.5',
+    sm: 'text-xs px-4 py-2 rounded-xl gap-1.5',
+    md: 'text-sm px-5 py-2.5 rounded-2xl gap-2',
+    lg: 'text-base px-7 py-3.5 rounded-2xl gap-2.5',
   };
 
-  const baseClasses = `inline-flex items-center justify-center transition-all duration-200 select-none hover:-translate-y-0.5 active:translate-y-0 ${variantMap[variant]} ${sizeMap[size]} ${className}`;
+  const baseClasses = `inline-flex items-center justify-center font-medium transition-all duration-200 select-none hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 ${variantMap[variant]} ${sizeMap[size]} ${className}`;
 
   const content = (
     <>

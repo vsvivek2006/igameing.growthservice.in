@@ -16,8 +16,10 @@ export const TermsPage: React.FC = () => {
         jsonLd={buildBreadcrumbSchema(breadcrumbs)}
       />
 
-      <div className="bg-slate-900 text-white py-16 sm:py-20 border-b border-purple-900/40">
-        <Container>
+      <div className="relative bg-navy-950 bg-hero-atmosphere text-white py-16 sm:py-20 overflow-hidden border-b border-navy-800/80">
+        <div className="absolute inset-0 bg-dark-mesh opacity-30 pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 w-[450px] h-[350px] rounded-full bg-purple-600/10 blur-[120px] pointer-events-none" />
+        <Container className="relative z-10">
           <Breadcrumb items={breadcrumbs} dark className="mb-4" />
           <h1 className="type-h2 text-white mb-4">Terms of Use</h1>
           <p className="type-body-lg text-slate-300 max-w-3xl leading-relaxed">

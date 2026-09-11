@@ -105,6 +105,20 @@ export const DesktopNav: React.FC = () => {
           </div>
         );
       })}
+
+      <NavLink
+        to="/model-3"
+        className={({ isActive }) =>
+          `ml-1 px-3 py-1.5 text-xs font-bold rounded-full transition-all flex items-center gap-1.5 ${
+            isActive
+              ? 'text-slate-950 bg-gradient-to-r from-amber-400 to-yellow-400 shadow-md shadow-amber-400/25'
+              : 'text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-300 shadow-xs'
+          }`
+        }
+      >
+        <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+        <span>Model 3</span>
+      </NavLink>
     </nav>
   );
 };

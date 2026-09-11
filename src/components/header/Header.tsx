@@ -12,7 +12,7 @@ export const Header: React.FC = () => {
       <TopBar />
 
       {/* Main Navbar */}
-      <div className="bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-shadow">
+      <div className="bg-white/90 backdrop-blur-xl border-b border-slate-200/70 shadow-xs transition-shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
           <Brand />
 
@@ -23,7 +23,7 @@ export const Header: React.FC = () => {
               to="/book-call"
               variant="outline"
               size="sm"
-              className="border-slate-200 hover:border-purple-600 text-slate-700 hover:text-purple-700"
+              className="border-slate-300 hover:border-purple-600 text-slate-700 hover:text-purple-700 font-semibold"
             >
               Book Strategy Call
             </Button>

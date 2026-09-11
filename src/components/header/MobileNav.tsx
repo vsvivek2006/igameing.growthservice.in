@@ -163,7 +163,28 @@ export const MobileNav: React.FC = () => {
           </div>
 
           {/* Navigation Links Accordion */}
-          <nav className="p-3 sm:p-4 space-y-1">
+          <nav className="p-3 sm:p-4 space-y-2">
+            {/* 0. Model 3 Flagship Link */}
+            <NavLink
+              to="/model-3"
+              onClick={closeMenu}
+              className={({ isActive }) =>
+                `flex items-center justify-between p-3.5 rounded-2xl text-sm font-black transition-all ${
+                  isActive
+                    ? 'bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-950 shadow-md'
+                    : 'bg-amber-50 text-amber-900 border border-amber-300 hover:bg-amber-100'
+                }`
+              }
+            >
+              <div className="flex items-center gap-2.5">
+                <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
+                <span>Model 3 Showcase</span>
+              </div>
+              <span className="text-[10px] font-extrabold bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full">
+                Live 3D
+              </span>
+            </NavLink>
+
             {/* 1. Services Accordion */}
             <div className="border border-slate-100 rounded-2xl overflow-hidden mb-2 bg-slate-50/40">
               <button

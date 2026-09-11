@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { SEOHead } from '../seo';
 import { buildBreadcrumbSchema, buildFAQSchema } from '../seo/schema';
-import { Container, Section, Badge, FAQAccordion, Breadcrumb } from '../components/ui';
+import { Container, Section, Badge, FAQAccordion, Breadcrumb, TechnicalAuditVisual } from '../components/ui';
 import { FadeIn } from '../components/animations';
 import { trackEvent } from '../analytics/tracking';
 import { submitLead } from '../services/leadSubmission';
@@ -677,6 +677,16 @@ export const FreeSeoAuditPage: React.FC = () => {
                 </div>
               );
             })}
+          </div>
+
+          {/* Interactive Code Diagnostic Terminal */}
+          <div className="mt-14">
+            <div className="text-center mb-6">
+              <span className="text-xs font-mono uppercase tracking-wider text-purple-700 bg-purple-100/80 px-3.5 py-1.5 rounded-full border border-purple-200">
+                Interactive Engineering Console
+              </span>
+            </div>
+            <TechnicalAuditVisual />
           </div>
         </Container>
       </Section>

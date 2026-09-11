@@ -212,7 +212,7 @@ export const AboutPage: React.FC = () => {
                 ].map((s, idx) => (
                   <div
                     key={idx}
-                    className="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 hover:border-purple-300 hover:bg-purple-50/30 transition-all duration-300"
+                    className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-card-hover hover:border-purple-300/80 transition-all duration-300 hover:-translate-y-1"
                   >
                     <div className="text-3xl font-heading font-black text-purple-700 mb-1">{s.value}</div>
                     <div className="text-xs font-bold text-slate-800 mb-0.5">{s.label}</div>
@@ -243,7 +243,7 @@ export const AboutPage: React.FC = () => {
               const Icon = v.icon;
               return (
                 <Reveal key={v.title} direction="up" delay={idx * 80}>
-                  <div className="h-full flex flex-col p-8 rounded-3xl border border-slate-200 bg-white hover:border-purple-300 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1">
+                  <div className="h-full flex flex-col p-8 rounded-3xl border border-slate-200 bg-white hover:border-purple-300 hover:shadow-card-hover gradient-border-card transition-all duration-300 hover:-translate-y-1.5">
                     <div className="w-12 h-12 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center mb-5">
                       <Icon className="w-6 h-6" />
                     </div>

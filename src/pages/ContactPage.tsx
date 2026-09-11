@@ -549,7 +549,7 @@ export const ContactPage: React.FC = () => {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-purple-600 text-white font-bold text-base hover:bg-purple-700 transition-all duration-200 shadow-md hover:shadow-glow-purple-sm hover:-translate-y-0.5 disabled:opacity-50 cursor-pointer"
+                        className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl bg-gradient-to-r from-purple-700 via-purple-600 to-indigo-600 hover:from-purple-600 hover:to-indigo-500 text-white font-bold text-base hover:shadow-glow-purple-sm hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 shadow-md disabled:opacity-50 cursor-pointer"
                       >
                         {isSubmitting ? (
                           <span>Preparing Your Proposal...</span>
@@ -585,7 +585,7 @@ export const ContactPage: React.FC = () => {
                 <div className="space-y-3">
                   <a
                     href={`mailto:${businessConfig.emails.primary}`}
-                    className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-purple-200 hover:bg-purple-50/40 transition-all group"
+                    className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-card-hover hover:border-purple-300/80 transition-all group hover:-translate-y-0.5"
                   >
                     <div className="w-11 h-11 rounded-xl bg-purple-100/80 text-purple-700 flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors">
                       <Mail className="w-5 h-5" />
@@ -599,7 +599,7 @@ export const ContactPage: React.FC = () => {
 
                   <Link
                     to="/book-call"
-                    className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-emerald-200 hover:bg-emerald-50/40 transition-all group"
+                    className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-card-hover hover:border-emerald-300/80 transition-all group hover:-translate-y-0.5"
                   >
                     <div className="w-11 h-11 rounded-xl bg-emerald-100/80 text-emerald-700 flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-200 transition-colors">
                       <Video className="w-5 h-5" />
@@ -615,7 +615,7 @@ export const ContactPage: React.FC = () => {
                     href="https://wa.me/919341436937"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-emerald-300 hover:bg-emerald-50/40 transition-all group"
+                    className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-card-hover hover:border-emerald-400/80 transition-all group hover:-translate-y-0.5"
                   >
                     <div className="w-11 h-11 rounded-xl bg-emerald-100/80 text-[#25D366] flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-200 transition-colors">
                       <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -631,7 +631,7 @@ export const ContactPage: React.FC = () => {
 
                   <Link
                     to="/free-seo-audit"
-                    className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-amber-200 hover:bg-amber-50/40 transition-all group"
+                    className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-card-hover hover:border-amber-300/80 transition-all group hover:-translate-y-0.5"
                   >
                     <div className="w-11 h-11 rounded-xl bg-amber-100/80 text-amber-700 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-200 transition-colors">
                       <Zap className="w-5 h-5" />
@@ -666,7 +666,7 @@ export const ContactPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {SLA_TIERS.map((tier) => (
-              <div key={tier.severity} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
+              <div key={tier.severity} className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 space-y-3">
                 <div className="text-xs font-bold uppercase tracking-wider text-purple-700">
                   {tier.severity}
                 </div>
@@ -699,7 +699,7 @@ export const ContactPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {ONBOARDING_STAGES.map((st) => (
-              <div key={st.step} className="bg-slate-50 rounded-2xl p-6 border border-slate-200/80 space-y-3 relative">
+              <div key={st.step} className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 space-y-3 relative">
                 <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-800 font-extrabold text-xs flex items-center justify-center">
                   {st.step}
                 </div>

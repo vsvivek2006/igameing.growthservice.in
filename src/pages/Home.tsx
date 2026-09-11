@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { SEOHead } from '../seo';
 import { buildOrganizationSchema, buildWebSiteSchema } from '../seo/schema';
-import { Container, Section, Button, FAQAccordion } from '../components/ui';
+import { Container, Section, Button, FAQAccordion, HeroArchitectureVisual } from '../components/ui';
 import { trackEvent } from '../analytics';
 import { PRICING_CATEGORIES, PRICING_DISCLAIMER } from '../data/pricingData';
 import { ENGAGEMENT_PROCESS, PROCESS_PROOFS, COMPLIANCE_COMMITMENTS, COMPARISON_ROWS } from '../data/trustData';
@@ -324,50 +324,9 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
 
-            {/* Right — architecture visual */}
+            {/* Right — 3D Architecture Visualizer Terminal */}
             <div className="hidden lg:block animate-fade-in" style={{ animationDelay: '200ms' }}>
-              <div className="relative">
-                {/* Main card */}
-                <div className="gradient-border-card-dark p-8 rounded-3xl border border-slate-700/60">
-                  <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-5">
-                    Engagement Architecture
-                  </div>
-                  {[
-                    { label: 'Technical Audit', status: 'Complete', color: 'text-emerald-400', dot: 'bg-emerald-400' },
-                    { label: 'Architecture Design', status: 'In Progress', color: 'text-amber-400', dot: 'bg-amber-400' },
-                    { label: 'Content Pipeline', status: 'In Progress', color: 'text-amber-400', dot: 'bg-amber-400' },
-                    { label: 'Authority Development', status: 'Scheduled', color: 'text-slate-400', dot: 'bg-slate-600' },
-                    { label: 'CRO Implementation', status: 'Scheduled', color: 'text-slate-400', dot: 'bg-slate-600' },
-                  ].map((item, i) => (
-                    <div
-                      key={item.label}
-                      className="flex items-center justify-between py-3 border-b border-slate-800/60 last:border-0"
-                      style={{ animationDelay: `${i * 100 + 300}ms` }}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className={`w-2 h-2 rounded-full ${item.dot}`} />
-                        <span className="text-sm text-slate-200 font-medium">{item.label}</span>
-                      </div>
-                      <span className={`text-xs font-semibold ${item.color}`}>{item.status}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Floating metric cards */}
-                <div className="absolute -top-6 -right-6 bg-white rounded-2xl p-4 shadow-card-hover border border-slate-100 animate-float">
-                  <div className="text-xs text-slate-500 mb-1">Core Web Vitals</div>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-2xl font-extrabold text-emerald-600">98</span>
-                    <span className="text-xs text-slate-400">/ 100</span>
-                  </div>
-                </div>
-
-                <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-card-hover border border-slate-100 animate-float-slow">
-                  <div className="text-xs text-slate-500 mb-1">Organic Coverage</div>
-                  <div className="text-2xl font-extrabold text-purple-700">+340%</div>
-                  <div className="text-[10px] text-slate-400">keyword expansion</div>
-                </div>
-              </div>
+              <HeroArchitectureVisual />
             </div>
           </div>
         </Container>

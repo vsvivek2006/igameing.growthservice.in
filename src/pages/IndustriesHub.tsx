@@ -11,17 +11,17 @@ import {
 } from 'lucide-react';
 import { SEOHead } from '../seo';
 import { buildBreadcrumbSchema } from '../seo/schema';
-import { Container, Section, Button, Breadcrumb, FAQAccordion } from '../components/ui';
+import { Container, Section, Button, Breadcrumb, FAQAccordion, MatrixVisualizer } from '../components/ui';
 import { getAllIndustries, INDUSTRY_CATEGORY_LABELS } from '../data/industriesData';
 import type { IndustryVertical } from '../data/industriesData';
 import useInView from '../hooks/useInView';
 import { trackEvent } from '../analytics';
 
-const CATEGORY_STYLES: Record<IndustryVertical['category'], { accent: string; badge: string; glow: string }> = {
-  gaming: { accent: 'border-l-4 border-purple-500', badge: 'bg-purple-100 text-purple-800', glow: 'group-hover:border-purple-300' },
-  finance: { accent: 'border-l-4 border-blue-500', badge: 'bg-blue-100 text-blue-800', glow: 'group-hover:border-blue-300' },
-  adult: { accent: 'border-l-4 border-rose-500', badge: 'bg-rose-100 text-rose-800', glow: 'group-hover:border-rose-300' },
-  'gaming-skill': { accent: 'border-l-4 border-amber-500', badge: 'bg-amber-100 text-amber-800', glow: 'group-hover:border-amber-300' },
+const CATEGORY_STYLES: Record<IndustryVertical['category'], { badge: string; glow: string }> = {
+  gaming: { badge: 'bg-purple-100 text-purple-800 border border-purple-200/80', glow: 'group-hover:border-purple-300' },
+  finance: { badge: 'bg-blue-100 text-blue-800 border border-blue-200/80', glow: 'group-hover:border-blue-300' },
+  adult: { badge: 'bg-rose-100 text-rose-800 border border-rose-200/80', glow: 'group-hover:border-rose-300' },
+  'gaming-skill': { badge: 'bg-amber-100 text-amber-800 border border-amber-200/80', glow: 'group-hover:border-amber-300' },
 };
 
 // ─── Reusable Reveal Component ────────────────────────────────────────────────
@@ -250,7 +250,7 @@ export const IndustriesHub: React.FC = () => {
               return (
                 <Reveal key={industry.slug} direction="up" delay={(idx % 2) * 100}>
                   <div
-                    className={`group flex flex-col h-full p-8 rounded-3xl border border-slate-200 bg-white ${style.glow} hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 ${style.accent}`}
+                    className="group flex flex-col h-full p-8 rounded-3xl border border-slate-200 bg-white hover:border-purple-300 hover:shadow-card-hover gradient-border-card transition-all duration-300 hover:-translate-y-1.5"
                   >
                     <div className="flex items-start justify-between gap-4 mb-4">
                       <div>
@@ -315,6 +315,25 @@ export const IndustriesHub: React.FC = () => {
           </div>
         </Container>
       </Section>
+
+      {/* ── 2.5 INTERACTIVE VERTICAL X SERVICE ARCHITECTURE MATRIX ─── */}
+      <section className="bg-navy-950 text-white py-16 sm:py-24 border-y border-navy-800/80 relative overflow-hidden">
+        <div className="absolute inset-0 bg-hero-atmosphere opacity-70 pointer-events-none" />
+        <Container className="relative z-10">
+          <Reveal direction="up" className="max-w-3xl mx-auto text-center mb-12">
+            <div className="type-eyebrow text-amber-400 mb-2">Interactive Matrix Engine</div>
+            <h2 className="type-h2 text-white mb-4">
+              Explore Tailored Architecture by Vertical
+            </h2>
+            <p className="text-slate-300 text-sm leading-relaxed max-w-2xl mx-auto">
+              Select any high-competition vertical below to inspect real, approved service architectures, unique positioning frameworks, and core technical deliverables.
+            </p>
+          </Reveal>
+          <Reveal direction="up" delay={150}>
+            <MatrixVisualizer />
+          </Reveal>
+        </Container>
+      </section>
 
       {/* ── 3. WHY SPECIALIST ARCHITECTURE IS NON-NEGOTIABLE ─────────────── */}
       <Section variant="white" spacing="lg">

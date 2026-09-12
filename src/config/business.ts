@@ -1,5 +1,5 @@
 /**
- * iGaming Growth Service — B2B Agency Business Configuration
+ * iGaming Growth — B2B Agency Business Configuration
  * Single source of truth for agency identity, services, verified contact channels,
  * and genuine operational capabilities.
  */
@@ -75,8 +75,8 @@ export const businessConfig: BusinessConfigSchema = {
     "Specialist B2B digital growth agency for iGaming, casino, and high-competition digital brands. Search engineering, technical architecture, and qualified conversion growth.",
   themeColor: "#7C3AED",
 
-  parentBrand: "GrowthService",
-  parentBrandUrl: "https://growthservice.in",
+  parentBrand: "",
+  parentBrandUrl: "",
 
   operationalModel: "Enterprise Engineering & Growth Studio",
   areaServed: "South Asia & Worldwide",

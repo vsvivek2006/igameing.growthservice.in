@@ -33,8 +33,7 @@ import { FadeIn, MotionCard } from '../components/animations';
 import { resolveServiceIndustryPage } from '../selectors/uniquenessEngine';
 import { getRelatedMatrixCrossLinks } from '../selectors/linkGraph';
 import { getServiceIndustrySEO } from '../seo/metadataFactory';
-import { trackEvent } from '../analytics/tracking';
-import { MAIN_PACKAGES, PAID_ACQUISITION_PACKAGE, PRICING_DISCLAIMER } from '../data/pricingData';
+import { MAIN_PACKAGES, PAID_PACKAGES, PRICING_DISCLAIMER } from '../data/pricingData';
 import NotFound from './NotFound';
 
 export const ServiceIndustryDetailPage: React.FC = () => {
@@ -62,7 +61,7 @@ export const ServiceIndustryDetailPage: React.FC = () => {
   // Resolve matching pricing tiers
   const pricingTiers =
     service.category === 'paid-acquisition'
-      ? [PAID_ACQUISITION_PACKAGE]
+      ? PAID_PACKAGES
       : MAIN_PACKAGES;
 
   const breadcrumbItems = [

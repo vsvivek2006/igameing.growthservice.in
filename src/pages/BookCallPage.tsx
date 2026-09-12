@@ -755,7 +755,7 @@ export const BookCallPage: React.FC = () => {
               >
                 <div className="text-[10px] font-mono text-cyan-400 uppercase mb-1">Architecture</div>
                 <div className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors flex items-center justify-between">
-                  <span>Web Build (₹15K)</span>
+                  <span>Web Build (₹20K)</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </Link>

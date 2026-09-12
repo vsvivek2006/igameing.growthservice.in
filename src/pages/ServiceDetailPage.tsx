@@ -14,11 +14,9 @@ import {
 import { SEOHead } from '../seo';
 import { buildBreadcrumbSchema, buildServiceSchema } from '../seo/schema';
 import { Container, Section, Button, ProcessTimeline, FAQAccordion, Breadcrumb, ServiceIcon, Reveal } from '../components/ui';
-import { trackEvent } from '../analytics';
-import { getServiceBySlug, getAllServices, SERVICE_CATEGORY_LABELS } from '../data/servicesData';
-import type { ServiceOffering } from '../data/servicesData';
+import { getServiceBySlug, getAllServices, SERVICE_CATEGORY_LABELS, type ServiceOffering } from '../data/servicesData';
 import { getAllIndustries } from '../data/industriesData';
-import { MAIN_PACKAGES, PAID_ACQUISITION_PACKAGE, PRICING_DISCLAIMER } from '../data/pricingData';
+import { MAIN_PACKAGES, PAID_PACKAGES, PRICING_DISCLAIMER } from '../data/pricingData';
 import NotFound from './NotFound';
 
 
@@ -44,7 +42,7 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
 
   const pricingTiers =
     service.category === 'paid-acquisition'
-      ? [PAID_ACQUISITION_PACKAGE]
+      ? PAID_PACKAGES
       : MAIN_PACKAGES;
 
   return (
@@ -565,7 +563,7 @@ const ServicePage: React.FC<{ service: ServiceOffering }> = ({ service }) => {
                             {relSrv.category}
                           </span>
                           <span className="text-[10px] font-mono text-slate-400">
-                            {relSrv.slug === 'website-development' ? 'From ₹15,000' : 'From ₹35,000/mo'}
+                            {relSrv.slug === 'website-development' ? 'From ₹20,000' : 'From ₹35,000/mo'}
                           </span>
                         </div>
                         <h4 className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors mb-1.5 font-heading">

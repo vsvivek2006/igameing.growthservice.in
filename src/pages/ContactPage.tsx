@@ -509,11 +509,13 @@ export const ContactPage: React.FC = () => {
                         onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl border border-white/10 text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-colors bg-model3-surface"
                       >
-                        <option value="" className="bg-slate-900 text-slate-400">Select budget tier</option>
-                        <option value="web_15k" className="bg-slate-900 text-white">Starting ₹15,000 (Website &amp; PWA Development)</option>
-                        <option value="seo_35k" className="bg-slate-900 text-white">Starting ₹35,000 / month (SEO Rank-1 Dominance)</option>
-                        <option value="full_45k" className="bg-slate-900 text-white">₹45,000 (Turnkey Web Build + SEO Sprint)</option>
-                        <option value="enterprise" className="bg-slate-900 text-white">₹75,000+ / month (Enterprise Dedicated Engineering Squad)</option>
+                        <option value="" className="bg-slate-900 text-slate-400">Select package or budget</option>
+                        <option value="web_20k" className="bg-slate-900 text-white">Starting ₹20,000 (Website &amp; PWA Development)</option>
+                        <option value="seo_35k" className="bg-slate-900 text-white">Starting ₹35,000 / month (SEO Monthly Sprint)</option>
+                        <option value="seo_1lakh" className="bg-slate-900 text-white">₹1,00,000 One-Time (SEO 3-Month Rank Sprint)</option>
+                        <option value="meta_35k" className="bg-slate-900 text-white">₹35,000 / month (Meta Ads - FB &amp; IG)</option>
+                        <option value="meta_google_50k" className="bg-slate-900 text-white">₹50,000 / month (Meta + Google Ads Dual Suite)</option>
+                        <option value="enterprise" className="bg-slate-900 text-white">Custom / Enterprise Dedicated Squad</option>
                         <option value="audit" className="bg-slate-900 text-white">Free Code-Level Technical SEO Audit</option>
                       </select>
                     </div>
@@ -660,15 +662,9 @@ export const ContactPage: React.FC = () => {
                   <div>
                     <div className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider font-mono">Agency Headquarters</div>
                     <div className="font-bold text-white text-sm">Kathmandu, Nepal</div>
-                    <a
-                      href="https://growthservice.in"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-amber-400 hover:text-amber-300 inline-flex items-center gap-1 font-semibold"
-                    >
-                      <span>Part of growthservice.in</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </a>
+                    <div className="text-xs text-slate-400">
+                      Serving Global Regulated Operators
+                    </div>
                   </div>
                 </div>
               </div>

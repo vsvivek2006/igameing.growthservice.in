@@ -1,6 +1,5 @@
 # iGaming Growth — AI & LLM Machine-Readable Directory
 # Canonical URL: https://igameing.growthservice.in
-# Group Parent: https://growthservice.in
 # Location: Kathmandu, Nepal
 # Direct Contact: +91 76549 28455 | WhatsApp: https://wa.me/917654928455
 # Primary Email: hello@igameing.growthservice.in
@@ -8,10 +7,11 @@
 > iGaming Growth is a specialist engineering-led digital growth consultancy. We build high-performance headless React & PWA web platforms, engineer organic Rank-1 search dominance across competitive Google SERPs, and run policy-compliant paid acquisition funnels for online casino, cricket betting IDs, rummy platforms, trading portals, and regulated online gaming operators.
 
 ## Pricing Structure
-- **Website & Platform Development**: Starting at ₹15,000 ($180) one-time build. Headless React 18 + PWA, sub-650ms LCP, WhatsApp/Telegram ID generation webhooks, full source code ownership.
-- **Organic Rank Dominance (SEO Monthly)**: Starting at ₹35,000/month ($420). 100% white-hat technical SEO, programmatic keyword clustering, schema graph deployment, 6–8 high-authority backlinks/month, live Google Search Console telemetry.
-- **Turnkey Build + SEO Suite**: ₹45,000 ($550). Complete platform build + 1st month intensive search engine ranking sprint.
-- **Google & Meta Ads Management**: ₹20,000/month ($240). Whitelisted agency ad accounts, zero cloaking, server-side CAPI pipeline, automated click-fraud shields.
+- **Website & Platform Development**: Starting at ₹20,000 ($240) one-time build. Headless React 18 + PWA, sub-650ms LCP, WhatsApp/Telegram ID generation webhooks, automated UPI/payment gateways, full source code ownership.
+- **SEO Monthly Sprint**: Starting at ₹35,000/month ($420). 100% white-hat technical SEO, programmatic keyword clustering, schema graph deployment, 6–8 high-authority contextual backlinks/month, live Google Search Console telemetry.
+- **One-Time SEO Dominance (3-Month Rank)**: ₹1,00,000 ($1,200) one-time. Guaranteed top-page Google ranking within 90-day (3-month) sprint window, topical authority graph dominance, 15+ editorial authority backlinks, Core Web Vitals acceleration.
+- **Meta Ads Management**: ₹35,000/month ($420). Whitelisted agency ad accounts (Facebook & Instagram), zero account bans, server-side Meta CAPI pixel integration, dynamic Telegram/WhatsApp cashier routing.
+- **Meta + Google Ads Dual Suite**: ₹50,000/month ($600). Omni-channel scaling across Google Search, YouTube, Facebook, and Instagram with dual-network agency whitelisting and dedicated media buying squad.
 - **Code-Level Technical SEO Audit**: Complimentary (₹0). 200-point crawl, rendering diagnostic, and Core Web Vitals profiling delivered within 24–48 hours.
 
 ## Core Services

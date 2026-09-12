@@ -70,7 +70,7 @@ export const ServicesHub: React.FC = () => {
   return (
     <div className="bg-model3-base text-white selection:bg-amber-400 selection:text-black font-sans antialiased overflow-x-hidden">
       <SEOHead
-        title="SEO & Digital Growth Services for High-Competition Industries — iGaming Growth"
+        title="SEO & Digital Engineering Services for High-Competition Industries — iGaming Growth"
         description="Specialist technical SEO, website development, paid acquisition, and conversion optimisation services for iGaming, casino, financial trading, and adult industry operators. Engineering-first growth systems."
         canonicalPath="/services"
         jsonLd={[buildBreadcrumbSchema(breadcrumbItems)]}

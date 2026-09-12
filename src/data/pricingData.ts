@@ -2,10 +2,11 @@
  * Centralized Pricing Data — iGaming Growth
  * 
  * Specifically structured for:
- * 1. Turnkey Platform Build (Turnkey Gaming / Casino / Cricket ID Platform Build)
- * 2. Organic Rank Dominance (Organic Rank-1 Dominance Sprint on Regulated Queries)
- * 3. Turnkey Build + SEO Suite (Flagship Complete Platform Build + SEO Sprint Bundle)
- * 4. Google & Meta Ads Management (Whitelisted, Zero-Ban Paid Acquisition)
+ * 1. Web & Platform Development (Starting from ₹20,000)
+ * 2. SEO Monthly Sprint (Starting from ₹35,000/month)
+ * 3. One-Time SEO Dominance (₹1,00,000 One-Time · Guaranteed Rank in 3 Months)
+ * 4. Meta Ads Management (₹35,000/month)
+ * 5. Meta + Google Ads Suite (₹50,000/month)
  */
 
 export interface PricingTier {
@@ -38,9 +39,9 @@ export const MAIN_PACKAGES: readonly PricingTier[] = [
     id: 'platform-build',
     name: 'Website & Platform Development',
     tagline: 'Custom Gaming, Cricket ID, Casino & Rummy Platform Engineering',
-    priceINR: '₹15,000',
-    priceUSD: '$180',
-    billingNote: 'starting from ₹15,000 · 1–2 week rapid delivery',
+    priceINR: '₹20,000',
+    priceUSD: '$240',
+    billingNote: 'starting from ₹20,000 · 1–2 week rapid delivery',
     badge: 'Web Development',
     features: [
       'Custom Headless React 18 + PWA Mobile-First Architecture',
@@ -59,36 +60,12 @@ export const MAIN_PACKAGES: readonly PricingTier[] = [
     ctaPath: '/contact',
   },
   {
-    id: 'full-stack-suite',
-    name: 'Turnkey Build + SEO Suite',
-    tagline: 'Complete Web Development + Rank-1 Organic Dominance Sprint',
-    priceINR: '₹45,000',
-    priceUSD: '$550',
-    billingNote: 'custom web build + 1st month intensive SEO sprint',
-    featured: true,
-    badge: '★ Most Popular & Best ROI',
-    features: [
-      'Everything in Website & Platform Development (Full Code)',
-      'Everything in Organic Rank Dominance (1st Month Sprint)',
-      'Zero Technical Debt: Built for Search Indexation from Day 1',
-      '#1 SERP Keyword Clustering (Cricket ID, Casino, Rummy)',
-      'Pre-Indexed Sitemaps & Instant Google Indexing Webhooks',
-      'Programmatic Landing Page Architecture for Volatile SERPs',
-      'Telegram/WhatsApp FTD (First Time Deposit) Retention Bots',
-      '6–8 High-Authority Quality Backlink Placements',
-      'Live GSC Telemetry & Real-Time Position Tracking',
-      'Priority 24/7 Direct WhatsApp & Slack Engineering Access',
-    ],
-    cta: 'Launch Full-Stack Suite',
-    ctaPath: '/contact',
-  },
-  {
     id: 'organic-seo',
-    name: 'Organic Rank Dominance',
-    tagline: 'Search Engine Rank-1 Dominance for High-Competition Gaming Queries',
+    name: 'SEO Monthly Sprint',
+    tagline: 'Continuous Search Engine Rank-1 Dominance for Regulated Gaming Queries',
     priceINR: '₹35,000',
     priceUSD: '$420',
-    billingNote: 'starts at ₹35k/month · 3-month minimum sprint',
+    billingNote: 'starts at ₹35,000 / month · Monthly Ranking Retainer',
     badge: 'SEO Monthly',
     features: [
       'Comprehensive Technical Crawl, Render & Core Web Vitals Audit',
@@ -102,45 +79,98 @@ export const MAIN_PACKAGES: readonly PricingTier[] = [
       'Bi-Weekly Video Sprint Reviews & Direct Code PRs',
     ],
     notIncluded: ['Full new website codebase build'],
-    cta: 'Start SEO Ranking Sprint',
+    cta: 'Start Monthly SEO',
+    ctaPath: '/contact',
+  },
+  {
+    id: 'seo-onetime',
+    name: 'One-Time SEO Dominance',
+    tagline: 'Guaranteed Top-Page Google Ranking Sprint — Rank in 3 Months',
+    priceINR: '₹1,00,000',
+    priceUSD: '$1,200',
+    billingNote: '₹1,00,000 one-time · Guaranteed Rank in 3 Months',
+    featured: true,
+    badge: '★ Guaranteed Rank in 3 Months',
+    features: [
+      'Guaranteed Top SERP Rankings within 90-Day (3-Month) Sprint Window',
+      'Aggressive Technical SEO Re-architecture & Core Web Vitals Overhaul',
+      'Full Topical Authority Dominance (Cricket ID, Casino, Matka, Betting)',
+      '15+ High-Tier Editorial Authority Backlinks & Niche Outreaches',
+      'Instant Indexing Cloudflare Worker API & Crawl Budget Escalation',
+      'Competitor Keyword Interception & Zero-Ban White-Hat Mechanics',
+      'Priority Engineering Support with Dedicated Search Strategist',
+      'Real-Time Rank Tracking Dashboard & Weekly Executive Briefings',
+      '3-Month Rank Milestone or Continued Free Optimization Until Ranked',
+    ],
+    cta: 'Claim 3-Month Rank Sprint',
     ctaPath: '/contact',
   },
 ];
 
-export const PAID_ACQUISITION_PACKAGE: PricingTier = {
-  id: 'paid-ads',
-  name: 'Google & Meta Ads Management',
-  tagline: 'Policy-Compliant Whitelisted Media Buying (Zero Account Bans)',
-  priceINR: '₹20,000',
-  priceUSD: '$240',
-  billingNote: 'per month + % of ad spend (scaled transparently)',
-  badge: 'Zero-Ban Whitelisted Ads',
+export const META_ADS_PACKAGE: PricingTier = {
+  id: 'meta-ads',
+  name: 'Meta Ads Management',
+  tagline: 'Policy-Compliant Whitelisted Facebook & Instagram Ads (Zero Account Bans)',
+  priceINR: '₹35,000',
+  priceUSD: '$420',
+  billingNote: '₹35,000 / month · Whitelisted Meta Buying (FB & IG)',
+  badge: 'Meta Ads (FB & IG)',
   features: [
-    'Whitelisted Agency Ad Accounts (Google Search, YouTube, Meta/FB/IG)',
-    'Zero Deceptive Cloaking — Permanent Pixel Learning Framework',
-    'Server-Side Conversions API (CAPI) Data Pipeline Setup',
-    'Policy-Compliant Educational Pre-Landers & Creative Direction',
-    '4.8x Historical Blended ROAS Target Optimization',
-    'Click-Fraud & Bot Filtering Safeguards',
-    'Dynamic Telegram & WhatsApp Instant Routing Funnels',
-    'Daily Spend, CPA & FTD Telemetry Reports',
+    'Whitelisted Agency Meta Ad Accounts (Facebook & Instagram)',
+    'Zero Account Bans — Policy-Compliant Creative & Bridge Funnels',
+    'Server-Side Meta Conversions API (CAPI) Pixel Integration',
+    'High-Converting Ad Creatives & Video Hook Scripts',
+    'Telegram & WhatsApp Instant Routing Funnels for Rapid First Deposits',
+    'Daily Ad Spend, CPA & FTD Telemetry Reports',
+    'Continuous A/B Creative Testing & Retargeting Loops',
   ],
-  cta: 'Scale Paid Acquisition',
+  cta: 'Start Meta Ads Campaign',
   ctaPath: '/contact',
 };
+
+export const META_GOOGLE_ADS_PACKAGE: PricingTier = {
+  id: 'meta-google-ads',
+  name: 'Meta + Google Ads Dual Suite',
+  tagline: 'Omni-Channel Acquisition Across Google Search, YouTube & Meta Platforms',
+  priceINR: '₹50,000',
+  priceUSD: '$600',
+  billingNote: '₹50,000 / month · Full-Funnel Dual Network Scaling Suite',
+  featured: true,
+  badge: '★ Best Value · Dual Network',
+  features: [
+    'Complete Meta Ads (Facebook + Instagram) Management',
+    'High-Intent Google Search Ads + YouTube Video Placements',
+    'Whitelisted Google Ads & Meta Agency Accounts (Zero Bans)',
+    'Dual-Platform CAPI & Offline Conversion Action Tracking',
+    'Dynamic Search Keyword Interception for High-Deposit Queries',
+    'Dedicated Ad Creative Studio (Video Scripts + High-CTR Static Graphics)',
+    'Automated Telegram/WhatsApp Cashier & Deposit Bridge Pages',
+    'Dedicated Media Buyer & 24/7 Slack/WhatsApp War Room Access',
+  ],
+  cta: 'Launch Dual-Network Ads',
+  ctaPath: '/contact',
+};
+
+export const PAID_PACKAGES: readonly PricingTier[] = [
+  META_ADS_PACKAGE,
+  META_GOOGLE_ADS_PACKAGE,
+];
+
+// Backward-compatible alias for existing imports
+export const PAID_ACQUISITION_PACKAGE: PricingTier = META_GOOGLE_ADS_PACKAGE;
 
 export const PRICING_CATEGORIES: readonly PricingCategory[] = [
   {
     id: 'core-packages',
     label: 'Core Packages (Web & SEO)',
-    description: 'The 3 core engagement models: Turnkey Web Development, Rank-1 SEO, or the Combined Web + SEO Flagship.',
+    description: 'Direct engineering packages: Turnkey Platform Development, Monthly SEO Sprint, and 3-Month Rank Sprint.',
     tiers: MAIN_PACKAGES,
   },
   {
     id: 'paid-ads',
-    label: 'Paid Media (Google & Meta Ads)',
-    description: 'Whitelisted advertising management across Google Ads, YouTube, and Meta platforms with zero account bans.',
-    tiers: [PAID_ACQUISITION_PACKAGE],
+    label: 'Paid Media (Meta & Google Ads)',
+    description: 'Whitelisted advertising management across Meta (Facebook & Instagram) and Google Ads with zero account bans.',
+    tiers: PAID_PACKAGES,
   },
 ] as const;
 

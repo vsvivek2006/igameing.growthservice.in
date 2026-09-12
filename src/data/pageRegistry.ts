@@ -117,7 +117,7 @@ export const EXACT_50_PAGES: readonly PageDefinition[] = [
     category: 'core',
     intent: 'commercial',
     title: 'Digital Marketing & SEO Services for iGaming Brands',
-    description: 'Full suite of specialized growth services for gaming, casino, and high-competition markets: Technical SEO, content strategy, programmatic SEO, web dev, and paid acquisition.',
+    description: 'Full suite of specialized digital engineering and marketing services for gaming, casino, and high-competition markets: Technical SEO, content strategy, programmatic SEO, web dev, and paid acquisition.',
     primaryKeyword: 'iGaming digital marketing services',
     secondaryKeywords: ['casino SEO services', 'gaming web development', 'sportsbook marketing'],
     parent: '/',

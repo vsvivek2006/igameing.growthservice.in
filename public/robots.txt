@@ -1,5 +1,5 @@
 # robots.txt for iGaming Growth (https://igameing.growthservice.in)
-# Headquartered in Kathmandu, Nepal | GrowthService Group (https://growthservice.in)
+# Specialist Engineering-Led Digital Growth Agency | Kathmandu, Nepal
 
 User-agent: *
 Allow: /

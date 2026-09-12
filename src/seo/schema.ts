@@ -26,11 +26,6 @@ export function buildOrganizationSchema(): Record<string, unknown> {
       addressLocality: businessConfig.address?.city || 'Kathmandu',
       addressCountry: businessConfig.address?.countryCode || 'NP',
     },
-    parentOrganization: {
-      '@type': 'Organization',
-      name: businessConfig.parentBrand || 'GrowthService',
-      url: businessConfig.parentBrandUrl || 'https://growthservice.in',
-    },
   };
 
   if (businessConfig.legalName && businessConfig.legalName !== businessConfig.name) {

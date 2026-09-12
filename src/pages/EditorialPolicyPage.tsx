@@ -164,8 +164,6 @@ export const EditorialPolicyPage: React.FC = () => {
                 <br />
                 <strong>Headquarters:</strong> Kathmandu, Nepal
                 <br />
-                <strong>Parent Group:</strong> <a href="https://growthservice.in" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:underline">GrowthService (https://growthservice.in)</a>
-                <br />
                 <strong>Email:</strong> hello@igameing.growthservice.in
               </p>
             </Card>

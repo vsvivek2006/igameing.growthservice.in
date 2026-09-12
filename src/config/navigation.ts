@@ -92,7 +92,7 @@ export const navigationConfig = {
       ],
     },
     {
-      title: 'Growth Services',
+      title: 'Engineering & Ads',
       links: [
         { label: 'Website Development', path: '/services/website-development' },
         { label: 'Google Ads Management', path: '/services/google-ads' },

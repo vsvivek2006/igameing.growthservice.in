@@ -58,7 +58,7 @@ const ABOUT_FAQS = [
   {
     question: 'Where is iGaming Growth based, and what markets do you serve?',
     answer:
-      'iGaming Growth operates as a specialist B2B digital growth consultancy headquartered in Kathmandu, Nepal, as part of the GrowthService group (https://growthservice.in). We serve operators and digital platforms across South Asia, Southeast Asia, the UK, Europe, Latin America, and emerging regulated markets worldwide.',
+      'iGaming Growth operates as an independent specialist B2B digital growth engineering studio headquartered in Kathmandu, Nepal. We serve operators and digital platforms across South Asia, Southeast Asia, the UK, Europe, Latin America, and emerging regulated markets worldwide.',
   },
   {
     question: 'How do you structure client engagements?',
@@ -442,7 +442,7 @@ export const AboutPage: React.FC = () => {
               className="p-4 rounded-2xl bg-model3-surface/90 border border-white/10 hover:border-cyan-400/50 transition-all hover:-translate-y-1 group"
             >
               <div className="text-[10px] font-mono uppercase text-cyan-400 mb-1">Architecture</div>
-              <div className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors">Web Development (₹15K)</div>
+              <div className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors">Web Development (₹20K)</div>
               <p className="text-xs text-slate-400 mt-1">Headless React &amp; PWA platforms</p>
             </Link>
 

@@ -771,7 +771,7 @@ export const FreeSeoAuditPage: React.FC = () => {
               >
                 <div className="text-[10px] font-mono text-cyan-400 uppercase mb-1">Stack Rebuild</div>
                 <div className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors flex items-center justify-between">
-                  <span>Web Development (₹15K)</span>
+                  <span>Web Development (₹20K)</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </Link>

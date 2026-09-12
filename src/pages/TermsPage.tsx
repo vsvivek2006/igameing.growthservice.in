@@ -157,8 +157,6 @@ export const TermsPage: React.FC = () => {
                 <br />
                 <strong>Agency Headquarters:</strong> Kathmandu, Nepal
                 <br />
-                <strong>Parent Group:</strong> <a href="https://growthservice.in" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:underline">GrowthService (https://growthservice.in)</a>
-                <br />
                 <strong>Legal Desk:</strong> hello@igameing.growthservice.in
               </p>
             </Card>

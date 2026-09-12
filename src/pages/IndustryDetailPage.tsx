@@ -455,7 +455,7 @@ const IndustryPage: React.FC<{ industry: IndustryVertical }> = ({ industry }) =>
                         Turnkey Stack
                       </span>
                       <span className="text-[10px] font-mono text-slate-400">
-                        From ₹15,000
+                        From ₹20,000
                       </span>
                     </div>
                     <h4 className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors mb-1.5 font-heading">

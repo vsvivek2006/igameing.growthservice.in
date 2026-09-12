@@ -22,7 +22,7 @@ export interface InternalLinkItem {
 export const getRelatedIndustriesForService = (serviceSlug: string): readonly InternalLinkItem[] => {
   const activeIndustrySlugs = getIndustriesForService(serviceSlug);
   const srv = getServiceBySlug(serviceSlug);
-  const serviceName = srv ? srv.name : 'Growth Services';
+  const serviceName = srv ? srv.name : 'Digital Services';
   
   if (activeIndustrySlugs.length > 0) {
     return activeIndustrySlugs

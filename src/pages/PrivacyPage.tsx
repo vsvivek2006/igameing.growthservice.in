@@ -39,7 +39,7 @@ export const PrivacyPage: React.FC = () => {
                 {businessName} is committed to transparent, privacy-first data handling standards in full alignment with international data protection frameworks, including the EU General Data Protection Regulation (GDPR), the California Consumer Privacy Act (CCPA), and applicable Indian data protection laws.
               </p>
               <p>
-                This Privacy Policy applies to all interactions with our website, free diagnostic audit request forms, strategy call scheduling interfaces, and direct commercial correspondence. We collect only the minimum necessary information required to deliver high-precision technical evaluations and B2B growth services.
+                This Privacy Policy applies to all interactions with our website, free diagnostic audit request forms, strategy call scheduling interfaces, and direct commercial correspondence. We collect only the minimum necessary information required to deliver high-precision technical evaluations and B2B engineering and search solutions.
               </p>
             </Card>
 
@@ -169,8 +169,6 @@ export const PrivacyPage: React.FC = () => {
                 To exercise any of these rights or to submit an inquiry to our Data Protection Officer, contact:
                 <br />
                 <strong>Headquarters:</strong> Kathmandu, Nepal
-                <br />
-                <strong>Parent Group:</strong> <a href="https://growthservice.in" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:underline">GrowthService (https://growthservice.in)</a>
                 <br />
                 <strong>Privacy Desk:</strong> hello@igameing.growthservice.in
               </p>

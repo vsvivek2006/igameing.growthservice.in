@@ -188,7 +188,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isDark = false }) => {
               >
                 <div className="flex items-center gap-2.5">
                   <TrendingUp className="w-4 h-4 text-amber-400" />
-                  <span>Growth Services</span>
+                  <span>Agency Services</span>
                   <span className="text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full">
                     12
                   </span>
@@ -207,7 +207,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isDark = false }) => {
                     onClick={closeMenu}
                     className="block p-2 rounded-xl text-xs font-bold text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition-colors"
                   >
-                    → View All 12 Growth Services
+                    → View All 12 Services
                   </Link>
                   <div className="max-h-60 overflow-y-auto space-y-0.5 pt-1 pr-1">
                     {services.map((s) => (

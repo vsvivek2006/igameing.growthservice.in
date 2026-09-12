@@ -175,22 +175,15 @@ export const Footer: React.FC = () => {
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">
-                    Headquarters &amp; Parent Group
+                    Global Studio Headquarters
                   </p>
                   <p className="text-xs text-slate-200 font-semibold mt-0.5">
                     {businessConfig.address?.city}, {businessConfig.address?.country}
                   </p>
                 </div>
-                <a
-                  href={businessConfig.parentBrandUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-400 hover:text-amber-300 transition-colors"
-                  title="Visit parent brand portal"
-                >
-                  <span>growthservice.in</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
+                <div className="text-[11px] font-semibold text-slate-400">
+                  Worldwide Delivery
+                </div>
               </div>
 
               <div className="pt-2 border-t border-white/5 space-y-2 text-xs">
@@ -252,7 +245,7 @@ export const Footer: React.FC = () => {
             <strong className="text-slate-300 font-semibold">Agency Regulatory Notice:</strong>{' '}
             {businessName} is a specialist B2B growth engineering and digital marketing consultancy
             serving enterprise operators in the iGaming, casino, and competitive online gaming sectors.
-            We provide search engineering, technical development, and compliance-safe growth services.
+            We provide search engineering, technical development, and compliance-safe digital marketing solutions.
             We do not operate gambling platforms, handle wagers, or provide financial or legal advice.
             All advisory complies with applicable regional advertising and platform policies.
           </p>
@@ -266,16 +259,7 @@ export const Footer: React.FC = () => {
               {businessConfig.address?.country}.
             </span>
             <span>
-              An enterprise brand of{' '}
-              <a
-                href={businessConfig.parentBrandUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-amber-400 hover:text-amber-300 underline underline-offset-2 transition-colors font-medium"
-              >
-                GrowthService
-              </a>
-              . All rights reserved.
+              All rights reserved. Dedicated digital engineering for high-competition industries.
             </span>
           </div>
 
